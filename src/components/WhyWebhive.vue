@@ -4,7 +4,7 @@
       
       <div class="section-header">
         <span class="mini-title">Value Proposition</span>
-        <h2 class="section-heading">Why Webhive</h2>
+        <h2 class="section-heading">Why Webhive</h2><br>
       </div>
 
       <div class="cards-grid">

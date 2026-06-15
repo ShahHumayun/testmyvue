@@ -9,7 +9,7 @@
           <p class="ai-vision-paragraph">
             Traditional software isolates your business; WebHive unifies it. We combine high-end web and mobile development with deeply synchronized NetSuite ERP environments to build responsive digital products that adapt, scale, and perform.
           </p>
-        </div><br><br>
+        </div><br>
 
         <section class="services-interactive-section">
           
@@ -157,12 +157,12 @@ const currentServiceImage = computed(() => {
 }
 
 /* ----------------------------------------- */
-/* 2. SPECIFIC HEADER GAP LOCATION           */
+/* 2. HEADER BLOCK                           */
 /* ----------------------------------------- */
 .ai-vision-block {
   text-align: center;
   max-width: 850px;
-  margin-bottom: 100px; 
+  margin-bottom: clamp(50px, 8vw, 100px);
 }
 .ai-vision-heading { 
   font-size: clamp(2.4rem, 4.2vw, 3.8rem); 
@@ -223,7 +223,12 @@ const currentServiceImage = computed(() => {
     flex-direction: column;
     gap: 0; 
   }
-  .services-left-side-text { max-width: 100%; height: auto; overflow-y: visible; }
+  .services-left-side-text { 
+    max-width: 100%; 
+    min-width: 0;
+    height: auto; 
+    overflow-y: visible; 
+  }
   .services-right-side-panel { display: none; }
 }
 
@@ -252,6 +257,7 @@ const currentServiceImage = computed(() => {
 
 .card-heading-block {
   width: 100%;
+  min-width: 0; /* allow text to wrap/shrink instead of pushing layout */
 }
 
 .card-icon-frame { 
@@ -267,6 +273,7 @@ const currentServiceImage = computed(() => {
   color: #4b5563;
   display: flex;
   align-items: center;
+  gap: 12px;
   transition: color 0.3s, transform 0.3s;
   width: 100%;
 }
@@ -277,9 +284,9 @@ const currentServiceImage = computed(() => {
   color: #4b5563;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s;
   transform: rotate(0deg);
-  margin-left: auto; /* FIXED: Anchors arrow firmly to right edge without collapse risks */
+  margin-left: auto;
   padding-left: 16px;
-  flex-shrink: 0; /* FIXED: Ensures string arrow characters are never compressed */
+  flex-shrink: 0;
 }
 
 .service-description-preview { 
@@ -291,7 +298,7 @@ const currentServiceImage = computed(() => {
   overflow: hidden;
   margin-top: 0; 
   transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1); 
-  width: calc(100% - 30px); /* Leaves space layout padding clear of chevron track boundaries */
+  width: 100%;
 }
 .theme-light .service-description-preview { color: #475569; }
 
@@ -393,4 +400,69 @@ const currentServiceImage = computed(() => {
 .fade-desktop-image-enter-active, .fade-desktop-image-leave-active { transition: opacity 0.3s ease, transform 0.4s ease; }
 .fade-desktop-image-enter-from { opacity: 0; transform: scale(1.02); }
 .fade-desktop-image-leave-to { opacity: 0; transform: scale(0.98); }
+
+/* ----------------------------------------- */
+/* 8. TABLET REFINEMENTS (≤1024px)           */
+/* ----------------------------------------- */
+@media (max-width: 1024px) {
+  .ai-vision-heading { letter-spacing: -0.02em; }
+  .service-accordion-card { padding: 20px 0; }
+  .card-text-header { gap: 20px; }
+}
+
+/* ----------------------------------------- */
+/* 9. MOBILE REFINEMENTS (≤640px)            */
+/* ----------------------------------------- */
+@media (max-width: 640px) {
+  .services-content-main { padding: 48px 20px; }
+
+  .ai-vision-block { margin-bottom: 48px; }
+  .ai-vision-heading { font-size: clamp(1.9rem, 8vw, 2.4rem); margin-bottom: 16px; }
+  .ai-vision-paragraph { font-size: 15px; line-height: 1.7; }
+
+  .card-text-header { 
+    gap: 14px; 
+    align-items: center; 
+  }
+
+  .card-icon-frame { 
+    margin-top: 0; 
+    width: 22px; 
+    height: 22px; 
+  }
+  .card-icon-frame svg { width: 22px; height: 22px; }
+
+  .service-title-h3 { 
+    font-size: 1.15rem; 
+    font-weight: 750;
+    line-height: 1.3;
+    gap: 8px;
+  }
+
+  .dropdown-chevron-indicator { 
+    font-size: 0.95rem; 
+    padding-left: 10px; 
+  }
+
+  .service-description-preview { 
+    font-size: 13.5px; 
+    line-height: 1.6; 
+  }
+
+  .active-card .service-description-preview {
+    margin-top: 10px;
+    max-height: 140px; /* allow more room since text wraps more on narrow screens */
+  }
+
+  .service-accordion-card { padding: 16px 0; }
+
+  .card-image-wrapper { margin-top: 16px; border-radius: 10px; }
+  .card-live-image { border-radius: 10px; }
+}
+
+@media (max-width: 380px) {
+  .service-title-h3 { font-size: 1.05rem; }
+  .card-icon-frame, .card-icon-frame svg { width: 20px; height: 20px; }
+  .service-description-preview { font-size: 13px; }
+}
 </style>
