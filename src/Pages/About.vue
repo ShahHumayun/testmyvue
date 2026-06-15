@@ -53,7 +53,7 @@
           >
             <span class="menu-index">0{{ index + 1 }}</span>
             <router-link 
-              :to="'/' + item.toLowerCase()" 
+              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
               @click="toggleMenu" 
               class="menu-link"
             >
@@ -208,7 +208,7 @@ const isMenuOpen = ref(false)
 const isScrolled = ref(false)
 const workSection = ref(null)
 
-const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Contact']
+const menuItems = ['Home', 'Services', 'Portfolio', 'Culture', 'Studio', 'Contact']
 
 const projects = ref([
   { 

@@ -59,12 +59,12 @@
           >
             <span class="menu-index">0{{ index + 1 }}</span>
             <router-link 
-              :to="'/' + item.toLowerCase()" 
-              @click="toggleMenu" 
-              class="menu-link"
-            >
-              {{ item }}
-            </router-link>
+  :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
+  @click="toggleMenu" 
+  class="menu-link"
+>
+  {{ item }}
+</router-link>
           </div>
 
           <div class="menu-item-wrap overlay-btn-item">
@@ -170,7 +170,7 @@ import gsap from 'gsap'
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
 
-const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Contact']
+const menuItems = ['Home', 'About', 'Services', 'Portfolio', 'Culture', 'Contact']
 
 const currentYear = new Date().getFullYear()
 

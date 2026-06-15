@@ -5,12 +5,11 @@
       <main class="services-content-main">
         
         <div class="ai-vision-block">
-          <h2 class="ai-vision-heading">Get AI-First Solutions That Power Your Vision</h2>
+          <h2 class="ai-vision-heading">Next-Gen Web, App, and NetSuite Engineering</h2>
           <p class="ai-vision-paragraph">
-            At WebHive, we go beyond traditional development. We engineer systems with AI at the core, 
-            ensuring they learn, adapt, and operate seamlessly at modern enterprise scale.
+            Traditional software isolates your business; WebHive unifies it. We combine high-end web and mobile development with deeply synchronized NetSuite ERP environments to build responsive digital products that adapt, scale, and perform.
           </p>
-        </div>
+        </div><br><br>
 
         <section class="services-interactive-section">
           

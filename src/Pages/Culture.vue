@@ -58,7 +58,7 @@
           >
             <span class="menu-index">0{{ index + 1 }}</span>
             <router-link 
-              :to="'/' + item.toLowerCase()" 
+              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
               @click="toggleMenu" 
               class="menu-link"
             >
@@ -169,7 +169,7 @@ const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
 const currentYear = new Date().getFullYear()
 
-const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Contact']
+const menuItems = ['Home', 'About', 'Services', 'Portfolio', 'Studio', 'Contact']
 
 const pillars = ref([
   {
