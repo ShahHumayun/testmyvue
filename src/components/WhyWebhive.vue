@@ -1,10 +1,10 @@
 <template>
-  <section :class="['why-webhive-section', darkMode ? 'theme-dark' : 'theme-light']">
+  <section class="why-webhive-section">
     <div class="section-container">
       
       <div class="section-header">
         <span class="mini-title">Value Proposition</span>
-        <h2 class="section-heading">Why Webhive</h2><br>
+        <h2 class="section-heading">Why Webhive</h2>
       </div>
 
       <div class="cards-grid">
@@ -14,17 +14,18 @@
           class="value-card"
           :class="{ 'featured-card': card.featured }"
         >
-          <div class="card-top-row">
-            <div class="icon-wrapper">
-              <div class="icon-glow"></div>
-              <div class="icon-inner" v-html="card.icon"></div>
+          <div class="card-inner-padding-box">
+            <div class="card-top-row">
+              <div class="icon-wrapper">
+                <div class="icon-glow"></div>
+                <div class="icon-inner" v-html="card.icon"></div>
+              </div>
             </div>
-            
-          </div>
 
-          <div class="card-content">
-            <h3 class="card-title">{{ card.title }}</h3>
-            <p class="card-desc">{{ card.desc }}</p>
+            <div class="card-content">
+              <h3 class="card-title">{{ card.title }}</h3>
+              <p class="card-desc">{{ card.desc }}</p>
+            </div>
           </div>
 
           <div class="card-bottom-accent"></div>
@@ -66,7 +67,7 @@ const pillars = ref([
   },
   {
     title: 'AI-Native Engineering',
-    desc: 'We don\u2019t just "add AI" as an afterthought; we deploy machine learning frameworks at the fundamental core. Your products will adapt, auto-optimize, and self-correct over time.',
+    desc: 'We don’t just "add AI" as an afterthought; we deploy machine learning frameworks at the fundamental core. Your products will adapt, auto-optimize, and self-correct over time.',
     icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 21l8.982-8.983m-1.985-3.413L17 3.5l-8.982 8.983M3.204 12a10.045 10.045 0 0 0 1.554 4.356l-1.381 1.382A11.962 11.962 0 0 1 2.25 12c0-2.3.646-4.45 1.77-6.28l1.381 1.382A10.045 10.045 0 0 0 3.204 12Zm14.242 4.356A10.045 10.045 0 0 0 19.043 12c0-1.593-.37-3.097-1.026-4.436l1.382-1.382C20.535 7.9 21.152 9.878 21.152 12c0 2.122-.617 4.1-1.753 5.736l-1.382-1.382ZM16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Z" /></svg>`,
     featured: true
   },
@@ -86,15 +87,28 @@ const pillars = ref([
 </script>
 
 <style scoped>
+/* ----------------------------------------- */
+/* 1. LAYER COMPONENT SETUP                  */
+/* ----------------------------------------- */
 .why-webhive-section {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
+  
+  /* Safe width calculations respecting your App.vue requirements */
   width: 100%;
-  padding: clamp(60px, 8vh, 120px) clamp(16px, 5vw, 60px);
+  max-width: 100%;
+  padding: clamp(60px, 8vh, 120px) 24px;
+  background-color: #0b0c10; /* Locked dark theme native base */
+  color: #ffffff;
   font-family: system-ui, -apple-system, sans-serif;
-  transition: background-color var(--transition-speed), color var(--transition-speed);
   position: relative;
   z-index: 10;
+
+  /* Centering Engine */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
 }
 
 .why-webhive-section *,
@@ -105,26 +119,22 @@ const pillars = ref([
   padding: 0;
 }
 
-/* Precise Contextual Theme Binds */
-.theme-dark {
-  background-color: #0b0c10;
-  color: #ffffff;
-}
-.theme-light {
-  background-color: #f4f6f9;
-  color: #0f172a;
-}
-
+/* Symmetrical alignment block container */
 .section-container {
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1150px; /* Aligns container cleanly with maximum grid size */
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 /* ----------------------------------------- */
-/* 2. SECTION TYPOGRAPHY STYLE DESIGNS       */
+/* 2. HEADER TYPOGRAPHY                      */
 /* ----------------------------------------- */
 .section-header {
-  text-align: center;
+  text-align: center !important;
   margin-bottom: clamp(40px, 6vh, 64px);
 }
 
@@ -137,37 +147,27 @@ const pillars = ref([
   display: block;
   margin-bottom: 8px;
 }
-.theme-light .mini-title {
-  color: #059669;
-  font-weight: 600;
-}
 
 .section-heading {
   font-size: clamp(2rem, 4.5vw, 3.2rem);
   font-weight: 950;
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  margin-bottom: 12px;
-}
-
-.heading-underline {
-  width: 50px;
-  height: 3px;
-  background-color: var(--brand-accent);
-  margin: 0 auto;
-}
-.theme-light .heading-underline {
-  background-color: #059669;
 }
 
 /* ----------------------------------------- */
-/* 3. SYMMETRICAL REUSABLE GRID CARDS        */
+/* 3. COMPACT SQUARED GRID CONTAINER         */
 /* ----------------------------------------- */
 .cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
-  gap: 28px;
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
   grid-auto-rows: 1fr;
+  width: 100%;
+  max-width: 1150px;
+  margin: 0 auto !important;
+  justify-content: center !important;
+  align-content: center !important;
 }
 
 .value-card {
@@ -175,78 +175,49 @@ const pillars = ref([
   flex-direction: column;
   height: 100%;
   min-height: 280px;
-  padding: clamp(28px, 3vw, 40px);
   border-radius: 16px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
-}
-
-/* Dark Theme Card Architecture */
-.theme-dark .value-card {
+  padding: 0 !important; 
   background-color: rgba(255, 255, 255, 0.015);
   border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
 }
-.theme-dark .value-card:hover {
+
+.value-card:hover {
   transform: translateY(-8px);
   border-color: rgba(0, 255, 163, 0.35);
   background-color: rgba(255, 255, 255, 0.03);
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
 }
 
-/* Light Theme Card Architecture */
-.theme-light .value-card {
-  background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
-}
-.theme-light .value-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(5, 150, 105, 0.25);
-  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.08);
-}
-
 /* Featured Card Treatment */
-.theme-dark .value-card.featured-card {
+.value-card.featured-card {
   background: linear-gradient(160deg, rgba(0, 255, 163, 0.07), rgba(255, 255, 255, 0.015) 60%);
   border-color: rgba(0, 255, 163, 0.25);
 }
-.theme-light .value-card.featured-card {
-  background: linear-gradient(160deg, rgba(5, 150, 105, 0.06), #ffffff 60%);
-  border-color: rgba(5, 150, 105, 0.2);
+
+/* FIXED: Implements solid 45px vertical and 36px lateral internal layout space */
+.card-inner-padding-box {
+  padding: 45px 36px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box !important;
 }
 
 /* ----------------------------------------- */
-/* 4. CARD TOP ROW: ICON + INDEX             */
+/* 4. CARD ROW & ICONS                       */
 /* ----------------------------------------- */
 .card-top-row {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 28px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
 }
 
-.card-index {
-  font-family: monospace;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  opacity: 0.25;
-  transition: opacity 0.3s, color 0.3s;
-}
-.value-card:hover .card-index {
-  opacity: 0.6;
-}
-.theme-dark .value-card:hover .card-index {
-  color: var(--brand-accent);
-}
-.theme-light .value-card:hover .card-index {
-  color: #059669;
-}
-
-/* ----------------------------------------- */
-/* 5. BRAND ICON NEON CONTAINER SYSTEMS      */
-/* ----------------------------------------- */
 .icon-wrapper {
   position: relative;
   width: 60px;
@@ -264,23 +235,19 @@ const pillars = ref([
   align-items: center;
   justify-content: center;
   z-index: 2;
+  background: rgba(0, 255, 163, 0.06);
+  border: 1px solid rgba(0, 255, 163, 0.2);
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
 .icon-inner :deep(svg) {
   width: 30px;
   height: 30px;
+  stroke: var(--brand-accent);
   transition: stroke 0.3s;
 }
 
-/* Dark Theme Icon Ecosystem */
-.theme-dark .icon-inner {
-  background: rgba(0, 255, 163, 0.06);
-  border: 1px solid rgba(0, 255, 163, 0.2);
-}
-.theme-dark .icon-inner :deep(svg) {
-  stroke: var(--brand-accent);
-}
-.theme-dark .icon-glow {
+.icon-glow {
   position: absolute;
   inset: -4px;
   background-color: var(--brand-accent);
@@ -290,51 +257,35 @@ const pillars = ref([
   transition: opacity 0.3s ease;
   z-index: 1;
 }
-.theme-dark .value-card:hover .icon-glow {
+
+.value-card:hover .icon-glow {
   opacity: 0.4;
 }
-.theme-dark .value-card:hover .icon-inner {
+
+.value-card:hover .icon-inner {
   transform: scale(1.08) rotate(-4deg);
 }
 
-/* Light Theme Icon Ecosystem */
-.theme-light .icon-inner {
-  background: rgba(5, 150, 105, 0.07);
-  border: 1px solid rgba(5, 150, 105, 0.18);
-}
-.theme-light .icon-inner :deep(svg) {
-  stroke: #059669;
-}
-.theme-light .value-card:hover .icon-inner {
-  background: #059669;
-  transform: scale(1.08) rotate(-4deg);
-}
-.theme-light .value-card:hover .icon-inner :deep(svg) {
-  stroke: #ffffff;
-}
-
-/* Featured card icon gets a slightly bolder treatment */
-.theme-dark .featured-card .icon-inner {
+.featured-card .icon-inner {
   background: rgba(0, 255, 163, 0.12);
   border-color: rgba(0, 255, 163, 0.35);
 }
-.theme-light .featured-card .icon-inner {
-  background: rgba(5, 150, 105, 0.12);
-  border-color: rgba(5, 150, 105, 0.3);
-}
 
 /* ----------------------------------------- */
-/* 6. CARD DATA TEXT FIELDS                  */
+/* 5. TEXT CONTENT FIELD CONNECTIONS         */
 /* ----------------------------------------- */
 .card-content {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   flex-grow: 1;
+  text-align: center; 
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .card-title {
-  font-size: clamp(19px, 1.9vw, 23px);
+  font-size: clamp(20px, 2.1vw, 25px);
   font-weight: 800;
   line-height: 1.3;
   letter-spacing: -0.01em;
@@ -343,17 +294,13 @@ const pillars = ref([
 .card-desc {
   font-size: 14.5px;
   line-height: 1.65;
-  transition: color var(--transition-speed);
-}
-.theme-dark .card-desc {
+  max-width: 480px; 
   color: rgba(255, 255, 255, 0.6);
-}
-.theme-light .card-desc {
-  color: #475569;
+  transition: color var(--transition-speed);
 }
 
 /* ----------------------------------------- */
-/* 7. BOTTOM ACCENT BAR                      */
+/* 6. BOTTOM DECORATIVE ACCENTS              */
 /* ----------------------------------------- */
 .card-bottom-accent {
   position: absolute;
@@ -362,23 +309,29 @@ const pillars = ref([
   width: 100%;
   height: 3px;
   transform: scaleX(0);
-  transform-origin: left;
+  transform-origin: center; 
+  background: var(--brand-accent);
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.theme-dark .card-bottom-accent {
-  background: var(--brand-accent);
-}
-.theme-light .card-bottom-accent {
-  background: #059669;
-}
+
 .value-card:hover .card-bottom-accent {
   transform: scaleX(1);
 }
 
 /* ----------------------------------------- */
-/* 8. RESPONSIVE TWEAKS                      */
+/* 7. DURABLE MEDIA VIEWPORT RESPONSIVENESS  */
 /* ----------------------------------------- */
+@media (max-width: 868px) {
+  .cards-grid {
+    grid-template-columns: 1fr !important; 
+    gap: 24px;
+  }
+}
+
 @media (max-width: 540px) {
+  .card-inner-padding-box {
+    padding: 32px 20px !important; 
+  }
   .value-card {
     min-height: 240px;
   }

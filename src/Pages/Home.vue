@@ -288,6 +288,7 @@ const onMenuLeave = (el, done) => {
   transform: translateX(-50%);
   min-height: 0;
   flex-shrink: 0;
+
 }
 
 .company-branding {

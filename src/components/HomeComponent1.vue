@@ -186,38 +186,45 @@ const currentServiceImage = computed(() => {
 /* ----------------------------------------- */
 .services-interactive-section {
   display: flex;
-  flex-direction: row;        
-  flex-wrap: nowrap;          
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: stretch;
   justify-content: space-between;
   width: 100%;
-  gap: clamp(60px, 8vw, 140px); 
+  gap: clamp(40px, 6vw, 100px); 
+  height: clamp(450px, 55vh, 600px); 
 }
 
 .services-left-side-text {
   flex: 0.7;
-  min-width: 0;
+  max-width: 520px;
+  min-width: 320px;
+  height: 100%; 
   display: flex;
   flex-direction: column;
-  gap: clamp(24px, 3vh, 40px); 
+  gap: 0; 
   text-align: left;
+  overflow-y: auto; 
+  scrollbar-width: none; 
 }
+.services-left-side-text::-webkit-scrollbar { display: none; }
 
 .services-right-side-panel {
-  flex: 0.8;
+  flex: 0.55;
   min-width: 0;
+  height: 100%; 
   display: flex;
   justify-content: center;
   align-items: center;
-  position: sticky;
-  top: 160px; 
-  align-self: flex-start;
 }
 
 @media (max-width: 1024px) {
+  .services-interactive-section { 
+    height: auto; 
+    flex-direction: column;
+    gap: 0; 
+  }
+  .services-left-side-text { max-width: 100%; height: auto; overflow-y: visible; }
   .services-right-side-panel { display: none; }
-  .services-left-side-text { max-width: 100%; flex: 1; }
-  .services-interactive-section { gap: 0; }
 }
 
 /* ----------------------------------------- */
@@ -226,7 +233,9 @@ const currentServiceImage = computed(() => {
 .service-accordion-card {
   display: flex;
   flex-direction: column;
-  padding: clamp(28px, 4vh, 48px) 0; 
+  justify-content: center; 
+  flex: 1; 
+  padding: 16px 0; 
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
@@ -237,41 +246,52 @@ const currentServiceImage = computed(() => {
 .card-text-header {
   display: flex;
   align-items: flex-start;
-  gap: clamp(24px, 3vw, 40px); 
+  gap: clamp(16px, 2.5vw, 32px); 
+  width: 100%;
+}
+
+.card-heading-block {
+  width: 100%;
 }
 
 .card-icon-frame { 
-  margin-top: 6px; 
+  margin-top: 4px; 
   color: #4b5563; 
   flex-shrink: 0; 
   transition: color 0.3s;
 }
 
 .service-title-h3 {
-  font-size: clamp(1.6rem, 2.2vw, 2.2rem); 
+  font-size: clamp(1.4rem, 2vw, 1.9rem); 
   font-weight: 850;
   color: #4b5563;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   transition: color 0.3s, transform 0.3s;
+  width: 100%;
 }
 .theme-light .service-title-h3 { color: #64748b; }
 
 .dropdown-chevron-indicator {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   color: #4b5563;
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s;
   transform: rotate(0deg);
+  margin-left: auto; /* FIXED: Anchors arrow firmly to right edge without collapse risks */
+  padding-left: 16px;
+  flex-shrink: 0; /* FIXED: Ensures string arrow characters are never compressed */
 }
 
 .service-description-preview { 
-  font-size: clamp(15px, 1.1vw, 17px); 
-  line-height: 1.7; 
+  font-size: clamp(14px, 1vw, 16px); 
+  line-height: 1.5; 
   color: #94a3b8; 
-  opacity: 0.4; 
-  margin-top: 18px; 
-  transition: all 0.3s; 
+  opacity: 0; 
+  max-height: 0;
+  overflow: hidden;
+  margin-top: 0; 
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1); 
+  width: calc(100% - 30px); /* Leaves space layout padding clear of chevron track boundaries */
 }
 .theme-light .service-description-preview { color: #475569; }
 
@@ -280,6 +300,7 @@ const currentServiceImage = computed(() => {
 /* ----------------------------------------- */
 .active-card { 
   border-bottom-color: var(--brand-accent);
+  flex: 1.4; 
 }
 .theme-light .active-card { border-bottom-color: var(--brand-accent-light); }
 
@@ -301,11 +322,16 @@ const currentServiceImage = computed(() => {
 }
 .theme-light .active-card .dropdown-chevron-indicator { color: var(--brand-accent-light); }
 
-.active-card .service-description-preview { opacity: 1; color: #cbd5e1; }
+.active-card .service-description-preview { 
+  opacity: 1; 
+  max-height: 80px; 
+  margin-top: 8px;
+  color: #cbd5e1; 
+}
 .theme-light .active-card .service-description-preview { color: #1e293b; }
 
 /* ----------------------------------------- */
-/* 6. ACCORDION MEDIA DRAWER (MOBILE)       */
+/* 6. ACCORDION MEDIA DRAWER (MOBILE)        */
 /* ----------------------------------------- */
 .accordion-media-drawer {
   display: grid;
@@ -340,12 +366,12 @@ const currentServiceImage = computed(() => {
 }
 
 /* ----------------------------------------- */
-/* 7. DESKTOP MEDIA VIEWPORT CANVAS         */
+/* 7. DESKTOP MEDIA VIEWPORT CANVAS          */
 /* ----------------------------------------- */
 .desktop-frame-canvas {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 12;
+  height: 100%; 
   border-radius: 20px; 
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.2);
@@ -358,7 +384,11 @@ const currentServiceImage = computed(() => {
   box-shadow: 0 50px 100px rgba(15, 23, 42, 0.08);
 }
 
-.desktop-live-image { width: 100%; height: 100%; object-fit: cover; }
+.desktop-live-image { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+}
 
 .fade-desktop-image-enter-active, .fade-desktop-image-leave-active { transition: opacity 0.3s ease, transform 0.4s ease; }
 .fade-desktop-image-enter-from { opacity: 0; transform: scale(1.02); }
