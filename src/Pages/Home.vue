@@ -282,7 +282,7 @@ const onMenuLeave = (el, done) => {
   justify-content: space-between;
   align-items: center;
   z-index: 50;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
