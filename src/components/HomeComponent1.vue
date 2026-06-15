@@ -5,7 +5,7 @@
       <main class="services-content-main">
         
         <div class="ai-vision-block">
-          <h2 class="ai-vision-heading">Next-Gen Web, App, and NetSuite Engineering</h2>
+          <h2 class="ai-vision-heading">Next-Gen Web, App, and NetSuite Engineering</h2><br>
           <p class="ai-vision-paragraph">
             Traditional software isolates your business; WebHive unifies it. We combine high-end web and mobile development with deeply synchronized NetSuite ERP environments to build responsive digital products that adapt, scale, and perform.
           </p>
