@@ -5,10 +5,10 @@
       <main class="services-content-main">
         
         <div class="ai-vision-block">
-          <h2 class="ai-vision-heading">Get AI-First Solutions that Power Your Vision</h2>
+          <h2 class="ai-vision-heading">Get AI-First Solutions That Power Your Vision</h2>
           <p class="ai-vision-paragraph">
             At WebHive, we go beyond traditional development. We engineer systems with AI at the core, 
-            ensuring they learn, adapt, and operate seamlessly.
+            ensuring they learn, adapt, and operate seamlessly at modern enterprise scale.
           </p>
         </div>
 
@@ -21,13 +21,14 @@
               class="service-accordion-card"
               :class="{ 'active-card': selectedService === service.id }"
               @mouseenter="selectedService = service.id"
+              @click="selectedService = service.id"
             >
               <div class="card-text-header">
                 <div class="card-icon-frame">
-                  <svg v-if="service.id === 1" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                  <svg v-if="service.id === 2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-                  <svg v-if="service.id === 3" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                  <svg v-if="service.id === 4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  <svg v-if="service.id === 1" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                  <svg v-if="service.id === 2" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                  <svg v-if="service.id === 3" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  <svg v-if="service.id === 4" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                 </div>
 
                 <div class="card-heading-block">
@@ -120,18 +121,23 @@ const currentServiceImage = computed(() => {
 
 <style scoped>
 /* ----------------------------------------- */
-/* 1. CORE WRAPPER SETUP                     */
+/* 1. LAYOUT WRAPPER & ACCENT CONFIG         */
 /* ----------------------------------------- */
 .services-component-wrapper {
   --brand-accent: #00ffa3;
+  --brand-accent-light: #059669;
   width: 100%;
   font-family: system-ui, -apple-system, sans-serif;
   box-sizing: border-box;
   background-color: transparent;
-  transition: color 0.3s ease;
+  transition: color 0.5s ease;
 }
 
-.services-component-wrapper *, .services-component-wrapper *::before, .services-component-wrapper *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.services-component-wrapper *, .services-component-wrapper *::before, .services-component-wrapper *::after { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
 .theme-dark { color: #ffffff; }
 .theme-light { color: #0f172a; }
 
@@ -146,25 +152,39 @@ const currentServiceImage = computed(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px;
+  padding: clamp(60px, 10vw, 120px) clamp(20px, 4vw, 50px);
   width: 100%;
   max-width: 1400px;
 }
 
+/* ----------------------------------------- */
+/* 2. SPECIFIC HEADER GAP LOCATION           */
+/* ----------------------------------------- */
 .ai-vision-block {
   text-align: center;
-  margin-bottom: 50px;
-  max-width: 720px;
+  max-width: 850px;
+  margin-bottom: 100px; 
 }
-.ai-vision-heading { font-size: 2.2rem; font-weight: 800; margin-bottom: 12px; }
+.ai-vision-heading { 
+  font-size: clamp(2.4rem, 4.2vw, 3.8rem); 
+  font-weight: 950; 
+  margin-bottom: 28px; 
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+.theme-dark .ai-vision-heading { color: #ffffff; }
 .theme-light .ai-vision-heading { color: #0f172a; }
 
-.ai-vision-paragraph { font-size: 16px; line-height: 1.6; color: #94a3b8; }
+.ai-vision-paragraph { 
+  font-size: clamp(17px, 1.3vw, 20px); 
+  line-height: 1.8; 
+  color: #94a3b8; 
+}
 .theme-light .ai-vision-paragraph { color: #475569; }
 
-/* ------------------------------------------------------------- */
-/* FLEX STRATEGY: LOCKED SIDE-BY-SIDE TWO DIV ARCHITECTURE        */
-/* ------------------------------------------------------------- */
+/* ----------------------------------------- */
+/* 3. SPLIT WORKSPACE INTERACTIVE GRID       */
+/* ----------------------------------------- */
 .services-interactive-section {
   display: flex;
   flex-direction: row;        
@@ -172,189 +192,176 @@ const currentServiceImage = computed(() => {
   align-items: flex-start;
   justify-content: space-between;
   width: 100%;
-  gap: 50px;
-  margin-top: 20px;
+  gap: clamp(60px, 8vw, 140px); 
 }
 
-/* LEFT DIV: Content Panel Stack */
 .services-left-side-text {
-  flex: 1;
+  flex: 0.7;
   min-width: 0;
-  max-width: 48%;
   display: flex;
   flex-direction: column;
+  gap: clamp(24px, 3vh, 40px); 
   text-align: left;
 }
 
-/* RIGHT DIV: Desktop Media Asset Viewer */
 .services-right-side-panel {
-  flex: 1;
+  flex: 0.8;
   min-width: 0;
-  max-width: 48%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: sticky;
-  top: 100px; /* Locks it to scroll beautifully */
+  top: 160px; 
   align-self: flex-start;
 }
 
-@media (max-width: 992px) {
-  /* 1. Hides the big desktop panel */
+@media (max-width: 1024px) {
   .services-right-side-panel { display: none; }
-  
-  /* 2. Expands the left text column to full width */
-  .services-left-side-text { max-width: 100%; }
+  .services-left-side-text { max-width: 100%; flex: 1; }
+  .services-interactive-section { gap: 0; }
 }
 
-/* Left panel item adjustments */
+/* ----------------------------------------- */
+/* 4. COMPONENT CARD VISUALS                 */
+/* ----------------------------------------- */
 .service-accordion-card {
   display: flex;
   flex-direction: column;
-  padding: 24px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: clamp(28px, 4vh, 48px) 0; 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
-  transition: background-color 0.25s, border-color 0.25s;
-  border-radius: 6px;
-  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  border-radius: 0; 
 }
-.theme-light .service-accordion-card { border-bottom: 1px solid rgba(15, 23, 42, 0.06); }
+.theme-light .service-accordion-card { border-bottom: 1px solid rgba(15, 23, 42, 0.1); }
 
-/* Defines the standard header layout */
 .card-text-header {
   display: flex;
   align-items: flex-start;
-  gap: 20px;
+  gap: clamp(24px, 3vw, 40px); 
 }
 
-.card-icon-frame { margin-top: 4px; color: #64748b; flex-shrink: 0; }
-.card-heading-block { flex: 1; }
+.card-icon-frame { 
+  margin-top: 6px; 
+  color: #4b5563; 
+  flex-shrink: 0; 
+  transition: color 0.3s;
+}
 
 .service-title-h3 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #64748b;
+  font-size: clamp(1.6rem, 2.2vw, 2.2rem); 
+  font-weight: 850;
+  color: #4b5563;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: color 0.25s;
+  transition: color 0.3s, transform 0.3s;
 }
+.theme-light .service-title-h3 { color: #64748b; }
 
 .dropdown-chevron-indicator {
-  font-size: 1rem;
-  color: #64748b;
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), color 0.3s ease;
+  font-size: 1.3rem;
+  color: #4b5563;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   transform: rotate(0deg);
 }
 
-.service-description-preview { font-size: 14px; line-height: 1.5; color: #94a3b8; opacity: 0.6; margin-top: 6px; transition: color 0.25s; }
+.service-description-preview { 
+  font-size: clamp(15px, 1.1vw, 17px); 
+  line-height: 1.7; 
+  color: #94a3b8; 
+  opacity: 0.4; 
+  margin-top: 18px; 
+  transition: all 0.3s; 
+}
 .theme-light .service-description-preview { color: #475569; }
 
 /* ----------------------------------------- */
-/* 2. MEDIA DRAWER ARCHITECTURE & LOGIC     */
+/* 5. INTERACTIVE ACTIVE MODIFIERS           */
+/* ----------------------------------------- */
+.active-card { 
+  border-bottom-color: var(--brand-accent);
+}
+.theme-light .active-card { border-bottom-color: var(--brand-accent-light); }
+
+.active-card .card-icon-frame { color: var(--brand-accent); }
+.theme-light .active-card .card-icon-frame { color: var(--brand-accent-light); }
+
+.active-card .service-title-h3 { 
+  color: #ffffff; 
+  transform: translateX(10px);
+}
+.theme-light .active-card .service-title-h3 { 
+  color: #0f172a; 
+  transform: translateX(10px);
+}
+
+.active-card .dropdown-chevron-indicator { 
+  transform: rotate(90deg); 
+  color: var(--brand-accent); 
+}
+.theme-light .active-card .dropdown-chevron-indicator { color: var(--brand-accent-light); }
+
+.active-card .service-description-preview { opacity: 1; color: #cbd5e1; }
+.theme-light .active-card .service-description-preview { color: #1e293b; }
+
+/* ----------------------------------------- */
+/* 6. ACCORDION MEDIA DRAWER (MOBILE)       */
 /* ----------------------------------------- */
 .accordion-media-drawer {
   display: grid;
-  grid-template-rows: 0fr; /* Default closed state */
+  grid-template-rows: 0fr; 
   opacity: 0;
-  transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, border-color 0.4s ease;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
   overflow: hidden;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  margin-top: 0px;
   width: 100%;
 }
 
 .card-image-wrapper {
   overflow: hidden;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9; 
+  margin-top: 32px;
+  border-radius: 12px;
 }
 
 .card-live-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
-/* --- MOBILE SPECIFIC LOGIC: Enables the internal drawers --- */
-@media (max-width: 992px) {
-  
-  /* Triggers the expansion logic on smaller screens */
+@media (max-width: 1024px) {
   .active-card .accordion-media-drawer {
     grid-template-rows: 1fr;
     opacity: 1;
-    margin-top: 20px;
-    
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background-color: rgba(0, 0, 0, 0.2);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
   }
-  
-  .theme-light .active-card .accordion-media-drawer {
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    background-color: #ffffff;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-  }
-
-  /* Internal Card image transition effects for accordion movement */
-  .fade-drawer-image-enter-active,
-  .fade-drawer-image-leave-active {
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  }
-  .fade-drawer-image-enter-from { opacity: 0; transform: translateY(-5px); }
-  .fade-drawer-image-leave-to { opacity: 0; transform: translateY(5px); }
 }
 
 /* ----------------------------------------- */
-/* 3. DYNAMIC ACTIVE & THEMATIC TWEAKS       */
-/* ----------------------------------------- */
-.service-accordion-card:hover, .active-card { background-color: rgba(255, 255, 255, 0.02); }
-.theme-light .service-accordion-card:hover, .theme-light .active-card { background-color: rgba(15, 23, 42, 0.02); }
-
-.active-card .card-icon-frame { color: var(--brand-accent); }
-.theme-light .active-card .card-icon-frame { color: #059669; }
-
-.active-card .service-title-h3 { color: #ffffff; }
-.theme-light .active-card .service-title-h3 { color: #0f172a; }
-
-/* Rotates the indicator down on active state */
-.active-card .dropdown-chevron-indicator { 
-  transform: rotate(90deg); 
-  color: var(--brand-accent); 
-}
-.theme-light .active-card .dropdown-chevron-indicator { color: #059669; }
-
-.active-card .service-description-preview { opacity: 1; color: #cbd5e1; }
-.theme-light .active-card .service-description-preview { color: #334155; }
-
-.active-card { border-bottom-color: var(--brand-accent); }
-.theme-light .active-card { border-bottom-color: #059669; }
-
-/* ----------------------------------------- */
-/* 4. DESKTOP MEDIA VIEWPORT FRAME LOGIC     */
+/* 7. DESKTOP MEDIA VIEWPORT CANVAS         */
 /* ----------------------------------------- */
 .desktop-frame-canvas {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: 12px;
+  aspect-ratio: 16 / 12;
+  border-radius: 20px; 
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
 }
 .theme-light .desktop-frame-canvas {
   background-color: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 50px 100px rgba(15, 23, 42, 0.08);
 }
 
 .desktop-live-image { width: 100%; height: 100%; object-fit: cover; }
 
-/* Desktop Transition Animations */
-.fade-desktop-image-enter-active, .fade-desktop-image-leave-active { transition: opacity 0.25s ease, transform 0.25s ease; }
-.fade-desktop-image-enter-from { opacity: 0; transform: scale(1.01); }
-.fade-desktop-image-leave-to { opacity: 0; transform: scale(0.99); }
+.fade-desktop-image-enter-active, .fade-desktop-image-leave-active { transition: opacity 0.3s ease, transform 0.4s ease; }
+.fade-desktop-image-enter-from { opacity: 0; transform: scale(1.02); }
+.fade-desktop-image-leave-to { opacity: 0; transform: scale(0.98); }
 </style>

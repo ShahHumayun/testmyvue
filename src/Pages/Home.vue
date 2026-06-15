@@ -778,13 +778,13 @@ const onMenuLeave = (el, done) => {
         <button 
           @click="isDarkMode = !isDarkMode"
           class="theme-toggle"
-          :aria-label="isDarkMode ? 'Switch to light theme' : 'Switch to dark theme'"
+          aria-label="Toggle Theme"
         >
           <div 
             class="toggle-thumb"
             :class="{ 'toggle-active': isDarkMode }"
           >
-            <span class="toggle-icon" aria-hidden="true">{{ isDarkMode ? '🌙' : '☀️' }}</span>
+            <span class="toggle-icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
           </div>
         </button>
 
@@ -792,8 +792,6 @@ const onMenuLeave = (el, done) => {
           @click="toggleMenu" 
           class="menu-trigger"
           :class="{ 'menu-active': isMenuOpen }"
-          :aria-expanded="isMenuOpen"
-          aria-label="Toggle navigation menu"
         >
           <span class="burger-line line-top"></span>
           <span class="burger-line line-mid"></span>
@@ -822,7 +820,7 @@ const onMenuLeave = (el, done) => {
 
           <div class="menu-item-wrap overlay-btn-item">
             <span class="menu-index">0{{ menuItems.length + 1 }}</span>
-            <router-link to="/consultation" @click="toggleMenu" class="consult-btn-overlay">
+            <router-link to="/consultation" class="consult-btn-overlay">
               Consultation
             </router-link>
           </div>
@@ -831,65 +829,53 @@ const onMenuLeave = (el, done) => {
     </Transition>
 
     <main class="hero-main">
-      <div 
-        class="ambient-glow"
-        :style="{ transform: `translate(${parallax.headingX * 1.5}px, ${parallax.headingY * 1.5}px)` }"
-      ></div>
+      <div class="hero-intro-viewport">
+        <div 
+          class="ambient-glow"
+          :style="{ transform: `translate(${parallax.headingX * 1.5}px, ${parallax.headingY * 1.5}px)` }"
+        ></div>
 
-      <h1
-        class="main-title"
-        :style="{
-          transform: `
-            perspective(1000px)
-            rotateX(${parallax.rotateX}deg)
-            rotateY(${parallax.rotateY}deg)
-          `
-        }"
-      >
-        WebHive
-      </h1>
+        <h1
+          class="main-title"
+          :style="{
+            transform: `
+              perspective(1000px)
+              rotateX(${parallax.rotateX}deg)
+              rotateY(${parallax.rotateY}deg)
+            `
+          }"
+        >
+          WebHive
+        </h1>
 
-      <p class="hero-subtitle">
-        Crafting Next-Gen Digital Ecosystems
-      </p>
-
-      <HomeComponent1 class="home-services-layout" />
-    </main>
-
-    <footer class="footer-group">
-      <div class="marquee-footer">
-        <div class="marquee-track">
-          <div class="marquee-content animate-marquee">
-            <div v-for="(tech, idx) in technologies" :key="'a-' + idx" class="marquee-item">
-              <span class="tech-name">{{ tech }}</span>
-            </div>
-          </div>
-          <div class="marquee-content animate-marquee" aria-hidden="true">
-            <div v-for="(tech, idx) in technologies" :key="'b-' + idx" class="marquee-item">
-              <span class="tech-name">{{ tech }}</span>
-            </div>
-          </div>
-        </div>
+        <p class="hero-subtitle">
+          Crafting Next-Gen Digital Ecosystems
+        </p>
       </div>
-      
-      <div class="copyright-section">
+
+      <HomeComponent1 
+        class="home-services-layout" 
+        :darkMode="isDarkMode" 
+      />
+
+      <footer class="copyright-section">
         <p>&copy; {{ currentYear }} WebHive Technologies. All rights reserved.</p>
-      </div>
-    </footer>
+      </footer>
+    </main>
 
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
 import HomeComponent1 from '../components/HomeComponent1.vue'
 
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
+const isScrolled = ref(false)
 
 const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Contact']
-const technologies = ['Magento', 'React Native', 'PHP', 'Laravel', 'Next.js', 'Vue.js']
 
 const currentYear = new Date().getFullYear()
 
@@ -901,6 +887,10 @@ const parallax = reactive({
   bgX: 0,
   bgY: 0
 })
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
+}
 
 const handleMouseMove = (e) => {
   const { clientX, clientY } = e
@@ -923,59 +913,40 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
 
-const onMenuEnter = (el, done) => {
-  gsap.set(el, { willChange: 'opacity' })
-  gsap.set(el.querySelectorAll('.menu-link, .consult-btn-overlay'), { willChange: 'transform' })
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
 
-  gsap.fromTo(el, 
-    { opacity: 0 }, 
-    { opacity: 1, duration: 0.4, ease: 'power2.out' }
-  )
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
+const onMenuEnter = (el, done) => {
+  gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })
   gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
     { yPercent: 100 }, 
-    { 
-      yPercent: 0, 
-      duration: 0.6, 
-      stagger: 0.06, 
-      ease: 'power3.out', 
-      delay: 0.1, 
-      onComplete: () => {
-        gsap.set([el, el.querySelectorAll('.menu-link, .consult-btn-overlay')], { clearProps: 'willChange' })
-        done()
-      }
-    }
+    { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out', delay: 0.1, onComplete: done }
   )
 }
 
 const onMenuLeave = (el, done) => {
-  gsap.set(el, { willChange: 'opacity' })
-  gsap.set(el.querySelectorAll('.menu-link, .consult-btn-overlay'), { willChange: 'transform' })
-
-  gsap.to(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
-    { yPercent: -100, duration: 0.4, stagger: 0.03, ease: 'power3.in' }
-  )
-  gsap.to(el, 
-    { 
-      opacity: 0, 
-      duration: 0.4, 
-      ease: 'power2.in', 
-      delay: 0.15, 
-      onComplete: () => {
-        gsap.set([el, el.querySelectorAll('.menu-link, .consult-btn-overlay')], { clearProps: 'willChange' })
-        done()
-      }
-    }
-  )
+  gsap.to(el.querySelectorAll('.menu-link, .consult-btn-overlay'), { yPercent: -100, duration: 0.4, stagger: 0.03, ease: 'power3.in' })
+  gsap.to(el, { opacity: 0, duration: 0.4, ease: 'power2.in', delay: 0.15, onComplete: done })
 }
 </script>
 
 <style scoped>
-:global(html),
+:global(html) {
+  scroll-behavior: smooth;
+  overflow-y: auto !important;
+  height: auto !important;
+}
 :global(body) {
   margin: 0;
   padding: 0;
-  overflow: hidden !important;
-  height: 100% !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  height: auto !important;
   width: 100% !important;
 }
 
@@ -986,19 +957,15 @@ const onMenuLeave = (el, done) => {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
   
-  position: fixed;
-  inset: 0;
-  height: 100dvh;
-  max-height: 100dvh;
-  width: 100vw;
-  overflow: hidden !important;
-  
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   font-family: system-ui, -apple-system, sans-serif;
   transition: background-color var(--transition-speed), color var(--transition-speed);
   box-sizing: border-box;
+  overflow-x: hidden;
   z-index: 1;
 }
 
@@ -1052,7 +1019,7 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 3. TOP NAVBAR SYSTEM                      */
+/* NAVBAR DESIGN SYSTEM (From About.vue)      */
 /* ----------------------------------------- */
 .navbar {
   width: 100%;
@@ -1063,7 +1030,10 @@ const onMenuLeave = (el, done) => {
   justify-content: space-between;
   align-items: center;
   z-index: 50;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   min-height: 0;
   flex-shrink: 0;
 }
@@ -1224,7 +1194,7 @@ const onMenuLeave = (el, done) => {
 .menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
 
 /* ----------------------------------------- */
-/* 4. NAVIGATION OVERLAY (GLASSMORPHISM)     */
+/* NAVIGATION OVERLAY PANEL (From About.vue)  */
 /* ----------------------------------------- */
 .nav-overlay {
   position: fixed;
@@ -1242,14 +1212,8 @@ const onMenuLeave = (el, done) => {
   padding-top: max(clamp(24px, 5vh, 48px), env(safe-area-inset-top));
   padding-bottom: max(clamp(24px, 5vh, 48px), env(safe-area-inset-bottom));
 }
-.theme-dark .nav-overlay { 
-  background-color: rgba(11, 12, 16, 0.85); 
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-.theme-light .nav-overlay { 
-  background-color: rgba(255, 255, 255, 0.85); 
-  border: 1px solid rgba(15, 23, 42, 0.05);
-}
+.theme-dark .nav-overlay { background-color: rgba(11, 12, 16, 0.96); }
+.theme-light .nav-overlay { background-color: rgba(255, 255, 255, 0.96); }
 
 .nav-links-container {
   display: flex;
@@ -1259,14 +1223,8 @@ const onMenuLeave = (el, done) => {
   max-width: 800px;
 }
 
-.menu-item-wrap {
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-}
-.overlay-btn-item {
-  margin-top: clamp(4px, 1vh, 12px);
-}
+.menu-item-wrap { overflow: hidden; display: flex; align-items: center; }
+.overlay-btn-item { margin-top: clamp(4px, 1vh, 12px); }
 .menu-index {
   font-family: monospace;
   font-size: clamp(12px, 1.5vw, 14px);
@@ -1303,6 +1261,7 @@ const onMenuLeave = (el, done) => {
   cursor: pointer;
   display: inline-block;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
   white-space: nowrap;
 }
 .consult-btn-overlay:hover {
@@ -1310,28 +1269,47 @@ const onMenuLeave = (el, done) => {
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
 
+@media (min-width: 1024px) {
+  .nav-overlay {
+    align-items: center;
+    padding-left: clamp(80px, 10vw, 180px);
+    justify-content: flex-start;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .menu-link { font-size: clamp(1.2rem, 4.5vw, 2rem); }
+  .nav-links-container { gap: clamp(4px, 1.2vh, 10px); }
+  .menu-index { font-size: 11px; }
+  .consult-btn-overlay {
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    padding: 6px clamp(14px, 2.5vw, 24px);
+  }
+}
+
 /* ----------------------------------------- */
-/* 5. HERO MAIN BODY & INNER CONTENT FLOW   */
+/* 5. HERO SCROLL LAYOUT HUB                 */
 /* ----------------------------------------- */
 .hero-main {
-  flex: 1 1 0;
-  min-height: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-intro-viewport {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   text-align: center;
   position: relative;
-  gap: 15px;
-  padding: clamp(40px, 6vw, 80px) clamp(16px, 4vw, 40px);
-  z-index: 10;
-  user-select: none;
-  width: 100%;
-  max-width: 100%;
-  overflow-y: auto;
-  scrollbar-width: none;
+  padding: 0 clamp(16px, 4vw, 40px);
 }
-.hero-main::-webkit-scrollbar { display: none; }
 
 .ambient-glow {
   position: absolute;
@@ -1339,34 +1317,25 @@ const onMenuLeave = (el, done) => {
   height: min(550px, 80vw);
   border-radius: 50%;
   filter: blur(140px);
-  -webkit-filter: blur(140px);
   mix-blend-mode: screen;
-  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
   pointer-events: none;
   opacity: 0.25;
-  top: 40px;
 }
 .theme-dark .ambient-glow { background-color: var(--brand-accent); }
 .theme-light .ambient-glow { background-color: #a7f3d0; mix-blend-mode: multiply; opacity: 0.35; }
 
 .main-title {
-  font-size: clamp(3rem, 10vw, 8rem);
+  font-size: clamp(3.5rem, 11vw, 9rem);
   font-weight: 950;
   letter-spacing: -0.04em;
   line-height: 1;
   text-transform: uppercase;
-  pointer-events: auto;
   background: linear-gradient(to right, #ffffff 30%, var(--brand-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  will-change: transform;
   transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
-  width: fit-content;
-  max-width: 92vw;
-  text-align: center;
-  word-break: break-word;
-  flex-shrink: 0;
+  margin-bottom: 20px;
 }
 .theme-light .main-title {
   background: linear-gradient(to right, #0f172a 40%, #059669 100%);
@@ -1377,102 +1346,30 @@ const onMenuLeave = (el, done) => {
 
 .hero-subtitle {
   font-family: monospace;
-  font-size: clamp(10px, 2.2vw, 14px);
+  font-size: clamp(11px, 2.2vw, 15px);
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  width: 100%;
-  max-width: 520px;
-  padding: 0 clamp(10px, 3vw, 24px);
-  transition: color var(--transition-speed);
-  word-break: break-word;
-  overflow-wrap: break-word;
-  flex-shrink: 0;
+  letter-spacing: 0.25em;
+  max-width: 550px;
 }
 .theme-dark .hero-subtitle { color: #94a3b8; }
 .theme-light .hero-subtitle { color: #475569; }
 
-/* ----------------------------------------- */
-/* CHILD COMPONENT CUSTOM MOUNT HOOK SPACE   */
-/* ----------------------------------------- */
 .home-services-layout {
-  /* Increased from 60px/100px to a massive 120px/180px breathing room range */
-  margin-top: clamp(120px, 15vh, 180px); 
-  margin-bottom: 60px;
-  pointer-events: auto;
+  margin-top: clamp(60px, 10vh, 120px); 
+  padding-bottom: clamp(100px, 15vh, 200px);
   width: 100%;
   max-width: 1400px;
+  padding-left: clamp(16px, 4vw, 40px);
+  padding-right: clamp(16px, 4vw, 40px);
 }
+
 /* ----------------------------------------- */
-/* 6. INFINITE MARQUEE FOOTER & COPYRIGHT    */
+/* 6. CLEAN RECONSTRUCTED COPYRIGHT FOOTER  */
 /* ----------------------------------------- */
-.footer-group {
-  width: 100%;
-  position: relative;
-  z-index: 10;
-  flex-shrink: 0;
-}
-
-.marquee-footer {
-  width: 100%;
-  border-top: 1px solid;
-  padding: 24px 0;
-  overflow: hidden;
-  position: relative;
-  transition: border-color var(--transition-speed), background-color var(--transition-speed);
-}
-.theme-dark .marquee-footer {
-  border-color: rgba(255, 255, 255, 0.06);
-  background-color: rgba(9, 9, 11, 0.4);
-}
-.theme-light .marquee-footer {
-  border-color: rgba(15, 23, 42, 0.08);
-  background-color: rgba(241, 245, 249, 0.4);
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-}
-.marquee-content {
-  display: flex;
-  gap: clamp(32px, 8vw, 90px);
-  padding-right: clamp(32px, 8vw, 90px);
-}
-
-.marquee-item {
-  display: flex;
-  align-items: center;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-size: clamp(10px, 1.6vw, 13px);
-}
-.theme-dark .tech-name { color: #f4f4f5; }
-.theme-light .tech-name { color: #1e293b; }
-
-.theme-dark .marquee-item:hover .tech-name {
-  color: var(--brand-accent);
-  transition: color 0.2s ease;
-}
-
-@keyframes marquee-loop {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-100%, 0, 0); }
-}
-.animate-marquee {
-  animation: marquee-loop 28s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
-    animation-play-state: paused;
-  }
-}
-
 .copyright-section {
   width: 100%;
   text-align: center;
-  padding: 12px 20px;
+  padding: 32px 20px;
   font-size: 11px;
   letter-spacing: 0.05em;
   border-top: 1px solid transparent;

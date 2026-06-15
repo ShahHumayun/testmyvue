@@ -202,7 +202,6 @@ const submissionPending = ref(false)
 
 const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Contact']
 
-// Initialize Supabase Cloud Engine
 const SUPABASE_URL = 'https://sfdmzyvhwrqzcschtudb.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNmZG16eXZod3JxemNzY2h0dWRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMDUxMzAsImV4cCI6MjA5Njg4MTEzMH0.HSleUjf4AzorG5GBoTGnmwuGhQ2uGNBG84gZsf4NwuY'
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
