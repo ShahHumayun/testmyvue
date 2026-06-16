@@ -255,26 +255,7 @@ const onMenuLeave = (el, done) => {
 /* ----------------------------------------- */
 /* 3. EXACT NAVBAR STYLES FROM ABOUT.VUE     */
 /* ----------------------------------------- */
-/* .navbar {
-  position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  max-width: 1200px;
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 0.8rem 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  box-sizing: border-box;
-} */
+
 .navbar {
   position: fixed;
   top: 16px;
