@@ -11,10 +11,9 @@
     </div>
 
     <header class="navbar">
-      <div class="company-branding">
-        <span class="status-dot"></span>
-        <span class="brand-text">WebHive Technologies</span>
-      </div>
+      <a href="#" class="company-branding logo">
+        WEBHIVE<span class="dot">.</span>
+      </a>
 
       <div class="nav-actions">
         <router-link to="/consultation" class="consult-btn">
@@ -58,12 +57,12 @@
           >
             <span class="menu-index">0{{ index + 1 }}</span>
             <router-link 
-  :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
-  @click="toggleMenu" 
-  class="menu-link"
->
-  {{ item }}
-</router-link>
+              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
+              @click="toggleMenu" 
+              class="menu-link"
+            >
+              {{ item }}
+            </router-link>
           </div>
 
           <div class="menu-item-wrap overlay-btn-item">
@@ -304,63 +303,51 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 2. TOP NAVBAR SYSTEM (flows with content) */
+/* 2. FLOATING FIXED NAVBAR ARCHITECTURE     */
 /* ----------------------------------------- */
 .navbar {
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: clamp(14px, 2vw, 24px) clamp(20px, 5vw, 60px);
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 1200px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 50;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
-.company-branding {
+.theme-light .navbar {
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* Inserted accurate culture.vue navbar branding styles */
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: #ffffff;
+  font-style: italic;
+  letter-spacing: -0.04em;
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex-shrink: 1;
-  overflow: hidden;
 }
-
-.brand-text {
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(12px, 1vw, 14px);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.7));
-  -webkit-background-clip: text;
-  background-clip: text;
-  transition: color var(--transition-speed);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.theme-light .brand-text {
-  background: none;
+.theme-light .logo {
   color: #0f172a;
 }
-
-.status-dot {
-  flex-shrink: 0;
-  width: 7px;
-  height: 7px;
-  background-color: var(--brand-accent);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--brand-accent);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: .4; transform: scale(0.9); }
+.logo .dot {
+  color: var(--brand-accent);
 }
 
 .nav-actions {
@@ -584,7 +571,7 @@ const onMenuLeave = (el, done) => {
   position: relative;
   z-index: 10;
   width: 100%;
-  padding: calc(clamp(20px, 4vw, 50px) + clamp(14px, 2vw, 24px) + 56px) clamp(20px, 5vw, 60px) 60px;
+  padding: calc(60px + clamp(10px, 2vw, 22px) + 50px) clamp(20px, 5vw, 60px) 60px;
 }
 
 .ambient-glow {
@@ -611,7 +598,6 @@ const onMenuLeave = (el, done) => {
   margin: 0 auto;
 }
 
-/* Centered Header Segment, matching About.vue's section header style */
 .portfolio-header {
   text-align: center;
   margin-bottom: clamp(32px, 4vw, 54px);
@@ -737,9 +723,6 @@ const onMenuLeave = (el, done) => {
   box-shadow: 0 16px 36px rgba(15, 23, 42, 0.06);
 }
 
-/* ----------------------------------------- */
-/* COMPONENT MEDIA SLIDE SLOTS               */
-/* ----------------------------------------- */
 .project-media {
   position: relative;
   width: 100%;
@@ -766,7 +749,6 @@ const onMenuLeave = (el, done) => {
   pointer-events: none;
 }
 
-/* Content Text Spacers */
 .project-meta {
   display: flex;
   flex-direction: column;
@@ -857,7 +839,7 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.internal-link {
+.enterprise-link, .internal-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;

@@ -1,10 +1,10 @@
 <template>
-  <section class="why-webhive-section">
+  <section :class="['why-webhive-section', props.darkMode ? 'theme-dark' : 'theme-light']">
     <div class="section-container">
       
       <div class="section-header">
         <span class="mini-title">Value Proposition</span>
-        <h2 class="section-heading">Why Webhive</h2><br>
+        <h2 class="section-heading">Why Webhive</h2>
       </div>
 
       <div class="cards-grid">
@@ -39,7 +39,7 @@
 <script setup>
 import { ref } from 'vue'
 
-defineProps({
+const props = defineProps({
   darkMode: {
     type: Boolean,
     default: true
@@ -94,21 +94,28 @@ const pillars = ref([
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
   
-  /* Safe width calculations respecting your App.vue requirements */
   width: 100%;
   max-width: 100%;
   padding: clamp(60px, 8vh, 120px) 24px;
-  background-color: #0b0c10; /* Locked dark theme native base */
-  color: #ffffff;
   font-family: system-ui, -apple-system, sans-serif;
   position: relative;
   z-index: 10;
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
 
-  /* Centering Engine */
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
   box-sizing: border-box !important;
+}
+
+/* Dynamic Themes mirroring homecomponent1.vue style */
+.theme-dark {
+  background-color: #0b0c10;
+  color: #ffffff;
+}
+.theme-light {
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
 .why-webhive-section *,
@@ -119,10 +126,9 @@ const pillars = ref([
   padding: 0;
 }
 
-/* Symmetrical alignment block container */
 .section-container {
   width: 100%;
-  max-width: 1150px; /* Aligns container cleanly with maximum grid size */
+  max-width: 1150px;
   margin: 0 auto !important;
   display: flex !important;
   flex-direction: column !important;
@@ -179,25 +185,43 @@ const pillars = ref([
   position: relative;
   overflow: hidden;
   padding: 0 !important; 
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
+}
+
+/* Adaptive Card Styling based on Theme Contexts */
+.theme-dark .value-card {
   background-color: rgba(255, 255, 255, 0.015);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
+}
+.theme-light .value-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
 }
 
 .value-card:hover {
   transform: translateY(-8px);
   border-color: rgba(0, 255, 163, 0.35);
+}
+.theme-dark .value-card:hover {
   background-color: rgba(255, 255, 255, 0.03);
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
 }
+.theme-light .value-card:hover {
+  background-color: #ffffff;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+}
 
 /* Featured Card Treatment */
-.value-card.featured-card {
+.theme-dark .value-card.featured-card {
   background: linear-gradient(160deg, rgba(0, 255, 163, 0.07), rgba(255, 255, 255, 0.015) 60%);
   border-color: rgba(0, 255, 163, 0.25);
 }
+.theme-light .value-card.featured-card {
+  background: linear-gradient(160deg, rgba(0, 255, 163, 0.04), #ffffff 60%);
+  border-color: rgba(5, 150, 105, 0.2);
+}
 
-/* FIXED: Implements solid 45px vertical and 36px lateral internal layout space */
 .card-inner-padding-box {
   padding: 45px 36px !important;
   display: flex;
@@ -235,10 +259,12 @@ const pillars = ref([
   align-items: center;
   justify-content: center;
   z-index: 2;
-  background: rgba(0, 255, 163, 0.06);
   border: 1px solid rgba(0, 255, 163, 0.2);
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
+.theme-dark .icon-inner { background: rgba(0, 255, 163, 0.06); }
+.theme-light .icon-inner { background: rgba(5, 150, 105, 0.04); border-color: rgba(5, 150, 105, 0.15); }
 
 .icon-inner :deep(svg) {
   width: 30px;
@@ -246,6 +272,7 @@ const pillars = ref([
   stroke: var(--brand-accent);
   transition: stroke 0.3s;
 }
+.theme-light .icon-inner :deep(svg) { stroke: #059669; }
 
 .icon-glow {
   position: absolute;
@@ -257,19 +284,15 @@ const pillars = ref([
   transition: opacity 0.3s ease;
   z-index: 1;
 }
+.theme-light .icon-glow { background-color: #00ffa3; }
 
-.value-card:hover .icon-glow {
-  opacity: 0.4;
-}
+.value-card:hover .icon-glow { opacity: 0.4; }
+.theme-light .value-card:hover .icon-glow { opacity: 0.2; }
 
-.value-card:hover .icon-inner {
-  transform: scale(1.08) rotate(-4deg);
-}
+.value-card:hover .icon-inner { transform: scale(1.08) rotate(-4deg); }
 
-.featured-card .icon-inner {
-  background: rgba(0, 255, 163, 0.12);
-  border-color: rgba(0, 255, 163, 0.35);
-}
+.theme-dark .featured-card .icon-inner { background: rgba(0, 255, 163, 0.12); border-color: rgba(0, 255, 163, 0.35); }
+.theme-light .featured-card .icon-inner { background: rgba(5, 150, 105, 0.08); border-color: rgba(5, 150, 105, 0.3); }
 
 /* ----------------------------------------- */
 /* 5. TEXT CONTENT FIELD CONNECTIONS         */
@@ -295,9 +318,10 @@ const pillars = ref([
   font-size: 14.5px;
   line-height: 1.65;
   max-width: 480px; 
-  color: rgba(255, 255, 255, 0.6);
   transition: color var(--transition-speed);
 }
+.theme-dark .card-desc { color: rgba(255, 255, 255, 0.6); }
+.theme-light .card-desc { color: #475569; }
 
 /* ----------------------------------------- */
 /* 6. BOTTOM DECORATIVE ACCENTS              */
@@ -313,10 +337,9 @@ const pillars = ref([
   background: var(--brand-accent);
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.theme-light .card-bottom-accent { background: #059669; }
 
-.value-card:hover .card-bottom-accent {
-  transform: scaleX(1);
-}
+.value-card:hover .card-bottom-accent { transform: scaleX(1); }
 
 /* ----------------------------------------- */
 /* 7. DURABLE MEDIA VIEWPORT RESPONSIVENESS  */
@@ -329,19 +352,9 @@ const pillars = ref([
 }
 
 @media (max-width: 540px) {
-  .card-inner-padding-box {
-    padding: 32px 20px !important; 
-  }
-  .value-card {
-    min-height: 240px;
-  }
-  .icon-wrapper {
-    width: 52px;
-    height: 52px;
-  }
-  .icon-inner :deep(svg) {
-    width: 26px;
-    height: 26px;
-  }
+  .card-inner-padding-box { padding: 32px 20px !important; }
+  .value-card { min-height: 240px; }
+  .icon-wrapper { width: 52px; height: 52px; }
+  .icon-inner :deep(svg) { width: 26px; height: 26px; }
 }
 </style>

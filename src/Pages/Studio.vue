@@ -1,4 +1,3 @@
-
 <template>
   <div 
     :class="['hero-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']"
@@ -11,11 +10,11 @@
       ></div>
     </div>
 
+    <!-- Exact Copy of Fixed Navbar Code from services.vue -->
     <header class="navbar">
-      <div class="company-branding">
-        <span class="status-dot"></span>
-        <span class="brand-text">WebHive Technologies</span>
-      </div>
+      <a href="#" class="company-branding logo">
+        WEBHIVE<span class="dot">.</span>
+      </a>
 
       <div class="nav-actions">
         <router-link to="/consultation" class="consult-btn">
@@ -25,13 +24,13 @@
         <button 
           @click="isDarkMode = !isDarkMode"
           class="theme-toggle"
-          :aria-label="isDarkMode ? 'Switch to light theme' : 'Switch to dark theme'"
+          aria-label="Toggle Theme"
         >
           <div 
             class="toggle-thumb"
             :class="{ 'toggle-active': isDarkMode }"
           >
-            <span class="toggle-icon" aria-hidden="true">{{ isDarkMode ? '🌙' : '☀️' }}</span>
+            <span class="toggle-icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
           </div>
         </button>
 
@@ -39,8 +38,6 @@
           @click="toggleMenu" 
           class="menu-trigger"
           :class="{ 'menu-active': isMenuOpen }"
-          :aria-expanded="isMenuOpen"
-          aria-label="Toggle navigation menu"
         >
           <span class="burger-line line-top"></span>
           <span class="burger-line line-mid"></span>
@@ -49,6 +46,7 @@
       </div>
     </header>
 
+    <!-- Exact Copy of Navigation Overlay from services.vue -->
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
@@ -59,17 +57,17 @@
           >
             <span class="menu-index">0{{ index + 1 }}</span>
             <router-link 
-  :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
-  @click="toggleMenu" 
-  class="menu-link"
->
-  {{ item }}
-</router-link>
+              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
+              @click="toggleMenu" 
+              class="menu-link"
+            >
+              {{ item }}
+            </router-link>
           </div>
 
           <div class="menu-item-wrap overlay-btn-item">
             <span class="menu-index">0{{ menuItems.length + 1 }}</span>
-            <router-link to="/consultation" @click="toggleMenu" class="consult-btn-overlay">
+            <router-link to="/consultation" class="consult-btn-overlay" @click="toggleMenu">
               Consultation
             </router-link>
           </div>
@@ -137,7 +135,6 @@
 
           <div class="map-panel">
             <div class="map-wrapper-card">
-              <!-- ✅ FIX 1: Simple coordinate-based URL — always drops a pin, no broken pb= blob -->
               <iframe
                 src="https://maps.google.com/maps?q=33.669397,73.074073&t=&z=17&ie=UTF8&iwloc=&output=embed"
                 width="100%"
@@ -157,7 +154,7 @@
 
     <footer class="footer-group">
       <div class="copyright-section">
-        <p>© {{ currentYear }} WebHive Technologies. All rights reserved.</p>
+        <p>&copy; {{ currentYear }} WebHive Technologies. All rights reserved.</p>
       </div>
     </footer>
   </div>
@@ -169,10 +166,10 @@ import gsap from 'gsap'
 
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
-
-const menuItems = ['Home', 'About', 'Services', 'Portfolio', 'Culture', 'Contact']
-
 const currentYear = new Date().getFullYear()
+
+// Restored local page item sequence context matching architectural layout rules
+const menuItems = ['Home', 'About', 'Services', 'Portfolio', 'Culture', 'Contact']
 
 const parallax = reactive({
   bgX: 0,
@@ -290,64 +287,48 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 2. TOP NAVBAR SYSTEM                      */
+/* 2. FIXED FLOATING NAVBAR SYSTEM (SERVICES)*/
 /* ----------------------------------------- */
 .navbar {
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: clamp(14px, 2vw, 24px) clamp(20px, 5vw, 60px);
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 1200px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 50;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
-.company-branding {
+.theme-light .navbar {
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: #ffffff;
+  font-style: italic;
+  letter-spacing: -0.04em;
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex-shrink: 1;
-  overflow: hidden;
 }
 
-.brand-text {
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(12px, 1vw, 14px);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.7));
-  -webkit-background-clip: text;
-  background-clip: text;
-  transition: color var(--transition-speed);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.theme-light .brand-text {
-  background: none;
-  color: #0f172a;
-}
-
-.status-dot {
-  flex-shrink: 0;
-  width: 7px;
-  height: 7px;
-  background-color: var(--brand-accent);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--brand-accent);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: .4; transform: scale(0.9); }
-}
+.theme-light .logo { color: #0f172a; }
+.logo .dot { color: var(--brand-accent); }
 
 .nav-actions {
   display: flex;
@@ -377,7 +358,6 @@ const onMenuLeave = (el, done) => {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
 }
-.consult-btn:active { transform: translateY(0); }
 
 .theme-toggle {
   width: 40px;
@@ -416,13 +396,9 @@ const onMenuLeave = (el, done) => {
   border: 1px solid var(--brand-accent);
 }
 @media (max-width: 480px) {
-  .toggle-thumb { width: 13px; height: 13px; }
   .toggle-active { transform: translateX(15px); }
 }
-.toggle-icon {
-  font-size: 9px;
-  user-select: none;
-}
+.toggle-icon { font-size: 9px; user-select: none; }
 
 .menu-trigger {
   width: 34px;
@@ -438,9 +414,6 @@ const onMenuLeave = (el, done) => {
   z-index: 55;
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
-}
-@media (max-width: 480px) {
-  .menu-trigger { width: 30px; height: 30px; gap: 3px; }
 }
 .theme-dark .menu-trigger {
   background-color: rgba(24, 24, 27, 0.8);
@@ -463,7 +436,7 @@ const onMenuLeave = (el, done) => {
 .menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
 
 /* ----------------------------------------- */
-/* NAVIGATION OVERLAY                        */
+/* 3. NAVIGATION OVERLAY SYSTEM (SERVICES)  */
 /* ----------------------------------------- */
 .nav-overlay {
   position: fixed;
@@ -474,14 +447,12 @@ const onMenuLeave = (el, done) => {
   justify-content: center;
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
-  background: rgba(5,5,5,0.95);
   width: 100%;
   height: 100dvh;
   overflow: hidden !important;
   padding: clamp(24px, 5vh, 48px) clamp(20px, 6vw, 48px);
-  padding-top: max(clamp(24px, 5vh, 48px), env(safe-area-inset-top));
-  padding-bottom: max(clamp(24px, 5vh, 48px), env(safe-area-inset-bottom));
 }
+.theme-dark .nav-overlay { background-color: rgba(11, 12, 16, 0.96); }
 .theme-light .nav-overlay { background-color: rgba(255, 255, 255, 0.96); }
 
 .nav-links-container {
@@ -491,15 +462,8 @@ const onMenuLeave = (el, done) => {
   width: 100%;
   max-width: 800px;
 }
-
-.menu-item-wrap {
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-}
-.overlay-btn-item {
-  margin-top: clamp(4px, 1vh, 12px);
-}
+.menu-item-wrap { overflow: hidden; display: flex; align-items: center; }
+.overlay-btn-item { margin-top: clamp(4px, 1vh, 12px); }
 .menu-index {
   font-family: monospace;
   font-size: clamp(12px, 1.5vw, 14px);
@@ -508,7 +472,6 @@ const onMenuLeave = (el, done) => {
   margin-right: clamp(12px, 3vw, 28px);
   letter-spacing: 0.15em;
   opacity: 0.7;
-  flex-shrink: 0;
 }
 .menu-link {
   font-size: clamp(1.1rem, 3vw, 2.2rem);
@@ -518,9 +481,8 @@ const onMenuLeave = (el, done) => {
   transition: color 0.3s, transform 0.3s;
   display: inline-block;
   line-height: 1.1;
-  word-break: break-word;
-  color: #fff;
 }
+.theme-dark .menu-link { color: #ffffff; }
 .theme-light .menu-link { color: #0f172a; }
 .menu-link:hover { color: var(--brand-accent); }
 
@@ -536,7 +498,6 @@ const onMenuLeave = (el, done) => {
   cursor: pointer;
   display: inline-block;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  white-space: nowrap;
 }
 .consult-btn-overlay:hover {
   transform: translateY(-2px);
@@ -551,15 +512,8 @@ const onMenuLeave = (el, done) => {
   }
 }
 
-@media (max-height: 500px) and (orientation: landscape) {
-  .menu-link { font-size: clamp(1.2rem, 4.5vw, 2rem); }
-  .nav-links-container { gap: clamp(4px, 1.2vh, 10px); }
-  .menu-index { font-size: 11px; }
-  .consult-btn-overlay { font-size: clamp(0.9rem, 2.5vw, 1.2rem); padding: 6px clamp(14px, 2.5vw, 24px); }
-}
-
 /* ----------------------------------------- */
-/* 3. HERO MAIN CONTENT CANVAS ENGINE       */
+/* 4. HERO MAIN CONTENT CANVAS ENGINE       */
 /* ----------------------------------------- */
 .hero-main {
   flex: 1 1 0;
@@ -569,7 +523,8 @@ const onMenuLeave = (el, done) => {
   position: relative;
   z-index: 10;
   width: 100%;
-  padding: calc(clamp(16px, 2vw, 40px) + clamp(14px, 2vw, 24px) + 56px) clamp(20px, 6vw, 80px) clamp(24px, 3vw, 48px);
+  /* Added exact structural safe padding context offset to match floating navbar height metrics */
+  padding: calc(60px + clamp(10px, 2vw, 22px) + 50px) clamp(20px, 6vw, 80px) clamp(24px, 3vw, 48px);
 }
 
 .ambient-glow {
@@ -604,7 +559,7 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 4. EXACT PHOTO SPECIFICATION STYLES       */
+/* 5. EXACT PHOTO SPECIFICATION STYLES       */
 /* ----------------------------------------- */
 .info-panel {
   display: flex;
@@ -741,7 +696,7 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 5. FOOTER & COPYRIGHT                     */
+/* 6. FOOTER & COPYRIGHT                     */
 /* ----------------------------------------- */
 .footer-group {
   width: 100%;
@@ -753,10 +708,10 @@ const onMenuLeave = (el, done) => {
 .copyright-section {
   width: 100%;
   text-align: center;
-  padding: 14px 20px;
+  padding: 30px 20px;
   font-size: 11px;
-  color: rgba(255,255,255,0.3);
-  border-top: 1px solid rgba(255,255,255,0.02);
+  border-top: 1px solid;
 }
-.theme-light .copyright-section { color: rgba(0,0,0,0.4); }
+.theme-dark .copyright-section { color: rgba(255, 255, 255, 0.4); background-color: rgba(9, 9, 11, 0.6); border-top-color: rgba(255, 255, 255, 0.05); }
+.theme-light .copyright-section { color: rgba(15, 23, 42, 0.5); background-color: rgba(241, 245, 249, 0.6); border-top-color: rgba(15, 23, 42, 0.06); }
 </style>

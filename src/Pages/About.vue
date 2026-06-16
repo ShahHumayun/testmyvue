@@ -8,10 +8,9 @@
     </div>
 
     <header class="navbar">
-      <div class="company-branding">
-        <span class="status-dot"></span>
-        <span class="brand-text">WebHive Technologies</span>
-      </div>
+      <a href="#" class="company-branding logo">
+        WEBHIVE<span class="dot">.</span>
+      </a>
 
       <div class="nav-actions">
         <router-link to="/consultation" class="consult-btn">
@@ -393,68 +392,64 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* NAVBAR DESIGN SYSTEM (From Home.vue)       */
+/* FIXED FLOATING GLASSBAR POSITION ADJUST   */
 /* ----------------------------------------- */
 
 .navbar {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: clamp(10px, 2vw, 22px) clamp(14px, 4vw, 40px);
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 1200px;
+  z-index: 1000;
+  /* Balanced glassmorphic background configurations */
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 50;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  min-height: 0;
-  flex-shrink: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
-.company-branding {
+.theme-light .navbar {
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* Updated WebHive Logo Design Properties */
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: #ffffff;
+  font-style: italic;
+  letter-spacing: -0.04em;
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex-shrink: 1;
-  overflow: hidden;
 }
 
-.brand-text {
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(12px, 1vw, 14px);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.7));
-  -webkit-background-clip: text;
-  background-clip: text;
-  transition: color var(--transition-speed);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.theme-light .brand-text {
-  background: none;
+.theme-light .logo {
   color: #0f172a;
 }
 
-.status-dot {
-  flex-shrink: 0;
-  width: 7px;
-  height: 7px;
-  background-color: var(--brand-accent);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--brand-accent);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: .4; transform: scale(0.9); }
+.logo .dot {
+  color: var(--brand-accent);
 }
 
+.status-dot {
+  display: none; /* Removed as structural dot is embedded into logo markup */
+}
+
+/* ----------------------------------------- */
+/* ACTIONS LAYOUT CONSTANTS                  */
+/* ----------------------------------------- */
 .nav-actions {
   display: flex;
   align-items: center;
@@ -569,7 +564,7 @@ const onMenuLeave = (el, done) => {
 .menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
 
 /* ----------------------------------------- */
-/* NAVIGATION OVERLAY PANEL (From Home.vue)  */
+/* NAVIGATION OVERLAY PANEL                  */
 /* ----------------------------------------- */
 .nav-overlay {
   position: fixed;

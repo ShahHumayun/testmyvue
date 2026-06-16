@@ -10,11 +10,11 @@
       ></div>
     </div>
 
+    <!-- Exact Copy of Fixed Navbar Code from home.vue / consultation.vue -->
     <header class="navbar">
-      <div class="company-branding">
-        <span class="status-dot"></span>
-        <span class="brand-text">WebHive Technologies</span>
-      </div>
+      <a href="#" class="company-branding logo">
+        WEBHIVE<span class="dot">.</span>
+      </a>
 
       <div class="nav-actions">
         <router-link to="/consultation" class="consult-btn">
@@ -24,13 +24,13 @@
         <button 
           @click="isDarkMode = !isDarkMode"
           class="theme-toggle"
-          :aria-label="isDarkMode ? 'Switch to light theme' : 'Switch to dark theme'"
+          aria-label="Toggle Theme"
         >
           <div 
             class="toggle-thumb"
             :class="{ 'toggle-active': isDarkMode }"
           >
-            <span class="toggle-icon" aria-hidden="true">{{ isDarkMode ? '🌙' : '☀️' }}</span>
+            <span class="toggle-icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
           </div>
         </button>
 
@@ -38,8 +38,6 @@
           @click="toggleMenu" 
           class="menu-trigger"
           :class="{ 'menu-active': isMenuOpen }"
-          :aria-expanded="isMenuOpen"
-          aria-label="Toggle navigation menu"
         >
           <span class="burger-line line-top"></span>
           <span class="burger-line line-mid"></span>
@@ -48,6 +46,7 @@
       </div>
     </header>
 
+    <!-- Exact Copy of Navigation Overlay from home.vue / consultation.vue -->
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
@@ -68,7 +67,7 @@
 
           <div class="menu-item-wrap overlay-btn-item">
             <span class="menu-index">0{{ menuItems.length + 1 }}</span>
-            <router-link to="/consultation" @click="toggleMenu" class="consult-btn-overlay">
+            <router-link to="/consultation" class="consult-btn-overlay" @click="toggleMenu">
               Consultation
             </router-link>
           </div>
@@ -169,6 +168,7 @@ const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
 const currentYear = new Date().getFullYear()
 
+// Synchronized to map items array architecture perfectly
 const menuItems = ['Home', 'About', 'Services', 'Portfolio', 'Studio', 'Contact']
 
 const pillars = ref([
@@ -247,7 +247,6 @@ const handleMouseMove = (e) => {
 const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value }
 
 onMounted(() => {
-  // Row wrappers themselves should stay visible; children animate individually
   gsap.set('.showcase-row, .culture-cta', { opacity: 1 })
 
   gsap.fromTo('.animate-title', 
@@ -315,7 +314,6 @@ onMounted(() => {
     ease: 'power3.out'
   })
 
-  // Refresh ScrollTrigger after images/layout settle so triggers are positioned correctly
   setTimeout(() => ScrollTrigger.refresh(), 300)
 })
 
@@ -404,63 +402,52 @@ onUnmounted(() => {
 }
 
 /* ----------------------------------------- */
-/* NAVBAR (unchanged from About/Portfolio)   */
+/* EXACT NAVBAR STYLES FROM HOME.VUE         */
 /* ----------------------------------------- */
 .navbar {
-  width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: clamp(14px, 2vw, 24px) clamp(20px, 5vw, 60px);
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 1200px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 50;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
-.company-branding {
+.theme-light .navbar {
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: #ffffff;
+  font-style: italic;
+  letter-spacing: -0.04em;
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex-shrink: 1;
-  overflow: hidden;
 }
 
-.brand-text {
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(12px, 1vw, 14px);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.7));
-  -webkit-background-clip: text;
-  background-clip: text;
-  transition: color var(--transition-speed);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.theme-light .brand-text {
-  background: none;
+.theme-light .logo {
   color: #0f172a;
 }
 
-.status-dot {
-  flex-shrink: 0;
-  width: 7px;
-  height: 7px;
-  background-color: var(--brand-accent);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--brand-accent);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: .4; transform: scale(0.9); }
+.logo .dot {
+  color: var(--brand-accent);
 }
 
 .nav-actions {
@@ -678,7 +665,7 @@ onUnmounted(() => {
   position: relative;
   z-index: 10;
   width: 100%;
-  padding: calc(clamp(20px, 4vw, 50px) + clamp(14px, 2vw, 24px) + 56px) clamp(16px, 5vw, 60px) 60px;
+  padding: calc(60px + clamp(10px, 2vw, 22px) + 50px) clamp(16px, 5vw, 60px) 60px;
 }
 
 .ambient-glow {

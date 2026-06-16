@@ -1,6 +1,6 @@
 <template>
   <div 
-    :class="['hero-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']"
+    :class="['services-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']"
     @mousemove="handleMouseMove"
   >
     <div class="bg-overlay">
@@ -10,11 +10,11 @@
       ></div>
     </div>
 
+    <!-- Exact Copy of Fixed Navbar Code from culture.vue -->
     <header class="navbar">
-      <div class="company-branding">
-        <span class="status-dot"></span>
-        <span class="brand-text">WebHive Technologies</span>
-      </div>
+      <a href="#" class="company-branding logo">
+        WEBHIVE<span class="dot">.</span>
+      </a>
 
       <div class="nav-actions">
         <router-link to="/consultation" class="consult-btn">
@@ -24,13 +24,13 @@
         <button 
           @click="isDarkMode = !isDarkMode"
           class="theme-toggle"
-          :aria-label="isDarkMode ? 'Switch to light theme' : 'Switch to dark theme'"
+          aria-label="Toggle Theme"
         >
           <div 
             class="toggle-thumb"
             :class="{ 'toggle-active': isDarkMode }"
           >
-            <span class="toggle-icon" aria-hidden="true">{{ isDarkMode ? '🌙' : '☀️' }}</span>
+            <span class="toggle-icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
           </div>
         </button>
 
@@ -38,8 +38,6 @@
           @click="toggleMenu" 
           class="menu-trigger"
           :class="{ 'menu-active': isMenuOpen }"
-          :aria-expanded="isMenuOpen"
-          aria-label="Toggle navigation menu"
         >
           <span class="burger-line line-top"></span>
           <span class="burger-line line-mid"></span>
@@ -48,6 +46,7 @@
       </div>
     </header>
 
+    <!-- Exact Copy of Navigation Overlay from culture.vue -->
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
@@ -58,17 +57,17 @@
           >
             <span class="menu-index">0{{ index + 1 }}</span>
             <router-link 
-  :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
-  @click="toggleMenu" 
-  class="menu-link"
->
-  {{ item }}
-</router-link>
+              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
+              @click="toggleMenu" 
+              class="menu-link"
+            >
+              {{ item }}
+            </router-link>
           </div>
 
           <div class="menu-item-wrap overlay-btn-item">
             <span class="menu-index">0{{ menuItems.length + 1 }}</span>
-            <router-link to="/consultation" @click="toggleMenu" class="consult-btn-overlay">
+            <router-link to="/consultation" class="consult-btn-overlay" @click="toggleMenu">
               Consultation
             </router-link>
           </div>
@@ -76,47 +75,62 @@
       </div>
     </Transition>
 
-    <main class="services-container">
-      <div 
-        class="ambient-glow"
-        :style="{ transform: `translate(${parallax.headingX * 1.2}px, ${parallax.headingY * 1.2}px)` }"
-      ></div>
+    <main class="services-main">
+      <div class="ambient-glow"></div>
 
-      <header class="section-header">
-        <span class="section-tag animate-text">Capabilities</span>
-        <h1 class="section-title animate-text">Our Services</h1>
-        <p class="section-subtitle animate-text">Transforming complex ideas into high-performance digital ecosystems.</p>
-      </header>
+      <!-- SERVICES HERO INTRO -->
+      <section class="services-hero">
+        <span class="section-tag animate-fade-in">Our Services</span>
+        <h1 class="services-title animate-title">
+          High-Performance <br>
+          <span class="highlight-text">Digital Architecture.</span>
+        </h1>
+        <p class="services-subtitle animate-fade-in">
+          We combine cutting-edge frontend engineering with robust system design to build highly secure, beautiful, and fluid digital platforms. Explore our technical capabilities below.
+        </p>
+      </section>
 
-      <div class="services-grid">
+      <!-- SERVICES SHOWCASE GRID / LIST -->
+      <section class="showcase-rows">
         <div 
-          v-for="(service, index) in services" 
-          :key="index"
-          class="service-card"
-          @mouseenter="animateCardIn(index)"
-          @mouseleave="animateCardOut(index)"
-          :ref="el => cardRefs[index] = el"
+          v-for="service in servicesList" 
+          :key="service.title"
+          class="showcase-row animate-scroll-element"
+          :class="{ 'row-reverse': service.reverse }"
         >
-          <div class="card-border-glow"></div>
-          <div class="card-content">
-            <div class="card-top">
-              <span class="service-number">0{{ index + 1 }}</span>
-              <div class="service-icon" v-html="service.icon"></div>
-            </div>
-            
-            <h3 class="service-name">{{ service.title }}</h3>
-            <p class="service-desc">{{ service.description }}</p>
-            
-            <router-link :to="service.link" class="card-footer-action">
-              <span class="action-text">Explore Track</span>
-              <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </router-link>
+          <div class="row-media">
+            <img :src="service.image" :alt="service.title" class="row-img" />
+            <div class="row-img-tint"></div>
+            <div class="row-glow-dot"></div>
+          </div>
+
+          <div class="row-content">
+            <span class="row-tag">{{ service.tag }}</span>
+            <h2 class="row-title">{{ service.title }}</h2>
+            <p class="row-desc">{{ service.desc }}</p>
+            <ul class="row-points">
+              <li v-for="point in service.points" :key="point">
+                <span class="point-dot"></span>
+                {{ point }}
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
+      </section>
+
+      <!-- CLOSING CTA - Layer Stack Corrected to Ensure Clicks Register -->
+      <section class="services-cta animate-scroll-element">
+        <div class="cta-glow"></div>
+        <h2 class="cta-title">
+          Ready to Elevate Your <span class="highlight-text">Digital Stack</span>?
+        </h2>
+        <p class="cta-subtitle">
+          Let's align your product vision with production-grade architectural builds. Partner with WebHive to construct cleaner infrastructure.
+        </p>
+        <router-link to="/consultation" class="btn-start-project">
+          Start a Project
+        </router-link>
+      </section>
     </main>
 
     <footer class="footer-group">
@@ -128,243 +142,207 @@
 </template>
 
 <script setup>
-import { ref, reactive, onBeforeUpdate, onMounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
-
-const menuItems = ['Home', 'About', 'Portfolio', 'Culture', 'Studio', 'Contact']
 const currentYear = new Date().getFullYear()
 
-const services = ref([
+const menuItems = ['Home', 'About', 'Portfolio', 'Culture', 'Studio', 'Contact']
+
+const servicesList = ref([
   {
-    title: 'Web Development',
-    description: 'Engineering ultra-fast, robust, and scalable full-stack web applications tailored for modern architecture.',
-    link: '/services/web-development',
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>'
+    tag: 'Web App Development',
+    title: 'Immersive Interfaces, Premium Motion',
+    desc: 'Crafting ultra-responsive, highly optimized single page applications and portals. Specializing in advanced state architectures matched with micro-interactions tailored for elite web environments.',
+    points: [
+      'Vue 3, Composition API & high-performance state layers',
+      'Advanced GSAP & ScrollTrigger timeline animations',
+      'Flawless Tailwind structural scaffolding and design execution'
+    ],
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=900&q=80',
+    reverse: false
   },
   {
-    title: 'Web Designing',
-    description: 'Crafting immersive digital spaces with glassmorphism, responsive aesthetics, and premium layouts.',
-    link: '/services/web-designing',
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path><path d="M12 16V12"></path><path d="M8 12H16"></path></svg>'
+    tag: 'App Development',
+    title: 'Native-Fluid Mobile Experiences',
+    desc: 'Engineering cross-platform mobile solutions built for speed, performance, and accessibility. We deploy production-ready applications with beautiful interface scaling across Android and iOS.',
+    points: [
+      'Reactive, multi-threaded mobile frameworks',
+      'Smooth layout logic optimized for modern smartphone viewports',
+      'Clean hardware-level API and peripheral integration'
+    ],
+    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=900&q=80',
+    reverse: true
   },
   {
-    title: 'App Development',
-    description: 'Building premium multi-platform native mobile applications running seamless performance on iOS and Android.',
-    link: '/services/app-development',
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>'
+    tag: 'E-commerce Solutions',
+    title: 'High-Conversion Architecture',
+    desc: 'Building transaction-resilient store setups optimized for conversion and rapid loading benchmarks. We separate front-end experiences from heavy database tasks to keep shopping journeys fast.',
+    points: [
+      'Scalable, clean relational database structures (MySQL)',
+      'Secure transaction processing and customized checking flows',
+      'Decoupled architecture built to survive peak sales traffic'
+    ],
+    image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=900&q=80',
+    reverse: false
   },
   {
-    title: 'E-commerce Solutions',
-    description: 'Architecting dynamic storefronts optimized cleanly for conversion rates, database integrity, and workflows.',
-    link: '/services/ecommerce-solutions',
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>'
+    tag: 'NetSuite Integrations',
+    title: 'Enterprise ERP Synchronization',
+    desc: 'Bridging front-end transactional stacks directly into your Oracle NetSuite ecosystem. Automate and handle your inventory tracking, analytical accounting data, and logistics mapping symmetrically without data drops.',
+    points: [
+      'Custom SuiteScript routines and robust SuiteTalk API linking',
+      'Real-time automated data validation and workflow tracking',
+      'Decoupled backends via Laravel middleware processing'
+    ],
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80',
+    reverse: true
   }
 ])
 
-const cardRefs = ref([])
-onBeforeUpdate(() => {
-  cardRefs.value = []
-})
-
-const parallax = reactive({
-  rotateX: 0,
-  rotateY: 0,
-  headingX: 0,
-  headingY: 0,
-  bgX: 0,
-  bgY: 0
-})
-
-onMounted(() => {
-  // Beautiful fade upside animation for header text elements
-  gsap.fromTo('.animate-text', 
-    { 
-      opacity: 0, 
-      y: 30 
-    }, 
-    { 
-      opacity: 1, 
-      y: 0, 
-      duration: 1, 
-      stagger: 0.15, 
-      ease: 'power3.out' 
-    }
-  )
-})
+const parallax = reactive({ bgX: 0, bgY: 0 })
 
 const handleMouseMove = (e) => {
   const { clientX, clientY } = e
   const { innerWidth, innerHeight } = window
-
   const xWeight = (clientX / innerWidth) - 0.5
   const yWeight = (clientY / innerHeight) - 0.5
-
-  parallax.rotateY = xWeight * 12
-  parallax.rotateX = yWeight * -12
-
   parallax.bgX = xWeight * -20
   parallax.bgY = yWeight * -20
-  
-  parallax.headingX = xWeight * 15
-  parallax.headingY = yWeight * 15
 }
 
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
-}
+const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value }
 
-const animateCardIn = (index) => {
-  const card = cardRefs.value[index]
-  if (!card) return
-  
-  gsap.to(card, {
-    y: -8,
-    scale: 1.02,
-    duration: 0.3,
-    ease: 'power2.out',
-    overwrite: 'auto'
-  })
-  gsap.to(card.querySelector('.card-border-glow'), {
-    opacity: 1,
-    duration: 0.3
-  })
-  gsap.to(card.querySelector('.arrow-icon'), {
-    x: 4,
-    color: '#00ffa3',
-    duration: 0.2
-  })
-}
+onMounted(() => {
+  gsap.set('.showcase-row, .services-cta', { opacity: 1 })
 
-const animateCardOut = (index) => {
-  const card = cardRefs.value[index]
-  if (!card) return
+  gsap.fromTo('.animate-title', 
+    { y: 50, opacity: 0 }, 
+    { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.2 }
+  )
 
-  gsap.to(card, {
-    y: 0,
-    scale: 1,
-    duration: 0.3,
-    ease: 'power2.out',
-    overwrite: 'auto'
+  gsap.fromTo('.animate-fade-in', 
+    { opacity: 0, y: 25 }, 
+    { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.4 }
+  )
+
+  gsap.utils.toArray('.showcase-row').forEach((row) => {
+    const media = row.querySelector('.row-media')
+    const content = row.querySelector('.row-content')
+    const isReverse = row.classList.contains('row-reverse')
+
+    gsap.fromTo(media, 
+      { opacity: 0, x: isReverse ? 60 : -60, scale: 0.95 },
+      {
+        opacity: 1, x: 0, scale: 1, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: row, start: 'top 75%', toggleActions: 'play none none none' }
+      }
+    )
+
+    gsap.fromTo(content, 
+      { opacity: 0, x: isReverse ? -60 : 60 },
+      {
+        opacity: 1, x: 0, duration: 0.9, ease: 'power3.out', delay: 0.15,
+        scrollTrigger: { trigger: row, start: 'top 75%', toggleActions: 'play none none none' }
+      }
+    )
+
+    gsap.fromTo(row.querySelectorAll('.row-points li'),
+      { opacity: 0, x: 15 },
+      {
+        opacity: 1, x: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out', delay: 0.4,
+        scrollTrigger: { trigger: row, start: 'top 75%', toggleActions: 'play none none none' }
+      }
+    )
   })
-  gsap.to(card.querySelector('.card-border-glow'), {
+
+  gsap.from('.services-cta', {
+    scrollTrigger: {
+      trigger: '.services-cta',
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    },
+    y: 40,
     opacity: 0,
-    duration: 0.3
+    duration: 0.8,
+    ease: 'power3.out'
   })
-  gsap.to(card.querySelector('.arrow-icon'), {
-    x: 0,
-    color: 'inherit',
-    duration: 0.2
-  })
-}
+
+  setTimeout(() => ScrollTrigger.refresh(), 300)
+})
 
 const onMenuEnter = (el, done) => {
-  gsap.set(el, { willChange: 'opacity' })
-  gsap.set(el.querySelectorAll('.menu-link, .consult-btn-overlay'), { willChange: 'transform' })
-
-  gsap.fromTo(el, 
-    { opacity: 0 }, 
-    { opacity: 1, duration: 0.4, ease: 'power2.out' }
-  )
+  gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })
   gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
     { yPercent: 100 }, 
-    { 
-      yPercent: 0, 
-      duration: 0.6, 
-      stagger: 0.06, 
-      ease: 'power3.out', 
-      delay: 0.1, 
-      onComplete: () => {
-        gsap.set([el, el.querySelectorAll('.menu-link, .consult-btn-overlay')], { clearProps: 'willChange' })
-        done()
-      }
-    }
+    { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out', delay: 0.1, onComplete: done }
   )
 }
 
 const onMenuLeave = (el, done) => {
-  gsap.set(el, { willChange: 'opacity' })
-  gsap.set(el.querySelectorAll('.menu-link, .consult-btn-overlay'), { willChange: 'transform' })
-
-  gsap.to(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
-    { yPercent: -100, duration: 0.4, stagger: 0.03, ease: 'power3.in' }
-  )
-  gsap.to(el, 
-    { 
-      opacity: 0, 
-      duration: 0.4, 
-      ease: 'power2.in', 
-      delay: 0.15, 
-      onComplete: () => {
-        gsap.set([el, el.querySelectorAll('.menu-link, .consult-btn-overlay')], { clearProps: 'willChange' })
-        done()
-      }
-    }
-  )
+  gsap.to(el.querySelectorAll('.menu-link, .consult-btn-overlay'), { yPercent: -100, duration: 0.4, stagger: 0.03, ease: 'power3.in' })
+  gsap.to(el, { opacity: 0, duration: 0.4, ease: 'power2.in', delay: 0.15, onComplete: done })
 }
+
+onUnmounted(() => {
+  ScrollTrigger.getAll().forEach(t => t.kill())
+})
 </script>
 
 <style scoped>
-:global(html),
+:global(html) {
+  scroll-behavior: smooth;
+  overflow-y: auto !important;
+  height: auto !important;
+}
 :global(body) {
   margin: 0;
   padding: 0;
   overflow-x: hidden !important;
-  height: 100%;
-  width: 100%;
+  overflow-y: auto !important;
+  height: auto !important;
+  width: 100% !important;
 }
 
 /* ----------------------------------------- */
-/* 1. CORE SETUP & VARIABLES                 */
+/* CORE WRAPPER & BACKGROUND                 */
 /* ----------------------------------------- */
-.hero-wrapper {
+.services-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
-  
-  position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
   width: 100%;
-  overflow-x: hidden;
-  
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  min-height: 100vh;
+  position: relative;
   font-family: system-ui, -apple-system, sans-serif;
   transition: background-color var(--transition-speed), color var(--transition-speed);
-  box-sizing: border-box;
-  z-index: 1;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.hero-wrapper *,
-.hero-wrapper *::before,
-.hero-wrapper *::after {
+.services-wrapper *,
+.services-wrapper *::before,
+.services-wrapper *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-.theme-dark {
-  background-color: #0b0c10;
-  color: #ffffff;
-}
-.theme-light {
-  background-color: #f4f6f9;
-  color: #0f172a;
-}
+.theme-dark { background-color: #0b0c10; color: #ffffff; }
+.theme-light { background-color: #f4f6f9; color: #0f172a; }
 
-/* ----------------------------------------- */
-/* 2. BACKGROUND INTERACTIVE NET GRID        */
-/* ----------------------------------------- */
 .bg-overlay {
   position: absolute;
   inset: 0;
   opacity: 0.2;
   pointer-events: none;
   overflow: hidden;
-  z-index: 0;
+  z-index: 1;
 }
 .bg-grid-lines {
   position: absolute;
@@ -384,66 +362,48 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 3. TOP NAVBAR SYSTEM                      */
+/* NAVBAR ACCORDING TO CULTURE.VUE           */
 /* ----------------------------------------- */
 .navbar {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: clamp(10px, 2vw, 22px) clamp(14px, 4vw, 40px);
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 1200px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 50;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  min-height: 0;
-  flex-shrink: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
-.company-branding {
+.theme-light .navbar {
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: #ffffff;
+  font-style: italic;
+  letter-spacing: -0.04em;
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex-shrink: 1;
-  overflow: hidden;
 }
 
-.brand-text {
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(12px, 1vw, 14px);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.7));
-  -webkit-background-clip: text;
-  background-clip: text;
-  transition: color var(--transition-speed);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.theme-light .brand-text {
-  background: none;
-  color: #0f172a;
-}
-
-.status-dot {
-  flex-shrink: 0;
-  width: 7px;
-  height: 7px;
-  background-color: var(--brand-accent);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--brand-accent);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: .4; transform: scale(0.9); }
-}
+.theme-light .logo { color: #0f172a; }
+.logo .dot { color: var(--brand-accent); }
 
 .nav-actions {
   display: flex;
@@ -473,7 +433,6 @@ const onMenuLeave = (el, done) => {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
 }
-.consult-btn:active { transform: translateY(0); }
 
 .theme-toggle {
   width: 40px;
@@ -512,13 +471,9 @@ const onMenuLeave = (el, done) => {
   border: 1px solid var(--brand-accent);
 }
 @media (max-width: 480px) {
-  .toggle-thumb { width: 13px; height: 13px; }
   .toggle-active { transform: translateX(15px); }
 }
-.toggle-icon {
-  font-size: 9px;
-  user-select: none;
-}
+.toggle-icon { font-size: 9px; user-select: none; }
 
 .menu-trigger {
   width: 34px;
@@ -532,12 +487,8 @@ const onMenuLeave = (el, done) => {
   cursor: pointer;
   border: none;
   z-index: 55;
-  position: relative;
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
-}
-@media (max-width: 480px) {
-  .menu-trigger { width: 30px; height: 30px; gap: 3px; }
 }
 .theme-dark .menu-trigger {
   background-color: rgba(24, 24, 27, 0.8);
@@ -547,32 +498,20 @@ const onMenuLeave = (el, done) => {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
 }
-
 .burger-line {
   height: 1.5px;
   width: 15px;
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s, background-color 0.3s;
-  transform-origin: center center;
+  transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
 .theme-dark .burger-line { background-color: #ffffff; }
 .theme-light .burger-line { background-color: #0f172a; }
 
-.menu-active .line-top { 
-  position: absolute;
-  transform: rotate(45deg); 
-  background-color: var(--brand-accent) !important; 
-}
-.menu-active .line-mid { 
-  opacity: 0; 
-}
-.menu-active .line-bot { 
-  position: absolute;
-  transform: rotate(-45deg); 
-  background-color: var(--brand-accent) !important; 
-}
+.menu-active .line-top { transform: translateY(5px) rotate(45deg); background-color: var(--brand-accent) !important; }
+.menu-active .line-mid { opacity: 0; }
+.menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
 
 /* ----------------------------------------- */
-/* 4. NAVIGATION OVERLAY                     */
+/* NAVIGATION OVERLAY BLOCK                  */
 /* ----------------------------------------- */
 .nav-overlay {
   position: fixed;
@@ -584,12 +523,9 @@ const onMenuLeave = (el, done) => {
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   width: 100%;
-  height: 100%;
   height: 100dvh;
   overflow: hidden !important;
   padding: clamp(24px, 5vh, 48px) clamp(20px, 6vw, 48px);
-  padding-top: max(clamp(24px, 5vh, 48px), env(safe-area-inset-top));
-  padding-bottom: max(clamp(24px, 5vh, 48px), env(safe-area-inset-bottom));
 }
 .theme-dark .nav-overlay { background-color: rgba(11, 12, 16, 0.96); }
 .theme-light .nav-overlay { background-color: rgba(255, 255, 255, 0.96); }
@@ -601,15 +537,8 @@ const onMenuLeave = (el, done) => {
   width: 100%;
   max-width: 800px;
 }
-
-.menu-item-wrap {
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-}
-.overlay-btn-item {
-  margin-top: clamp(4px, 1vh, 12px);
-}
+.menu-item-wrap { overflow: hidden; display: flex; align-items: center; }
+.overlay-btn-item { margin-top: clamp(4px, 1vh, 12px); }
 .menu-index {
   font-family: monospace;
   font-size: clamp(12px, 1.5vw, 14px);
@@ -618,7 +547,6 @@ const onMenuLeave = (el, done) => {
   margin-right: clamp(12px, 3vw, 28px);
   letter-spacing: 0.15em;
   opacity: 0.7;
-  flex-shrink: 0;
 }
 .menu-link {
   font-size: clamp(1.1rem, 3vw, 2.2rem);
@@ -628,7 +556,6 @@ const onMenuLeave = (el, done) => {
   transition: color 0.3s, transform 0.3s;
   display: inline-block;
   line-height: 1.1;
-  word-break: break-word;
 }
 .theme-dark .menu-link { color: #ffffff; }
 .theme-light .menu-link { color: #0f172a; }
@@ -646,8 +573,6 @@ const onMenuLeave = (el, done) => {
   cursor: pointer;
   display: inline-block;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  will-change: transform;
-  white-space: nowrap;
 }
 .consult-btn-overlay:hover {
   transform: translateY(-2px);
@@ -662,266 +587,225 @@ const onMenuLeave = (el, done) => {
   }
 }
 
-@media (max-height: 500px) and (orientation: landscape) {
-  .menu-link { font-size: clamp(1.2rem, 4.5vw, 2rem); }
-  .nav-links-container { gap: clamp(4px, 1.2vh, 10px); }
-  .menu-index { font-size: 11px; }
-  .consult-btn-overlay { font-size: clamp(0.9rem, 2.5vw, 1.2rem); padding: 6px clamp(14px, 2.5vw, 24px); }
-}
-
 /* ----------------------------------------- */
-/* 5. SERVICES CONTENT DESIGN                */
+/* SERVICES CANVAS                           */
 /* ----------------------------------------- */
-.services-container {
-  flex: 1;
-  width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: calc(clamp(20px, 4vh, 40px) + clamp(10px, 2vw, 22px) + 50px) clamp(16px, 4vw, 40px) clamp(20px, 4vh, 40px);
+.services-main {
+  flex: 1 1 0;
   position: relative;
   z-index: 10;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  width: 100%;
+  padding: calc(60px + clamp(10px, 2vw, 22px) + 50px) clamp(16px, 5vw, 60px) 60px;
 }
 
 .ambient-glow {
   position: absolute;
-  top: 25%;
+  width: min(700px, 85vw);
+  height: min(700px, 85vw);
+  background-color: var(--brand-accent);
+  border-radius: 50%;
+  top: 8%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(600px, 80vw);
-  height: min(600px, 80vw);
-  border-radius: 50%;
-  filter: blur(160px);
-  -webkit-filter: blur(160px);
+  filter: blur(150px);
+  opacity: 0.08;
   pointer-events: none;
-  opacity: 0.15;
-  z-index: -1;
+  z-index: 1;
 }
-.theme-dark .ambient-glow { background-color: var(--brand-accent); mix-blend-mode: screen; }
-.theme-light .ambient-glow { background-color: #a7f3d0; mix-blend-mode: multiply; opacity: 0.25; }
+.theme-light .ambient-glow { opacity: 0.15; background-color: #a7f3d0; }
 
-.section-header {
+.services-hero {
+  max-width: 920px;
+  margin: 40px auto 90px;
   text-align: center;
-  margin-bottom: clamp(30px, 5vh, 50px);
+  position: relative;
+  z-index: 5;
 }
 
 .section-tag {
   font-family: monospace;
-  font-size: clamp(10px, 1.5vw, 12px);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
   color: var(--brand-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
   display: inline-block;
-  margin-bottom: 8px;
-}
-.theme-light .section-tag {
-  color: #059669;
-  font-weight: 600;
-}
-
-.section-title {
-  font-size: clamp(2.2rem, 6vw, 4.5rem);
-  font-weight: 950;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  line-height: 1.1;
-  margin-bottom: 12px;
-  background: linear-gradient(to right, #ffffff 40%, var(--brand-accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.theme-light .section-title {
-  background: linear-gradient(to right, #0f172a 50%, #059669 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.section-subtitle {
-  font-size: clamp(13px, 1.8vw, 16px);
-  max-width: 580px;
-  margin: 0 auto;
-  line-height: 1.5;
-}
-.theme-dark .section-subtitle { color: #94a3b8; }
-.theme-light .section-subtitle { color: #475569; }
-
-/* ----------------------------------------- */
-/* 6. FIXED FORCE SINGLE ROW CARDS GRID      */
-/* ----------------------------------------- */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(12px, 2vw, 24px);
-  width: 100%;
-}
-
-.service-card {
-  position: relative;
-  border-radius: 12px;
-  padding: clamp(18px, 2.5vw, 28px);
-  overflow: hidden;
-  cursor: pointer;
-  transition: background-color 0.4s, border-color 0.4s;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-@media (max-width: 1024px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 640px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.theme-dark .service-card {
-  background-color: rgba(24, 24, 27, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-.theme-light .service-card {
-  background-color: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
-}
-
-.card-border-glow {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
-  border-radius: 12px;
-  padding: 1px;
-  background: linear-gradient(135deg, var(--brand-accent), transparent 60%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-}
-
-.card-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  position: relative;
-  z-index: 2;
-}
-
-.card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 24px;
 }
+.theme-light .section-tag { color: #059669; font-weight: 600; }
 
-.service-number {
-  font-family: monospace;
-  font-size: 14px;
-  font-weight: 700;
-  opacity: 0.3;
-  letter-spacing: 0.1em;
-}
-
-.service-icon {
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  transition: transform 0.3s;
-}
-.service-icon :deep(svg) {
-  width: 24px;
-  height: 24px;
-}
-.theme-dark .service-icon {
-  background-color: rgba(0, 255, 163, 0.05);
-  color: var(--brand-accent);
-}
-.theme-light .service-icon {
-  background-color: rgba(5, 150, 105, 0.08);
-  color: #059669;
-}
-
-.service-card:hover .service-icon {
-  transform: rotate(-5deg) scale(1.05);
-}
-
-.service-name {
-  font-size: clamp(16px, 1.8vw, 20px);
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  margin-bottom: 12px;
-}
-.theme-dark .service-name { color: #f4f4f5; }
-.theme-light .service-name { color: #0f172a; }
-
-.service-desc {
-  font-size: 13.5px;
-  line-height: 1.6;
-  margin-bottom: 32px;
-  flex-grow: 1;
-}
-.theme-dark .service-desc { color: #a1a1aa; }
-.theme-light .service-desc { color: #475569; }
-
-.card-footer-action {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 700;
+.services-title {
+  font-size: clamp(2.4rem, 6.5vw, 5rem);
+  font-weight: 950;
+  line-height: 1.15;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  width: fit-content;
-  transition: color 0.2s;
+  letter-spacing: -0.03em;
+  margin-bottom: 28px;
+  color: #ffffff;
 }
-.theme-dark .card-footer-action { color: rgba(255, 255, 255, 0.5); }
-.theme-light .card-footer-action { color: #475569; }
-.card-footer-action:hover { color: var(--brand-accent); }
+.theme-light .services-title { color: #0f172a; }
 
-.arrow-icon {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.2s, color 0.2s;
+.highlight-text {
+  background: linear-gradient(135deg, #ffffff 20%, var(--brand-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
+.theme-light .highlight-text {
+  background: linear-gradient(135deg, #0f172a 40%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.services-subtitle {
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.7;
+  max-width: 760px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.65);
+}
+.theme-light .services-subtitle { color: #475569; }
 
 /* ----------------------------------------- */
-/* 7. COPYRIGHT FOOTER                       */
+/* ALTERNATING SHOWCASE GRID                 */
 /* ----------------------------------------- */
-.footer-group {
-  width: 100%;
+.showcase-rows {
+  max-width: 1300px;
+  margin: 0 auto 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
   position: relative;
-  z-index: 10;
-  flex-shrink: 0;
-  margin-top: auto; /* Pushes footer tightly to the absolute bottom */
+  z-index: 5;
+}
+.showcase-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 70px);
+  align-items: center;
+}
+.row-reverse { direction: rtl; }
+.row-reverse .row-content, .row-reverse .row-media { direction: ltr; }
+
+@media (max-width: 860px) {
+  .showcase-row, .row-reverse { grid-template-columns: 1fr; direction: ltr; }
+  .row-reverse .row-media { order: -1; }
 }
 
+.row-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.theme-light .row-media { border-color: rgba(15, 23, 42, 0.08); }
+.row-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.row-media:hover .row-img { transform: scale(1.04); }
+
+.row-img-tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 255, 163, 0.12), transparent 60%);
+  pointer-events: none;
+}
+.row-glow-dot {
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  width: 130px;
+  height: 130px;
+  background-color: var(--brand-accent);
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.25;
+}
+
+.row-content { display: flex; flex-direction: column; }
+.row-tag {
+  font-family: monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--brand-accent);
+  margin-bottom: 14px;
+}
+.theme-light .row-tag { color: #059669; font-weight: 600; }
+.row-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; margin-bottom: 16px; }
+.row-desc { font-size: 15px; line-height: 1.7; color: rgba(255, 255, 255, 0.65); margin-bottom: 24px; }
+.theme-light .row-desc { color: #475569; }
+
+.row-points { display: flex; flex-direction: column; gap: 12px; list-style: none; }
+.row-points li { display: flex; align-items: center; gap: 12px; font-size: 14px; color: rgba(255, 255, 255, 0.85); }
+.theme-light .row-points li { color: #1e293b; }
+.point-dot { width: 7px; height: 7px; border-radius: 50%; background-color: var(--brand-accent); box-shadow: 0 0 8px var(--brand-accent); }
+
+/* ----------------------------------------- */
+/* CLOSING CTA BLOCK (FIXED HITBOX CONTEXT)   */
+/* ----------------------------------------- */
+.services-cta {
+  position: relative;
+  z-index: 30; /* Elevated above background layouts and blurring elements */
+  pointer-events: auto;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 80px 40px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: rgba(255, 255, 255, 0.01);
+  overflow: hidden;
+}
+.theme-light .services-cta { background-color: #ffffff; border-color: rgba(15, 23, 42, 0.06); }
+.cta-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background-color: var(--brand-accent);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(150px);
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.cta-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: 18px; position: relative; z-index: 5; }
+.cta-subtitle { font-size: clamp(14px, 1.6vw, 17px); line-height: 1.6; color: rgba(255, 255, 255, 0.65); max-width: 560px; margin: 0 auto 36px; position: relative; z-index: 5; }
+.theme-light .cta-subtitle { color: #475569; }
+
+.btn-start-project {
+  position: relative;
+  z-index: 10; /* Placed over internal glow layer */
+  pointer-events: auto !important; /* Explicit browser directive to accept click actions */
+  text-decoration: none;
+  display: inline-block;
+  background-color: #ffffff;
+  color: #0b0c10;
+  padding: 18px 38px;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+.theme-light .btn-start-project { background-color: #0f172a; color: #ffffff; }
+.btn-start-project:hover { background-color: var(--brand-accent); color: #0b0c10; transform: translateY(-2px); }
+
+.animate-scroll-element { opacity: 0; }
+
+/* ----------------------------------------- */
+/* FOOTER                                    */
+/* ----------------------------------------- */
+.footer-group { width: 100%; position: relative; z-index: 10; margin-top: auto; }
 .copyright-section {
   width: 100%;
   text-align: center;
-  padding: 24px 20px;
+  padding: 30px 20px;
   font-size: 11px;
-  letter-spacing: 0.05em;
-  border-top: 1px solid transparent;
-  transition: color var(--transition-speed);
+  border-top: 1px solid;
 }
-.theme-dark .copyright-section {
-  color: rgba(255, 255, 255, 0.4);
-  background-color: rgba(9, 9, 11, 0.4);
-  border-top-color: rgba(255, 255, 255, 0.03);
-}
-.theme-light .copyright-section {
-  color: rgba(15, 23, 42, 0.5);
-  background-color: rgba(241, 245, 249, 0.4);
-  border-top-color: rgba(15, 23, 42, 0.04);
-}
+.theme-dark .copyright-section { color: rgba(255, 255, 255, 0.4); background-color: rgba(9, 9, 11, 0.6); border-top-color: rgba(255, 255, 255, 0.05); }
+.theme-light .copyright-section { color: rgba(15, 23, 42, 0.5); background-color: rgba(241, 245, 249, 0.6); border-top-color: rgba(15, 23, 42, 0.06); }
 </style>

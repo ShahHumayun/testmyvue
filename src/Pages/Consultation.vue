@@ -11,12 +11,12 @@
     </div>
 
     <header class="navbar">
-      <div class="company-branding">
-        <span class="status-dot"></span>
-        <span class="brand-text">WebHive Technologies</span>
-      </div>
+      <a href="#" class="company-branding logo">
+        WEBHIVE<span class="dot">.</span>
+      </a>
 
       <div class="nav-actions">
+        <!-- Replaced Consultation link with Home route -->
         <router-link to="/" class="consult-btn">
           Home
         </router-link>
@@ -56,7 +56,7 @@
           >
             <span class="menu-index">0{{ index + 1 }}</span>
             <router-link 
-              :to="'/' + item.toLowerCase()" 
+              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
               @click="toggleMenu" 
               class="menu-link"
             >
@@ -64,9 +64,10 @@
             </router-link>
           </div>
 
+          <!-- Updated overlay button item from Consultation to Home -->
           <div class="menu-item-wrap overlay-btn-item">
             <span class="menu-index">0{{ menuItems.length + 1 }}</span>
-            <router-link to="/" @click="toggleMenu" class="consult-btn-overlay">
+            <router-link to="/" class="consult-btn-overlay" @click="toggleMenu">
               Home
             </router-link>
           </div>
@@ -209,8 +210,8 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 const form = reactive({
   name: '',
   email: '',
-  projectType: 'web', // Default selection setup
-  budget: '$1k - $5k', // Default budget setup
+  projectType: 'web', 
+  budget: '$1k - $5k', 
   message: ''
 })
 
@@ -284,14 +285,13 @@ const handleSubmit = async () => {
   submissionPending.value = true
 
   try {
-    // Insert structured payload directly to Supabase cloud table
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('consultations')
       .insert([
         {
           name: form.name,
           email: form.email,
-          project_type: form.projectType, // Matches your fixed column layout!
+          project_type: form.projectType, 
           budget: form.budget,
           message: form.message
         }
@@ -302,7 +302,6 @@ const handleSubmit = async () => {
     apiResponse.message = 'Inquiry transmitted successfully to cloud architecture!'
     apiResponse.status = 'success'
     
-    // Clear textual input fields
     form.name = ''
     form.email = ''
     form.message = ''
@@ -421,65 +420,52 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 3. TOP NAVBAR SYSTEM                      */
+/* 3. EXACT NAVBAR STYLES FROM HOME.VUE      */
 /* ----------------------------------------- */
 .navbar {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: clamp(10px, 2vw, 22px) clamp(14px, 4vw, 40px);
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 1200px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 50;
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  min-height: 0;
-  flex-shrink: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
-.company-branding {
+.theme-light .navbar {
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: #ffffff;
+  font-style: italic;
+  letter-spacing: -0.04em;
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex-shrink: 1;
-  overflow: hidden;
 }
 
-.brand-text {
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(12px, 1vw, 14px);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.7));
-  -webkit-background-clip: text;
-  background-clip: text;
-  transition: color var(--transition-speed);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.theme-light .brand-text {
-  background: none;
+.theme-light .logo {
   color: #0f172a;
 }
 
-.status-dot {
-  flex-shrink: 0;
-  width: 7px;
-  height: 7px;
-  background-color: var(--brand-accent);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--brand-accent);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: .4; transform: scale(0.9); }
+.logo .dot {
+  color: var(--brand-accent);
 }
 
 .nav-actions {
@@ -639,7 +625,7 @@ const onMenuLeave = (el, done) => {
 .menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
 
 /* ----------------------------------------- */
-/* 4. NAVIGATION OVERLAY                     */
+/* 4. EXACT NAVIGATION OVERLAY FROM HOME.VUE */
 /* ----------------------------------------- */
 .nav-overlay {
   position: fixed;

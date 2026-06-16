@@ -1,8 +1,5 @@
 <template>
-  <div 
-    :class="['hero-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']"
-    @mousemove="handleMouseMove"
-  >
+  <div :class="['hero-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']" @mousemove="handleMouseMove">
     <div class="bg-overlay">
       <div 
         class="bg-grid-lines"
@@ -11,10 +8,9 @@
     </div>
 
     <header class="navbar">
-      <div class="company-branding">
-        <span class="status-dot"></span>
-        <span class="brand-text">WebHive Technologies</span>
-      </div>
+      <a href="#" class="company-branding logo">
+        WEBHIVE<span class="dot">.</span>
+      </a>
 
       <div class="nav-actions">
         <router-link to="/consultation" class="consult-btn">
@@ -56,7 +52,7 @@
           >
             <span class="menu-index">0{{ index + 1 }}</span>
             <router-link 
-              :to="'/' + item.toLowerCase()" 
+              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
               @click="toggleMenu" 
               class="menu-link"
             >
@@ -66,7 +62,7 @@
 
           <div class="menu-item-wrap overlay-btn-item">
             <span class="menu-index">0{{ menuItems.length + 1 }}</span>
-            <router-link to="/consultation" class="consult-btn-overlay">
+            <router-link to="/consultation" class="consult-btn-overlay" @click="toggleMenu">
               Consultation
             </router-link>
           </div>
@@ -77,7 +73,7 @@
     <main class="hero-main">
       <div class="hero-intro-viewport">
         <div 
-          class="ambient-glow"
+          class="ambient-glow-hero"
           :style="{ transform: `translate(${parallax.headingX * 1.5}px, ${parallax.headingY * 1.5}px)` }"
         ></div>
 
@@ -121,14 +117,14 @@
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
 import HomeComponent1 from '../components/HomeComponent1.vue'
-import WhyWebhive from '../components/WhyWebhive.vue' // Imported the value proposition card component
+import WhyWebhive from '../components/WhyWebhive.vue'
 
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)
 
+// menuItems matches about.vue structure to support proper internal routing
 const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Contact']
-
 const currentYear = new Date().getFullYear()
 
 const parallax = reactive({
@@ -173,6 +169,7 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 
+// Exact GSAP micro-interactions matches from about.vue
 const onMenuEnter = (el, done) => {
   gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })
   gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
@@ -203,22 +200,17 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 1. CORE SETUP & VARIABLES                 */
+/* 1. CORE SETUP & PREMIUM THEME VARIABLES  */
 /* ----------------------------------------- */
 .hero-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
-  
   position: relative;
   width: 100%;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   font-family: system-ui, -apple-system, sans-serif;
   transition: background-color var(--transition-speed), color var(--transition-speed);
-  box-sizing: border-box;
   overflow-x: hidden;
-  z-index: 1;
 }
 
 .hero-wrapper *,
@@ -229,22 +221,12 @@ const onMenuLeave = (el, done) => {
   padding: 0;
 }
 
-.theme-dark {
-  background-color: #0b0c10;
-  color: #ffffff;
-}
-.theme-light {
-  background-color: #f4f6f9;
-  color: #0f172a;
-}
-.main-title {
-  transform-style: preserve-3d;
-  transform-origin: center center;
-  transition: transform 0.15s ease-out;
-}
+/* Theme Colors EXACT match to about.vue dark color palette */
+.theme-dark { background-color: #0b0c10; color: #ffffff; }
+.theme-light { background-color: #f4f6f9; color: #0f172a; }
 
 /* ----------------------------------------- */
-/* 2. BACKGROUND INTERACTIVE NET GRID        */
+/* 2. BACKGROUND INTERACTIVE NET GRID         */
 /* ----------------------------------------- */
 .bg-overlay {
   position: absolute;
@@ -271,66 +253,52 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* NAVBAR DESIGN SYSTEM (From About.vue)      */
+/* 3. EXACT NAVBAR STYLES FROM ABOUT.VUE     */
 /* ----------------------------------------- */
 .navbar {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: clamp(10px, 2vw, 22px) clamp(14px, 4vw, 40px);
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 1200px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 50;
-  position: relative;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  min-height: 0;
-  flex-shrink: 0;
-
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
-.company-branding {
+.theme-light .navbar {
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-decoration: none;
+  color: #ffffff;
+  font-style: italic;
+  letter-spacing: -0.04em;
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex-shrink: 1;
-  overflow: hidden;
 }
 
-.brand-text {
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(12px, 1vw, 14px);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.7));
-  -webkit-background-clip: text;
-  background-clip: text;
-  transition: color var(--transition-speed);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.theme-light .brand-text {
-  background: none;
+.theme-light .logo {
   color: #0f172a;
 }
 
-.status-dot {
-  flex-shrink: 0;
-  width: 7px;
-  height: 7px;
-  background-color: var(--brand-accent);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--brand-accent);
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: .4; transform: scale(0.9); }
+.logo .dot {
+  color: var(--brand-accent);
 }
 
 .nav-actions {
@@ -447,7 +415,7 @@ const onMenuLeave = (el, done) => {
 .menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
 
 /* ----------------------------------------- */
-/* NAVIGATION OVERLAY PANEL (From About.vue)  */
+/* 4. EXACT NAVIGATION OVERLAY FROM ABOUT.VUE */
 /* ----------------------------------------- */
 .nav-overlay {
   position: fixed;
@@ -541,7 +509,7 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 5. HERO SCROLL LAYOUT HUB                 */
+/* 5. HERO LAYOUT ELEMENTS                   */
 /* ----------------------------------------- */
 .hero-main {
   width: 100%;
@@ -564,7 +532,7 @@ const onMenuLeave = (el, done) => {
   padding: 0 clamp(16px, 4vw, 40px);
 }
 
-.ambient-glow {
+.ambient-glow-hero {
   position: absolute;
   width: min(550px, 80vw);
   height: min(550px, 80vw);
@@ -572,10 +540,10 @@ const onMenuLeave = (el, done) => {
   filter: blur(140px);
   mix-blend-mode: screen;
   pointer-events: none;
-  opacity: 0.25;
+  opacity: 0.12;
 }
-.theme-dark .ambient-glow { background-color: var(--brand-accent); }
-.theme-light .ambient-glow { background-color: #a7f3d0; mix-blend-mode: multiply; opacity: 0.35; }
+.theme-dark .ambient-glow-hero { background-color: var(--brand-accent); }
+.theme-light .ambient-glow-hero { background-color: #a7f3d0; mix-blend-mode: multiply; opacity: 0.2; }
 
 .main-title {
   font-size: clamp(3.5rem, 11vw, 9rem);
@@ -615,9 +583,8 @@ const onMenuLeave = (el, done) => {
   padding-right: clamp(16px, 4vw, 40px);
 }
 
-/* Structural gap layout configuration for WhyWebhive section */
 .home-why-webhive-layout {
-  margin-top: clamp(80px, 12vh, 160px); /* Clean, generous gap after services layout */
+  margin-top: clamp(80px, 12vh, 160px); 
   padding-bottom: clamp(100px, 15vh, 200px);
   width: 100%;
   max-width: 1400px;
@@ -626,25 +593,25 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 6. CLEAN RECONSTRUCTED COPYRIGHT FOOTER  */
+/* 6. MINIMALIST COPYRIGHT FOOTER            */
 /* ----------------------------------------- */
 .copyright-section {
   width: 100%;
   text-align: center;
-  padding: 32px 20px;
+  padding: 30px 20px;
   font-size: 11px;
   letter-spacing: 0.05em;
-  border-top: 1px solid transparent;
+  border-top: 1px solid;
   transition: color var(--transition-speed);
 }
 .theme-dark .copyright-section {
   color: rgba(255, 255, 255, 0.4);
   background-color: rgba(9, 9, 11, 0.6);
-  border-top-color: rgba(255, 255, 255, 0.03);
+  border-top-color: rgba(255, 255, 255, 0.05);
 }
 .theme-light .copyright-section {
   color: rgba(15, 23, 42, 0.5);
   background-color: rgba(241, 245, 249, 0.6);
-  border-top-color: rgba(15, 23, 42, 0.04);
+  border-top-color: rgba(15, 23, 42, 0.06);
 }
 </style>
