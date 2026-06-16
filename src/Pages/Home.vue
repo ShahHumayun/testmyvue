@@ -255,7 +255,7 @@ const onMenuLeave = (el, done) => {
 /* ----------------------------------------- */
 /* 3. EXACT NAVBAR STYLES FROM ABOUT.VUE     */
 /* ----------------------------------------- */
-.navbar {
+/* .navbar {
   position: fixed;
   top: 16px;
   left: 50%;
@@ -274,8 +274,34 @@ const onMenuLeave = (el, done) => {
   align-items: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
+} */
+.navbar {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  /* Added translateZ(0) to force GPU hardware acceleration locally */
+  transform: translateX(-50%) translateZ(0);
+  /* Hints the browser engine to prepare for backdrop composite layers */
+  will-change: transform, backdrop-filter;
+  
+  width: 92%;
+  max-width: 1200px;
+  z-index: 1000;
+  
+  /* Slightly boosted color saturation to fight dev-server gray washouts */
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
-
 .theme-light .navbar {
   background: rgba(15, 23, 42, 0.03);
   border: 1px solid rgba(15, 23, 42, 0.08);
