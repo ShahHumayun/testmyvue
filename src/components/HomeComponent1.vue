@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div :class="['services-component-wrapper', props.darkMode ? 'theme-dark' : 'theme-light']">
     
     <div class="main-component-container">
@@ -116,6 +116,162 @@ const selectedService = ref(1)
 const currentServiceImage = computed(() => {
   return servicesData.find(s => s.id === selectedService.value) || servicesData[0]
 })
+</script> -->
+
+
+<template>
+  <div :class="['services-component-wrapper', props.darkMode ? 'theme-dark' : 'theme-light']">
+    
+    <div class="main-component-container">
+      <main class="services-content-main">
+        
+        <div class="ai-vision-block">
+          <h2 class="ai-vision-heading">Next-Gen Web, App, and NetSuite Engineering</h2><br>
+          <p class="ai-vision-paragraph">
+            Traditional software isolates your business; WebHive unifies it. We combine high-end web and mobile development with deeply synchronized NetSuite ERP environments to build responsive digital products that adapt, scale, and perform.
+          </p>
+        </div><br>
+
+        <section class="services-interactive-section">
+          
+          <div class="services-left-side-text">
+            <div 
+              v-for="service in servicesData" 
+              :key="service.id"
+              class="service-accordion-card"
+              :class="{ 'active-card': selectedService === service.id }"
+              @mouseenter="handleMouseEnter(service.id)"
+              @click="handleServiceClick(service)"
+            >
+              <div class="card-text-header">
+                <div class="card-icon-frame">
+                  <svg v-if="service.id === 1" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                  <svg v-if="service.id === 2" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                  <svg v-if="service.id === 3" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  <svg v-if="service.id === 4" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+
+                <div class="card-heading-block">
+                  <h3 class="service-title-h3">
+                    {{ service.title }}
+                    <span class="dropdown-chevron-indicator">➔</span>
+                  </h3>
+                  <p class="service-description-preview">{{ service.description }}</p>
+                </div>
+              </div>
+
+              <div class="accordion-media-drawer">
+                <div class="card-image-wrapper">
+                  <Transition name="fade-drawer-image" mode="out-in">
+                    <img 
+                      v-if="selectedService === service.id"
+                      :key="service.id" 
+                      :src="service.imgUrl" 
+                      :alt="service.title"
+                      class="card-live-image" 
+                    />
+                  </Transition>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="services-right-side-panel">
+            <div class="desktop-frame-canvas">
+              <Transition name="fade-desktop-image" mode="out-in">
+                <img 
+                  :key="currentServiceImage.id" 
+                  :src="currentServiceImage.imgUrl" 
+                  :alt="currentServiceImage.title"
+                  class="desktop-live-image" 
+                />
+              </Transition>
+            </div>
+          </div>
+
+        </section>
+      </main>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const isNavigating = ref(false)
+
+const props = defineProps({
+  darkMode: {
+    type: Boolean,
+    default: true
+  }
+})
+
+const servicesData = [
+  { 
+    id: 1, 
+    title: 'Web App Development', 
+    description: 'Revolutionizing businesses with high-performance web applications tailored for modern scale.',
+    imgUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80',
+    path: '/webappdevelopment'
+  },
+  { 
+    id: 2, 
+    title: 'App Development', 
+    description: 'Driving client engagement across native platforms via high-fidelity iOS and Android applications.',
+    imgUrl: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1000&q=80',
+    path: '/appdevelopment'
+  },
+  { 
+    id: 3, 
+    title: 'eCommerce Solutions', 
+    description: 'Unlocking high-conversion multi-channel storefronts optimized for checkout workflows.',
+    imgUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80',
+    path: '/ecommercesolutions'
+  },
+  { 
+    id: 4, 
+    title: 'NetSuite Integrations', 
+    description: 'Seamlessly binding ERP data pipelines together to streamline critical cloud business operations.',
+    imgUrl: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1000&q=80',
+    path: '/netsuiteintegrations'
+  }
+]
+
+const selectedService = ref(1)
+
+const currentServiceImage = computed(() => {
+  return servicesData.find(s => s.id === selectedService.value) || servicesData[0]
+})
+
+// Reset our navigation flag when the component loads/mounts back into view
+onMounted(() => {
+  isNavigating.value = false
+  // Forces browser focus off old target layouts, clearing history loops
+  window.scrollTo(0, 0)
+})
+
+const handleMouseEnter = (id) => {
+  if (isNavigating.value) return
+  selectedService.value = id
+}
+
+const handleServiceClick = (service) => {
+  if (isNavigating.value) return
+  isNavigating.value = true
+  
+  selectedService.value = service.id
+  
+  // Minor microtask pause handles browser history cleanly 
+  setTimeout(() => {
+    router.push(service.path).then(() => {
+      // Clean up window focus rules instantly
+      window.scrollTo(0, 0)
+    })
+  }, 50)
+}
 </script>
 
 <style scoped>

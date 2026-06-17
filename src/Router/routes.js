@@ -8,6 +8,10 @@ import Culture from '../Pages/Culture.vue'
 import Studio from '../Pages/Studio.vue' 
 import Contact from '../Pages/Contact.vue'
 import Consultation from '../Pages/Consultation.vue'
+import WebAppDevelopment from '../Pages/WebAppDevelopment.vue'
+import AppDevelopment from '../Pages/AppDevelopment.vue'
+import EcommerceSolutions from '../Pages/EcommerceSolutions.vue'
+import NetSuiteIntegrations from '../Pages/NetSuiteIntegrations.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -17,7 +21,11 @@ const routes = [
   { path: '/culture', component: Culture },
   { path: '/studio', component: Studio },
   { path: '/contact', component: Contact },
-  { path: '/consultation', component: Consultation }
+  { path: '/consultation', component: Consultation },
+  { path: '/webappdevelopment', component: WebAppDevelopment },
+  { path: '/appdevelopment', component: AppDevelopment },
+  { path: '/ecommercesolutions', component: EcommerceSolutions },
+  { path: '/netsuiteintegrations', component: NetSuiteIntegrations }
 ]
 
 const router = createRouter({
