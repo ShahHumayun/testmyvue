@@ -5,6 +5,7 @@
       class="pointer-events-none fixed inset-0 z-10 opacity-25 transition-opacity duration-300 will-change-transform"
       :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(0, 255, 163, 0.12), transparent 80%)` }"
     ></div>
+    <Header/><br>
 
     <AppComponent1 :phone-rotation="phoneRotation" />
     <AppComponent2 />
@@ -24,6 +25,7 @@
 </template>
 
 <script setup>
+import Header from '../components/Header.vue'
 import { ref, onMounted, onUnmounted, reactive } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
