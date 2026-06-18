@@ -6,7 +6,7 @@
       class="pointer-events-none fixed inset-0 z-10 opacity-30 transition-opacity duration-500"
       :style="{ background: `radial-gradient(800px circle at ${pointer.x}px ${pointer.y}px, rgba(0,255,163,0.12), transparent 75%)` }"
     ></div>
-
+     <Header /><br>
     <NetsuiteHeroSection />
     <NetsuiteTrustSection />
     <NetsuiteWhatisSection />
@@ -36,6 +36,7 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 
+import Header from '../components/Header.vue'
 import NetsuiteHeroSection from '../components/NetsuiteHeroSection.vue'
 import NetsuiteTrustSection from '../components/NetsuiteTrustSection.vue'
 import NetsuiteWhatisSection from '../components/NetsuiteWhatisSection.vue'
