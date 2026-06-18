@@ -6,9 +6,9 @@
       </router-link>
 
       <div class="nav-actions">
-        <router-link to="/consultation" class="consult-btn">
+        <!-- <router-link to="/consultation" class="consult-btn">
           Consultation
-        </router-link>
+        </router-link> -->
 
         <!-- <button 
           @click="toggleTheme"

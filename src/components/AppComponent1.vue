@@ -1,6 +1,6 @@
 <template>
   <div ref="pageContainer" class="bg-[#000000] text-[#FFFFFF] font-sans relative overflow-hidden selection:bg-[#00ffa3] selection:text-[#000000]">
-
+<Header/><br>
     <div
       class="pointer-events-none fixed inset-0 z-10 opacity-25 transition-opacity duration-300 will-change-transform"
       :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(0, 255, 163, 0.12), transparent 80%)` }"
@@ -149,6 +149,7 @@
 </template>
 
 <script setup>
+import Header from './Header.vue'
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import { gsap } from 'gsap'
 
