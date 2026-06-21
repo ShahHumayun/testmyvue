@@ -71,12 +71,12 @@ const currentSlide = ref(0)
 let slideInterval = null
 
 const carouselSlides = ref([
-  { id: 1, image: '/src/assets/TaylorAllergy/screen1.jpg' },
-  { id: 2, image: '/src/assets/TaylorAllergy/screen2.jpg' },
-  { id: 3, image: '/src/assets/TaylorAllergy/screen3.jpg' },
-  { id: 4, image: '/src/assets/TaylorAllergy/screen4.jpg' },
-  { id: 5, image: '/src/assets/TaylorAllergy/screen5.jpg' },
-  { id: 6, image: '/src/assets/TaylorAllergy/screen6.jpg' }
+  { id: 1, image: '/TaylorAllergy/screen1.jpg' },
+  { id: 2, image: '/TaylorAllergy/screen2.jpg' },
+  { id: 3, image: '/TaylorAllergy/screen3.jpg' },
+  { id: 4, image: '/TaylorAllergy/screen4.jpg' },
+  { id: 5, image: '/TaylorAllergy/screen5.jpg' },
+  { id: 6, image: '/TaylorAllergy/screen6.jpg' }
 ])
 
 const appBenefits = [
