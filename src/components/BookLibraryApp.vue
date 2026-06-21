@@ -70,10 +70,15 @@ const whyList = ref(null)
 const currentSlide = ref(0)
 let slideInterval = null
 
+// Helper function that tells Vite to process the book library assets dynamically
+const getBookLibraryImage = (fileName) => {
+  return new URL(`../assets/BookLibraryImages/${fileName}`, import.meta.url).href
+}
+
 const carouselSlides = ref([
-  { id: 1, image: '/src/assets/BookLibraryImages/screen1.jpg' },
-  { id: 2, image: '/src/assets/BookLibraryImages/screen2.jpg' },
-  { id: 3, image: '/src/assets/BookLibraryImages/screen3.jpg' }
+  { id: 1, image: getBookLibraryImage('screen1.jpg') },
+  { id: 2, image: getBookLibraryImage('screen2.jpg') },
+  { id: 3, image: getBookLibraryImage('screen3.jpg') }
 ])
 
 const appBenefits = [

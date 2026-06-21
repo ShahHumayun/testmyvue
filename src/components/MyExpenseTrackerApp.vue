@@ -70,16 +70,21 @@ const whyList = ref(null)
 const currentSlide = ref(0)
 let slideInterval = null
 
+// Helper function that tells Vite to process the expense tracker assets dynamically
+const getExpenseTrackerImage = (fileName) => {
+  return new URL(`../assets/myExpenseTrackerImages/${fileName}`, import.meta.url).href
+}
+
 const carouselSlides = ref([
-  { id: 1, image: '/src/assets/myExpenseTrackerImages/screen1.jpg' },
-  { id: 2, image: '/src/assets/myExpenseTrackerImages/screen2.jpg' },
-  { id: 3, image: '/src/assets/myExpenseTrackerImages/screen3.jpg' },
-  { id: 4, image: '/src/assets/myExpenseTrackerImages/screen4.jpg' },
-  { id: 5, image: '/src/assets/myExpenseTrackerImages/screen5.jpg' },
-  { id: 6, image: '/src/assets/myExpenseTrackerImages/screen6.jpg' },
-  { id: 7, image: '/src/assets/myExpenseTrackerImages/screen7.jpg' },
-  { id: 8, image: '/src/assets/myExpenseTrackerImages/screen8.jpg' },
-  { id: 9, image: '/src/assets/myExpenseTrackerImages/screen9.jpg' }
+  { id: 1, image: getExpenseTrackerImage('screen1.jpg') },
+  { id: 2, image: getExpenseTrackerImage('screen2.jpg') },
+  { id: 3, image: getExpenseTrackerImage('screen3.jpg') },
+  { id: 4, image: getExpenseTrackerImage('screen4.jpg') },
+  { id: 5, image: getExpenseTrackerImage('screen5.jpg') },
+  { id: 6, image: getExpenseTrackerImage('screen6.jpg') },
+  { id: 7, image: getExpenseTrackerImage('screen7.jpg') },
+  { id: 8, image: getExpenseTrackerImage('screen8.jpg') },
+  { id: 9, image: getExpenseTrackerImage('screen9.jpg') }
 ])
 
 const appBenefits = [

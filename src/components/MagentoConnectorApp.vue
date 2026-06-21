@@ -70,11 +70,16 @@ const whyList = ref(null)
 const currentSlide = ref(0)
 let slideInterval = null
 
+// Helper function that tells Vite to process the Magento Connector assets dynamically
+const getMagentoConnectorImage = (fileName) => {
+  return new URL(`../assets/MagentoConnector/${fileName}`, import.meta.url).href
+}
+
 const carouselSlides = ref([
-  { id: 1, image: '/src/assets/MagentoConnector/screen1.jpg' },
-  { id: 2, image: '/src/assets/MagentoConnector/screen2.jpg' },
-  { id: 3, image: '/src/assets/MagentoConnector/screen3.jpg' },
-  { id: 4, image: '/src/assets/MagentoConnector/screen4.jpg' }
+  { id: 1, image: getMagentoConnectorImage('screen1.jpg') },
+  { id: 2, image: getMagentoConnectorImage('screen2.jpg') },
+  { id: 3, image: getMagentoConnectorImage('screen3.jpg') },
+  { id: 4, image: getMagentoConnectorImage('screen4.jpg') }
 ])
 
 const appBenefits = [
