@@ -70,15 +70,18 @@ const whyList = ref(null)
 const currentSlide = ref(0)
 let slideInterval = null
 
-const base = import.meta.env.BASE_URL // 👈 This grabs your base path automatically
+// Helper function that tells Vite to process the asset file dynamically
+const getImageUrl = (fileName) => {
+  return new URL(`../assets/TaylorAllergy/${fileName}`, import.meta.url).href
+}
 
 const carouselSlides = ref([
-  { id: 1, image: `${base}TaylorAllergy/screen1.jpg` },
-  { id: 2, image: `${base}TaylorAllergy/screen2.jpg` },
-  { id: 3, image: `${base}TaylorAllergy/screen3.jpg` },
-  { id: 4, image: `${base}TaylorAllergy/screen4.jpg` },
-  { id: 5, image: `${base}TaylorAllergy/screen5.jpg` },
-  { id: 6, image: `${base}TaylorAllergy/screen6.jpg` }
+  { id: 1, image: getImageUrl('screen1.jpg') },
+  { id: 2, image: getImageUrl('screen2.jpg') },
+  { id: 3, image: getImageUrl('screen3.jpg') },
+  { id: 4, image: getImageUrl('screen4.jpg') },
+  { id: 5, image: getImageUrl('screen5.jpg') },
+  { id: 6, image: getImageUrl('screen6.jpg') }
 ])
 
 const appBenefits = [
