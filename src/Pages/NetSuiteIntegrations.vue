@@ -18,7 +18,7 @@
     <NetsuiteAutomationSection />
     <NetsuiteIndustriesSection />
     <NetsuiteMetricsSection />
-    <NetsuiteCaseStudySection />
+    <NetsuiteReviewsSection />
     <NetsuiteTechStackSection />
     <NetsuiteFAQSection />
     <NetsuiteSeoContentSection />
@@ -48,12 +48,13 @@ import NetsuiteChallengeSection from '../components/NetsuiteChallengeSection.vue
 import NetsuiteAutomationSection from '../components/NetsuiteAutomationSection.vue'
 import NetsuiteIndustriesSection from '../components/NetsuiteIndustriesSection.vue'
 import NetsuiteMetricsSection from '../components/NetsuiteMetricsSection.vue'
-import NetsuiteCaseStudySection from '../components/NetsuiteCaseStudySection.vue'
+import NetsuiteReviewsSection from '../components/NetsuiteReviewsSection.vue'
 import NetsuiteTechStackSection from '../components/NetsuiteTechStackSection.vue'
 import NetsuiteFAQSection from '../components/NetsuiteFAQSection.vue'
 import NetsuiteSeoContentSection from '../components/NetsuiteSeoContentSection.vue'
 import NetsuiteFinalCtaSection from '../components/NetsuiteFinalCtaSection.vue'
 import Footer from '../components/footer.vue'
+
 
 // Page-level identity ref (kept for parity with the original single-file markup;
 // not currently targeted by any animation)

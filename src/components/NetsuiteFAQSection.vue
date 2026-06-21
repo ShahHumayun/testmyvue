@@ -1,29 +1,34 @@
 <template>
-  <!-- 14. FAQ SECTION -->
-  <section class="py-32 px-6 border-b border-neutral-900 relative z-20">
+  <section class="py-32 px-6 border-b border-neutral-800 bg-black relative z-20">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-center mb-16 text-white">
         Frequently Asked <span class="text-[#00ffa3]">Questions</span>
       </h2>
-      <div ref="faqWrapper" class="space-y-4">
-        <div
-          v-for="(item, idx) in faqsList"
-          :key="idx"
-          class="bg-neutral-950 border border-neutral-900 rounded-lg overflow-hidden transition-all duration-300"
-          :class="{ 'border-neutral-800': activeFaqStep === idx }"
+      
+      <div ref="faqContainer" class="space-y-4">
+        <div 
+          v-for="(item, idx) in faqsList" 
+          :key="idx" 
+          class="bg-black border border-neutral-800 rounded-xl overflow-hidden"
         >
-          <button @click="toggleFaqStep(idx)" class="w-full flex items-center justify-between p-6 text-left group">
+          <!-- Question Button -->
+          <button @click="toggleFaq(idx)" class="w-full flex items-center justify-between p-6 text-left group">
             <h3 class="font-bold text-base md:text-lg text-white group-hover:text-[#00ffa3] transition-colors">
               {{ item.question }}
             </h3>
-            <span class="ml-4 shrink-0 w-6 h-6 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center transition-transform duration-300" :class="{ 'rotate-180 border-[#00ffa3]/40': activeFaqStep === idx }">
-              <svg class="w-3 h-3 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+            <span class="ml-4 flex-shrink-0 w-6 h-6 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center transition-transform duration-300" 
+                  :class="{ 'rotate-180 border-[#00ffa3]/30': activeFaq === idx }">
+              <svg class="w-3 h-3 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
             </span>
           </button>
-          <div class="transition-all duration-300 ease-in-out max-h-0 opacity-0 overflow-hidden" :style="activeFaqStep === idx ? { 'max-h': '250px', 'opacity': 1, 'padding': '0 24px 24px 24px' } : {}">
-            <p class="text-neutral-400 text-sm md:text-base leading-relaxed border-t border-neutral-900 pt-4">
+          
+          <!-- Animated Answer Wrapper -->
+          <div class="answer-wrapper overflow-hidden" style="height: 0;">
+            <div class="p-6 pt-0 text-neutral-400 text-sm md:text-base leading-relaxed border-t border-neutral-900">
               {{ item.answer }}
-            </p>
+            </div>
           </div>
         </div>
       </div>
@@ -32,14 +37,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const faqWrapper = ref(null)
-const activeFaqStep = ref(null)
+const activeFaq = ref(null)
 
 const faqsList = [
   { question: 'What is NetSuite integration?', answer: 'NetSuite integration connects Oracle NetSuite ERP with other business applications to automate cross-platform workflows and maintain real-time data synchronization.' },
@@ -50,22 +51,18 @@ const faqsList = [
   { question: 'Do you offer post-integration support?', answer: 'Yes. We establish persistent monitoring protocols, API load checking, and iterative logic balancing support logs.' }
 ]
 
-const toggleFaqStep = (idx) => {
-  activeFaqStep.value = activeFaqStep.value === idx ? null : idx
+const toggleFaq = (idx) => {
+  const elements = document.querySelectorAll('.answer-wrapper')
+  
+  if (activeFaq.value === idx) {
+    gsap.to(elements[idx], { height: 0, duration: 0.4, ease: "power2.inOut" })
+    activeFaq.value = null
+  } else {
+    if (activeFaq.value !== null) {
+      gsap.to(elements[activeFaq.value], { height: 0, duration: 0.4, ease: "power2.inOut" })
+    }
+    gsap.to(elements[idx], { height: "auto", duration: 0.4, ease: "power2.inOut" })
+    activeFaq.value = idx
+  }
 }
-
-let scrollTriggerInstance = null
-
-onMounted(() => {
-  // FAQ Component Blocks Accumulation Rows Reveal
-  const anim = gsap.fromTo(faqWrapper.value.children, { opacity: 0, y: 15 }, {
-    opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out',
-    scrollTrigger: { trigger: faqWrapper.value, start: 'top 85%' }
-  })
-  scrollTriggerInstance = anim.scrollTrigger
-})
-
-onUnmounted(() => {
-  if (scrollTriggerInstance) scrollTriggerInstance.kill()
-})
 </script>

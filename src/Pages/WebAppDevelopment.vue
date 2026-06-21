@@ -9,6 +9,7 @@
 
     <webappcomponent1 @navigate="navigateToConsultation" />
     <webappcomponent2 />
+    <webdevelopmentportfoliosection />
     <webappcomponent3 />
     <webappcomponent4 />
     <webappcomponent5 />
@@ -31,6 +32,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import webappcomponent1 from '../components/webappcomponent1.vue'
 import webappcomponent2 from '../components/webappcomponent2.vue'
 import webappcomponent3 from '../components/webappcomponent3.vue'
+import webdevelopmentportfoliosection from '../components/webdevelopmentportfoliosection.vue'
 import webappcomponent4 from '../components/webappcomponent4.vue'
 import webappcomponent5 from '../components/webappcomponent5.vue'
 import webappcomponent6 from '../components/webappcomponent6.vue'

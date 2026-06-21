@@ -11,13 +11,13 @@
           NetSuite Integration Services
         </span>
         <h1 ref="heroHeadline" class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] text-white">
-          Connect Every System. <br>
+          Netsuite Meganto <br>
           <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00ffa3] via-emerald-400 to-teal-500">
-            Automate Every Process.
+            Integration.
           </span>
         </h1>
         <p ref="heroPara" class="text-neutral-400 text-base md:text-lg leading-relaxed max-w-xl">
-          Eliminate data silos and streamline operations with custom NetSuite integrations. Connect your business applications, automate workflows, and create a single source of truth across your organization.
+          NetSuite Magento Integration automates data sync between NetSuite ERP and Magento, streamlining products, orders, and customers data when orders are synced for improved efficiency and real-time updates.
         </p>
         <div ref="heroActions" class="flex flex-col sm:flex-row items-center gap-4 pt-4">
           <button class="w-full sm:w-auto px-8 py-4 bg-[#00ffa3] text-[#000000] font-bold text-sm uppercase tracking-wider rounded border border-[#00ffa3] hover:bg-transparent hover:text-[#00ffa3] transition-all duration-300 shadow-[0_0_25px_rgba(0,255,163,0.15)]">

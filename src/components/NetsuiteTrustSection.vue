@@ -28,10 +28,10 @@ gsap.registerPlugin(ScrollTrigger)
 const trustGrid = ref(null)
 
 const trustStats = [
-  { value: 100, suffix: '+', label: 'Integrations Delivered' },
-  { value: 50, suffix: '+', label: 'Business Systems Connected' },
-  { value: 99, suffix: '%', label: 'Data Accuracy Guaranteed' },
-  { value: 70, suffix: '%', label: 'Reduction In Manual Work' }
+  { value: 20, suffix: '+', label: 'Successful Integrations' },
+  { value: 50000, suffix: '+', label: 'Orders Synced' },
+  { value: 100, suffix: '%', label: 'Satisfied Clients' },
+  { value: 120000, suffix: '+', label: 'Products Synced' }
 ]
 
 let triggers = []

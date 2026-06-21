@@ -19,10 +19,16 @@
             We design and develop high-performance web applications that help businesses automate operations, improve customer experiences, and scale faster. From startups to enterprise solutions, we build web platforms that deliver measurable results.
           </p>
           <div ref="heroButtons" class="flex flex-col sm:flex-row items-center gap-4 pt-4">
-            <button @click="emitNavigate" class="w-full sm:w-auto px-8 py-4 bg-[#00ffa3] text-[#000000] font-bold rounded-lg shadow-[0_0_30px_rgba(0,255,163,0.3)] hover:shadow-[0_0_40px_rgba(0,255,163,0.5)] transition-all duration-300 hover:scale-[1.02]">
+            <button 
+              @click="router.push('/consultation')" 
+              class="w-full sm:w-auto px-8 py-4 bg-[#00ffa3] text-[#000000] font-bold rounded-lg shadow-[0_0_30px_rgba(0,255,163,0.3)] hover:shadow-[0_0_40px_rgba(0,255,163,0.5)] transition-all duration-300 hover:scale-[1.02]"
+            >
               Start Your Project
             </button>
-            <button class="w-full sm:w-auto px-8 py-4 bg-neutral-900 border border-neutral-800 text-white font-medium rounded-lg hover:bg-neutral-800 hover:border-neutral-700 transition-all duration-300">
+            <button 
+              @click="router.push('/portfolio')" 
+              class="w-full sm:w-auto px-8 py-4 bg-neutral-900 border border-neutral-800 text-white font-medium rounded-lg hover:bg-neutral-800 hover:border-neutral-700 transition-all duration-300"
+            >
               View Our Work
             </button>
           </div>
@@ -58,10 +64,11 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router' // Import useRouter
 import { gsap } from 'gsap'
 import Header from './Header.vue'
 
-const emit = defineEmits(['navigate'])
+const router = useRouter() // Initialize router
 const heroLabel = ref(null)
 const heroTitle = ref(null)
 const heroSubtitle = ref(null)
@@ -78,8 +85,6 @@ const travelDots = [
   { id: 4, title: 'Banff Glacial Retreats', imageUrl: 'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?q=80&w=1200' },
   { id: 5, title: 'Swiss Alpine Ridges', imageUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200' }
 ]
-
-const emitNavigate = () => emit('navigate')
 
 onMounted(() => {
   interval = setInterval(() => { currentDot.value = (currentDot.value + 1) % travelDots.length }, 4000)

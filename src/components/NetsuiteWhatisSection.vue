@@ -1,58 +1,69 @@
 <template>
-  <!-- 3. WHAT IS NETSUITE INTEGRATION -->
-  <section class="py-32 px-6 border-b border-neutral-900 relative z-20">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      <div class="space-y-6">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-white">
-          What Is <span class="text-[#00ffa3]">NetSuite Integration?</span>
+  <section class="py-32 px-6 border-b border-neutral-900 bg-black relative z-20">
+    <div class="max-w-5xl mx-auto">
+      
+      <div class="text-center space-y-6 mb-20 fade-up-animation">
+        <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+          Seamless Integration: <span class="text-[#00ffa3]">Magento to NetSuite</span> and <br/>
+          <span class="text-[#00ffa3]">NetSuite to Magento</span> for Enhanced eCommerce Efficiency
         </h2>
-        <p class="text-neutral-400 leading-relaxed text-base md:text-lg">
-          NetSuite integration connects Oracle NetSuite ERP with your external business applications, enabling real-time data synchronization, automated cross-platform workflow handling, and improved operational execution efficiency. It establishes an absolute single point of programmatic visibility.
+        <p class="max-w-3xl mx-auto text-neutral-400 text-lg md:text-xl leading-relaxed">
+          NetSuite Magento Integration enables businesses to connect their ERP and eCommerce platforms, 
+          creating a unified, efficient system that synchronizes products, orders and customers data 
+          when orders are synced in real time.
         </p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-          <div v-for="(benefit, i) in explanationBenefits" :key="i" class="flex items-center gap-3 font-mono text-xs text-neutral-300">
-            <span class="w-1.5 h-1.5 bg-[#00ffa3] rounded-full shadow-[0_0_8px_#00ffa3]"></span>
-            {{ benefit }}
-          </div>
-        </div>
       </div>
 
-      <!-- Live Visual Interactive Node Pipeline Matrix -->
-      <div class="bg-neutral-950 border border-neutral-900 rounded-xl p-8 relative min-h-[300px] flex flex-col justify-between overflow-hidden">
-        <div class="flex items-center justify-between border-b border-neutral-900 pb-4 font-mono text-xs text-neutral-500">
-          <span>DATA TRANSITION CHANNEL</span>
-          <span class="text-[#00ffa3] animate-pulse">● SYNCHRONIZED</span>
-        </div>
-        <div class="py-8 space-y-6 relative">
-          <div class="flex justify-between items-center relative z-20">
-            <div class="bg-black border border-neutral-800 px-4 py-2.5 rounded text-xs font-mono text-white">External Platform API</div>
-            <div class="bg-black border border-neutral-800 px-4 py-2.5 rounded text-xs font-mono text-white">NetSuite Restlet</div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div 
+          v-for="(feature, index) in features" 
+          :key="index" 
+          class="p-6 rounded-2xl bg-neutral-900/30 border border-neutral-800 hover:border-[#00ffa3]/30 transition-all duration-300"
+        >
+          <div class="flex items-start gap-3 mb-3">
+            <div class="mt-1 flex-shrink-0">
+              <div class="w-5 h-5 rounded-full bg-[#00ffa3]/10 border border-[#00ffa3] flex items-center justify-center">
+                <svg class="w-3 h-3 text-[#00ffa3]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            <h3 class="text-lg font-bold text-white tracking-tight">{{ feature.title }}</h3>
           </div>
-          <!-- Dynamic Continuous Flow Processing Bar Line -->
-          <div class="absolute top-[17px] left-8 right-8 h-[1px] bg-neutral-800 z-10">
-            <div class="h-full w-12 bg-gradient-to-r from-transparent via-[#00ffa3] to-transparent animate-[marquee_3s_linear_infinite]"></div>
-          </div>
-        </div>
-        <div class="bg-black border border-neutral-900 rounded p-4 font-mono text-[11px] text-neutral-400 space-y-1">
-          <p><span class="text-neutral-600">></span> Payload: { status: "synchronized", records: 4120 }</p>
-          <p><span class="text-neutral-600">></span> Integrity Validation Check: 100% Passed</p>
+          <p class="text-neutral-400 text-sm leading-relaxed pl-8">
+            {{ feature.desc }}
+          </p>
         </div>
       </div>
+      
     </div>
   </section>
 </template>
 
 <script setup>
-const explanationBenefits = [
-  'Single Source Of Truth', 'Real-Time Data Visibility', 'Reduced Human Errors',
-  'Automated Workflows', 'Improved Productivity', 'Scalable Business Operations'
+const features = [
+  { title: 'Real-Time Inventory Updates', desc: 'Updates in Netsuite are instantly reflected in Magento, ensuring accurate stock levels across all channels.' },
+  { title: 'Customizable CRON Schedule', desc: 'The user can set up a customized CRON schedule, selecting the desired time frame for when the scripts will run and choosing which specific scripts to execute.' },
+  { title: 'Better Customer Experience', desc: 'Accurate inventory and order information enhance the shopping experience for Magento customers, ensuring they have up-to-date details for a smoother purchasing process.' },
+  { title: 'Custom Features Selection', desc: 'The user has the option to select only the customized features they need from the list of available options, rather than all features.' },
+  { title: 'Bulk Product Synchronization', desc: 'Import all Netsuite products into Magento by either adding new products or updating existing product details to keep data aligned.' },
+  { title: 'Reduced Manual Data Entry', desc: 'Automation minimizes the need for manual data entry, saving significant time and reducing the risk of human errors.' },
+  { title: 'Order Status Updates', desc: 'Changes in order status in NetSuite are automatically reflected in Magento, enhancing transparency without manual admin intervention.' },
+  { title: 'Data Synchronization', desc: 'New and updated product data from NetSuite is automatically pushed to Magento, centralizing information across platforms.' },
+  { title: 'Bulk Orders Synchronization', desc: 'After setting up the store, the user has the option to import all Netsuite products into Magento. In this case, the user has two options: add all products to the Magento store or update all existing product details. The user must select one of these options to sync product details between NetSuite and the connector app.' },
+  { title: 'Multi-Store Management', desc: 'The user can link multiple Magento stores to NetSuite via the connector app, allowing them to connect each store to either the same or different NetSuite ERP systems. This enables seamless data synchronization, ensuring that inventory, orders, and product details are consistently updated across all stores from a single interface.' },
+  { title: 'Product Synchronization Options', desc: 'The user has multiple flexible options to add or update products efficiently. The first option is to manually import products into Magento. The second option allows the user to import newly added or updated products via a button click, based on the specified CRON time frame. The third option is to use a CRON job to automate the product add/update process.' },
+  { title: 'Automated Order Management', desc: 'Magento orders are automatically synced to Netsuite, streamlining order processing. The user has multiple options to sync orders. The first option is to manually import orders into NetSuite. The second option allows the user to import newly added orders via a button click, based on the specified CRON time frame. The third option is to use a CRON job to automate the order sync process.' }
 ]
 </script>
 
 <style scoped>
-/* Keyframe linear layout trace mapping loop for the data transition channel */
-@keyframes marquee {
-  0% { transform: translateX(-150%); }
-  100% { transform: translateX(250%); }
+.fade-up-animation {
+  animation: fadeUp 1s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 </style>

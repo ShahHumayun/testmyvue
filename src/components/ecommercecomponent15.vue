@@ -1,64 +1,58 @@
 <template>
   <section class="py-32 px-6 border-b border-neutral-900 bg-neutral-950/20 relative z-20 text-neutral-400">
-      <div class="max-w-4xl mx-auto space-y-8 tracking-wide text-sm md:text-base leading-relaxed">
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight text-white text-center mb-12">
-          Why Ecommerce Development Is Essential For <span class="text-[#00ffa3]">Modern Businesses</span>
-        </h2>
-        
-        <div class="space-y-6">
-          <p>
-            In the current global economic framework, digital commerce infrastructure has shifted from an experimental operations vector to the core engine of corporate scaling. The traditional boundaries separating physical brick-and-mortar storefronts from target demographics have fractured. Modern enterprises must adapt to high-velocity transactional environments or risk total baseline consolidation by agile market competitors. High-performance custom ecommerce ecosystem engineering provides the technical baseline required to capture shifting market traffic and monetize shifting consumer preferences instantly.
-          </p>
-          
-          <h3 class="text-lg font-bold text-white tracking-tight mt-6">Evolutionary Shifts in Global Online Shopping Trends</h3>
-          <p>
-            Macroeconomic consumer indexing indicates a permanent integration of algorithmic marketplace funnels directly into daily human behavior. Online shopping platforms are no longer isolated nodes utilized for episodic ordering; they serve as dynamic personalized ecosystems where consumers expect instantaneous rendering, predictive inventory processing, and algorithmic asset curation. Enterprises leveraging modern systems can easily configure multi-tier product feeds to target specific behavioral groups, reducing customer acquisition costs while driving lifetime values exponentially upwards.
-          </p>
-
-          <h3 class="text-lg font-bold text-white tracking-tight mt-6">Decoding Modern Digital Consumer Behavior</h3>
-          <p>
-            The digital user journey is exceptionally delicate. Micro-frictions within checkout sequences, unaccounted network latency, or non-intuitive navigation frameworks trigger near-instantaneous cart abandonment vectors. Consumers demand extreme accessibility paired with absolute clarity. Our engineering paradigm addresses these micro-behavioral thresholds by eliminating input validation bottlenecks, streamlining database query loops, and configuring ultra-thin customer interfaces that align perfectly with conversion mapping metrics.
-          </p>
-
-          <h3 class="text-lg font-bold text-white tracking-tight mt-6">The Undeniable Imperative of Mobile Commerce Growth</h3>
-          <p>
-            Mobile device traffic controls the absolute majority of concurrent global transactions. If an electronic commerce asset is not engineered with mobile-first rendering paths from day zero, it is essentially invisible to active buying cohorts. Responsive viewport scaling alone is insufficient; modern architecture demands specific touch-target spacing optimizations, native hardware wallet API integrations (such as Apple Pay and Google Pay), and decoupled network payload processing loops that allow high-fidelity platforms to function correctly over variable mobile cellular networks.
-          </p>
-
-          <h3 class="text-lg font-bold text-white tracking-tight mt-6">Algorithmic Conversion Curve Optimization</h3>
-          <p>
-            True business efficiency is measured by maximizing the revenue yields extracted from pre-existing inbound traffic. Custom conversion-focused web engineering implements specialized server-side optimization techniques to achieve this. Through predictive item indexing, localized dynamically rendered price routing, one-click layout bypasses, and unified backend data caching layers, our setups consistently secure high conversion curves while maintaining low client churn margins.
-          </p>
-
-          <h3 class="text-lg font-bold text-white tracking-tight mt-6">Advanced Structural Search Engine Optimization (Ecommerce SEO)</h3>
-          <p>
-            Organic customer acquisition patterns depend heavily on systematic search visibility. Generic content deployment models fail to parse correctly against modern search ranking crawlers. Our system structure utilizes deep nested semantic HTML routing layouts, programmatically generated schema graph arrays, high-speed rendering profiles, and clean contextual link maps. This ensures every product category node achieves high structural visibility without relying entirely on expensive ad platforms.
-          </p>
-
-          <h3 class="text-lg font-bold text-white tracking-tight mt-6">Cryptographic Ledger Integrity and Payment Infrastructure Security</h3>
-          <p>
-            Maintaining user transaction trust requires highly secure network engineering. Securing multi-vendor or direct-to-consumer store frameworks requires strict isolation of client data tokens, end-to-end payload encryption layers, PCI-compliant infrastructure nodes, and integrated fraud risk mitigation modules. By utilizing secure token handshakes and keeping sensitive banking data out of localized server state pools, your store architecture remains insulated from traditional data vulnerability vectors.
-          </p>
-
-          <h3 class="text-lg font-bold text-white tracking-tight mt-6">Scalability Metrics & Frictionless Global Market Reach</h3>
-          <p>
-            Enterprise commerce infrastructure must scale instantly to manage sudden, unpredictable traffic spikes without performance loss. Transitioning architectures into headless configurations or cloud-edge nodes completely separates presentation layers from heavy background processing systems. This ensures your customer-facing catalog remains fast and available during peak viral events, providing your brand with a reliable, infinitely scalable path into global digital markets.
+    <div class="max-w-4xl mx-auto space-y-8 tracking-wide text-sm md:text-base leading-relaxed">
+      
+      <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight text-white text-center mb-12">
+        Why Ecommerce Development Is Essential For <span class="text-[#00ffa3]">Modern Businesses</span>
+      </h2>
+      
+      <div class="space-y-6">
+        <div v-for="(block, index) in blocks" :key="index">
+          <h3 v-if="block.heading" class="text-lg font-bold text-white tracking-tight mt-6">
+            {{ block.heading }}
+          </h3>
+          <p :class="{'mt-2': block.heading}">
+            {{ block.body }}
           </p>
         </div>
       </div>
-    </section>
-
+      
+    </div>
+  </section>
 </template>
 
 <script setup>
 const blocks = [
-  { body: 'In the current global economic framework, digital commerce infrastructure has shifted from an experimental operations vector to the core engine of corporate scaling.' },
-  { heading: 'Evolutionary Shifts in Global Online Shopping Trends', body: 'Macroeconomic consumer indexing indicates a permanent integration of algorithmic marketplace funnels directly into daily human behavior.' },
-  { heading: 'Decoding Modern Digital Consumer Behavior', body: 'The digital user journey is exceptionally delicate. Micro-frictions within checkout sequences trigger near-instantaneous cart abandonment.' },
-  { heading: 'The Undeniable Imperative of Mobile Commerce Growth', body: 'Mobile device traffic controls the absolute majority of concurrent global transactions.' },
-  { heading: 'Algorithmic Conversion Curve Optimization', body: 'True business efficiency is measured by maximizing the revenue yields extracted from inbound traffic.' },
-  { heading: 'Advanced Structural SEO', body: 'Organic customer acquisition patterns depend heavily on systematic search visibility.' },
-  { heading: 'Payment Infrastructure Security', body: 'Maintaining user transaction trust requires highly secure network engineering.' },
-  { heading: 'Scalability & Global Market Reach', body: 'Enterprise commerce infrastructure must scale instantly to manage sudden traffic spikes.' },
+  { 
+    body: 'Digital commerce has shifted from an experimental channel to the primary engine for corporate scaling. To remain competitive, modern enterprises must move beyond traditional storefronts. High-performance custom ecommerce development provides the technical foundation needed to capture market traffic, monetize consumer preferences, and operate at the velocity today\'s economy demands.' 
+  },
+  { 
+    heading: 'Evolutionary Shifts in Online Shopping', 
+    body: 'Online shopping is no longer just for occasional orders; it is a personalized ecosystem. Consumers now expect instantaneous loading, predictive inventory management, and curated product experiences. Businesses that leverage modern, data-driven systems can effectively target behavioral groups, significantly lowering customer acquisition costs while driving lifetime value.' 
+  },
+  { 
+    heading: 'Decoding Digital Consumer Behavior', 
+    body: 'The digital user journey is fragile. Issues like non-intuitive navigation, slow loading times, or complex checkout flows often lead to immediate cart abandonment. Our development paradigm prioritizes clarity and speed, removing technical bottlenecks and streamlining interfaces to align perfectly with conversion mapping and user intent.' 
+  },
+  { 
+    heading: 'The Mobile Commerce Imperative', 
+    body: 'With mobile devices driving the majority of global transactions, a mobile-first strategy is mandatory. We engineer platforms with touch-target optimization, native integration for digital wallets like Apple and Google Pay, and high-fidelity performance that ensures seamless shopping experiences even over variable cellular networks.' 
+  },
+  { 
+    heading: 'Optimizing Conversion Curves', 
+    body: 'True business efficiency comes from maximizing revenue from your existing traffic. We implement server-side optimizations, predictive product indexing, and one-click checkout flows. These technical refinements secure higher conversion rates and help maintain healthy profit margins by reducing friction at the final point of sale.' 
+  },
+  { 
+    heading: 'Advanced Ecommerce SEO Structure', 
+    body: 'Organic growth relies on high search visibility. Generic sites often struggle to rank, but our systems use semantic HTML, clean URL architecture, and optimized schema markup. By focusing on technical SEO foundations, we ensure your product categories are easily indexed and highly visible to your target audience.' 
+  },
+  { 
+    heading: 'Securing Payment Infrastructure', 
+    body: 'Trust is the currency of ecommerce. Our development process prioritizes security through PCI-compliant infrastructure, end-to-end payload encryption, and strict isolation of sensitive client data. By employing secure tokenization, we protect your brand and your customers from common data vulnerability threats.' 
+  },
+  { 
+    heading: 'Scalability for Global Reach', 
+    body: 'Enterprise commerce must scale effortlessly during traffic spikes. By utilizing headless architecture and cloud-edge deployment, we decouple your storefront from heavy backend processes. This keeps your catalog lightning-fast during peak events, providing your brand with an infinitely scalable path to global growth.' 
+  },
 ]
 </script>

@@ -1,83 +1,84 @@
 <template>
-  <!-- 6. WHY BUSINESSES CHOOSE NETSUITE INTEGRATION -->
-  <section class="py-32 px-6 border-b border-neutral-900 relative z-20">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+  <section class="py-32 px-6 bg-black relative z-20 overflow-hidden">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Center Heading -->
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-white text-center mb-24">
+        Key Benefits of <span class="text-[#00ffa3]">NetSuite Magento Integration</span>
+      </h2>
 
-      <!-- Metrics Automation Graphic Sync Board Container -->
-      <div class="bg-neutral-950 border border-neutral-900 rounded-xl p-6 grid grid-cols-2 gap-4 relative overflow-hidden aspect-video lg:aspect-auto lg:h-96">
-        <div class="bg-black border border-neutral-900 rounded-lg p-4 flex flex-col justify-between">
-          <span class="text-[10px] font-mono text-neutral-500 block">REALTIME DATA SYNC</span>
-          <div class="h-2 w-full bg-neutral-900 rounded overflow-hidden">
-            <div class="h-full bg-[#00ffa3] rounded animate-[marquee_2s_linear_infinite] w-1/3"></div>
+      <div class="space-y-32">
+        <!-- Feature 1: Text Left, Image Right -->
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="text-content-left space-y-4">
+            <h3 class="text-2xl font-bold text-white">Automated Data Synchronization</h3>
+            <p class="text-neutral-400 leading-relaxed">
+              Automatically syncs data between Magento and NetSuite, including orders, products, and customers data when orders are synced, reducing manual effort and minimizing data entry errors.
+            </p>
           </div>
-          <span class="text-xl font-bold font-mono text-white">4.8ms<span class="text-xs text-neutral-500 font-normal">/avg</span></span>
-        </div>
-        <div class="bg-black border border-neutral-900 rounded-lg p-4 flex flex-col justify-between">
-          <span class="text-[10px] font-mono text-neutral-500 block">WORKFLOW AUTOMATION</span>
-          <span class="text-2xl font-black text-[#00ffa3]">ACTIVE</span>
-          <span class="text-[10px] font-mono text-neutral-400">Continuous Logic Loops</span>
-        </div>
-        <div class="bg-black border border-neutral-900 rounded-lg p-4 col-span-2 flex items-center justify-between">
-          <div>
-            <span class="text-[10px] font-mono text-neutral-500 block mb-1">DATA INTEGRITY FACTOR</span>
-            <span class="text-sm font-bold text-white font-mono">99.9998% Validation Rate</span>
+          <div class="image-content-right overflow-hidden rounded-2xl border border-neutral-800">
+            <img src="https://images.unsplash.com/photo-1771922748624-b205cf5d002d?q=80&w=1420&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Data Sync" class="w-full h-80 object-cover" />
           </div>
-          <div class="w-3 h-3 rounded-full bg-[#00ffa3] shadow-[0_0_10px_#00ffa3]"></div>
+        </div>
+
+        <!-- Feature 2: Text Right, Image Left -->
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="image-content-left order-2 lg:order-1 overflow-hidden rounded-2xl border border-neutral-800">
+            <img src="https://plus.unsplash.com/premium_photo-1664297989345-f4ff2063b212?q=80&w=1098&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Inventory Updates" class="w-full h-80 object-cover" />
+          </div>
+          <div class="text-content-right order-1 lg:order-2 space-y-4">
+            <h3 class="text-2xl font-bold text-white">Real-Time Inventory Updates</h3>
+            <p class="text-neutral-400 leading-relaxed">
+              Keeps inventory levels up to date across both platforms, preventing stock discrepancies and ensuring that customers see accurate product availability on your Magento store.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 3: Text Left, Image Right -->
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div class="text-content-left space-y-4">
+            <h3 class="text-2xl font-bold text-white">Faster Order Processing</h3>
+            <p class="text-neutral-400 leading-relaxed">
+              Orders placed in Magento are immediately reflected in NetSuite, streamlining the fulfillment process, reducing delays, and improving delivery times.
+            </p>
+          </div>
+          <div class="image-content-right overflow-hidden rounded-2xl border border-neutral-800">
+            <img src="https://images.unsplash.com/photo-1751448555253-f39c06e29d82?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Order Processing" class="w-full h-80 object-cover" />
+          </div>
         </div>
       </div>
-
-      <!-- Right Side Content Copy Array Layout -->
-      <div class="space-y-8">
-        <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-white">
-          Transform Manual Processes <br><span class="text-[#00ffa3]">Into Automated Workflows</span>
-        </h2>
-        <div ref="benefitsBlock" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div v-for="(b, idx) in structuralBenefits" :key="idx" class="flex items-start gap-3 p-2 rounded hover:bg-neutral-950 transition-colors">
-            <span class="text-[#00ffa3] text-sm mt-0.5 font-bold">✓</span>
-            <span class="text-neutral-300 font-medium text-sm">{{ b }}</span>
-          </div>
-        </div>
-      </div>
-
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { onMounted } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const benefitsBlock = ref(null)
-
-const structuralBenefits = [
-  'Real-Time Data Synchronization', 'Improved Business Visibility', 'Reduced Operational Costs',
-  'Elimination Of Duplicate Data Entry', 'Increased Productivity', 'Better Customer Experience',
-  'Faster Decision Making', 'Scalable Growth Potential'
-]
-
-let scrollTriggerInstance = null
-
 onMounted(() => {
-  // Right Side Structural Benefits Cascade Reveal
-  const anim = gsap.fromTo(benefitsBlock.value.children, { opacity: 0, x: 15 }, {
-    opacity: 1, x: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out',
-    scrollTrigger: { trigger: benefitsBlock.value, start: 'top 85%' }
-  })
-  scrollTriggerInstance = anim.scrollTrigger
-})
+  // Select all feature rows
+  const rows = document.querySelectorAll('.grid')
+  
+  rows.forEach((row) => {
+    const textLeft = row.querySelector('.text-content-left')
+    const imgRight = row.querySelector('.image-content-right')
+    const imgLeft = row.querySelector('.image-content-left')
+    const textRight = row.querySelector('.text-content-right')
 
-onUnmounted(() => {
-  if (scrollTriggerInstance) scrollTriggerInstance.kill()
+    // Animate Text Left / Image Right
+    if (textLeft && imgRight) {
+      gsap.from(textLeft, { x: -50, opacity: 0, duration: 1, scrollTrigger: { trigger: row, start: 'top 80%' } })
+      gsap.from(imgRight, { x: 50, opacity: 0, duration: 1, scrollTrigger: { trigger: row, start: 'top 80%' } })
+    }
+
+    // Animate Image Left / Text Right
+    if (imgLeft && textRight) {
+      gsap.from(imgLeft, { x: -50, opacity: 0, duration: 1, scrollTrigger: { trigger: row, start: 'top 80%' } })
+      gsap.from(textRight, { x: 50, opacity: 0, duration: 1, scrollTrigger: { trigger: row, start: 'top 80%' } })
+    }
+  })
 })
 </script>
-
-<style scoped>
-/* Keyframe linear layout trace mapping loop for the realtime sync progress bar */
-@keyframes marquee {
-  0% { transform: translateX(-150%); }
-  100% { transform: translateX(250%); }
-}
-</style>
