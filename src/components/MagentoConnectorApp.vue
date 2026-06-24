@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-black overflow-y-auto lg:overflow-hidden">
+  <div class="bg-black overflow-y-auto lg:overflow-hidden  lg:h-[620px]">
     <section class="h-auto py-10 lg:py-0 lg:h-[620px] px-6 border-b border-neutral-900 relative z-20 bg-black flex items-center">
       <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
 
@@ -40,7 +40,7 @@
 
         <div class="space-y-8">
           <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-white">
-            Why Your Business <br><span class="text-[#00ffa3]">Needs A Mobile App</span>
+            Magento Connector <br><span class="text-[#00ffa3]">App Features</span>
           </h2>
           <ul ref="whyList" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <li v-for="(benefit, idx) in appBenefits" :key="idx" class="flex items-start gap-3 p-2">
@@ -52,6 +52,12 @@
               <span class="text-neutral-300 font-medium text-sm md:text-base">{{ benefit }}</span>
             </li>
           </ul>
+          <router-link
+            to="/consultation"
+            class="inline-block px-6 py-3 bg-[#00ffa3] text-black font-semibold rounded-lg hover:bg-[#00e691] transition-colors duration-300"
+          >
+            Get a Quote
+          </router-link>
         </div>
 
       </div>
@@ -70,7 +76,6 @@ const whyList = ref(null)
 const currentSlide = ref(0)
 let slideInterval = null
 
-// Helper function that tells Vite to process the Magento Connector assets dynamically
 const getMagentoConnectorImage = (fileName) => {
   return new URL(`../assets/MagentoConnector/${fileName}`, import.meta.url).href
 }
@@ -83,8 +88,9 @@ const carouselSlides = ref([
 ])
 
 const appBenefits = [
-  'Direct Customer Engagement', 'Increased Brand Loyalty', 'Better User Experience',
-  'Higher Revenue Opportunities', 'Push Notification Marketing', 'Competitive Market Advantage', 'Real-Time Customer Access'
+  'Registered Dealers Management',
+  'Detailed Order Information',
+  'Orders Dashboard',
 ]
 
 function nextSlide() {

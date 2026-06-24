@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router' // 👈 1. Changed createWebHistory to createWebHashHistory
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import Home from '../Pages/Home.vue'
 import About from '../Pages/About.vue' 
@@ -29,8 +29,11 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(), // 👈 2. Updated this line to use hash history
-  routes
+  history: createWebHashHistory(),
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }
+  }
 })
 
 export default router
