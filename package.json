@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@supabase/supabase-js": "^2.108.1",
     "@tailwindcss/vite": "^4.3.1",
     "@vueuse/head": "^0.9.8",

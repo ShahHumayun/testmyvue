@@ -105,6 +105,8 @@
         :darkMode="isDarkMode"
       />
 
+      <ChatBot />
+
       <footer class="copyright-section">
         <p>&copy; {{ currentYear }} WebHive Technologies. All rights reserved.</p>
       </footer>
@@ -118,6 +120,7 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
 import HomeComponent1 from '../components/HomeComponent1.vue'
 import WhyWebhive from '../components/WhyWebhive.vue'
+import ChatBot from '../components/ChatBot.vue'
 
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
