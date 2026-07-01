@@ -76,11 +76,11 @@
     </Transition>
 
     <main class="hero-main">
-      <WebDevelopmentPortfolioSection :isDarkMode="isDarkMode" /><br>
+      <WebDevelopmentPortfolioSection :isDarkMode="isDarkMode" />
       <AppDevelopmentProjectSection 
         :isDarkMode="isDarkMode"
         @open-modal="openModal"
-      /><br>
+      />
       <EcommerceprojectsSection :isDarkMode="isDarkMode"/>
     </main>
 
@@ -118,6 +118,27 @@
       </Transition>
     </Teleport>
 
+    <!-- Floating chat widget -->
+    <button
+      class="chat-fab"
+      @click="isChatOpen = !isChatOpen"
+      :aria-label="isChatOpen ? 'Close chat' : 'Open chat'"
+    >
+      <svg v-if="!isChatOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8-1.06 0-2.077-.16-3.02-.457L3 21l1.5-4.5C3.55 15.163 3 13.632 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z" />
+      </svg>
+      <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <Transition name="chat-pop">
+      <div v-if="isChatOpen" class="chat-popup">
+        <button class="chat-popup-close" @click="isChatOpen = false" aria-label="Close chat">✕</button>
+        <ChatBot variant="popup" />
+      </div>
+    </Transition>
+
   </div>
 </template>
 
@@ -125,6 +146,7 @@
 import WebDevelopmentPortfolioSection from '../components/webdevelopmentportfoliosection.vue'
 import AppDevelopmentProjectSection from '../components/AppDevelopmentProjectSection.vue'
 import EcommerceprojectsSection from '../components/EcommerceprojectsSection.vue'
+import ChatBot from '../components/ChatBot.vue'
 
 // ✅ All four app components
 import TaylorAllergyApp from '../components/TaylorAllergyApp.vue'
@@ -137,7 +159,8 @@ import gsap from 'gsap'
 
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
-const activeModal = ref(null) // holds the component to show, or null
+const activeModal = ref(null)
+const isChatOpen = ref(false)
 
 // ✅ Map project titles to their components
 const modalMap = {
@@ -233,13 +256,13 @@ const onMenuLeave = (el, done) => {
   transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
-.hero-wrapper *,
+/* .hero-wrapper *,
 .hero-wrapper *::before,
 .hero-wrapper *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 
 .theme-dark {
   background-color: #0b0c10;
@@ -515,7 +538,7 @@ const onMenuLeave = (el, done) => {
   flex-direction: column;
   width: 100%;
   padding-inline: clamp(20px, 5vw, 60px);
-  gap: 60px;
+  gap: 24px;
   padding-top: calc(60px + clamp(10px, 2vw, 22px) + 50px);
   padding-bottom: 60px;
 }
@@ -667,6 +690,79 @@ const onMenuLeave = (el, done) => {
     right: 14px;
     padding: 8px 14px;
     font-size: 12px;
+  }
+}
+
+/* ── Floating Chat Widget (new, isolated) ── */
+.chat-fab {
+  position: fixed;
+  bottom: clamp(16px, 4vw, 28px);
+  right: clamp(16px, 4vw, 28px);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: var(--brand-accent);
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 950;
+  box-shadow: 0 8px 24px rgba(0, 255, 163, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.chat-fab:hover { transform: translateY(-2px) scale(1.05); }
+.chat-fab:active { transform: scale(0.95); }
+
+.chat-popup {
+  position: fixed;
+  bottom: clamp(84px, 12vh, 100px);
+  right: clamp(16px, 4vw, 28px);
+  width: min(380px, calc(100vw - 32px));
+  height: min(400px, calc(100dvh - 140px));
+  z-index: 940;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chat-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.chat-popup-close:hover { background: rgba(255, 255, 255, 0.2); }
+
+.chat-pop-enter-active,
+.chat-pop-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.chat-pop-enter-from,
+.chat-pop-leave-to {
+  opacity: 0;
+  transform: translateY(16px) scale(0.96);
+}
+
+@media (max-width: 480px) {
+  .chat-popup {
+    left: 16px;
+    right: 16px;
+    width: auto;
   }
 }
 </style>
