@@ -364,7 +364,8 @@ const lead = reactive({
 })
 
 const now = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-const messages      = ref([{ id: 1, sender: 'bot', text: chatTree.start.message, time: now() }])
+// const messages      = ref([{ id: 1, sender: 'bot', text: chatTree.start.message, time: now() }])
+const messages = ref([{ id: 1, sender: 'bot', text: chatTree.start.message, time: now() }])
 const activeOptions = ref(chatTree.start.options)
 const stepType      = computed(() => chatTree[currentStep.value]?.type ?? '')
 
@@ -932,6 +933,11 @@ const sendEmail = async () => {
   margin-bottom: 12px;
   line-height: 1.1;
   width: 100%;
+  transition: color var(--transition-speed); /* Smooth transition */
+}
+
+.theme-light .chatbot-heading {
+  color: #0f172a;
 }
 .chatbot-subheading {
   font-size: 14px;
@@ -940,6 +946,11 @@ const sendEmail = async () => {
   line-height: 1.6;
   margin-bottom: 40px;
   max-width: 420px;
+  transition: color var(--transition-speed);
+}
+/* Add theme override */
+.theme-light .chatbot-subheading {
+  color: #475569;
 }
 
 /* ── Card ── */
@@ -1001,12 +1012,11 @@ const sendEmail = async () => {
   padding: 20px 16px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  /* justify-content: flex-end; 👈 REMOVE THIS LINE */
   gap: 4px;
   scroll-behavior: smooth;
   background-color: #050505;
-  background-image:
-    radial-gradient(rgba(0, 255, 163, 0.025) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(0, 255, 163, 0.025) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 .chatbot-messages::-webkit-scrollbar { width: 3px; }
