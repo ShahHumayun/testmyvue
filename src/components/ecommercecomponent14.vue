@@ -19,7 +19,7 @@
 <script setup>
 const stack = [
   { category: 'Frontend', items: ['Next.js', 'Vue', 'Nuxt', 'Astro'] },
-  { category: 'Commerce', items: ['Shopify', 'Medusa', 'Commerce.js', 'Saleor'] },
+  { category: 'Commerce', items: ['Magento', 'Medusa', 'Commerce.js', 'Saleor'] },
   { category: 'Backend', items: ['Node.js', 'GraphQL', 'PostgreSQL', 'Redis'] },
   { category: 'Infra', items: ['Vercel', 'AWS', 'Cloudflare', 'Docker'] },
 ]

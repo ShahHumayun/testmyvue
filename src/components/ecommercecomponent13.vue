@@ -41,8 +41,11 @@ const activeFaq = ref(null)
 
 const faqs = [
   { question: 'What is ecommerce development?', answer: 'Ecommerce development involves building online stores and digital shopping platforms that allow businesses to sell products and services online.' },
-  { question: 'Which ecommerce platform is best?', answer: 'The best platform depends on business goals, product types, scalability requirements, and budget.' },
+  { question: 'Which ecommerce platform is best?', answer: 'The best platform depends on business goals, product types, scalability requirements, and budget. For enterprise and B2B businesses with complex catalogs, we typically recommend Magento for its flexibility and scalability.' },
   { question: 'Can you migrate my existing store?', answer: 'Yes, we can migrate stores from platforms such as WooCommerce, Magento, Shopify, and custom systems.' },
+  { question: 'Why choose Magento for my store?', answer: 'Magento offers unmatched flexibility for complex product catalogs, multi-store and multi-currency setups, and B2B functionality out of the box. It scales well with business growth and supports deep customization through custom modules and API integrations — making it our go-to recommendation for enterprise-level stores.' },
+  { question: 'Do you offer Magento 2 migration services?', answer: 'Yes. We handle full Magento 1 to Magento 2 migrations and legacy platform-to-Magento 2 migrations, including data transfer, custom theme rebuilding, extension compatibility checks, and performance tuning post-migration.' },
+  { question: 'Can you build custom Magento modules?', answer: 'Yes, our team develops custom Magento 2 modules tailored to your business logic — from custom checkout flows and pricing rules to third-party API and ERP integrations like NetSuite.' },
   { question: 'Do you integrate payment gateways?', answer: 'Yes, we integrate secure payment gateways and transaction systems.' },
   { question: 'Can you optimize my ecommerce store for SEO?', answer: 'Absolutely. We build ecommerce websites with SEO best practices to improve visibility and organic traffic.' },
   { question: 'Do you provide ongoing support?', answer: 'Yes. We provide maintenance, updates, performance monitoring, and growth support.' }
