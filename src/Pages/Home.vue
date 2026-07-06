@@ -18,7 +18,7 @@
         </router-link>
 
         <button 
-          @click="isDarkMode = !isDarkMode"
+          @click="toggleTheme"
           class="theme-toggle"
           aria-label="Toggle Theme"
         >
@@ -143,11 +143,11 @@ import ChatBot from '../components/ChatBot.vue'
 
 const isChatOpen = ref(false)
 
+// Set default theme state to true (Black/Dark mode by default)
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)
 
-// menuItems matches about.vue structure to support proper internal routing
 const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Contact']
 const currentYear = new Date().getFullYear()
 
@@ -159,6 +159,12 @@ const parallax = reactive({
   bgX: 0,
   bgY: 0
 })
+
+// CHANGED: Saved under a unique key specifically for the home page
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  localStorage.setItem('webhive-home-theme', isDarkMode.value ? 'dark' : 'light')
+}
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
@@ -187,13 +193,21 @@ const toggleMenu = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+
+  // CHANGED: Retrieves only the home-specific theme cache definition
+  const savedTheme = localStorage.getItem('webhive-home-theme')
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+  } else {
+    // Default safe fallback if no unique history trace exists
+    isDarkMode.value = true
+  }
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 
-// Exact GSAP micro-interactions matches from about.vue
 const onMenuEnter = (el, done) => {
   gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })
   gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
@@ -223,9 +237,6 @@ const onMenuLeave = (el, done) => {
   width: 100% !important;
 }
 
-/* ----------------------------------------- */
-/* 1. CORE SETUP & PREMIUM THEME VARIABLES  */
-/* ----------------------------------------- */
 .hero-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
@@ -237,21 +248,9 @@ const onMenuLeave = (el, done) => {
   overflow-x: hidden;
 }
 
-/* .hero-wrapper *,
-.hero-wrapper *::before,
-.hero-wrapper *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-} */
-
-/* Theme Colors EXACT match to about.vue dark color palette */
 .theme-dark { background-color: #0b0c10; color: #ffffff; }
 .theme-light { background-color: #f4f6f9; color: #0f172a; }
 
-/* ----------------------------------------- */
-/* 2. BACKGROUND INTERACTIVE NET GRID         */
-/* ----------------------------------------- */
 .bg-overlay {
   position: absolute;
   inset: 0;
@@ -276,28 +275,18 @@ const onMenuLeave = (el, done) => {
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
 
-/* ----------------------------------------- */
-/* 3. EXACT NAVBAR STYLES FROM ABOUT.VUE     */
-/* ----------------------------------------- */
-
 .navbar {
   position: fixed;
   top: 16px;
   left: 50%;
-  /* Added translateZ(0) to force GPU hardware acceleration locally */
   transform: translateX(-50%) translateZ(0);
-  /* Hints the browser engine to prepare for backdrop composite layers */
   will-change: transform, backdrop-filter;
-  
   width: 92%;
   max-width: 1200px;
   z-index: 1000;
-  
-  /* Slightly boosted color saturation to fight dev-server gray washouts */
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(15px) saturate(180%);
   -webkit-backdrop-filter: blur(15px) saturate(180%);
-  
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   padding: 0.8rem 1.5rem;
@@ -445,9 +434,6 @@ const onMenuLeave = (el, done) => {
 .menu-active .line-mid { opacity: 0; }
 .menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
 
-/* ----------------------------------------- */
-/* 4. EXACT NAVIGATION OVERLAY FROM ABOUT.VUE */
-/* ----------------------------------------- */
 .nav-overlay {
   position: fixed;
   inset: 0;
@@ -539,9 +525,6 @@ const onMenuLeave = (el, done) => {
   }
 }
 
-/* ----------------------------------------- */
-/* 5. HERO LAYOUT ELEMENTS                   */
-/* ----------------------------------------- */
 .hero-main {
   width: 100%;
   display: flex;
@@ -623,9 +606,6 @@ const onMenuLeave = (el, done) => {
   padding-right: clamp(16px, 4vw, 40px);
 }
 
-/* ----------------------------------------- */
-/* 6. MINIMALIST COPYRIGHT FOOTER            */
-/* ----------------------------------------- */
 .copyright-section {
   width: 100%;
   text-align: center;
@@ -646,7 +626,6 @@ const onMenuLeave = (el, done) => {
   border-top-color: rgba(15, 23, 42, 0.06);
 }
 
-/* ── Floating Chat Widget (new, isolated) ── */
 .chat-fab {
   position: fixed;
   bottom: clamp(16px, 4vw, 28px);
@@ -719,4 +698,3 @@ const onMenuLeave = (el, done) => {
   }
 }
 </style>
-

@@ -18,7 +18,7 @@
         </router-link>
 
         <button 
-          @click="isDarkMode = !isDarkMode"
+          @click="toggleTheme"
           class="theme-toggle"
           aria-label="Toggle Theme"
         >
@@ -76,8 +76,8 @@
       <div class="hero-content-block">
         <span class="section-tag animate-fade-in">Innovative Digital Agency</span>
         <h1 class="about-title animate-title">
-  We Design The <br><span class="highlight-text">Digital Future.</span>
-</h1>
+          We Design The <br><span class="highlight-text">Digital Future.</span>
+        </h1>
         
         <p class="about-subtitle animate-fade-in">
           From concept to deployment, we combine stunning UI/UX design with high-performance engineering to build web platforms and mobile applications that grow businesses.
@@ -224,6 +224,7 @@ import ChatBot from '../components/ChatBot.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Enforced dark default matching Home.vue setup
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)
@@ -256,6 +257,12 @@ const parallax = reactive({
   bgY: 0
 })
 
+// CHANGED: Saved under a unique key specifically for the about page
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  localStorage.setItem('webhive-about-theme', isDarkMode.value ? 'dark' : 'light')
+}
+
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
 }
@@ -284,6 +291,15 @@ const scrollToWork = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+
+  // CHANGED: Retrieves only the about-specific theme configuration
+  const savedTheme = localStorage.getItem('webhive-about-theme')
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+  } else {
+    // Falls back to dark mode by default if no history exists for this page
+    isDarkMode.value = true
+  }
 
   gsap.fromTo('.animate-title', 
     { y: 50, opacity: 0 }, 
@@ -379,14 +395,6 @@ const onMenuLeave = (el, done) => {
   overflow-x: hidden;
 }
 
-/* .about-page-wrapper *,
-.about-page-wrapper *::before,
-.about-page-wrapper *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-} */
-
 .theme-dark { background-color: #0b0c10; color: #ffffff; }
 .theme-light { background-color: #f4f6f9; color: #0f172a; }
 
@@ -414,10 +422,6 @@ const onMenuLeave = (el, done) => {
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
 
-/* ----------------------------------------- */
-/* FIXED FLOATING GLASSBAR POSITION ADJUST   */
-/* ----------------------------------------- */
-
 .navbar {
   position: fixed;
   top: 16px;
@@ -426,7 +430,6 @@ const onMenuLeave = (el, done) => {
   width: 92%;
   max-width: 1200px;
   z-index: 1000;
-  /* Balanced glassmorphic background configurations */
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
@@ -446,7 +449,6 @@ const onMenuLeave = (el, done) => {
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
-/* Updated WebHive Logo Design Properties */
 .logo {
   font-size: 1.4rem;
   font-weight: 800;
@@ -467,12 +469,9 @@ const onMenuLeave = (el, done) => {
 }
 
 .status-dot {
-  display: none; /* Removed as structural dot is embedded into logo markup */
+  display: none;
 }
 
-/* ----------------------------------------- */
-/* ACTIONS LAYOUT CONSTANTS                  */
-/* ----------------------------------------- */
 .nav-actions {
   display: flex;
   align-items: center;
@@ -586,9 +585,6 @@ const onMenuLeave = (el, done) => {
 .menu-active .line-mid { opacity: 0; }
 .menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
 
-/* ----------------------------------------- */
-/* NAVIGATION OVERLAY PANEL                  */
-/* ----------------------------------------- */
 .nav-overlay {
   position: fixed;
   inset: 0;
@@ -680,9 +676,6 @@ const onMenuLeave = (el, done) => {
   }
 }
 
-/* ----------------------------------------- */
-/* MAIN HERO BLOCK SECTION                   */
-/* ----------------------------------------- */
 .about-hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 140px clamp(16px, 5vw, 60px) 80px; position: relative; z-index: 10; }
 .ambient-glow { position: absolute; width: min(600px, 80vw); height: min(600px, 80vw); background-color: var(--brand-accent); border-radius: 50%; filter: blur(150px); opacity: 0.12; pointer-events: none; }
 .theme-light .ambient-glow { opacity: 0.2; background-color: #a7f3d0; }
@@ -710,9 +703,6 @@ const onMenuLeave = (el, done) => {
 .theme-light .btn-start-project { background-color: #0f172a; color: #ffffff; }
 .btn-start-project:hover { background-color: var(--brand-accent); color: #0b0c10; transform: translateY(-2px); }
 
-/* ----------------------------------------- */
-/* THREE-COLUMN SERVICE SECTION              */
-/* ----------------------------------------- */
 .services-section { padding: 80px clamp(16px, 5vw, 60px); max-width: 1400px; margin: 0 auto; position: relative; z-index: 10; }
 .mini-title { font-family: monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--brand-accent); display: block; margin-bottom: 8px; }
 .theme-light .mini-title { color: #059669; font-weight: 600; }
@@ -726,9 +716,6 @@ const onMenuLeave = (el, done) => {
 .service-card p { font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.6); }
 .theme-light .service-card p { color: #475569; }
 
-/* ----------------------------------------- */
-/* PORTFOLIO GRID SIZING & ALIGNMENT         */
-/* ----------------------------------------- */
 .work-showcase-section { padding: 80px clamp(16px, 5vw, 60px) 100px; max-width: 1400px; margin: 0 auto; position: relative; z-index: 10; }
 .showcase-heading { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: 12px; text-transform: uppercase; }
 .showcase-subheading { font-size: 16px; color: rgba(255, 255, 255, 0.5); margin-bottom: 54px; }
@@ -772,9 +759,6 @@ const onMenuLeave = (el, done) => {
 .tech-pill { font-family: monospace; font-size: 11px; padding: 4px 10px; background-color: rgba(255, 255, 255, 0.04); border-radius: 4px; color: rgba(255, 255, 255, 0.8); }
 .theme-light .tech-pill { background-color: #f1f5f9; color: #334155; }
 
-/* ----------------------------------------- */
-/* CONTACT SCREENSHOT SECTION                */
-/* ----------------------------------------- */
 .contact-screenshot-section { padding: 80px clamp(16px, 5vw, 60px) 100px; position: relative; z-index: 10; width: 100%; }
 .contact-container { max-width: 1200px; margin: 0 auto; text-align: center; }
 .contact-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.01em; margin-bottom: 12px; }
@@ -796,15 +780,11 @@ const onMenuLeave = (el, done) => {
 .theme-light .text-blue { color: #0284c7; }
 .contact-item-card:hover .text-blue { color: var(--brand-accent); }
 
-/* ----------------------------------------- */
-/* MINIMALIST COPYRIGHT FOOTER               */
-/* ----------------------------------------- */
 .footer-group { width: 100%; position: relative; z-index: 10; margin-top: auto; }
 .copyright-section { width: 100%; text-align: center; padding: 30px 20px; font-size: 11px; letter-spacing: 0.05em; border-top: 1px solid; }
 .theme-dark .copyright-section { color: rgba(255, 255, 255, 0.4); background-color: rgba(9, 9, 11, 0.6); border-top-color: rgba(255, 255, 255, 0.05); }
 .theme-light .copyright-section { color: rgba(15, 23, 42, 0.5); background-color: rgba(241, 245, 249, 0.6); border-top-color: rgba(15, 23, 42, 0.06); }
 
-/* ── Floating Chat Widget (new, isolated) ── */
 .chat-fab {
   position: fixed;
   bottom: clamp(16px, 4vw, 28px);

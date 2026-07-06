@@ -10,7 +10,6 @@
       ></div>
     </div>
 
-    <!-- Exact Copy of Fixed Navbar Code from services.vue -->
     <header class="navbar">
       <a href="#" class="company-branding logo">
         WEBHIVE<span class="dot">.</span>
@@ -22,7 +21,7 @@
         </router-link>
 
         <button 
-          @click="isDarkMode = !isDarkMode"
+          @click="toggleTheme"
           class="theme-toggle"
           aria-label="Toggle Theme"
         >
@@ -46,7 +45,6 @@
       </div>
     </header>
 
-    <!-- Exact Copy of Navigation Overlay from services.vue -->
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
@@ -154,14 +152,14 @@
 
     <footer class="footer-group">
       <div class="copyright-section">
-        <p>&copy; {{ currentYear }} WebHive Technologies. All rights reserved.</p>
+        <p>© {{ currentYear }} WebHive Technologies. All rights reserved.</p>
       </div>
     </footer>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import gsap from 'gsap'
 
 const isDarkMode = ref(true)
@@ -190,6 +188,23 @@ const handleMouseMove = (e) => {
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
+
+// ── Isolated theme logic for Studio Page ──
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  // Save specifically to a studio page key so it doesn't affect standard global configurations
+  localStorage.setItem('studio-page-theme', isDarkMode.value ? 'dark' : 'light')
+}
+
+onMounted(() => {
+  // Read from the isolated Studio-specific cache
+  const savedTheme = localStorage.getItem('studio-page-theme')
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+  } else {
+    isDarkMode.value = true // Default theme when visiting fresh
+  }
+})
 
 const onMenuEnter = (el, done) => {
   gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })

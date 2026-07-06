@@ -1,1 +1,6 @@
 @import "tailwindcss";
+/* Apply a default dark background at the root level */
+html, body {
+  background-color: #060606 !important; /* Use your preferred dark/black theme color code */
+  color: #ffffff;
+}

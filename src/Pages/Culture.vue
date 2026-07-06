@@ -10,7 +10,6 @@
       ></div>
     </div>
 
-    <!-- Exact Copy of Fixed Navbar Code from home.vue / consultation.vue -->
     <header class="navbar">
       <a href="#" class="company-branding logo">
         WEBHIVE<span class="dot">.</span>
@@ -22,7 +21,7 @@
         </router-link>
 
         <button 
-          @click="isDarkMode = !isDarkMode"
+          @click="toggleTheme"
           class="theme-toggle"
           aria-label="Toggle Theme"
         >
@@ -46,7 +45,6 @@
       </div>
     </header>
 
-    <!-- Exact Copy of Navigation Overlay from home.vue / consultation.vue -->
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
@@ -78,7 +76,6 @@
     <main class="culture-main">
       <div class="ambient-glow"></div>
 
-      <!-- HERO INTRO -->
       <section class="culture-hero">
         <span class="section-tag animate-fade-in">Life at WebHive</span>
         <h1 class="culture-title animate-title">
@@ -92,7 +89,6 @@
         </p>
       </section>
 
-      <!-- PILLARS -->
       <section class="pillars-section">
         <div 
           v-for="pillar in pillars" 
@@ -105,7 +101,6 @@
         </div>
       </section>
 
-      <!-- ALTERNATING SHOWCASE ROWS -->
       <section class="showcase-rows">
         <div 
           v-for="row in showcaseRows" 
@@ -133,7 +128,6 @@
         </div>
       </section>
 
-      <!-- CLOSING CTA -->
       <section class="culture-cta animate-scroll-element">
         <div class="cta-glow"></div>
         <h2 class="cta-title">
@@ -155,8 +149,7 @@
       </div>
     </footer>
 
-     <!-- Floating chat widget -->
-    <button
+     <button
       class="chat-fab"
       @click="isChatOpen = !isChatOpen"
       :aria-label="isChatOpen ? 'Close chat' : 'Open chat'"
@@ -269,7 +262,22 @@ const handleMouseMove = (e) => {
 
 const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value }
 
+// ── Isolated theme logic for Culture Page ──
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  // Save specifically to a culture page key so it doesn't affect standard global configurations
+  localStorage.setItem('culture-page-theme', isDarkMode.value ? 'dark' : 'light')
+}
+
 onMounted(() => {
+  // Read from the isolated Culture-specific cache
+  const savedTheme = localStorage.getItem('culture-page-theme')
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+  } else {
+    isDarkMode.value = true // Default theme when visiting fresh
+  }
+
   gsap.set('.showcase-row, .culture-cta', { opacity: 1 })
 
   gsap.fromTo('.animate-title', 
@@ -388,14 +396,6 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
 }
-
-/* .culture-wrapper *,
-.culture-wrapper *::before,
-.culture-wrapper *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-} */
 
 .theme-dark { background-color: #0b0c10; color: #ffffff; }
 .theme-light { background-color: #f4f6f9; color: #0f172a; }

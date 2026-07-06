@@ -21,7 +21,7 @@
         </router-link>
 
         <button 
-          @click="isDarkMode = !isDarkMode"
+          @click="toggleTheme"
           class="theme-toggle"
           :aria-label="isDarkMode ? 'Switch to light theme' : 'Switch to dark theme'"
         >
@@ -90,7 +90,6 @@
       </div>
     </footer>
 
-    <!-- ✅ App Preview Modal Overlay -->
     <Teleport to="body">
       <Transition name="modal-fade">
         <div
@@ -98,7 +97,6 @@
           class="modal-backdrop"
           @click.self="closeModal"
         >
-          <!-- Close Button -->
           <button
             @click="closeModal"
             class="modal-close-btn"
@@ -108,7 +106,6 @@
             <span class="close-text">Close</span>
           </button>
 
-          <!-- Rounded Card -->
           <div class="modal-card">
             <div class="modal-scroll-inner">
               <component :is="activeModal" />
@@ -118,7 +115,6 @@
       </Transition>
     </Teleport>
 
-    <!-- Floating chat widget -->
     <button
       class="chat-fab"
       @click="isChatOpen = !isChatOpen"
@@ -141,7 +137,6 @@
 
   </div>
 </template>
-
 <script setup>
 import WebDevelopmentPortfolioSection from '../components/webdevelopmentportfoliosection.vue'
 import AppDevelopmentProjectSection from '../components/AppDevelopmentProjectSection.vue'
@@ -154,7 +149,7 @@ import MyExpenseTrackerApp from '../components/MyExpenseTrackerApp.vue'
 import BookLibraryApp from '../components/BookLibraryApp.vue'
 import MagentoConnectorApp from '../components/MagentoConnectorApp.vue'
 
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, onMounted } from 'vue'
 import gsap from 'gsap'
 
 const isDarkMode = ref(true)
@@ -179,6 +174,13 @@ const openModal = (projectTitle) => {
 
 const closeModal = () => {
   activeModal.value = null
+}
+
+// ── Isolated theme logic for Portfolio Page ──
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  // Save specifically to a portfolio page key so it doesn't affect standard global configurations
+  localStorage.setItem('portfolio-page-theme', isDarkMode.value ? 'dark' : 'light')
 }
 
 // Lock body scroll when modal is open
@@ -223,8 +225,17 @@ const onMenuLeave = (el, done) => {
   gsap.to(el.querySelectorAll('.menu-link, .consult-btn-overlay'), { yPercent: -100, duration: 0.4, stagger: 0.03, ease: 'power3.in' })
   gsap.to(el, { opacity: 0, duration: 0.4, ease: 'power2.in', delay: 0.15, onComplete: done })
 }
-</script>
 
+onMounted(() => {
+  // Read from the isolated Portfolio-specific cache
+  const savedTheme = localStorage.getItem('portfolio-page-theme')
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+  } else {
+    isDarkMode.value = true // Default theme when visiting fresh
+  }
+})
+</script>
 <style scoped>
 :global(html) {
   scroll-behavior: smooth;
@@ -255,14 +266,6 @@ const onMenuLeave = (el, done) => {
   overflow-x: hidden;
   transition: background-color var(--transition-speed), color var(--transition-speed);
 }
-
-/* .hero-wrapper *,
-.hero-wrapper *::before,
-.hero-wrapper *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-} */
 
 .theme-dark {
   background-color: #0b0c10;
@@ -572,8 +575,6 @@ const onMenuLeave = (el, done) => {
 /* =============================================
    ✅ APP PREVIEW MODAL
    ============================================= */
-
-/* Full screen solid black backdrop — hides everything behind it */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -585,7 +586,6 @@ const onMenuLeave = (el, done) => {
   padding: 24px;
 }
 
-/* Centered rounded card with green glow */
 .modal-card {
   position: relative;
   width: 100%;
@@ -604,12 +604,10 @@ const onMenuLeave = (el, done) => {
   flex-direction: column;
 }
 
-/* Scrollable inner area so long components scroll inside the card */
 .modal-scroll-inner {
   overflow-y: auto;
   overflow-x: hidden;
   flex: 1;
-  /* Hide scrollbar but keep scroll functional */
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 255, 163, 0.2) transparent;
 }
@@ -624,7 +622,6 @@ const onMenuLeave = (el, done) => {
   border-radius: 4px;
 }
 
-/* Close button — top right, above the card */
 .modal-close-btn {
   position: fixed;
   top: 20px;
@@ -661,7 +658,6 @@ const onMenuLeave = (el, done) => {
   line-height: 1;
 }
 
-/* Fade + scale transition */
 .modal-fade-enter-active {
   transition: opacity 0.25s ease, transform 0.25s ease;
 }

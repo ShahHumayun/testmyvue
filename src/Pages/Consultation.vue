@@ -22,7 +22,7 @@
         </router-link>
 
         <button 
-          @click="isDarkMode = !isDarkMode"
+          @click="toggleTheme"
           class="theme-toggle"
           aria-label="Toggle Theme"
         >
@@ -191,6 +191,7 @@
   </div>
 </template>
 
+
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import { createClient } from '@supabase/supabase-js'
@@ -248,6 +249,13 @@ const handleMouseMove = (e) => {
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
+}
+
+// ── Isolated theme logic for Consultation Page ──
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  // Save specifically to a consultation page key so it doesn't affect standard global configurations
+  localStorage.setItem('consultation-page-theme', isDarkMode.value ? 'dark' : 'light')
 }
 
 const evaluateClientForm = () => {
@@ -317,6 +325,14 @@ const handleSubmit = async () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  
+  // Read from the isolated Consultation-specific cache
+  const savedTheme = localStorage.getItem('consultation-page-theme')
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+  } else {
+    isDarkMode.value = true // Default theme when visiting fresh
+  }
 })
 
 onUnmounted(() => {
@@ -912,7 +928,7 @@ const onMenuLeave = (el, done) => {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2;
   box-shadow: 0 4px 20px rgba(0, 255, 163, 0.2);
 }
 .submit-btn:disabled {

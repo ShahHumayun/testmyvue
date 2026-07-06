@@ -10,7 +10,6 @@
       ></div>
     </div>
 
-    <!-- Exact Copy of Fixed Navbar Code from culture.vue -->
     <header class="navbar">
       <a href="#" class="company-branding logo">
         WEBHIVE<span class="dot">.</span>
@@ -22,7 +21,7 @@
         </router-link>
 
         <button 
-          @click="isDarkMode = !isDarkMode"
+          @click="toggleTheme"
           class="theme-toggle"
           aria-label="Toggle Theme"
         >
@@ -46,7 +45,6 @@
       </div>
     </header>
 
-    <!-- Exact Copy of Navigation Overlay from culture.vue -->
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
@@ -78,7 +76,6 @@
     <main class="services-main">
       <div class="ambient-glow"></div>
 
-      <!-- SERVICES HERO INTRO -->
       <section class="services-hero">
         <span class="section-tag animate-fade-in">Our Services</span>
         <h1 class="services-title animate-title">
@@ -90,7 +87,6 @@
         </p>
       </section>
 
-      <!-- SERVICES SHOWCASE GRID / LIST -->
       <section class="showcase-rows">
         <div 
           v-for="service in servicesList" 
@@ -118,7 +114,6 @@
         </div>
       </section>
 
-      <!-- CLOSING CTA - Layer Stack Corrected to Ensure Clicks Register -->
       <section class="services-cta animate-scroll-element">
         <div class="cta-glow"></div>
         <h2 class="cta-title">
@@ -139,8 +134,7 @@
       </div>
     </footer>
 
-     <!-- Floating chat widget -->
-    <button
+     <button
       class="chat-fab"
       @click="isChatOpen = !isChatOpen"
       :aria-label="isChatOpen ? 'Close chat' : 'Open chat'"
@@ -230,6 +224,13 @@ const servicesList = ref([
 
 const parallax = reactive({ bgX: 0, bgY: 0 })
 
+// ── Isolated theme logic for Services Page ──
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  // Save specifically to a services page key so it doesn't affect standard global configurations
+  localStorage.setItem('services-page-theme', isDarkMode.value ? 'dark' : 'light')
+}
+
 const handleMouseMove = (e) => {
   const { clientX, clientY } = e
   const { innerWidth, innerHeight } = window
@@ -242,6 +243,14 @@ const handleMouseMove = (e) => {
 const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value }
 
 onMounted(() => {
+  // Read from the isolated Services-specific cache
+  const savedTheme = localStorage.getItem('services-page-theme')
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+  } else {
+    isDarkMode.value = true // Keep dark as default when visiting fresh
+  }
+
   gsap.set('.showcase-row, .services-cta', { opacity: 1 })
 
   gsap.fromTo('.animate-title', 
@@ -314,6 +323,12 @@ const onMenuLeave = (el, done) => {
 
 onUnmounted(() => {
   ScrollTrigger.getAll().forEach(t => t.kill())
+  
+  /* 
+    Cleanup on route leave: Wipe the fallback common variable completely if 
+    other pages look for it, ensuring they boot up using their default theme options.
+  */
+  localStorage.removeItem('webhive-theme')
 })
 </script>
 
@@ -347,14 +362,6 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
 }
-
-/* .services-wrapper *,
-.services-wrapper *::before,
-.services-wrapper *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-} */
 
 .theme-dark { background-color: #0b0c10; color: #ffffff; }
 .theme-light { background-color: #f4f6f9; color: #0f172a; }
