@@ -94,7 +94,88 @@ const props = defineProps({
   variant: { type: String, default: 'section' } // 'section' | 'popup'
 })
 
-// chatbot code
+// ── FAQ data ──────────────────────────────────────────────
+// Answers shown to visitors who click "I Have a Question" instead of
+// starting the quote flow. Purely informational — none of this is sent
+// via email, so the EmailJS template does not need to change.
+const faqData = {
+  company: {
+    label: '🏢 Company',
+    questions: [
+      { q: 'What services do you offer?', a: 'We offer web development, mobile app development, Magento & e-commerce development, and NetSuite integration.' },
+      { q: 'Why should I choose WebHive?', a: 'We combine technical expertise with a fast, transparent process — from Magento specialists to full-stack developers, we build real solutions, not just websites.' },
+      { q: 'Can I see your portfolio?', a: 'Yes! Check out the Portfolio section on our site to see examples of our recent work.' },
+      { q: 'Do you work with international clients?', a: 'Absolutely — we work with clients across the globe and communicate via your preferred channel (email, Slack, Zoom, etc).' },
+      { q: 'How do I get started?', a: "Just click 'Get a Quote' below and answer a few quick questions — we'll get back to you within 24 hours." },
+    ],
+  },
+  webdev: {
+    label: '💻 Web Development',
+    questions: [
+      { q: 'Do you build custom or business websites?', a: 'Yes, we build fully custom business, corporate, and startup websites tailored to your goals.' },
+      { q: 'Can you redesign my existing website?', a: 'Yes, we regularly redesign and modernize existing websites while preserving what already works.' },
+      { q: 'Do you build web applications or custom web solutions?', a: 'Yes, we build custom web apps beyond simple sites, including internal tools and client-facing platforms.' },
+      { q: 'Can you integrate APIs into my website?', a: 'Yes, we integrate third-party and custom APIs into websites and web apps.' },
+      { q: 'What technologies do you use for web development?', a: 'Mainly NextJs, React, Tailwind CSS, Laravel, and GSAP, with backend integrations chosen per project.' },
+    ],
+  },
+  mobile: {
+    label: '📱 Mobile App Development',
+    questions: [
+      { q: 'Do you build Android, iPhone, or cross-platform apps?', a: 'Yes, we build for Android, iOS, and cross-platform, depending on your needs.' },
+      { q: 'Can you build an MVP for my startup?', a: 'Yes, MVP development is one of our specialties for startups looking to launch fast.' },
+      { q: 'Can you redesign or add features to my existing app?', a: 'Yes, we can redesign existing apps or extend them with new features.' },
+      { q: 'Do you publish on Google Play / App Store?', a: 'Yes, we handle the full publishing process for both stores.' },
+      { q: 'What technologies do you use for app development?', a: 'Typically React Native, with native tooling used when performance requires it.' },
+    ],
+  },
+  magento: {
+    label: '🛍️ Magento Development',
+    questions: [
+      { q: 'Do you build custom Magento stores?', a: 'Yes, custom Magento development is one of our core specialties.' },
+      { q: 'Can you migrate my store to Magento or upgrade it?', a: 'Yes, we handle both migrations to Magento and upgrades to the latest version.' },
+      { q: 'Do you develop Magento extensions or customize themes?', a: 'Yes, we build custom extensions and fully customize Magento themes.' },
+      { q: 'Can you integrate payment gateways and shipping services?', a: 'Yes, we integrate payment gateways and shipping providers into Magento stores.' },
+      { q: 'Can you improve Magento speed and SEO?', a: 'Yes, Magento performance tuning and SEO optimization are part of our standard offering.' },
+    ],
+  },
+  ecommerce: {
+    label: '🛒 E-Commerce',
+    questions: [
+      { q: 'Which e-commerce platforms do you support?', a: 'Magento is our specialty, and we also support Shopify and fully custom e-commerce builds.' },
+      { q: 'Can you build a multi-vendor marketplace?', a: 'Yes, we build multi-vendor marketplace platforms.' },
+      { q: 'Can you integrate Stripe/PayPal or other payment gateways?', a: 'Yes, we integrate Stripe, PayPal, and other major payment gateways.' },
+      { q: 'Can you migrate or improve my existing online store?', a: 'Yes, we handle store migrations and performance/UX improvements for existing stores.' },
+    ],
+  },
+  netsuite: {
+    label: '⚡ NetSuite Integration',
+    questions: [
+      { q: 'What is NetSuite integration and do you provide it?', a: 'NetSuite integration connects your website or store to NetSuite ERP so data flows automatically between systems — yes, we provide this.' },
+      { q: 'Can you integrate NetSuite with Magento, Shopify, or my ERP/CRM?', a: 'Yes, we integrate NetSuite with Magento, Shopify, and most ERP/CRM systems.' },
+      { q: 'Can you sync inventory, orders, or customer data with NetSuite?', a: 'Yes, we set up automatic syncing of inventory, orders, and customer data with NetSuite.' },
+      { q: 'Can you automate workflows with NetSuite?', a: 'Yes, we build automated business workflows powered by NetSuite.' },
+    ],
+  },
+  process: {
+    label: '📋 Process, Pricing & Support',
+    questions: [
+      { q: 'How does your development process work?', a: 'Discovery, proposal, design, build, testing, and launch — with regular check-ins throughout.' },
+      { q: 'What information do you need before starting?', a: "Your goals, target platform, rough budget, timeline, and any existing assets or requirements you have." },
+      { q: 'How much does a project typically cost?', a: 'Cost varies by scope — click "Get a Quote" and share your details for an accurate estimate.' },
+      { q: 'How long does a typical project take?', a: 'Timelines vary by scope, typically ranging from a few weeks to a few months.' },
+      { q: 'Do you provide ongoing maintenance and support after launch?', a: 'Yes, we offer ongoing maintenance and support plans after launch.' },
+      { q: 'Will you train my team or provide documentation?', a: 'Yes, we provide documentation and can train your team as part of handover.' },
+    ],
+  },
+}
+
+const faqFollowUpOptions = [
+  { text: '❓ Ask Another Question', value: 'faq_categories' },
+  { text: '📝 Get a Quote', value: 'start' },
+]
+
+// ── Lead-capture chat tree (unchanged) ───────────────────
 const chatTree = {
   start: {
     sender: 'bot',
@@ -105,6 +186,7 @@ const chatTree = {
       { text: '📱 Mobile App',           value: 'Mobile App',              nextStep: 'ask_platform' },
       { text: '🛒 E-Commerce Platform',  value: 'E-Commerce Platform',     nextStep: 'ask_platform' },
       { text: '⚡ NetSuite Integration', value: 'NetSuite Integration',    nextStep: 'ask_platform' },
+      { text: '❓ I Have a Question',    value: 'FAQ',                     nextStep: 'faq_categories' },
     ],
   },
   ask_platform: {
@@ -191,7 +273,7 @@ const lead = reactive({
 const now = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 const messages = ref([{ id: 1, sender: 'bot', text: chatTree.start.message, time: now() }])
 const activeOptions = ref(chatTree.start.options)
-const stepType      = computed(() => chatTree[currentStep.value]?.type ?? '')
+const stepType      = computed(() => chatTree[currentStep.value]?.type ?? 'buttons')
 
 const scroll = async () => {
   await nextTick()
@@ -205,11 +287,74 @@ const stepFieldMap = {
   ask_stage:    'project_stage',
 }
 
+// ── FAQ flow helpers ──────────────────────────────────────
+const showFaqCategories = () => {
+  currentStep.value = 'faq_categories'
+  isTyping.value = true
+  scroll()
+  setTimeout(() => {
+    isTyping.value = false
+    messages.value.push({ id: Date.now(), sender: 'bot', text: 'Sure! What would you like to know about?', time: now() })
+    activeOptions.value = Object.entries(faqData).map(([key, cat]) => ({ text: cat.label, value: key }))
+    scroll()
+  }, 800)
+}
+
+const showFaqQuestions = (categoryKey) => {
+  currentStep.value = 'faq_questions'
+  const category = faqData[categoryKey]
+  isTyping.value = true
+  scroll()
+  setTimeout(() => {
+    isTyping.value = false
+    messages.value.push({ id: Date.now(), sender: 'bot', text: `Here are some common questions about ${category.label.replace(/^\S+\s/, '')}:`, time: now() })
+    activeOptions.value = category.questions.map((item, idx) => ({ text: item.q, value: `${categoryKey}:${idx}` }))
+    scroll()
+  }, 800)
+}
+
+const showFaqAnswer = (refValue) => {
+  const [categoryKey, idx] = refValue.split(':')
+  const item = faqData[categoryKey].questions[Number(idx)]
+  currentStep.value = 'faq_followup'
+  isTyping.value = true
+  scroll()
+  setTimeout(() => {
+    isTyping.value = false
+    messages.value.push({ id: Date.now(), sender: 'bot', text: item.a, time: now() })
+    activeOptions.value = faqFollowUpOptions
+    scroll()
+  }, 900)
+}
+
 const handleOption = (option) => {
-  const field = stepFieldMap[currentStep.value] || 'service'
-  lead[field] = option.value
   messages.value.push({ id: Date.now(), sender: 'user', text: option.text, time: now() })
   activeOptions.value = []
+
+  // Entry point into the FAQ branch (from the main menu)
+  if (option.nextStep === 'faq_categories') {
+    showFaqCategories()
+    return
+  }
+
+  // Inside the FAQ branch
+  if (currentStep.value === 'faq_categories') {
+    showFaqQuestions(option.value)
+    return
+  }
+  if (currentStep.value === 'faq_questions') {
+    showFaqAnswer(option.value)
+    return
+  }
+  if (currentStep.value === 'faq_followup') {
+    if (option.value === 'faq_categories') showFaqCategories()
+    else advance('start')
+    return
+  }
+
+  // Existing lead-capture flow
+  const field = stepFieldMap[currentStep.value] || 'service'
+  lead[field] = option.value
   advance(option.nextStep)
 }
 

@@ -250,15 +250,27 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 2px 6px;
+  padding: 6px 12px; /* Fixed small paddings to give text breathing room */
   font-size: 1rem;
   font-weight: 700;
   border-radius: 8px;
   cursor: pointer;
-  color: #ffffff;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
+
+/* Dark Theme Button State */
+.theme-dark .view-btn {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* Light Theme Button State */
+.theme-light .view-btn {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: #000000;
+}
+
+/* Unified Hover State */
 .view-btn:hover {
   background-color: #00ffa3;
   color: #000000;

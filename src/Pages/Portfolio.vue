@@ -16,8 +16,8 @@
       </a>
 
       <div class="nav-actions">
-        <router-link to="/consultation" class="consult-btn">
-          Consultation
+        <router-link to="/" class="consult-btn">
+          Home
         </router-link>
 
         <button 
@@ -67,8 +67,8 @@
 
           <div class="menu-item-wrap overlay-btn-item">
             <span class="menu-index">0{{ menuItems.length + 1 }}</span>
-            <router-link to="/consultation" @click="toggleMenu" class="consult-btn-overlay">
-              Consultation
+            <router-link to="/" @click="toggleMenu" class="consult-btn-overlay">
+              Home
             </router-link>
           </div>
         </nav>
@@ -137,6 +137,7 @@
 
   </div>
 </template>
+
 <script setup>
 import WebDevelopmentPortfolioSection from '../components/webdevelopmentportfoliosection.vue'
 import AppDevelopmentProjectSection from '../components/AppDevelopmentProjectSection.vue'
@@ -152,6 +153,7 @@ import MagentoConnectorApp from '../components/MagentoConnectorApp.vue'
 import { ref, reactive, watch, onMounted } from 'vue'
 import gsap from 'gsap'
 
+// 1. Keeps initial state true so default load mounts as dark mode directly
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
 const activeModal = ref(null)
@@ -179,7 +181,6 @@ const closeModal = () => {
 // ── Isolated theme logic for Portfolio Page ──
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
-  // Save specifically to a portfolio page key so it doesn't affect standard global configurations
   localStorage.setItem('portfolio-page-theme', isDarkMode.value ? 'dark' : 'light')
 }
 
@@ -227,15 +228,16 @@ const onMenuLeave = (el, done) => {
 }
 
 onMounted(() => {
-  // Read from the isolated Portfolio-specific cache
   const savedTheme = localStorage.getItem('portfolio-page-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
   } else {
-    isDarkMode.value = true // Default theme when visiting fresh
+    // 2. Ensuring fallback on first load is always dark mode
+    isDarkMode.value = true 
   }
 })
 </script>
+
 <style scoped>
 :global(html) {
   scroll-behavior: smooth;
@@ -267,8 +269,9 @@ onMounted(() => {
   transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
+/* 3. Updated background to pure deep black */
 .theme-dark {
-  background-color: #0b0c10;
+  background-color: #000000;
   color: #ffffff;
 }
 .theme-light {
@@ -671,22 +674,6 @@ onMounted(() => {
 .modal-fade-leave-to {
   opacity: 0;
   transform: scale(0.97);
-}
-
-@media (max-width: 600px) {
-  .modal-card {
-    border-radius: 16px;
-    max-height: 92vh;
-  }
-  .modal-backdrop {
-    padding: 12px;
-  }
-  .modal-close-btn {
-    top: 12px;
-    right: 14px;
-    padding: 8px 14px;
-    font-size: 12px;
-  }
 }
 
 /* ── Floating Chat Widget (new, isolated) ── */
