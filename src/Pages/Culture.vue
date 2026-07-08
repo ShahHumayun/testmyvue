@@ -251,6 +251,17 @@ const showcaseRows = ref([
 
 const parallax = reactive({ bgX: 0, bgY: 0 })
 
+// Helper function to update the global HTML class token
+const applyGlobalThemeClass = (isDark) => {
+  if (isDark) {
+    document.documentElement.classList.add('theme-dark')
+    document.documentElement.classList.remove('theme-light')
+  } else {
+    document.documentElement.classList.add('theme-light')
+    document.documentElement.classList.remove('theme-dark')
+  }
+}
+
 const handleMouseMove = (e) => {
   const { clientX, clientY } = e
   const { innerWidth, innerHeight } = window
@@ -262,21 +273,26 @@ const handleMouseMove = (e) => {
 
 const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value }
 
-// ── Isolated theme logic for Culture Page ──
+// CHANGED: Saved under the unified webhive-theme key and updates root HTML element classes
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
-  // Save specifically to a culture page key so it doesn't affect standard global configurations
-  localStorage.setItem('culture-page-theme', isDarkMode.value ? 'dark' : 'light')
+  const activeTheme = isDarkMode.value ? 'dark' : 'light'
+  
+  localStorage.setItem('webhive-theme', activeTheme)
+  applyGlobalThemeClass(isDarkMode.value)
 }
 
 onMounted(() => {
-  // Read from the isolated Culture-specific cache
-  const savedTheme = localStorage.getItem('culture-page-theme')
+  // CHANGED: Check the universal site theme preference. Defaults to dark.
+  const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
   } else {
-    isDarkMode.value = true // Default theme when visiting fresh
+    isDarkMode.value = true
   }
+
+  // Keep root context token up-to-date instantly on view mount
+  applyGlobalThemeClass(isDarkMode.value)
 
   gsap.set('.showcase-row, .culture-cta', { opacity: 1 })
 

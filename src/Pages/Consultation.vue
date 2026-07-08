@@ -232,6 +232,26 @@ const parallax = reactive({
   bgY: 0
 })
 
+// Helper function to update the global HTML class token
+const applyGlobalThemeClass = (isDark) => {
+  if (isDark) {
+    document.documentElement.classList.add('theme-dark')
+    document.documentElement.classList.remove('theme-light')
+  } else {
+    document.documentElement.classList.add('theme-light')
+    document.documentElement.classList.remove('theme-dark')
+  }
+}
+
+// CHANGED: Saved under the unified webhive-theme key and updates root HTML element classes
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  const activeTheme = isDarkMode.value ? 'dark' : 'light'
+  
+  localStorage.setItem('webhive-theme', activeTheme)
+  applyGlobalThemeClass(isDarkMode.value)
+}
+
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
 }
@@ -249,13 +269,6 @@ const handleMouseMove = (e) => {
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
-}
-
-// ── Isolated theme logic for Consultation Page ──
-const toggleTheme = () => {
-  isDarkMode.value = !isDarkMode.value
-  // Save specifically to a consultation page key so it doesn't affect standard global configurations
-  localStorage.setItem('consultation-page-theme', isDarkMode.value ? 'dark' : 'light')
 }
 
 const evaluateClientForm = () => {
@@ -326,13 +339,16 @@ const handleSubmit = async () => {
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   
-  // Read from the isolated Consultation-specific cache
-  const savedTheme = localStorage.getItem('consultation-page-theme')
+  // CHANGED: Check the universal site theme preference. Defaults to dark.
+  const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
   } else {
-    isDarkMode.value = true // Default theme when visiting fresh
+    isDarkMode.value = true
   }
+
+  // Keep root context token up-to-date instantly on view mount
+  applyGlobalThemeClass(isDarkMode.value)
 })
 
 onUnmounted(() => {
@@ -359,7 +375,6 @@ const onMenuLeave = (el, done) => {
   )
 }
 </script>
-
 <style scoped>
 :global(html),
 :global(body) {

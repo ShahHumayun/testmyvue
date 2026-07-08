@@ -178,10 +178,24 @@ const closeModal = () => {
   activeModal.value = null
 }
 
-// ── Isolated theme logic for Portfolio Page ──
+// Helper function to update the global HTML class token
+const applyGlobalThemeClass = (isDark) => {
+  if (isDark) {
+    document.documentElement.classList.add('theme-dark')
+    document.documentElement.classList.remove('theme-light')
+  } else {
+    document.documentElement.classList.add('theme-light')
+    document.documentElement.classList.remove('theme-dark')
+  }
+}
+
+// CHANGED: Saved under the unified webhive-theme key and updates root HTML element classes
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
-  localStorage.setItem('portfolio-page-theme', isDarkMode.value ? 'dark' : 'light')
+  const activeTheme = isDarkMode.value ? 'dark' : 'light'
+  
+  localStorage.setItem('webhive-theme', activeTheme)
+  applyGlobalThemeClass(isDarkMode.value)
 }
 
 // Lock body scroll when modal is open
@@ -228,13 +242,17 @@ const onMenuLeave = (el, done) => {
 }
 
 onMounted(() => {
-  const savedTheme = localStorage.getItem('portfolio-page-theme')
+  // CHANGED: Check the universal site theme preference. Defaults to dark.
+  const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
   } else {
     // 2. Ensuring fallback on first load is always dark mode
     isDarkMode.value = true 
   }
+
+  // Keep root context token up-to-date instantly on view mount
+  applyGlobalThemeClass(isDarkMode.value)
 })
 </script>
 

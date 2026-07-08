@@ -257,10 +257,24 @@ const parallax = reactive({
   bgY: 0
 })
 
-// CHANGED: Saved under a unique key specifically for the about page
+// Helper function to update the global HTML class token
+const applyGlobalThemeClass = (isDark) => {
+  if (isDark) {
+    document.documentElement.classList.add('theme-dark')
+    document.documentElement.classList.remove('theme-light')
+  } else {
+    document.documentElement.classList.add('theme-light')
+    document.documentElement.classList.remove('theme-dark')
+  }
+}
+
+// CHANGED: Saved under the unified webhive-theme key and updates root HTML element classes
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
-  localStorage.setItem('webhive-about-theme', isDarkMode.value ? 'dark' : 'light')
+  const activeTheme = isDarkMode.value ? 'dark' : 'light'
+  
+  localStorage.setItem('webhive-theme', activeTheme)
+  applyGlobalThemeClass(isDarkMode.value)
 }
 
 const handleScroll = () => {
@@ -292,14 +306,16 @@ const scrollToWork = () => {
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
 
-  // CHANGED: Retrieves only the about-specific theme configuration
-  const savedTheme = localStorage.getItem('webhive-about-theme')
+  // CHANGED: Check the universal site theme preference. Defaults to dark.
+  const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
   } else {
-    // Falls back to dark mode by default if no history exists for this page
     isDarkMode.value = true
   }
+  
+  // Keep root context token up-to-date instantly on view mount
+  applyGlobalThemeClass(isDarkMode.value)
 
   gsap.fromTo('.animate-title', 
     { y: 50, opacity: 0 }, 

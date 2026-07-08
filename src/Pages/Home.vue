@@ -110,7 +110,6 @@
       </footer>
     </main>
     
-    <!-- Floating chat widget -->
     <button
       class="chat-fab"
       @click="isChatOpen = !isChatOpen"
@@ -143,7 +142,7 @@ import ChatBot from '../components/ChatBot.vue'
 
 const isChatOpen = ref(false)
 
-// Set default theme state to true (Black/Dark mode by default)
+// Set default theme state to true (Pure Black/Dark mode by default)
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)
@@ -160,10 +159,24 @@ const parallax = reactive({
   bgY: 0
 })
 
-// CHANGED: Saved under a unique key specifically for the home page
+// Helper function to update the global HTML class token
+const applyGlobalThemeClass = (isDark) => {
+  if (isDark) {
+    document.documentElement.classList.add('theme-dark')
+    document.documentElement.classList.remove('theme-light')
+  } else {
+    document.documentElement.classList.add('theme-light')
+    document.documentElement.classList.remove('theme-dark')
+  }
+}
+
+// CHANGED: Saved under a unified local storage key and updates root HTML element classes
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
-  localStorage.setItem('webhive-home-theme', isDarkMode.value ? 'dark' : 'light')
+  const activeTheme = isDarkMode.value ? 'dark' : 'light'
+  
+  localStorage.setItem('webhive-theme', activeTheme)
+  applyGlobalThemeClass(isDarkMode.value)
 }
 
 const handleScroll = () => {
@@ -194,14 +207,16 @@ const toggleMenu = () => {
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
 
-  // CHANGED: Retrieves only the home-specific theme cache definition
-  const savedTheme = localStorage.getItem('webhive-home-theme')
+  // CHANGED: Check the universal site theme preference. Defaults to dark.
+  const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
   } else {
-    // Default safe fallback if no unique history trace exists
     isDarkMode.value = true
   }
+  
+  // Keep root context token up-to-date
+  applyGlobalThemeClass(isDarkMode.value)
 })
 
 onUnmounted(() => {
@@ -248,7 +263,8 @@ const onMenuLeave = (el, done) => {
   overflow-x: hidden;
 }
 
-.theme-dark { background-color: #0b0c10; color: #ffffff; }
+/* CHANGED: Made dark mode default background pitch pure black */
+.theme-dark { background-color: #000000; color: #ffffff; }
 .theme-light { background-color: #f4f6f9; color: #0f172a; }
 
 .bg-overlay {

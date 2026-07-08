@@ -224,11 +224,24 @@ const servicesList = ref([
 
 const parallax = reactive({ bgX: 0, bgY: 0 })
 
-// ── Isolated theme logic for Services Page ──
+// Helper function to update the global HTML class token
+const applyGlobalThemeClass = (isDark) => {
+  if (isDark) {
+    document.documentElement.classList.add('theme-dark')
+    document.documentElement.classList.remove('theme-light')
+  } else {
+    document.documentElement.classList.add('theme-light')
+    document.documentElement.classList.remove('theme-dark')
+  }
+}
+
+// CHANGED: Saved under the unified webhive-theme key and updates root HTML element classes
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
-  // Save specifically to a services page key so it doesn't affect standard global configurations
-  localStorage.setItem('services-page-theme', isDarkMode.value ? 'dark' : 'light')
+  const activeTheme = isDarkMode.value ? 'dark' : 'light'
+  
+  localStorage.setItem('webhive-theme', activeTheme)
+  applyGlobalThemeClass(isDarkMode.value)
 }
 
 const handleMouseMove = (e) => {
@@ -243,13 +256,16 @@ const handleMouseMove = (e) => {
 const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value }
 
 onMounted(() => {
-  // Read from the isolated Services-specific cache
-  const savedTheme = localStorage.getItem('services-page-theme')
+  // CHANGED: Check the universal site theme preference. Defaults to dark.
+  const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
   } else {
     isDarkMode.value = true // Keep dark as default when visiting fresh
   }
+
+  // Keep root context token up-to-date instantly on view mount
+  applyGlobalThemeClass(isDarkMode.value)
 
   gsap.set('.showcase-row, .services-cta', { opacity: 1 })
 
@@ -323,12 +339,7 @@ const onMenuLeave = (el, done) => {
 
 onUnmounted(() => {
   ScrollTrigger.getAll().forEach(t => t.kill())
-  
-  /* 
-    Cleanup on route leave: Wipe the fallback common variable completely if 
-    other pages look for it, ensuring they boot up using their default theme options.
-  */
-  localStorage.removeItem('webhive-theme')
+  // CHANGED: Removed the item removal function to prevent wiping user preference on route changes
 })
 </script>
 
