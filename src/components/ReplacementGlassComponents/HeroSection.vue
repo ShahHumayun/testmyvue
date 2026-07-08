@@ -24,7 +24,6 @@
       <span class="rg-tag">Custom Quoting</span>
     </div>
 
-    <!-- Image, no browser chrome -->
     <div
       class="rg-image"
       ref="imageRef"
@@ -40,19 +39,7 @@
       <div class="rg-image__border"></div>
     </div>
 
-    <p class="rg-hero__description" ref="descriptionRef">
-      ReplacementGlass.co is a custom eCommerce platform specializing in
-      precision-cut glass products for residential and commercial
-      applications. The website allows customers to order custom-sized
-      tempered, annealed, ceramic, and mirror glass tailored to their exact
-      specifications. With an intuitive product customization process, secure
-      checkout, and comprehensive product catalog, the platform simplifies
-      purchasing replacement glass for tabletops, cabinets, shelves,
-      fireplaces, mirrors, and other custom applications. The company
-      emphasizes high-quality craftsmanship, competitive wholesale pricing,
-      and dependable nationwide shipping backed by decades of industry
-      experience.
-    </p>
+    <p class="rg-hero__description" ref="descriptionRef">ReplacementGlass.co is a custom eCommerce platform specializing in precision-cut glass products for residential and commercial applications. The website allows customers to order custom-sized tempered, annealed, ceramic, and mirror glass tailored to their exact specifications. With an intuitive product customization process, secure checkout, and comprehensive product catalog, the platform simplifies purchasing replacement glass for tabletops, cabinets, shelves, fireplaces, mirrors, and other custom applications. The company emphasizes high-quality craftsmanship, competitive wholesale pricing, and dependable nationwide shipping backed by decades of industry experience.</p>
   </section>
 </template>
 
@@ -121,7 +108,7 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style scoped> 
 .rg-hero {
   position: relative;
   min-height: 100vh;
@@ -192,13 +179,17 @@ onMounted(() => {
 .rg-hero__title {
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 1000px;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
-  font-size: clamp(2.8rem, 7vw, 5.2rem);
+  font-size: clamp(1.85rem, 6.5vw, 5.2rem);
   color: #ffffff;
-  line-height: 1.02;
+  line-height: 1.1;
   letter-spacing: -0.02em;
   margin: 0 0 22px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .rg-accent {
@@ -217,6 +208,7 @@ onMounted(() => {
 .rg-hero__tagline {
   position: relative;
   z-index: 1;
+  width: 100%;
   max-width: 640px;
   font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
@@ -233,6 +225,7 @@ onMounted(() => {
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 56px;
+  width: 100%;
 }
 
 .rg-tag {
@@ -251,12 +244,12 @@ onMounted(() => {
   background: rgba(0, 255, 163, 0.12);
 }
 
-/* Image */
+/* Image Wrapper */
 .rg-image {
   position: relative;
   z-index: 1;
-  width: min(980px, 92vw);
-  aspect-ratio: 16 / 8;
+  width: min(980px, 100%);
+  aspect-ratio: 16 / 9;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 50px 120px rgba(0, 0, 0, 0.65), 0 0 80px rgba(0, 255, 163, 0.1);
@@ -301,17 +294,53 @@ onMounted(() => {
 .rg-hero__description {
   position: relative;
   z-index: 1;
+  width: 100%;
   max-width: 760px;
-  margin: 36px auto 0;
+  margin: 44px auto 0;
   font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.65);
+  
+  /* Layout adjustments: Clean, crisp text block alignment formatting */
+  text-align: justify;
+  text-justify: inter-word;
+  white-space: normal;
 }
 
+/* Responsive Structural Breakpoints */
 @media (max-width: 640px) {
-  .rg-hero { padding: 110px 18px 70px; }
-  .rg-hero__tagline { font-size: 0.95rem; }
-  .rg-image { aspect-ratio: 4 / 3; }
+  .rg-hero { 
+    padding: 100px 20px 60px; 
+  }
+  .rg-hero__title {
+    font-size: 2.2rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .rg-hero__tagline { 
+    font-size: 0.95rem; 
+    line-height: 1.6;
+  }
+  .rg-image { 
+    aspect-ratio: 4 / 3; 
+    border-radius: 12px;
+  }
+  .rg-image__border {
+    border-radius: 12px;
+  }
+  .rg-hero__description {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    margin-top: 32px;
+    /* Retain clean left styling on small mobile views to look better on narrow ports */
+    text-align: left; 
+  }
+}
+
+@media (max-width: 360px) {
+  .rg-hero__title {
+    font-size: 1.8rem;
+  }
 }
 </style>
