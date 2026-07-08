@@ -12,6 +12,7 @@ import WebAppDevelopment from '../Pages/WebAppDevelopment.vue'
 import AppDevelopment from '../Pages/AppDevelopment.vue'
 import EcommerceSolutions from '../Pages/EcommerceSolutions.vue'
 import NetSuiteIntegrations from '../Pages/NetSuiteIntegrations.vue'
+import ReplacementGlass from '../Pages/ReplacementGlass.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -25,7 +26,8 @@ const routes = [
   { path: '/webappdevelopment', component: WebAppDevelopment },
   { path: '/appdevelopment', component: AppDevelopment },
   { path: '/ecommercesolutions', component: EcommerceSolutions },
-  { path: '/netsuiteintegrations', component: NetSuiteIntegrations }
+  { path: '/netsuiteintegrations', component: NetSuiteIntegrations },
+  { path: '/replacementglass', component: ReplacementGlass }
 ]
 
 const router = createRouter({

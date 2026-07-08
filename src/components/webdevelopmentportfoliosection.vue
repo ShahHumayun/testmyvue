@@ -5,21 +5,25 @@
     <div class="max-w-4xl mx-auto text-center mb-20 relative z-10 flex flex-col items-center">
       <span class="text-[#00ffa3] font-extrabold tracking-[0.25em] uppercase text-sm mb-6 block">Web App Development</span>
       <h2 :class="['text-5xl md:text-7xl font-extrabold mb-6 tracking-tight', isDarkMode ? 'text-white' : 'text-black']">
-  Digital Experiences That <br/>
-  <span :class="[isDarkMode ? 'bg-clip-text text-transparent bg-gradient-to-r from-[#00ffa3] to-white' : 'text-black']">
-    Deliver Results
-  </span>
-</h2>
+        Digital Experiences That <br/>
+        <span :class="[isDarkMode ? 'bg-clip-text text-transparent bg-gradient-to-r from-[#00ffa3] to-white' : 'text-black']">
+          Deliver Results
+        </span>
+      </h2>
       <div class="w-32 h-1.5 bg-[#00ffa3] mx-auto mb-8 rounded-full shadow-[0_0_15px_#00ffa3]"></div>
     </div><br>
 
     <div class="max-w-7xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 relative z-10 place-items-center">
-      <a v-for="(project, index) in projects" 
-         :key="index"
-         :href="project.url" 
-         target="_blank"
-         :class="['project-card opacity-0 w-full max-w-sm group relative backdrop-blur-2xl border rounded-xl overflow-hidden transition-all duration-500 hover:border-[#00ffa3]/50 hover:shadow-[0_0_50px_rgba(0,255,163,0.15)] flex flex-col h-full', 
-                  isDarkMode ? 'bg-white/[0.02] border-white/10' : 'bg-white border-gray-200']">
+      
+      <component
+        v-for="(project, index) in projects"
+        :key="index"
+        :is="project.isInternal ? 'router-link' : 'a'"
+        :[project.isInternal?'to':'href']="project.url"
+        :target="project.isInternal ? null : '_blank'"
+        :class="['project-card opacity-0 w-full max-w-sm group relative backdrop-blur-2xl border rounded-xl overflow-hidden transition-all duration-500 hover:border-[#00ffa3]/50 hover:shadow-[0_0_50px_rgba(0,255,163,0.15)] flex flex-col h-full', 
+                 isDarkMode ? 'bg-white/[0.02] border-white/10' : 'bg-white border-gray-200']"
+      >
         
         <div class="h-72 overflow-hidden relative w-full shrink-0">
           <img :src="project.image" :alt="project.title" class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110">
@@ -39,7 +43,8 @@
             </div>
           </div><br>
         </div>
-      </a>
+      </component>
+
     </div>
   </section>
 </template>
@@ -59,9 +64,27 @@ const props = defineProps({
 gsap.registerPlugin(ScrollTrigger);
 
 const projects = [
-  { title: 'Wine Openers Canada', intro: 'A premium ecommerce experience designed for wine enthusiasts with intuitive navigation.', url: 'https://wineopeners.ca/', image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&q=80&w=800' },
-  { title: 'Replacement Glass', intro: 'Specialized platform built to simplify product discovery, focusing on speed and clarity.', url: 'https://www.replacementglass.co/', image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800' },
-  { title: 'Blazing Glass', intro: 'Professional digital presence created to showcase services and build credibility.', url: 'http://blazingglass.com/', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800' }
+  { 
+    title: 'Wine Openers Canada', 
+    intro: 'A premium ecommerce experience designed for wine enthusiasts with intuitive navigation.', 
+    url: 'https://wineopeners.ca/', 
+    isInternal: false,
+    image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&q=80&w=800' 
+  },
+  { 
+    title: 'Replacement Glass', 
+    intro: 'Specialized platform built to simplify product discovery, focusing on speed and clarity.', 
+    url: '/replacementglass',
+    isInternal: true,
+    image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800' 
+  },
+  { 
+    title: 'Blazing Glass', 
+    intro: 'Professional digital presence created to showcase services and build credibility.', 
+    url: 'http://blazingglass.com/', 
+    isInternal: false,
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800' 
+  }
 ];
 
 onMounted(() => {
