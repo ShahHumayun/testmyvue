@@ -1,17 +1,17 @@
 <template>
-  <section class="py-32 px-6 border-b border-neutral-900 bg-neutral-950/20 relative z-20 text-neutral-400">
-    <div class="max-w-4xl mx-auto space-y-8 tracking-wide text-sm md:text-base leading-relaxed">
+  <section :class="['essay-section py-32 px-6 border-b relative z-20 transition-colors duration-500', isDarkMode ? 'theme-dark' : 'theme-light']">
+    <div class="max-w-4xl mx-auto space-y-8 tracking-wide text-sm md:text-base leading-relaxed content-wrapper">
       
-      <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight text-white text-center mb-12">
+      <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight text-center mb-12 main-essay-heading">
         Why Ecommerce Development Is Essential For <span class="text-[#00ffa3]">Modern Businesses</span>
       </h2>
       
       <div class="space-y-6">
         <div v-for="(block, index) in blocks" :key="index">
-          <h3 v-if="block.heading" class="text-lg font-bold text-white tracking-tight mt-6">
+          <h3 v-if="block.heading" class="text-lg font-bold tracking-tight mt-6 block-subheading">
             {{ block.heading }}
           </h3>
-          <p :class="{'mt-2': block.heading}">
+          <p :class="['block-body-paragraph', { 'mt-2': block.heading }]">
             {{ block.body }}
           </p>
         </div>
@@ -22,13 +22,18 @@
 </template>
 
 <script setup>
+import { ref, inject } from 'vue'
+
+// Inject global theme state context seamlessly
+const isDarkMode = inject('isDarkMode', ref(true))
+
 const blocks = [
   { 
-    body: 'Digital commerce has shifted from an experimental channel to the primary engine for corporate scaling. To remain competitive, modern enterprises must move beyond traditional storefronts. High-performance custom ecommerce development provides the technical foundation needed to capture market traffic, monetize consumer preferences, and operate at the velocity today\'s economy demands.' 
+    body: "Digital commerce has shifted from an experimental channel to the primary engine for corporate scaling. To remain competitive, modern enterprises must move beyond traditional storefronts. High-performance custom ecommerce development provides the technical foundation needed to capture market traffic, monetize consumer preferences, and operate at the velocity today's economy demands." 
   },
   { 
     heading: 'Evolutionary Shifts in Online Shopping', 
-    body: 'Online shopping is no longer just for occasional orders; it is a personalized ecosystem. Consumers now expect instantaneous loading, predictive inventory management, and curated product experiences. Businesses that leverage modern, data-driven systems can effectively target behavioral groups, significantly lowering customer acquisition costs while driving lifetime value.' 
+    body: "Online shopping is no longer just for occasional orders; it is a personalized ecosystem. Consumers now expect instantaneous loading, predictive inventory management, and curated product experiences. Businesses that leverage modern, data-driven systems can effectively target behavioral groups, significantly lowering customer acquisition costs while driving lifetime value." 
   },
   { 
     heading: 'Decoding Digital Consumer Behavior', 
@@ -56,3 +61,42 @@ const blocks = [
   },
 ]
 </script>
+
+<style scoped>
+/* ── Encapsulated Visual Protection Boundaries ── */
+.theme-dark {
+  background-color: #000000 !important;
+  border-color: #171717 !important; /* border-neutral-900 equivalent */
+  --main-title-color: #ffffff;
+  --subheading-color: #ffffff;
+  --body-text-color: #a3a3a3; /* text-neutral-400 equivalent */
+}
+
+.theme-light {
+  background-color: #ffffff !important; /* Forces solid white background */
+  border-color: #e2e8f0 !important; /* border-slate-200 equivalent */
+  --main-title-color: #0f172a; /* text-slate-900 equivalent */
+  --subheading-color: #000000; /* requested text to black */
+  --body-text-color: #000000; /* requested text to black */
+}
+
+/* ── Explicit Selector Rule Mappings ── */
+.essay-section {
+  width: 100% !important;
+}
+
+.main-essay-heading {
+  color: var(--main-title-color) !important;
+  transition: color 0.4s ease;
+}
+
+.block-subheading {
+  color: var(--subheading-color) !important;
+  transition: color 0.4s ease;
+}
+
+.block-body-paragraph {
+  color: var(--body-text-color) !important;
+  transition: color 0.4s ease;
+}
+</style>

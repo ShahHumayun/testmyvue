@@ -1,13 +1,18 @@
 <template>
-  <section class="py-32 px-6 border-b border-neutral-800 bg-neutral-900 relative z-20">
+  <section
+    :class="[
+      'py-32 px-6 border-b relative z-20',
+      isDarkMode ? 'border-neutral-800 bg-neutral-900' : 'border-neutral-200 bg-neutral-50'
+    ]"
+  >
     <div class="max-w-5xl mx-auto text-center space-y-12">
       
-      <h2 class="text-3xl md:text-4xl font-bold text-white">Words from Our Satisfied Clients</h2>
+      <h2 :class="['text-3xl md:text-4xl font-bold', isDarkMode ? 'text-white' : 'text-black']">Words from Our Satisfied Clients</h2>
       
       <div class="relative min-h-[250px] flex items-center justify-center">
         <transition name="carousel-fade" mode="out-in">
           <div :key="active" class="space-y-6 max-w-3xl">
-            <blockquote class="text-lg md:text-xl font-medium text-neutral-300 leading-relaxed italic">
+            <blockquote :class="['text-lg md:text-xl font-medium leading-relaxed italic', isDarkMode ? 'text-neutral-300' : 'text-neutral-700']">
               "{{ testimonials[active].quote }}"
             </blockquote>
             <p class="text-[#00ffa3] font-bold text-sm tracking-wide">
@@ -20,14 +25,16 @@
       <div class="flex justify-center gap-2">
         <button v-for="(_, idx) in testimonials" :key="idx" @click="setActive(idx)"
           class="h-2 rounded-full transition-all duration-300"
-          :class="active === idx ? 'bg-[#00ffa3] w-8' : 'bg-neutral-700 w-2'" />
+          :class="active === idx ? 'bg-[#00ffa3] w-8' : (isDarkMode ? 'bg-neutral-700 w-2' : 'bg-neutral-300 w-2')" />
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, inject } from 'vue'
+
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const testimonials = [
   { 

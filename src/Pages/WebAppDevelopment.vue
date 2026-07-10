@@ -1,34 +1,42 @@
 <template>
-  <div ref="pageContainer" class="bg-[#000000] text-[#ffffff] font-sans relative overflow-hidden selection:bg-[#00ffa3] selection:text-[#000000]">
-    
+  <div
+    ref="pageContainer"
+    :class="[
+      'font-sans relative overflow-hidden selection:bg-[#00ffa3] selection:text-[#000000]',
+      isDarkMode ? 'bg-[#000000] text-[#ffffff] theme-dark' : 'bg-white text-[#0f172a] theme-light'
+    ]"
+  >
+
+    <Header />
+
     <div 
       ref="mouseGlow" 
       class="pointer-events-none fixed inset-0 z-10 opacity-30 transition-opacity duration-300 will-change-transform"
       :style="{ background: `radial-gradient(600px circle at ${mouse.x}px ${mouse.y}px, rgba(0, 255, 163, 0.15), transparent 80%)` }"
     ></div>
 
-    <webappcomponent1 @navigate="navigateToConsultation" />
-    <webappcomponent2 />
-    <webdevelopmentportfoliosection />
-    <webappcomponent3 />
-    <webappcomponent4 />
-    <webappcomponent5 />
-    <webappcomponent6 />
-    <webappcomponent7 />
-    <webappcomponent8 />
-    <webappcomponent9 />
-    <webappcomponent10 @navigate="navigateToConsultation" />
+    <webappcomponent1 :isDarkMode="isDarkMode" @navigate="navigateToConsultation" />
+    <webappcomponent2 :isDarkMode="isDarkMode" />
+    <webdevelopmentportfoliosection :isDarkMode="isDarkMode" />
+    <webappcomponent3 :isDarkMode="isDarkMode" />
+    <webappcomponent4 :isDarkMode="isDarkMode" />
+    <webappcomponent5 :isDarkMode="isDarkMode" />
+    <webappcomponent6 :isDarkMode="isDarkMode" />
+    <webappcomponent7 :isDarkMode="isDarkMode" />
+    <webappcomponent8 :isDarkMode="isDarkMode" />
+    <webappcomponent9 :isDarkMode="isDarkMode" />
+    <webappcomponent10 :isDarkMode="isDarkMode" @navigate="navigateToConsultation" />
     <footer-component />
 
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, reactive } from 'vue'
+import { ref, onMounted, onUnmounted, reactive, provide } from 'vue'
 import { useRouter } from 'vue-router'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-
+import Header from '../components/Header.vue'
 import webappcomponent1 from '../components/webappcomponent1.vue'
 import webappcomponent2 from '../components/webappcomponent2.vue'
 import webappcomponent3 from '../components/webappcomponent3.vue'
@@ -49,6 +57,32 @@ const mouseGlow = ref(null)
 const mouse = reactive({ x: 0, y: 0 })
 let rafId = null
 
+// ── Theme state — matches ReplacementGlass.vue / AppDevelopment.vue exactly ──
+const isDarkMode = ref(true)
+
+const applyGlobalThemeClass = (isDark) => {
+  if (isDark) {
+    document.documentElement.classList.add('theme-dark')
+    document.documentElement.classList.remove('theme-light')
+  } else {
+    document.documentElement.classList.add('theme-light')
+    document.documentElement.classList.remove('theme-dark')
+  }
+}
+
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  const activeTheme = isDarkMode.value ? 'dark' : 'light'
+
+  localStorage.setItem('webhive-theme', activeTheme)
+  applyGlobalThemeClass(isDarkMode.value)
+}
+
+// Provide reactive state + toggle so Header.vue and all child section
+// components can inject them, same pattern as ReplacementGlass.vue / AppDevelopment.vue
+provide('isDarkMode', isDarkMode)
+provide('toggleTheme', toggleTheme)
+
 const navigateToConsultation = () => {
   router.push('/consultation')
 }
@@ -64,6 +98,17 @@ const handleMouseMove = (e) => {
 }
 
 onMounted(() => {
+  // Check the universal site theme preference. Defaults to dark. - Matching AppDevelopment.vue
+  const savedTheme = localStorage.getItem('webhive-theme')
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+  } else {
+    isDarkMode.value = true
+  }
+
+  // Keep root context token up-to-date instantly
+  applyGlobalThemeClass(isDarkMode.value)
+
   window.addEventListener('mousemove', handleMouseMove, { passive: true })
 })
 

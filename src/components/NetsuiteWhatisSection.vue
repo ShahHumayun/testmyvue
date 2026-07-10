@@ -1,13 +1,18 @@
 <template>
-  <section class="py-32 px-6 border-b border-neutral-900 bg-black relative z-20">
+  <section
+    :class="[
+      'py-32 px-6 border-b relative z-20',
+      isDarkMode ? 'border-neutral-900 bg-black' : 'border-neutral-200 bg-white'
+    ]"
+  >
     <div class="max-w-5xl mx-auto">
       
       <div class="text-center space-y-6 mb-20 fade-up-animation">
-        <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+        <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight leading-tight', isDarkMode ? 'text-white' : 'text-black']">
           Seamless Integration: <span class="text-[#00ffa3]">Magento to NetSuite</span> and <br/>
           <span class="text-[#00ffa3]">NetSuite to Magento</span> for Enhanced eCommerce Efficiency
         </h2>
-        <p class="max-w-3xl mx-auto text-neutral-400 text-lg md:text-xl leading-relaxed">
+        <p :class="['max-w-3xl mx-auto text-lg md:text-xl leading-relaxed', isDarkMode ? 'text-neutral-400' : 'text-neutral-600']">
           NetSuite Magento Integration enables businesses to connect their ERP and eCommerce platforms, 
           creating a unified, efficient system that synchronizes products, orders and customers data 
           when orders are synced in real time.
@@ -18,7 +23,12 @@
         <div 
           v-for="(feature, index) in features" 
           :key="index" 
-          class="p-6 rounded-2xl bg-neutral-900/30 border border-neutral-800 hover:border-[#00ffa3]/30 transition-all duration-300"
+          :class="[
+            'p-6 rounded-2xl border hover:border-[#00ffa3]/30 transition-all duration-300',
+            isDarkMode
+              ? 'bg-neutral-900/30 border-neutral-800'
+              : 'bg-white border-transparent shadow-md hover:shadow-xl shadow-neutral-200/70'
+          ]"
         >
           <div class="flex items-start gap-3 mb-3">
             <div class="mt-1 flex-shrink-0">
@@ -28,9 +38,9 @@
                 </svg>
               </div>
             </div>
-            <h3 class="text-lg font-bold text-white tracking-tight">{{ feature.title }}</h3>
+            <h3 :class="['text-lg font-bold tracking-tight', isDarkMode ? 'text-white' : 'text-black']">{{ feature.title }}</h3>
           </div>
-          <p class="text-neutral-400 text-sm leading-relaxed pl-8">
+          <p :class="['text-sm leading-relaxed pl-8', isDarkMode ? 'text-neutral-400' : 'text-neutral-600']">
             {{ feature.desc }}
           </p>
         </div>
@@ -41,6 +51,10 @@
 </template>
 
 <script setup>
+import { ref, inject } from 'vue'
+
+const isDarkMode = inject('isDarkMode', ref(true))
+
 const features = [
   { title: 'Real-Time Inventory Updates', desc: 'Updates in Netsuite are instantly reflected in Magento, ensuring accurate stock levels across all channels.' },
   { title: 'Customizable CRON Schedule', desc: 'The user can set up a customized CRON schedule, selecting the desired time frame for when the scripts will run and choosing which specific scripts to execute.' },

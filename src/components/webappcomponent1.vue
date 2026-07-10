@@ -1,8 +1,17 @@
 <template>
-  <div :class="['page-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']">
-    <Header v-model:isDarkMode="isDarkMode" />
+  <div
+    :class="[
+      'page-wrapper',
+      isDarkMode ? 'bg-black text-white theme-dark' : 'bg-white text-[#0f172a] theme-light'
+    ]"
+  >
 
-    <section class="relative min-h-screen flex items-center justify-center px-6 overflow-hidden border-b border-neutral-900 z-20 pt-24">
+    <section
+      :class="[
+        'relative min-h-screen flex items-center justify-center px-6 overflow-hidden border-b z-20 pt-24',
+        isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
+      ]"
+    >
       <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,163,0.05),transparent_70%)]"></div>
       
       <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-20 w-full">
@@ -11,11 +20,20 @@
           <span ref="heroLabel" class="inline-block text-xs font-bold tracking-[0.3em] text-[#00ffa3] uppercase bg-[#00ffa3]/10 px-4 py-1.5 rounded-full border border-[#00ffa3]/20 shadow-[0_0_15px_rgba(0,255,163,0.1)]">
             Web Application Development
           </span>
-          <h1 ref="heroTitle" class="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-b from-white to-neutral-400">
+          <h1
+            ref="heroTitle"
+            :class="[
+              'text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-b',
+              isDarkMode ? 'from-white to-neutral-400' : 'from-black to-neutral-600'
+            ]"
+          >
             Building Powerful Web Applications <br>
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00ffa3] to-emerald-400">That Grow Your Business</span>
           </h1>
-          <p ref="heroSubtitle" class="text-neutral-400 text-base md:text-xl leading-relaxed max-w-2xl">
+          <p
+            ref="heroSubtitle"
+            :class="['text-base md:text-xl leading-relaxed max-w-2xl', isDarkMode ? 'text-neutral-400' : 'text-neutral-600']"
+          >
             We design and develop high-performance web applications that help businesses automate operations, improve customer experiences, and scale faster. From startups to enterprise solutions, we build web platforms that deliver measurable results.
           </p>
           <div ref="heroButtons" class="flex flex-col sm:flex-row items-center gap-4 pt-4">
@@ -27,7 +45,12 @@
             </button>
             <button 
               @click="router.push('/portfolio')" 
-              class="w-full sm:w-auto px-8 py-4 bg-neutral-900 border border-neutral-800 text-white font-medium rounded-lg hover:bg-neutral-800 hover:border-neutral-700 transition-all duration-300"
+              :class="[
+                'w-full sm:w-auto px-8 py-4 font-medium rounded-lg transition-all duration-300 border',
+                isDarkMode
+                  ? 'bg-neutral-900 border-neutral-800 text-white hover:bg-neutral-800 hover:border-neutral-700'
+                  : 'bg-neutral-100 border-neutral-200 text-black hover:bg-neutral-200 hover:border-neutral-300'
+              ]"
             >
               View Our Work
             </button>
@@ -35,14 +58,20 @@
         </div>
 
         <div class="lg:col-span-6 flex justify-center perspective-1000">
-          <div ref="monitor" class="w-full max-w-[650px] aspect-[16/10] bg-neutral-900 border-[8px] border-neutral-800 rounded-lg shadow-[0_0_80px_rgba(0,255,163,0.1)] relative">
-            <div class="h-8 bg-neutral-950 flex items-center px-4 border-b border-neutral-800">
+          <div
+            ref="monitor"
+            :class="[
+              'w-full max-w-[650px] aspect-[16/10] border-[8px] rounded-lg shadow-[0_0_80px_rgba(0,255,163,0.1)] relative',
+              isDarkMode ? 'bg-neutral-900 border-neutral-800' : 'bg-neutral-50 border-black'
+            ]"
+          >
+            <div :class="['h-8 flex items-center px-4 border-b', isDarkMode ? 'bg-neutral-950 border-neutral-800' : 'bg-neutral-100 border-neutral-300']">
               <div class="flex gap-1.5 mr-4">
                 <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
                 <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
                 <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
               </div>
-              <span class="text-neutral-500 text-[10px] font-bold tracking-widest uppercase">The Explorers</span>
+              <span :class="['text-[10px] font-bold tracking-widest uppercase', isDarkMode ? 'text-neutral-500' : 'text-neutral-500']">The Explorers</span>
             </div>
             
             <div class="relative w-full h-[calc(100%-32px)] overflow-hidden">
@@ -63,18 +92,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router' // Import useRouter
+import { ref, onMounted, onUnmounted, inject } from 'vue'
+import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
-import Header from './Header.vue'
 
-const router = useRouter() // Initialize router
+const router = useRouter()
 const heroLabel = ref(null)
 const heroTitle = ref(null)
 const heroSubtitle = ref(null)
 const heroButtons = ref(null)
 const monitor = ref(null)
-const isDarkMode = ref(true)
+
+// Injected from WebDevelopment.vue's provide() — no more local/private
+// isDarkMode state, so this always reflects the real shared toggle
+const isDarkMode = inject('isDarkMode', ref(true))
+
 const currentDot = ref(0)
 let interval = null
 
@@ -102,7 +134,6 @@ onUnmounted(() => clearInterval(interval))
 
 <style scoped>
 .page-wrapper { --brand-accent: #00ffa3; --transition-speed: 0.5s; width: 100%; min-height: 100vh; position: relative; }
-.theme-dark { background-color: #000000; color: #ffffff; }
 .travel-fade-enter-active, .travel-fade-leave-active { transition: opacity 0.6s ease-in-out; }
 .travel-fade-enter-from, .travel-fade-leave-to { opacity: 0; }
 </style>

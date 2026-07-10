@@ -1,17 +1,27 @@
 <template>
-  <section class="py-32 px-6 border-b border-neutral-900 relative z-20">
+  <section
+    :class="[
+      'py-32 px-6 border-b relative z-20',
+      isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
+    ]"
+  >
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-20 text-center">
+      <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight mb-20 text-center', isDarkMode ? 'text-white' : 'text-black']">
         Features That <span class="text-[#00ffa3]">Users Expect</span>
       </h2>
       <div ref="featuresGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div 
           v-for="(feat, idx) in featureCards" 
           :key="idx"
-          class="feature-node bg-neutral-950 border border-neutral-900 rounded-xl p-6 hover:bg-neutral-950/40 hover:border-neutral-800 transition-colors"
+          :class="[
+            'feature-node border rounded-xl p-6 transition-colors',
+            isDarkMode
+              ? 'bg-neutral-950 border-neutral-900 hover:bg-neutral-950/40 hover:border-neutral-800'
+              : 'bg-neutral-50 border-neutral-200 hover:bg-neutral-100 hover:border-neutral-300'
+          ]"
         >
           
-          <h3 class="text-base font-bold text-white tracking-tight">{{ feat }}</h3>
+          <h3 :class="['text-base font-bold tracking-tight', isDarkMode ? 'text-white' : 'text-black']">{{ feat }}</h3>
         </div>
       </div>
     </div>
@@ -19,8 +29,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const featuresGrid = ref(null)
 
@@ -30,7 +45,9 @@ const featureCards = [
 ]
 
 onMounted(() => {
-  const featureNodes = document.querySelectorAll('.feature-node')
+  // Scoped to this component's own grid — avoids grabbing .feature-node
+  // elements from any other instance on the page
+  const featureNodes = featuresGrid.value.querySelectorAll('.feature-node')
   featureNodes.forEach((node, idx) => {
     const xVector = idx % 2 === 0 ? -40 : 40
     gsap.fromTo(node, { opacity: 0, x: xVector }, {

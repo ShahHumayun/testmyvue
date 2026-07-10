@@ -1,24 +1,37 @@
 <template>
   <!-- 8. BUSINESS CHALLENGES WE SOLVE -->
-  <section class="py-32 px-6 border-b border-neutral-900 relative z-20">
+  <section
+    :class="[
+      'py-32 px-6 border-b relative z-20',
+      isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
+    ]"
+  >
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-center mb-20">
+      <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight text-center mb-20', isDarkMode ? 'text-white' : 'text-black']">
         Eliminate Operational <span class="text-[#00ffa3]">Bottlenecks</span>
       </h2>
       <div ref="challengesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div
           v-for="(card, idx) in challengeMatrix"
           :key="idx"
-          class="challenge-node-card bg-neutral-950 border border-neutral-900 rounded-xl p-6 min-h-[160px] flex flex-col justify-between transition-all duration-500 cursor-pointer group"
+          :class="[
+            'challenge-node-card border rounded-xl p-6 min-h-[160px] flex flex-col justify-between transition-all duration-500 cursor-pointer group',
+            isDarkMode ? 'bg-neutral-950 border-neutral-900' : 'bg-white border-neutral-200'
+          ]"
         >
           <div>
-            <span class="text-[10px] font-mono tracking-widest text-neutral-600 block mb-2 uppercase">SYSTEM STATE INTERCEPT</span>
-            <h3 class="text-base font-bold text-neutral-300 group-hover:text-[#00ffa3] transition-colors">
+            <span :class="['text-[10px] font-mono tracking-widest block mb-2 uppercase', isDarkMode ? 'text-neutral-600' : 'text-neutral-500']">SYSTEM STATE INTERCEPT</span>
+            <h3 :class="['text-base font-bold group-hover:text-[#00ffa3] transition-colors', isDarkMode ? 'text-neutral-300' : 'text-black']">
               {{ card.challenge }}
             </h3>
           </div>
           <!-- Interactive Dynamic Transformation Hint Text Node -->
-          <div class="border-t border-neutral-900/60 pt-4 text-xs font-mono text-neutral-500 group-hover:text-white transition-colors flex items-center justify-between">
+          <div
+            :class="[
+              'border-t pt-4 text-xs font-mono transition-colors flex items-center justify-between',
+              isDarkMode ? 'border-neutral-900/60 text-neutral-500 group-hover:text-white' : 'border-neutral-200 text-neutral-500 group-hover:text-black'
+            ]"
+          >
             <span>Resolution Layer</span>
             <span class="opacity-0 group-hover:opacity-100 transition-opacity text-[#00ffa3] font-bold">→ {{ card.solution }}</span>
           </div>
@@ -29,11 +42,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, inject } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const challengesGrid = ref(null)
 
@@ -68,6 +83,13 @@ onUnmounted(() => {
 /* System challenge conversion dynamic text updates overlay metrics */
 .challenge-node-card:hover {
   border-color: rgba(0, 255, 163, 0.4);
+}
+
+.theme-dark .challenge-node-card:hover {
   background-color: #050505;
+}
+
+.theme-light .challenge-node-card:hover {
+  background-color: #f8fafc;
 }
 </style>

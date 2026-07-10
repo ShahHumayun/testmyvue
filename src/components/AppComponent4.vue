@@ -1,12 +1,22 @@
 <template>
-  <section class="py-32 px-6 border-b border-neutral-900 relative z-20 bg-black">
+  <section
+    :class="[
+      'py-32 px-6 border-b relative z-20',
+      isDarkMode ? 'border-neutral-900 bg-black' : 'border-neutral-200 bg-white'
+    ]"
+  >
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
       <div class="flex justify-center">
-        <div class="w-64 h-[500px] border-[6px] border-neutral-900 rounded-[44px] bg-black p-2 shadow-[0_0_50px_rgba(0,255,163,0.15)] relative overflow-hidden ring-1 ring-neutral-800 will-change-transform transform-gpu">
-          <div class="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-4 bg-neutral-900 rounded-full z-30"></div>
+        <div
+          :class="[
+            'w-64 h-[500px] border-[6px] rounded-[44px] p-2 shadow-[0_0_50px_rgba(0,255,163,0.15)] relative overflow-hidden ring-1 will-change-transform transform-gpu',
+            isDarkMode ? 'border-neutral-900 bg-black ring-neutral-800' : 'border-black bg-white ring-black/20'
+          ]"
+        >
+          <div :class="['absolute top-2 left-1/2 -translate-x-1/2 w-24 h-4 rounded-full z-30', isDarkMode ? 'bg-neutral-900' : 'bg-black']"></div>
 
-          <div class="w-full h-full rounded-[34px] overflow-hidden relative bg-neutral-950 isolate">
+          <div :class="['w-full h-full rounded-[34px] overflow-hidden relative isolate', isDarkMode ? 'bg-neutral-950' : 'bg-neutral-50']">
             <div
               v-for="(slide, sIdx) in investmentSlides"
               :key="slide.id"
@@ -15,10 +25,15 @@
             >
               <div class="pt-8 space-y-2 z-10 relative">
                 <div class="text-[#00ffa3] font-mono text-xs tracking-widest uppercase">Metric Panel</div>
-                <h4 class="text-xl font-bold tracking-tight text-white drop-shadow-md">{{ slide.title }}</h4>
+                <h4 :class="['text-xl font-bold tracking-tight drop-shadow-md', isDarkMode ? 'text-white' : 'text-black']">{{ slide.title }}</h4>
               </div>
 
-              <div class="w-full h-44 rounded-xl bg-neutral-900 border border-neutral-800/60 flex items-center justify-center relative overflow-hidden group shadow-inner">
+              <div
+                :class="[
+                  'w-full h-44 rounded-xl flex items-center justify-center relative overflow-hidden group shadow-inner border',
+                  isDarkMode ? 'bg-neutral-900 border-neutral-800/60' : 'bg-neutral-100 border-neutral-200'
+                ]"
+              >
                 <img
                   :src="slide.image"
                   :alt="slide.title"
@@ -31,7 +46,7 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/50 to-transparent pointer-events-none"></div>
               </div>
 
-              <p class="text-neutral-400 text-xs leading-relaxed mb-4 z-10 relative">{{ slide.desc }}</p>
+              <p :class="['text-xs leading-relaxed mb-4 z-10 relative', isDarkMode ? 'text-neutral-400' : 'text-neutral-600']">{{ slide.desc }}</p>
             </div>
           </div>
 
@@ -41,7 +56,7 @@
               :key="sIdx"
               @click="goToSlide(sIdx)"
               class="h-1.5 rounded-full transition-all duration-300 ease-out focus:outline-none"
-              :class="currentSlide === sIdx ? 'bg-[#00ffa3] w-3' : 'bg-neutral-800 w-1.5'"
+              :class="currentSlide === sIdx ? 'bg-[#00ffa3] w-3' : (isDarkMode ? 'bg-neutral-800 w-1.5' : 'bg-neutral-300 w-1.5')"
               :aria-label="`Show ${investmentSlides[sIdx].title}`"
             ></button>
           </div>
@@ -49,7 +64,7 @@
       </div>
 
       <div class="space-y-8">
-        <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-white">
+        <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight', isDarkMode ? 'text-white' : 'text-black']">
           Why Your Business <br><span class="text-[#00ffa3]">Needs A Mobile App</span>
         </h2>
         <ul ref="whyList" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -59,7 +74,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </span>
-            <span class="text-neutral-300 font-medium text-sm md:text-base">{{ benefit }}</span>
+            <span :class="['font-medium text-sm md:text-base', isDarkMode ? 'text-neutral-300' : 'text-neutral-700']">{{ benefit }}</span>
           </li>
         </ul>
       </div>
@@ -69,11 +84,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, inject } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const whyList = ref(null)
 const currentSlide = ref(0)

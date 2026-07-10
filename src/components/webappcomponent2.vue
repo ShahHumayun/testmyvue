@@ -1,5 +1,5 @@
 <template>
-  <section :class="['stats-section', props.darkMode ? 'theme-dark' : 'theme-light']">
+  <section :class="['stats-section', isDarkMode ? 'theme-dark' : 'theme-light']">
     <div class="max-w-7xl mx-auto">
       <h2 class="section-subtitle">
         Trusted By Growing Businesses Worldwide
@@ -19,16 +19,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-const props = defineProps({
-  darkMode: {
-    type: Boolean,
-    default: true
-  }
-})
+// Injected from parent context with a safe local default fallback
+const isDarkMode = inject('isDarkMode', ref(true))
 
 gsap.registerPlugin(ScrollTrigger)
 const counterContainer = ref(null)
@@ -41,7 +37,7 @@ const stats = [
 ]
 
 onMounted(() => {
-  const counters = document.querySelectorAll('.counter-val')
+  const counters = counterContainer.value.querySelectorAll('.counter-val')
   counters.forEach((counter) => {
     const targetValue = parseInt(counter.getAttribute('data-target'), 10)
     gsap.fromTo(counter, 
@@ -69,6 +65,7 @@ onMounted(() => {
   padding: 6rem 1.5rem;
   position: relative;
   z-index: 20;
+  width: 100% !important;
   
   /* Bind structural styles dynamically to the root variables */
   background-color: var(--bg-main) !important;
@@ -78,7 +75,7 @@ onMounted(() => {
 }
 
 /* Using :where() makes sure Vue targets the variables directly 
-  on the root .stats-section element when the class shifts.
+   on the root .stats-section element when the class shifts.
 */
 .stats-section:where(.theme-dark) {
   --bg-main: #000000;
@@ -89,10 +86,10 @@ onMounted(() => {
 }
 
 .stats-section:where(.theme-light) {
-  --bg-main: #f4f6f9;
-  --text-main: #0f172a;
-  --text-muted: #64748b;   /* slate-500 */
-  --text-sub: #94a3b8;     /* slate-400 */
+  --bg-main: #ffffff;      /* Changed to solid white background */
+  --text-main: #0f172a;    /* slate-900 */
+  --text-muted: #475569;   /* slate-600 */
+  --text-sub: #64748b;     /* slate-500 */
   --border-color: #e2e8f0; /* slate-200 */
 }
 
@@ -106,14 +103,14 @@ onMounted(() => {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-bottom: 4rem;
-  color: var(--text-sub);
+  color: var(--text-sub) !important;
   transition: color 0.5s ease;
 }
 
 .counter-display {
   font-size: 2.25rem;
   font-weight: 900;
-  color: #00ffa3;
+  color: #00ffa3 !important;
   letter-spacing: -0.025em;
   text-shadow: 0 0 15px rgba(0, 255, 163, 0.15);
 }
@@ -129,7 +126,7 @@ onMounted(() => {
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-muted) !important;
   transition: color 0.5s ease;
 }
 

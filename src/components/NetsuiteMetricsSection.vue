@@ -1,17 +1,36 @@
 <template>
   <!-- 11. SUCCESS METRICS -->
-  <section class="py-32 px-6 border-b border-neutral-900 relative z-20">
+  <section
+    :class="[
+      'py-32 px-6 border-b relative z-20',
+      isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
+    ]"
+  >
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-center mb-20">
+      <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight text-center mb-20', isDarkMode ? 'text-white' : 'text-black']">
         Delivering Measurable <span class="text-[#00ffa3]">Business Impact</span>
       </h2>
       <div ref="metricsTargetGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div v-for="(m, idx) in impactMetrics" :key="idx" class="bg-neutral-950 border border-neutral-900 rounded-xl p-8 flex flex-col justify-between min-h-[180px] relative overflow-hidden group">
+        <div
+          v-for="(m, idx) in impactMetrics"
+          :key="idx"
+          :class="[
+            'border rounded-xl p-8 flex flex-col justify-between min-h-[180px] relative overflow-hidden group',
+            isDarkMode
+              ? 'bg-neutral-950 border-neutral-900'
+              : 'bg-white border-transparent shadow-md hover:shadow-xl shadow-neutral-200/70 transition-shadow duration-300'
+          ]"
+        >
           <div class="absolute bottom-0 right-0 w-16 h-16 bg-[#00ffa3]/5 blur-xl group-hover:bg-[#00ffa3]/10 transition-colors"></div>
           <div class="text-4xl md:text-5xl font-black text-[#00ffa3] font-mono tracking-tight">
             <span class="impact-value-counter" :data-target="m.value">0</span>{{ m.suffix }}
           </div>
-          <p class="text-xs font-mono uppercase text-neutral-400 tracking-wider pt-4 border-t border-neutral-900 mt-4">
+          <p
+            :class="[
+              'text-xs font-mono uppercase tracking-wider pt-4 border-t mt-4',
+              isDarkMode ? 'text-neutral-400 border-neutral-900' : 'text-neutral-600 border-neutral-200'
+            ]"
+          >
             {{ m.label }}
           </p>
         </div>
@@ -21,11 +40,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, inject } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const metricsTargetGrid = ref(null)
 

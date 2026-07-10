@@ -1,13 +1,23 @@
 <template>
-  <section class="py-32 px-6 border-b border-neutral-900 relative z-20 bg-black">
+  <section
+    :class="[
+      'py-32 px-6 border-b relative z-20',
+      isDarkMode ? 'border-neutral-900 bg-black' : 'border-neutral-200 bg-white'
+    ]"
+  >
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-20 text-center text-white">
+      <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight mb-20 text-center', isDarkMode ? 'text-white' : 'text-black']">
         Modern Technologies For <span class="text-[#00ffa3]">Future-Ready Apps</span>
       </h2>
       
       <div ref="techGrid" class="grid grid-cols-1 md:grid-cols-3 gap-12">
         <div v-for="(cat, idx) in techStack" :key="idx" class="flex flex-col items-center">
-          <h3 class="text-sm font-bold tracking-[0.2em] uppercase text-[#00ffa3] mb-8 pb-4 border-b border-neutral-800 whitespace-nowrap">
+          <h3
+            :class="[
+              'text-sm font-bold tracking-[0.2em] uppercase text-[#00ffa3] mb-8 pb-4 border-b whitespace-nowrap',
+              isDarkMode ? 'border-neutral-800' : 'border-neutral-200'
+            ]"
+          >
             {{ cat.category }}
           </h3>
           
@@ -15,13 +25,18 @@
             <li 
               v-for="(tech, tIdx) in cat.items" 
               :key="tIdx" 
-              class="group flex items-center gap-4 text-neutral-300 font-medium cursor-default"
+              :class="['group flex items-center gap-4 font-medium cursor-default', isDarkMode ? 'text-neutral-300' : 'text-neutral-700']"
             >
               <div class="w-6 flex justify-center">
-                <span class="w-2 h-2 rounded-full bg-neutral-800 group-hover:bg-[#00ffa3] group-hover:shadow-[0_0_8px_#00ffa3] transition-all duration-300"></span>
+                <span
+                  :class="[
+                    'w-2 h-2 rounded-full group-hover:bg-[#00ffa3] group-hover:shadow-[0_0_8px_#00ffa3] transition-all duration-300',
+                    isDarkMode ? 'bg-neutral-800' : 'bg-neutral-300'
+                  ]"
+                ></span>
               </div>
               
-              <span class="group-hover:text-white transition-colors">
+              <span :class="['transition-colors', isDarkMode ? 'group-hover:text-white' : 'group-hover:text-black']">
                 {{ tech }}
               </span>
             </li>
@@ -33,11 +48,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const techGrid = ref(null)
 

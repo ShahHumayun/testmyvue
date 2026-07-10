@@ -1,25 +1,24 @@
 <template>
-  <section class="py-32 px-6 border-b border-neutral-900 relative z-20">
+  <section :class="['faq-section py-32 px-6 border-b relative z-20 transition-colors duration-400', isDarkMode ? 'theme-dark' : 'theme-light']">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-16 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-16 text-center faq-heading">
         Frequently Asked <span class="text-[#00ffa3]">Questions</span>
       </h2>
       <div ref="faqAccordion" class="space-y-4">
         <div 
           v-for="(item, idx) in faqs" 
           :key="idx" 
-          class="bg-neutral-950 border border-neutral-900 rounded-xl overflow-hidden transition-colors duration-300"
-          :class="{ 'border-neutral-800 bg-neutral-950/80': activeFaq === idx }"
+          :class="['faq-card border rounded-xl overflow-hidden transition-colors duration-300', activeFaq === idx ? 'faq-card--active' : '']"
         >
           <button 
             @click="toggleFaq(idx)"
             class="w-full flex items-center justify-between p-6 text-left focus:outline-none group"
           >
-            <h3 class="font-bold text-base md:text-lg text-white group-hover:text-[#00ffa3] transition-colors duration-200">
+            <h3 class="font-bold text-base md:text-lg faq-question transition-colors duration-200">
               {{ item.question }}
             </h3>
-            <span class="ml-4 flex-shrink-0 w-6 h-6 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center transition-transform duration-300" :class="{ 'rotate-180 border-[#00ffa3]/30': activeFaq === idx }">
-              <svg class="w-3 h-3 text-neutral-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+            <span :class="['ml-4 flex-shrink-0 w-6 h-6 rounded-full border flex items-center justify-center transition-transform duration-300 arrow-circle', activeFaq === idx ? 'rotate-180 arrow-circle--active' : '']">
+              <svg class="w-3 h-3 arrow-icon transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
             </span>
           </button>
           
@@ -31,7 +30,7 @@
             }"
           >
             <div class="drawer-content">
-              <p class="text-neutral-400 text-sm md:text-base leading-relaxed border-t border-neutral-900 pt-4">
+              <p class="faq-answer text-sm md:text-base leading-relaxed border-t pt-4">
                 {{ item.answer }}
               </p>
             </div>
@@ -44,11 +43,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+// Inject global theme state context seamlessly
+const isDarkMode = inject('isDarkMode', ref(true))
+
 const faqAccordion = ref(null)
 const activeFaq = ref(null)
 
@@ -82,7 +85,91 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Modern CSS Grid technique for perfectly smooth top-to-bottom scaling */
+/* ── Encapsulated Visual Protection Boundaries ── */
+.theme-dark {
+  background-color: #000000 !important;
+  border-color: #171717 !important; /* border-neutral-900 equivalent */
+  --heading-color: #ffffff;
+  --card-bg: #0a0a0a; /* bg-neutral-950 equivalent */
+  --card-border: #171717; /* border-neutral-900 equivalent */
+  --card-active-bg: rgba(10, 10, 10, 0.8);
+  --card-active-border: #262626; /* border-neutral-800 equivalent */
+  --question-color: #ffffff;
+  --arrow-bg: #171717; /* bg-neutral-900 equivalent */
+  --arrow-border: #262626; /* border-neutral-800 equivalent */
+  --arrow-svg-color: #a3a3a3; /* text-neutral-400 equivalent */
+  --answer-color: #a3a3a3;
+  --answer-border: #171717;
+}
+
+.theme-light {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important; /* border-slate-200 equivalent */
+  --heading-color: #0f172a; /* text-slate-900 equivalent */
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --card-active-bg: #f8fafc; /* bg-slate-50 equivalent */
+  --card-active-border: #cbd5e1; /* border-slate-300 equivalent */
+  --question-color: #0f172a;
+  --arrow-bg: #f1f5f9; /* bg-slate-100 equivalent */
+  --arrow-border: #cbd5e1;
+  --arrow-svg-color: #64748b; /* text-slate-500 equivalent */
+  --answer-color: #475569; /* text-slate-600 equivalent */
+  --answer-border: #e2e8f0;
+}
+
+/* ── Explicit Selector Rule Mappings ── */
+.faq-section {
+  width: 100% !important;
+}
+
+.faq-heading {
+  color: var(--heading-color) !important;
+  transition: color 0.4s ease;
+}
+
+.faq-card {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+}
+
+.faq-card--active {
+  background-color: var(--card-active-bg) !important;
+  border-color: var(--card-active-border) !important;
+}
+
+.faq-question {
+  color: var(--question-color) !important;
+}
+
+/* Text-only accent response on trigger hover items */
+.group:hover .faq-question {
+  color: #00ffa3 !important;
+}
+
+.arrow-circle {
+  background-color: var(--arrow-bg) !important;
+  border-color: var(--arrow-border) !important;
+}
+
+.arrow-circle--active {
+  border-color: rgba(0, 255, 163, 0.3) !important;
+}
+
+.arrow-icon {
+  color: var(--arrow-svg-color) !important;
+}
+
+.group:hover .arrow-icon {
+  color: #ffffff !important;
+}
+
+.faq-answer {
+  color: var(--answer-color) !important;
+  border-color: var(--answer-border) !important;
+}
+
+/* ── Functional Animation Structural Drawer Layout ── */
 .accordion-drawer {
   display: grid;
   transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
@@ -93,7 +180,6 @@ onMounted(() => {
   overflow: hidden;
 }
 
-/* Add breathing room at the bottom of the open card drawer container */
 .accordion-drawer[style*="grid-template-rows: 1fr"] {
   padding-bottom: 24px;
 }

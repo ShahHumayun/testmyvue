@@ -1,8 +1,13 @@
 <template>
   <!-- 5. COMMON PLATFORMS WE INTEGRATE -->
-  <section class="py-32 px-6 border-b border-neutral-900 bg-neutral-950/10 relative z-20 overflow-hidden">
+  <section
+    :class="[
+      'py-32 px-6 border-b relative z-20 overflow-hidden',
+      isDarkMode ? 'border-neutral-900 bg-neutral-950/10' : 'border-neutral-200 bg-white'
+    ]"
+  >
     <div class="max-w-7xl mx-auto relative">
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-center mb-24">
+      <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight text-center mb-24', isDarkMode ? 'text-white' : 'text-black']">
         Platforms We Connect <span class="text-[#00ffa3]">With NetSuite</span>
       </h2>
 
@@ -11,10 +16,20 @@
         <div
           v-for="(plat, idx) in platformsList"
           :key="idx"
-          class="bg-black border border-neutral-900 p-6 rounded-lg text-center group cursor-default transition-all duration-300 hover:border-[#00ffa3]/60 hover:shadow-[0_0_20px_rgba(0,255,163,0.03)]"
+          :class="[
+            'p-6 rounded-lg text-center group cursor-default transition-all duration-300 hover:border-[#00ffa3]/60 hover:shadow-[0_0_20px_rgba(0,255,163,0.03)] border',
+            isDarkMode
+              ? 'bg-black border-neutral-900'
+              : 'bg-white border-transparent shadow-md hover:shadow-xl shadow-neutral-200/70'
+          ]"
         >
           <div class="text-2xl mb-2 transition-transform duration-300 group-hover:scale-110">{{ plat.icon }}</div>
-          <h3 class="text-xs font-mono font-bold tracking-wider text-neutral-400 group-hover:text-white transition-colors">
+          <h3
+            :class="[
+              'text-xs font-mono font-bold tracking-wider transition-colors',
+              isDarkMode ? 'text-neutral-400 group-hover:text-white' : 'text-neutral-600 group-hover:text-black'
+            ]"
+          >
             {{ plat.name }}
           </h3>
         </div>
@@ -24,11 +39,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, inject } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const platformTargetGrid = ref(null)
 

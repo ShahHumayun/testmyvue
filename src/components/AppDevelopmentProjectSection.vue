@@ -1,5 +1,5 @@
 <template>
-  <section class="projects-section" :class="isDarkMode ? 'theme-dark' : 'theme-light'">
+  <section :class="['projects-section transition-colors duration-400', isDarkMode ? 'theme-dark' : 'theme-light']">
     <div class="bg-glow"></div>
 
     <div class="section-header">
@@ -36,18 +36,20 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, inject, ref } from 'vue';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-defineProps({ isDarkMode: { type: Boolean, default: true } });
+// Inject global theme state context seamlessly
+const isDarkMode = inject('isDarkMode', ref(true));
+
 defineEmits(['open-modal']);
 
 const projects = [
   { title: 'Taylor Allergy',     intro: 'Patient appointment tracking, rescheduling, and secure communication.', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=600' },
-  { title: 'My Expense Tracker', intro: 'Comprehensive finance management.',                                      image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600' },
-  { title: 'Book Library',       intro: 'Public library management system.',                                     image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=600' },
-  { title: 'Magento Connector',  intro: 'Admin portal for order management.',                                    image: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=600' },
+  { title: 'My Expense Tracker', intro: 'Comprehensive finance management.',                                     image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600' },
+  { title: 'Book Library',       intro: 'Public library management system.',                                    image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=600' },
+  { title: 'Magento Connector',  intro: 'Admin portal for order management.',                                   image: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=600' },
 ];
 
 gsap.registerPlugin(ScrollTrigger);
@@ -57,6 +59,29 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* ── Encapsulated Visual Protection Boundaries ── */
+.theme-dark { 
+  background-color: #0b0c10 !important; 
+  color: #ffffff !important; 
+  --title-color: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.02);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --body-bg: rgba(0, 0, 0, 0.4);
+  --btn-border: rgba(255, 255, 255, 0.2);
+  --btn-text: #ffffff;
+}
+
+.theme-light { 
+  background-color: #ffffff !important; 
+  color: #000000 !important; 
+  --title-color: #000000;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --body-bg: #ffffff;
+  --btn-border: rgba(15, 23, 42, 0.15);
+  --btn-text: #0f172a;
+}
+
 /* ── Section ── */
 .projects-section {
   padding: 80px 32px;
@@ -69,15 +94,11 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.5s, color 0.5s;
 }
 
 @media (min-width: 768px) {
   .projects-section { padding: 80px 48px; }
 }
-
-.theme-dark { background-color: #0b0c10; color: #ffffff; }
-.theme-light { background-color: #f4f6f9; color: #000000; }
 
 /* ── Background glow ── */
 .bg-glow {
@@ -106,7 +127,7 @@ onMounted(() => {
 }
 
 .section-label {
-  color: #00ffa3;
+  color: #00ffa3 !important;
   font-weight: 800;
   letter-spacing: 0.25em;
   text-transform: uppercase;
@@ -121,10 +142,9 @@ onMounted(() => {
   margin-bottom: 24px;
   letter-spacing: -0.02em;
   line-height: 1.1;
+  color: var(--title-color) !important;
+  transition: color 0.4s ease;
 }
-
-.theme-dark .section-title { color: #ffffff; }
-.theme-light .section-title { color: #000000; }
 
 .title-accent {
   background: linear-gradient(to right, #00ffa3, #ffffff);
@@ -134,9 +154,9 @@ onMounted(() => {
   color: transparent;
 }
 .theme-light .title-accent {
-  background: none;
-  -webkit-text-fill-color: #000000;
-  color: #000000;
+  background: none !important;
+  -webkit-text-fill-color: #000000 !important;
+  color: #000000 !important;
 }
 
 /* ── Cards grid ── */
@@ -169,20 +189,17 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  transition: border-color 0.5s;
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.theme-dark .project-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
 .theme-light .project-card {
-  background: #ffffff;
-  border: 1px solid #d1d5db;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05) !important;
 }
+
 .project-card:hover {
-  border-color: rgba(0, 255, 163, 0.5);
+  border-color: rgba(0, 255, 163, 0.5) !important;
 }
 
 /* ── Card image ── */
@@ -211,23 +228,21 @@ onMounted(() => {
   flex-direction: column;
   flex-grow: 1;
   text-align: center;
+  background: var(--body-bg) !important;
+  transition: background 0.4s ease;
 }
-
-.theme-dark .card-body { background: rgba(0, 0, 0, 0.4); }
-.theme-light .card-body { background: #ffffff; }
 
 .card-title {
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 12px;
   flex-shrink: 0;
+  color: var(--title-color) !important;
 }
-.theme-dark .card-title { color: #ffffff; }
-.theme-light .card-title { color: #000000; }
 
 .card-intro {
   font-size: 0.875rem;
-  color: #9ca3af;
+  color: #9ca3af !important;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -250,30 +265,20 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 6px 12px; /* Fixed small paddings to give text breathing room */
+  padding: 6px 12px;
   font-size: 1rem;
   font-weight: 700;
   border-radius: 8px;
   cursor: pointer;
+  border: 1px solid var(--btn-border) !important;
+  color: var(--btn-text) !important;
+  background-color: transparent !important;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-/* Dark Theme Button State */
-.theme-dark .view-btn {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-}
-
-/* Light Theme Button State */
-.theme-light .view-btn {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  color: #000000;
-}
-
-/* Unified Hover State */
 .view-btn:hover {
-  background-color: #00ffa3;
-  color: #000000;
-  border-color: #00ffa3;
+  background-color: #00ffa3 !important;
+  color: #000000 !important;
+  border-color: #00ffa3 !important;
 }
 </style>

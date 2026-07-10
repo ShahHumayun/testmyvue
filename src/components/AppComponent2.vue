@@ -1,15 +1,30 @@
 <template>
-  <section class="py-24 px-6 border-b border-neutral-900 relative z-20">
+  <section
+    :class="[
+      'py-24 px-6 border-b relative z-20',
+      isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
+    ]"
+  >
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-center text-sm font-bold tracking-widest text-neutral-500 uppercase mb-16">
+      <h2
+        :class="[
+          'text-center text-sm font-bold tracking-widest uppercase mb-16',
+          isDarkMode ? 'text-neutral-500' : 'text-neutral-400'
+        ]"
+      >
         Trusted By Startups & Growing Businesses
       </h2>
       <div ref="counterContainer" class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
         <div v-for="(stat, idx) in stats" :key="idx" class="space-y-2">
-          <div class="text-4xl md:text-5xl font-black text-[#00ffa3] tracking-tight">
+          <div :class="['text-4xl md:text-5xl font-black tracking-tight', isDarkMode ? 'text-[#00ffa3]' : 'text-black']">
             <span class="trust-counter" :data-target="stat.value">0</span>{{ stat.suffix }}
           </div>
-          <p class="text-xs md:text-sm text-neutral-400 font-medium tracking-wide uppercase">{{ stat.label }}</p>
+          <p
+            :class="[
+              'text-xs md:text-sm font-medium tracking-wide uppercase',
+              isDarkMode ? 'text-neutral-400' : 'text-neutral-500'
+            ]"
+          >{{ stat.label }}</p>
         </div>
       </div>
     </div>
@@ -17,8 +32,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { gsap } from 'gsap'
+
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const counterContainer = ref(null)
 const stats = [

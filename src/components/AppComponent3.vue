@@ -1,25 +1,48 @@
 <template>
-  <section class="py-32 px-6 border-b border-neutral-900 relative z-20 bg-black">
+  <section
+    :class="[
+      'py-32 px-6 border-b relative z-20',
+      isDarkMode ? 'border-neutral-900 bg-black' : 'border-neutral-200 bg-white'
+    ]"
+  >
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-20 text-center max-w-3xl mx-auto">
+      <h2
+        :class="[
+          'text-3xl md:text-5xl font-bold tracking-tight mb-20 text-center max-w-3xl mx-auto',
+          isDarkMode ? 'text-white' : 'text-black'
+        ]"
+      >
         Mobile Solutions <span class="text-[#00ffa3]">Built For Growth</span>
       </h2>
       <div ref="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div 
-          v-for="(service, idx) in services" 
+        <div
+          v-for="(service, idx) in services"
           :key="idx"
-          class="group relative bg-neutral-950 border border-neutral-900 rounded-2xl p-8 transition-all duration-500 hover:border-[#00ffa3]/50 hover:shadow-[0_0_30px_rgba(0,255,163,0.05)] cursor-pointer overflow-hidden"
+          :class="[
+            'group relative rounded-2xl p-8 transition-all duration-500 hover:border-[#00ffa3]/50 hover:shadow-[0_0_30px_rgba(0,255,163,0.05)] cursor-pointer overflow-hidden border',
+            isDarkMode ? 'bg-neutral-950 border-neutral-900' : 'bg-neutral-50 border-neutral-200'
+          ]"
         >
           <div class="absolute -right-16 -top-16 w-32 h-32 bg-[#00ffa3]/5 rounded-full blur-2xl group-hover:bg-[#00ffa3]/10 transition-all duration-500"></div>
-          
-          <div class="w-12 h-12 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center mb-6 group-hover:border-[#00ffa3]/30 transition-colors duration-300">
+
+          <div
+            :class="[
+              'w-12 h-12 rounded-xl flex items-center justify-center mb-6 group-hover:border-[#00ffa3]/30 transition-colors duration-300 border',
+              isDarkMode ? 'bg-neutral-900 border-neutral-800' : 'bg-white border-neutral-200'
+            ]"
+          >
             <component :is="service.icon" class="w-6 h-6 text-[#00ffa3] transition-transform duration-500 group-hover:rotate-12" />
           </div>
-          
-          <h3 class="text-xl font-bold mb-3 text-white tracking-tight group-hover:text-[#00ffa3] transition-colors duration-300">
+
+          <h3
+            :class="[
+              'text-xl font-bold mb-3 tracking-tight group-hover:text-[#00ffa3] transition-colors duration-300',
+              isDarkMode ? 'text-white' : 'text-black'
+            ]"
+          >
             {{ service.title }}
           </h3>
-          <p class="text-neutral-400 leading-relaxed text-sm">
+          <p :class="['leading-relaxed text-sm', isDarkMode ? 'text-neutral-400' : 'text-neutral-600']">
             {{ service.description }}
           </p>
         </div>
@@ -29,11 +52,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, h } from 'vue'
+import { ref, onMounted, h, inject } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const isDarkMode = inject('isDarkMode', ref(true))
+
 const servicesGrid = ref(null)
 
 /* ------------------------------------------------------------- */

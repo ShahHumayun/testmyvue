@@ -1,5 +1,5 @@
 <template>
-  <section class="rg-features" ref="sectionRef">
+  <section :class="['rg-features', isDarkMode ? 'theme-dark' : 'theme-light']" ref="sectionRef">
     <span class="rg-label">Key Features</span>
     <h2 class="rg-features__heading">What the site does</h2>
 
@@ -15,11 +15,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, inject } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+// Inject the shared site theme preference seamlessly
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const sectionRef = ref(null)
 const gridRef = ref(null)
@@ -28,49 +31,49 @@ const features = [
   {
     title: 'Instant Quote Calculator',
     desc: 'Customers enter dimensions, glass type, and edge finish, and get a live price estimate before checkout.',
-    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" stroke="#00ffa3" stroke-width="1.6"/><path d="M8 7h8M8 11h8M8 15h5" stroke="#00ffa3" stroke-width="1.6"/></svg>'
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="16" height="20" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="14" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 7h8M8 10h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>'
   },
   {
-    title: 'Product Catalog',
-    desc: 'Tempered, annealed, mirror, and ceramic glass organized into browsable, filterable categories.',
-    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" stroke="#00ffa3" stroke-width="1.6"/><rect x="13" y="3" width="8" height="8" stroke="#00ffa3" stroke-width="1.6"/><rect x="3" y="13" width="8" height="8" stroke="#00ffa3" stroke-width="1.6"/><rect x="13" y="13" width="8" height="8" stroke="#00ffa3" stroke-width="1.6"/></svg>'
+    title: 'Custom Dimension Rules',
+    desc: 'Validates maximum and minimum surface area thresholds dynamically, handling structural glass constraint configurations safely.',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 18h18M6 6v4M10 6v4M14 6v4M18 6v4M6 14v4M12 14v4M18 14v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>'
   },
   {
-    title: 'Custom Size Requests',
-    desc: 'A guided form walks customers through non-standard sizes and shapes for made-to-order panels.',
-    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20L20 4M4 4h6M4 4v6M20 20h-6M20 20v-6" stroke="#00ffa3" stroke-width="1.6"/></svg>'
+    title: 'Shape Selection Wizard',
+    desc: 'Interactive grid allowing selectors to toggle between rectangles, circles, arches, or sketch uploads cleanly.',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="7" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M4 17l4-4 4 4M14 20h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   },
   {
-    title: 'Order Tracking',
-    desc: 'Customers can follow their order from quote approval through cutting and delivery.',
-    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#00ffa3" stroke-width="1.6"/><path d="M12 7v5l3 3" stroke="#00ffa3" stroke-width="1.6"/></svg>'
+    title: 'Edge & Corner Finishes',
+    desc: 'Supports high-end configuration variables, mapping seamed, flat-polished, beveled, and radiused corner premiums automatically.',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20V8a4 4 0 014-4h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M8 14h8M12 10v8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>'
   },
   {
-    title: 'Mobile-First Checkout',
-    desc: 'A streamlined, thumb-friendly checkout flow built for customers ordering from a job site or store.',
-    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="7" y="2" width="10" height="20" rx="2" stroke="#00ffa3" stroke-width="1.6"/><path d="M11 18h2" stroke="#00ffa3" stroke-width="1.6"/></svg>'
+    title: 'WooCommerce B2B Wholesale',
+    desc: 'Unlocks tailored tiered discounts, dynamic structural pricing matrices, and business-tier quote approvals.',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-5 9 5v10a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 20V12h6v8" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>'
   },
   {
-    title: 'Reusable Components',
-    desc: 'Product cards, forms, and layout blocks built as isolated Vue components for easy catalog growth.',
-    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="#00ffa3" stroke-width="1.6"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="#00ffa3" stroke-width="1.6"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="#00ffa3" stroke-width="1.6"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="#00ffa3" stroke-width="1.6"/></svg>'
+    title: 'Custom Shipping Logic',
+    desc: 'Complex checkout routing matrix optimizing dynamic local freight versus heavy crate courier carrier allocations.',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="15" height="13" rx="1" stroke="currentColor" stroke-width="1.6"/><path d="M17 8h4l2 3v5h-6V8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="6" cy="18" r="2" stroke="currentColor" stroke-width="1.6"/><circle cx="18" cy="18" r="2" stroke="currentColor" stroke-width="1.6"/></svg>'
   }
 ]
 
 let st
 
 onMounted(() => {
-  gsap.set(gridRef.value.children, { y: 28, opacity: 0 })
+  gsap.set(gridRef.value.children, { opacity: 0, y: 30 })
   st = ScrollTrigger.create({
     trigger: sectionRef.value,
-    start: 'top 78%',
+    start: 'top 75%',
     once: true,
     onEnter: () => {
       gsap.to(gridRef.value.children, {
         y: 0,
         opacity: 1,
-        duration: 0.55,
-        stagger: 0.09,
+        duration: 0.6,
+        stagger: 0.08,
         ease: 'power3.out'
       })
     }
@@ -81,11 +84,33 @@ onBeforeUnmount(() => st?.kill())
 </script>
 
 <style scoped>
+/* CSS Theme Variable Mapping Matrix */
+.theme-dark {
+  --features-bg: #000000;
+  --text-heading: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.015);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-title: #ffffff;
+  --card-desc: rgba(255, 255, 255, 0.6);
+  --card-glow: radial-gradient(circle, rgba(0, 255, 163, 0.07) 0%, transparent 70%);
+  --icon-wrap-bg: rgba(0, 255, 163, 0.06);
+}
+
+.theme-light {
+  --features-bg: #ffffff;
+  --text-heading: #0f172a;
+  --card-bg: #f8fafc;
+  --card-border: rgba(15, 23, 42, 0.08);
+  --card-title: #0f172a;
+  --card-desc: #475569;
+  --card-glow: radial-gradient(circle, rgba(0, 255, 163, 0.04) 0%, transparent 70%);
+  --icon-wrap-bg: rgba(0, 255, 163, 0.12);
+}
+
 .rg-features {
-  background: #000000;
-  padding: 90px 24px;
-  max-width: 1160px;
-  margin: 0 auto;
+  background: var(--features-bg);
+  padding: 100px 24px;
+  transition: background-color 0.4s ease;
 }
 
 .rg-label {
@@ -102,8 +127,9 @@ onBeforeUnmount(() => st?.kill())
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
   font-size: clamp(1.5rem, 2.8vw, 2rem);
-  color: #ffffff;
+  color: var(--text-heading);
   margin: 0 0 40px;
+  transition: color 0.4s ease;
 }
 
 .rg-features__grid {
@@ -116,10 +142,10 @@ onBeforeUnmount(() => st?.kill())
   position: relative;
   padding: 26px 22px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
   overflow: hidden;
-  transition: border-color 0.3s ease, transform 0.3s ease;
+  transition: border-color 0.3s ease, transform 0.3s ease, background-color 0.4s ease;
 }
 
 .rg-card:hover {
@@ -133,41 +159,54 @@ onBeforeUnmount(() => st?.kill())
   right: -30%;
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle, rgba(0, 255, 163, 0.16) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  background: var(--card-glow);
   pointer-events: none;
-}
-
-.rg-card:hover .rg-card__glow {
-  opacity: 1;
+  z-index: 0;
 }
 
 .rg-card__icon {
-  display: inline-flex;
-  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--icon-wrap-bg);
+  color: #00ffa3;
+  margin-bottom: 20px;
+  transition: background-color 0.4s ease;
 }
 
 .rg-card__title {
+  position: relative;
+  z-index: 1;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 1.05rem;
-  color: #ffffff;
+  font-size: 1.1rem;
+  color: var(--card-title);
   margin: 0 0 10px;
+  transition: color 0.4s ease;
 }
 
 .rg-card__desc {
+  position: relative;
+  z-index: 1;
   font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--card-desc);
   margin: 0;
+  transition: color 0.4s ease;
 }
 
-@media (max-width: 900px) {
-  .rg-features__grid { grid-template-columns: 1fr 1fr; }
+@media (max-width: 960px) {
+  .rg-features__grid { grid-template-columns: repeat(2, 1fr); }
 }
+
 @media (max-width: 600px) {
   .rg-features__grid { grid-template-columns: 1fr; }
+  .rg-card { padding: 22px 18px; }
 }
 </style>

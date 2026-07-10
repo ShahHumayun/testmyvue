@@ -1,14 +1,19 @@
 <template>
-  <section class="py-32 px-6 border-b border-neutral-900 bg-neutral-950/20 relative z-20 text-neutral-400">
+  <section
+    :class="[
+      'py-32 px-6 border-b relative z-20',
+      isDarkMode ? 'border-neutral-900 bg-neutral-950/20 text-neutral-400' : 'border-neutral-200 bg-white text-neutral-600'
+    ]"
+  >
     <div class="max-w-4xl mx-auto space-y-8 tracking-wide text-sm md:text-base leading-relaxed">
       
-      <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight text-white text-center mb-12">
+      <h2 :class="['text-2xl md:text-4xl font-extrabold tracking-tight text-center mb-12', isDarkMode ? 'text-white' : 'text-black']">
         Why NetSuite Integration Is Essential For <span class="text-[#00ffa3]">Modern Businesses</span>
       </h2>
 
       <div class="space-y-8">
         <div v-for="(item, index) in contentBlocks" :key="index">
-          <h3 class="text-lg font-bold text-white tracking-tight mb-3">
+          <h3 :class="['text-lg font-bold tracking-tight mb-3', isDarkMode ? 'text-white' : 'text-black']">
             {{ item.title }}
           </h3>
           <p>{{ item.text }}</p>
@@ -20,6 +25,10 @@
 </template>
 
 <script setup>
+import { ref, inject } from 'vue'
+
+const isDarkMode = inject('isDarkMode', ref(true))
+
 const contentBlocks = [
   {
     title: 'Achieve Operational Agility',

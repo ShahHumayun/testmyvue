@@ -1,5 +1,5 @@
 <template>
-  <section class="rg-overview" ref="sectionRef">
+  <section :class="['rg-overview', isDarkMode ? 'theme-dark' : 'theme-light']" ref="sectionRef">
     <div class="rg-overview__grid">
       <div class="rg-overview__text">
         <span class="rg-label">Overview</span>
@@ -65,11 +65,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, inject } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+// Inject the shared site theme preference seamlessly
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const sectionRef = ref(null)
 const statsRef = ref(null)
@@ -86,7 +89,7 @@ function animateCount(el, target, suffix = '') {
     duration: 1.6,
     ease: 'power2.out',
     onUpdate: () => {
-      el.textContent = Math.round(obj.val) + suffix
+      if (el) el.textContent = Math.round(obj.val) + suffix
     }
   })
 }
@@ -137,9 +140,35 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+/* CSS Theme Variable Mapping Matrix */
+.theme-dark {
+  --overview-bg: #000000;
+  --text-heading: #ffffff;
+  --text-body: rgba(255, 255, 255, 0.65);
+  --text-sub: rgba(255, 255, 255, 0.4);
+  --text-label: rgba(255, 255, 255, 0.55);
+  --border-line: rgba(255, 255, 255, 0.1);
+  --stat-bg: rgba(255, 255, 255, 0.02);
+  --stat-border: rgba(255, 255, 255, 0.08);
+  --img-border: rgba(0, 255, 163, 0.3);
+}
+
+.theme-light {
+  --overview-bg: #ffffff;
+  --text-heading: #0f172a;
+  --text-body: #475569;
+  --text-sub: #64748b;
+  --text-label: #475569;
+  --border-line: rgba(15, 23, 42, 0.08);
+  --stat-bg: #f8fafc;
+  --stat-border: rgba(15, 23, 42, 0.08);
+  --img-border: rgba(0, 255, 163, 0.2);
+}
+
 .rg-overview {
-  background: #000000;
+  background: var(--overview-bg);
   padding: 100px 24px;
+  transition: background-color 0.4s ease;
 }
 
 .rg-overview__grid {
@@ -165,17 +194,19 @@ onBeforeUnmount(() => {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
-  color: #ffffff;
+  color: var(--text-heading);
   line-height: 1.25;
   margin: 0 0 22px;
+  transition: color 0.4s ease;
 }
 
 .rg-overview__para {
   font-family: 'Inter', sans-serif;
   font-size: 0.98rem;
   line-height: 1.75;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--text-body);
   margin: 0 0 18px;
+  transition: color 0.4s ease;
 }
 
 .rg-overview__role {
@@ -184,7 +215,8 @@ onBeforeUnmount(() => {
   gap: 28px;
   margin-top: 32px;
   padding-top: 28px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--border-line);
+  transition: border-color 0.4s ease;
 }
 
 .rg-role-item {
@@ -198,13 +230,15 @@ onBeforeUnmount(() => {
   font-size: 11.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-sub);
+  transition: color 0.4s ease;
 }
 
 .rg-role-value {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  color: #ffffff;
+  color: var(--text-heading);
+  transition: color 0.4s ease;
 }
 
 /* Visual column */
@@ -226,10 +260,11 @@ onBeforeUnmount(() => {
 .rg-overview__image-border {
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(0, 255, 163, 0.3);
+  border: 1px solid var(--img-border);
   border-radius: 14px;
   box-shadow: inset 0 0 40px rgba(0, 255, 163, 0.08);
   pointer-events: none;
+  transition: border-color 0.4s ease;
 }
 
 .rg-stats {
@@ -244,10 +279,11 @@ onBeforeUnmount(() => {
   flex-direction: column;
   gap: 6px;
   padding: 18px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--stat-border);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--stat-bg);
   text-align: center;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
 .rg-stat__number {
@@ -260,8 +296,9 @@ onBeforeUnmount(() => {
 .rg-stat__label {
   font-family: 'Inter', sans-serif;
   font-size: 11.5px;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--text-label);
   line-height: 1.3;
+  transition: color 0.4s ease;
 }
 
 @media (max-width: 900px) {

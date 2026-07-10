@@ -1,5 +1,5 @@
 <template>
-  <section class="rg-tech" ref="sectionRef">
+  <section :class="['rg-tech', isDarkMode ? 'theme-dark' : 'theme-light']" ref="sectionRef">
     <span class="rg-label">Tech Stack</span>
     <h2 class="rg-tech__heading">Built with</h2>
 
@@ -17,11 +17,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, inject } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+// Inject the shared site theme preference seamlessly
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const sectionRef = ref(null)
 const listRef = ref(null)
@@ -101,12 +104,32 @@ onBeforeUnmount(() => st?.kill())
 </script>
 
 <style scoped>
+/* CSS Theme Variable Mapping Matrix */
+.theme-dark {
+  --tech-bg: #000000;
+  --text-heading: #ffffff;
+  --text-name: #ffffff;
+  --text-desc: rgba(255, 255, 255, 0.55);
+  --item-hover-bg: rgba(0, 255, 163, 0.04);
+  --line-color: rgba(0, 255, 163, 0.35);
+}
+
+.theme-light {
+  --tech-bg: #ffffff;
+  --text-heading: #0f172a;
+  --text-name: #0f172a;
+  --text-desc: #475569;
+  --item-hover-bg: rgba(15, 23, 42, 0.04);
+  --line-color: rgba(15, 23, 42, 0.15);
+}
+
 .rg-tech {
   position: relative;
-  background: #000000;
+  background: var(--tech-bg);
   padding: 90px 24px;
   max-width: 820px;
   margin: 0 auto;
+  transition: background-color 0.4s ease;
 }
 
 .rg-label {
@@ -123,8 +146,9 @@ onBeforeUnmount(() => st?.kill())
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
   font-size: clamp(1.5rem, 2.8vw, 2rem);
-  color: #ffffff;
+  color: var(--text-heading);
   margin: 0 0 40px;
+  transition: color 0.4s ease;
 }
 
 /* Vertical, one-after-another list */
@@ -144,7 +168,7 @@ onBeforeUnmount(() => st?.kill())
 }
 
 .rg-tech__item:hover {
-  background: rgba(0, 255, 163, 0.04);
+  background: var(--item-hover-bg);
   transform: translateX(6px);
 }
 
@@ -154,7 +178,7 @@ onBeforeUnmount(() => st?.kill())
   top: 62px;
   width: 1px;
   height: calc(100% - 24px);
-  background: linear-gradient(to bottom, rgba(0, 255, 163, 0.35), transparent);
+  background: linear-gradient(to bottom, var(--line-color), transparent);
 }
 
 .rg-tech__icon {
@@ -186,16 +210,18 @@ onBeforeUnmount(() => st?.kill())
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
   font-size: 1rem;
-  color: #ffffff;
+  color: var(--text-name);
   margin: 0;
+  transition: color 0.4s ease;
 }
 
 .rg-tech__desc {
   font-family: 'Inter', sans-serif;
   font-size: 0.85rem;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--text-desc);
   margin: 0;
+  transition: color 0.4s ease;
 }
 
 @media (max-width: 560px) {

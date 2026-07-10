@@ -1,7 +1,7 @@
 <template>
-  <section class="py-20 px-6 bg-black text-white">
+  <section :class="['faq-section py-20 px-6 transition-colors duration-400', isDarkMode ? 'theme-dark' : 'theme-light']">
     <div class="max-w-3xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 text-center faq-heading">
         Frequently Asked <span class="text-[#00ffa3]">Questions</span>
       </h2>
       
@@ -9,32 +9,30 @@
         <div 
           v-for="(item, idx) in faqs" 
           :key="idx" 
-          class="bg-neutral-950 border border-neutral-900 rounded-xl overflow-hidden transition-colors duration-300"
-          :class="{ 'border-neutral-800': activeFaq === idx }"
+          :class="['faq-card border rounded-xl overflow-hidden transition-colors duration-300', activeFaq === idx ? 'faq-card--active' : '']"
         >
           <button 
             @click="toggleFaq(idx)"
             class="w-full flex items-center justify-between p-6 text-left focus:outline-none group"
           >
-            <span class="font-bold text-white group-hover:text-[#00ffa3] transition-colors">
+            <span class="font-bold group-hover:text-[#00ffa3] transition-colors faq-question">
               {{ item.question }}
             </span>
             <span 
-              class="ml-4 w-6 h-6 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center transition-all duration-300" 
-              :class="{ 'rotate-180 border-[#00ffa3]/30': activeFaq === idx }"
+              :class="['ml-4 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 faq-icon-circle', activeFaq === idx ? 'rotate-180 faq-icon-circle--active' : '']" 
             >
-              <svg class="w-3 h-3 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+              <svg class="w-3 h-3 faq-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </span>
           </button>
 
           <div 
-            class="grid transition-all duration-300 ease-in-out text-neutral-400"
+            class="grid transition-all duration-300 ease-in-out faq-answer-panel"
             :style="{ gridTemplateRows: activeFaq === idx ? '1fr' : '0fr' }"
           >
             <div class="overflow-hidden">
-              <p class="px-6 pb-6 pt-0 text-sm md:text-base leading-relaxed border-t border-neutral-900/50">
+              <p class="px-6 pb-6 pt-0 text-sm md:text-base leading-relaxed border-t faq-answer-text">
                 {{ item.answer }}
               </p>
             </div>
@@ -46,7 +44,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
+
+// Inject the shared site theme preference seamlessly
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const activeFaq = ref(null)
 
@@ -63,3 +64,76 @@ const toggleFaq = (index) => {
   activeFaq.value = activeFaq.value === index ? null : index
 }
 </script>
+
+<style scoped>
+/* Encapsulated Visual Protection Boundaries */
+.theme-dark {
+  background-color: #000000 !important;
+  --heading-color: #ffffff;
+  --card-bg: #0a0a0a; /* bg-neutral-950 */
+  --card-border: #171717; /* border-neutral-900 */
+  --card-border-active: #262626; /* border-neutral-800 */
+  --question-color: #ffffff;
+  --circle-bg: #171717;
+  --circle-border: #262626;
+  --circle-border-active: rgba(0, 255, 163, 0.3);
+  --chevron-color: #a3a3a3;
+  --answer-color: #a3a3a3;
+  --divider-color: rgba(23, 23, 23, 0.5);
+}
+
+.theme-light {
+  background-color: #ffffff !important;
+  --heading-color: #0f172a;
+  --card-bg: #f8fafc;
+  --card-border: rgba(15, 23, 42, 0.08);
+  --card-border-active: rgba(15, 23, 42, 0.15);
+  --question-color: #0f172a;
+  --circle-bg: #f1f5f9;
+  --circle-border: rgba(15, 23, 42, 0.08);
+  --circle-border-active: rgba(0, 255, 163, 0.4);
+  --chevron-color: #475569;
+  --answer-color: #475569;
+  --divider-color: rgba(15, 23, 42, 0.06);
+}
+
+/* Explicit Structural Rules */
+.faq-heading {
+  color: var(--heading-color) !important;
+  transition: color 0.4s ease;
+}
+
+.faq-card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+}
+
+.faq-card--active {
+  border-color: var(--card-border-active) !important;
+}
+
+.faq-question {
+  color: var(--question-color) !important;
+}
+
+.faq-icon-circle {
+  background-color: var(--circle-bg) !important;
+  border: 1px solid var(--circle-border) !important;
+}
+
+.faq-icon-circle--active {
+  border-color: var(--circle-border-active) !important;
+}
+
+.faq-chevron {
+  color: var(--chevron-color) !important;
+}
+
+.faq-answer-panel {
+  color: var(--answer-color) !important;
+}
+
+.faq-answer-text {
+  border-color: var(--divider-color) !important;
+}
+</style>

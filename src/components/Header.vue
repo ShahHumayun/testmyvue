@@ -6,11 +6,11 @@
       </router-link>
 
       <div class="nav-actions">
-        <!-- <router-link to="/consultation" class="consult-btn">
+        <router-link to="/consultation" class="consult-btn">
           Consultation
-        </router-link> -->
+        </router-link>
 
-        <!-- <button 
+        <button 
           @click="toggleTheme"
           class="theme-toggle"
           aria-label="Toggle Theme"
@@ -21,7 +21,7 @@
           >
             <span class="toggle-icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
           </div>
-        </button> -->
+        </button>
 
         <button 
           @click="toggleMenu" 
@@ -45,7 +45,7 @@
           >
             <span class="menu-index">0{{ index + 1 }}</span>
             <router-link 
-              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
+              :to="item === 'Consultation' ? '/consultation' : '/' + item.toLowerCase()" 
               @click="toggleMenu" 
               class="menu-link"
             >
@@ -66,27 +66,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { gsap } from 'gsap'
 
-const props = defineProps({
-  isDarkMode: {
-    type: Boolean,
-    default: true
-  }
-})
-
-const emit = defineEmits(['update:isDarkMode'])
+// CHANGED: Injected the global reactive theme state and toggle handler from the parent layout
+const isDarkMode = inject('isDarkMode', ref(true))
+const toggleTheme = inject('toggleTheme', () => {})
 
 const isMenuOpen = ref(false)
-const menuItems = ['Home', 'About', 'Services', 'Portfolio', 'Studio', 'Contact']
+
+// CHANGED: Replaced 'Home' with 'Consultation' in the primary menu items list
+const menuItems = ['Consultation', 'About', 'Services', 'Portfolio', 'Culture', 'Contact']
 
 const toggleMenu = () => { 
   isMenuOpen.value = !isMenuOpen.value 
-}
-
-const toggleTheme = () => {
-  emit('update:isDarkMode', !props.isDarkMode)
 }
 
 // GSAP Stagger Overlays 

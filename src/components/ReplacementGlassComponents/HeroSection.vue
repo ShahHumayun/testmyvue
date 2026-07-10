@@ -1,5 +1,5 @@
 <template>
-  <section class="rg-hero" ref="heroRef">
+  <section :class="['rg-hero', isDarkMode ? 'theme-dark' : 'theme-light']" ref="heroRef">
     <div class="rg-hero__glow" ref="glowRef"></div>
     <div class="rg-hero__grid"></div>
 
@@ -44,8 +44,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import gsap from 'gsap'
+
+// Injected dynamic site theme status indicator configuration
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const heroRef = ref(null)
 const glowRef = ref(null)
@@ -109,24 +112,51 @@ onMounted(() => {
 </script>
 
 <style scoped> 
+/* CSS Variables Context Definition mapping */
+.theme-dark {
+  --hero-bg: #000000;
+  --text-main: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.72);
+  --text-description: rgba(255, 255, 255, 0.65);
+  --grid-line: rgba(0, 255, 163, 0.05);
+  --glow-layer: radial-gradient(circle, rgba(0, 255, 163, 0.2) 0%, rgba(0, 255, 163, 0) 65%);
+  --tag-bg: rgba(0, 255, 163, 0.06);
+  --tag-border: rgba(0, 255, 163, 0.35);
+  --shadow-color: rgba(0, 0, 0, 0.65);
+}
+
+.theme-light {
+  --hero-bg: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-description: #334155;
+  --grid-line: rgba(15, 23, 42, 0.04);
+  --glow-layer: radial-gradient(circle, rgba(0, 255, 163, 0.06) 0%, rgba(0, 255, 163, 0) 65%);
+  --tag-bg: #f1f5f9;
+  --tag-border: rgba(15, 23, 42, 0.12);
+  --shadow-color: rgba(15, 23, 42, 0.08);
+}
+
 .rg-hero {
   position: relative;
   min-height: 100vh;
-  background: #000000;
+  background: var(--hero-bg);
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 140px 24px 100px;
   overflow: hidden;
   text-align: center;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .rg-hero__grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0, 255, 163, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 163, 0.05) 1px, transparent 1px);
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 40%, transparent 100%);
   pointer-events: none;
@@ -139,7 +169,7 @@ onMounted(() => {
   transform: translateX(-50%);
   width: 1000px;
   height: 1000px;
-  background: radial-gradient(circle, rgba(0, 255, 163, 0.2) 0%, rgba(0, 255, 163, 0) 65%);
+  background: var(--glow-layer);
   pointer-events: none;
   z-index: 0;
 }
@@ -156,7 +186,7 @@ onMounted(() => {
   text-transform: uppercase;
   color: #00ffa3;
   padding: 7px 16px;
-  border: 1px solid rgba(0, 255, 163, 0.3);
+  border: 1px solid rgba(0, 255, 163, 0.35);
   border-radius: 999px;
   background: rgba(0, 255, 163, 0.05);
   margin-bottom: 24px;
@@ -184,12 +214,13 @@ onMounted(() => {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
   font-size: clamp(1.85rem, 6.5vw, 5.2rem);
-  color: #ffffff;
+  color: var(--text-main);
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin: 0 0 22px;
   word-break: break-word;
   overflow-wrap: break-word;
+  transition: color 0.4s ease;
 }
 
 .rg-accent {
@@ -213,8 +244,9 @@ onMounted(() => {
   font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--text-muted);
   margin: 0 0 30px;
+  transition: color 0.4s ease;
 }
 
 .rg-hero__tags {
@@ -232,11 +264,11 @@ onMounted(() => {
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   color: #00ffa3;
-  border: 1px solid rgba(0, 255, 163, 0.35);
-  background: rgba(0, 255, 163, 0.06);
+  border: 1px solid var(--tag-border);
+  background: var(--tag-bg);
   padding: 6px 14px;
   border-radius: 999px;
-  transition: border-color 0.25s ease, background 0.25s ease;
+  transition: border-color 0.25s ease, background 0.25s ease, color 0.4s ease;
 }
 
 .rg-tag:hover {
@@ -252,10 +284,11 @@ onMounted(() => {
   aspect-ratio: 16 / 9;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 50px 120px rgba(0, 0, 0, 0.65), 0 0 80px rgba(0, 255, 163, 0.1);
+  box-shadow: 0 50px 120px var(--shadow-color), 0 0 80px rgba(0, 255, 163, 0.05);
   transform-style: preserve-3d;
   perspective: 1000px;
   cursor: pointer;
+  transition: box-shadow 0.4s ease;
 }
 
 .rg-image__photo {
@@ -269,9 +302,10 @@ onMounted(() => {
   position: absolute;
   inset: 0;
   border-radius: 20px;
-  border: 1px solid rgba(0, 255, 163, 0.35);
-  box-shadow: inset 0 0 60px rgba(0, 255, 163, 0.08);
+  border: 1px solid var(--tag-border);
+  box-shadow: inset 0 0 60px rgba(0, 255, 163, 0.04);
   pointer-events: none;
+  transition: border-color 0.4s ease;
 }
 
 .rg-image__shine {
@@ -286,7 +320,7 @@ onMounted(() => {
     rgba(0, 255, 163, 0.16) 45%,
     rgba(255, 255, 255, 0.22) 50%,
     rgba(0, 255, 163, 0.16) 55%,
-    transparent 100%
+    transparent 100__
   );
   pointer-events: none;
 }
@@ -300,7 +334,8 @@ onMounted(() => {
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   line-height: 1.85;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--text-description);
+  transition: color 0.4s ease;
   
   /* Layout adjustments: Clean, crisp text block alignment formatting */
   text-align: justify;

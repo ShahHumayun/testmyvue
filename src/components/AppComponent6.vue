@@ -1,8 +1,13 @@
 <template>
-  <section class="py-32 px-6 border-b border-neutral-900 overflow-hidden relative z-20">
+  <section
+    :class="[
+      'py-32 px-6 overflow-hidden relative z-20 border-b',
+      isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
+    ]"
+  >
     <div class="max-w-7xl mx-auto">
       <div class="text-center max-w-2xl mx-auto mb-20">
-        <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+        <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight mb-4', isDarkMode ? 'text-white' : 'text-black']">
           Designed To Impress. <br><span class="text-[#00ffa3]">Built To Perform.</span>
         </h2>
       </div>
@@ -11,19 +16,29 @@
         <div
           v-for="(app, idx) in showcaseApps"
           :key="idx"
-          class="showcase-card group bg-neutral-950 border border-neutral-900 rounded-3xl p-6 flex flex-col justify-between items-center text-center cursor-pointer transition-all duration-500 hover:border-neutral-800"
+          :class="[
+            'showcase-card group rounded-3xl p-6 flex flex-col justify-between items-center text-center cursor-pointer transition-all duration-500 border',
+            isDarkMode
+              ? 'bg-neutral-950 border-neutral-900 hover:border-neutral-800'
+              : 'bg-white border-neutral-200 hover:border-neutral-300 shadow-md hover:shadow-xl shadow-neutral-200/60'
+          ]"
         >
           <div class="relative pt-2 pb-3">
             <!-- Side buttons -->
-            <span class="absolute -left-0.5 top-12 w-0.5 h-5 bg-neutral-600 rounded-l-full"></span>
-            <span class="absolute -left-0.5 top-20 w-0.5 h-8 bg-neutral-600 rounded-l-full"></span>
-            <span class="absolute -right-0.5 top-16 w-0.5 h-10 bg-neutral-600 rounded-r-full"></span>
+            <span :class="['absolute -left-0.5 top-12 w-0.5 h-5 rounded-l-full', isDarkMode ? 'bg-neutral-600' : 'bg-neutral-300']"></span>
+            <span :class="['absolute -left-0.5 top-20 w-0.5 h-8 rounded-l-full', isDarkMode ? 'bg-neutral-600' : 'bg-neutral-300']"></span>
+            <span :class="['absolute -right-0.5 top-16 w-0.5 h-10 rounded-r-full', isDarkMode ? 'bg-neutral-600' : 'bg-neutral-300']"></span>
 
             <!-- Phone shell -->
-            <div class="w-36 h-72 bg-black border-[3px] border-neutral-800 ring-1 ring-neutral-700/40 rounded-[32px] p-1.5 shadow-[0_25px_50px_-12px_rgba(0,255,163,0.15)] relative overflow-hidden transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-1">
+            <div
+              :class="[
+                'w-36 h-72 border-[3px] ring-1 rounded-[32px] p-1.5 shadow-[0_25px_50px_-12px_rgba(0,255,163,0.15)] relative overflow-hidden transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-1',
+                isDarkMode ? 'bg-black border-neutral-800 ring-neutral-700/40' : 'bg-white border-black ring-black/10'
+              ]"
+            >
 
               <!-- Screen -->
-              <div class="w-full h-full rounded-[26px] overflow-hidden relative bg-black">
+              <div :class="['w-full h-full rounded-[26px] overflow-hidden relative', isDarkMode ? 'bg-black' : 'bg-white']">
                 <img
                   :src="app.image"
                   :alt="app.title"
@@ -50,8 +65,8 @@
           </div>
 
           <div class="mt-2 space-y-2">
-            <h3 class="text-xl font-bold tracking-tight text-white">{{ app.title }}</h3>
-            <p class="text-neutral-500 text-xs uppercase font-semibold tracking-wider">{{ app.category }}</p>
+            <h3 :class="['text-xl font-bold tracking-tight', isDarkMode ? 'text-white' : 'text-black']">{{ app.title }}</h3>
+            <p :class="['text-xs uppercase font-semibold tracking-wider', isDarkMode ? 'text-neutral-500' : 'text-neutral-600']">{{ app.category }}</p>
           </div>
         </div>
       </div>
@@ -60,11 +75,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const isDarkMode = inject('isDarkMode', ref(true))
 
 const showcaseGrid = ref(null)
 

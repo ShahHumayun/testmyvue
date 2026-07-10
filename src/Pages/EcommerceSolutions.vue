@@ -1,39 +1,51 @@
 <template>
-  <div ref="pageContainer" class="bg-[#000000] text-[#FFFFFF] font-sans relative overflow-hidden selection:bg-[#00ffa3] selection:text-[#000000]">
-    
+  <div
+    ref="pageContainer"
+    :class="[
+      'font-sans relative overflow-hidden selection:bg-[#00ffa3] selection:text-[#000000]',
+      isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
+    ]"
+  >
+
+    <Header />
+
     <div 
       class="pointer-events-none fixed inset-0 z-10 opacity-25 transition-opacity duration-300 will-change-transform"
       :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(0, 255, 163, 0.12), transparent 80%)` }"
     ></div>
 
-   <ecommercecomponent1 />
-    <ecommercecomponent2 />
-     <ecommercecomponent3 />
-      <ecommercecomponent4 />
-      <ecommercecomponent5 />
-      <ecommercecomponent6 />
-      <ecommercecomponent7 />
-      <ecommercecomponent8 />
-      <ecommercecomponent9 />
-      <ecommercecomponent10 />
-      <ecommercecomponent11 />
-      <ecommercecomponent12 />
-      <ecommercecomponent13 />
-      <ecommercecomponent14/>
-      <ecommercecomponent15 />
-      <ecommercecomponent16 />
+   <ecommercecomponent1 :isDarkMode="isDarkMode" />
+    <ecommercecomponent2 :isDarkMode="isDarkMode" />
+    <EcommerceprojectsSection/>
+     <ecommercecomponent3 :isDarkMode="isDarkMode" />
+      <ecommercecomponent4 :isDarkMode="isDarkMode" />
+      <ecommercecomponent5 :isDarkMode="isDarkMode" />
+      <ecommercecomponent6 :isDarkMode="isDarkMode" />
+      <ecommercecomponent7 :isDarkMode="isDarkMode" />
+      <ecommercecomponent8 :isDarkMode="isDarkMode" />
+      <ecommercecomponent9 :isDarkMode="isDarkMode" />
+      <ecommercecomponent10 :isDarkMode="isDarkMode" />
+      <ecommercecomponent11 :isDarkMode="isDarkMode" />
+      <ecommercecomponent12 :isDarkMode="isDarkMode" />
+      <ecommercecomponent13 :isDarkMode="isDarkMode" />
+      <ecommercecomponent14 :isDarkMode="isDarkMode" />
+      <ecommercecomponent15 :isDarkMode="isDarkMode" />
+      <ecommercecomponent16 :isDarkMode="isDarkMode" />
+      <Footer/>
 
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, reactive } from 'vue'
+import { ref, onMounted, onUnmounted, reactive, provide } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+import Header from '../components/Header.vue'
 import ecommercecomponent1 from '../components/ecommercecomponent1.vue'
 import ecommercecomponent2 from '../components/ecommercecomponent2.vue'
 import ecommercecomponent3 from '../components/ecommercecomponent3.vue'
+import EcommerceprojectsSection from '../components/EcommerceprojectsSection.vue'
 import ecommercecomponent4 from '../components/ecommercecomponent4.vue'
 import ecommercecomponent5 from '../components/ecommercecomponent5.vue'
 import ecommercecomponent6 from '../components/ecommercecomponent6.vue'
@@ -47,6 +59,7 @@ import ecommercecomponent13 from '../components/ecommercecomponent13.vue'
 import ecommercecomponent14 from '../components/ecommercecomponent14.vue'
 import ecommercecomponent15 from '../components/ecommercecomponent15.vue'
 import ecommercecomponent16 from '../components/ecommercecomponent16.vue'
+import Footer from '../components/footer.vue'
 
 
 gsap.registerPlugin(ScrollTrigger)
@@ -55,6 +68,32 @@ const pageContainer = ref(null)
 const mouse = reactive({ x: 0, y: 0 })
 const phoneRotation = reactive({ x: 0, y: 0 })
 let rafId = null
+
+// ── Theme state — matches ReplacementGlass.vue / AppDevelopment.vue / WebDevelopment.vue exactly ──
+const isDarkMode = ref(true)
+
+const applyGlobalThemeClass = (isDark) => {
+  if (isDark) {
+    document.documentElement.classList.add('theme-dark')
+    document.documentElement.classList.remove('theme-light')
+  } else {
+    document.documentElement.classList.add('theme-light')
+    document.documentElement.classList.remove('theme-dark')
+  }
+}
+
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  const activeTheme = isDarkMode.value ? 'dark' : 'light'
+
+  localStorage.setItem('webhive-theme', activeTheme)
+  applyGlobalThemeClass(isDarkMode.value)
+}
+
+// Provide reactive state + toggle so Header.vue and all child section
+// components can inject them, same pattern as the other page components
+provide('isDarkMode', isDarkMode)
+provide('toggleTheme', toggleTheme)
 
 const handleMouseMove = (e) => {
   if (!rafId) {
@@ -73,6 +112,17 @@ const handleMouseMove = (e) => {
 }
 
 onMounted(() => {
+  // Check the universal site theme preference. Defaults to dark. - Matching AppDevelopment.vue
+  const savedTheme = localStorage.getItem('webhive-theme')
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+  } else {
+    isDarkMode.value = true
+  }
+
+  // Keep root context token up-to-date instantly
+  applyGlobalThemeClass(isDarkMode.value)
+
   window.addEventListener('mousemove', handleMouseMove, { passive: true })
 })
 

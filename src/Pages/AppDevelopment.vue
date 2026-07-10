@@ -1,25 +1,33 @@
 <template>
-  <div ref="pageContainer" class="bg-[#000000] text-[#FFFFFF] font-sans relative overflow-hidden selection:bg-[#00ffa3] selection:text-[#000000]">
-    
+  <div
+    ref="pageContainer"
+    :class="[
+      'font-sans relative overflow-hidden selection:bg-[#00ffa3] selection:text-[#000000]',
+      isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
+    ]"
+  >
+
+    <Header />
+
     <div 
       class="pointer-events-none fixed inset-0 z-10 opacity-25 transition-opacity duration-300 will-change-transform"
       :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(0, 255, 163, 0.12), transparent 80%)` }"
     ></div>
     <br><br>
 
-    <AppComponent1 :phone-rotation="phoneRotation" />
-    <AppComponent2 />
-    <AppDevelopmentProjectSection :isDarkMode="true" @open-modal="openModal" />
-    <AppComponent3 />
-    <AppComponent4 />
-    <AppComponent5 />
-    <AppComponent6 />
-    <AppComponent7 />
-    <AppComponent8 />
-    <AppComponent9 />
-    <AppComponent10 />
-    <AppComponent11 />
-    <AppComponent12 />
+    <AppComponent1 :phone-rotation="phoneRotation" :isDarkMode="isDarkMode" />
+    <AppComponent2 :isDarkMode="isDarkMode" />
+    <AppDevelopmentProjectSection :isDarkMode="isDarkMode" @open-modal="openModal" />
+    <AppComponent3 :isDarkMode="isDarkMode" />
+    <AppComponent4 :isDarkMode="isDarkMode" />
+    <AppComponent5 :isDarkMode="isDarkMode" />
+    <AppComponent6 :isDarkMode="isDarkMode" />
+    <AppComponent7 :isDarkMode="isDarkMode" />
+    <AppComponent8 :isDarkMode="isDarkMode" />
+    <AppComponent9 :isDarkMode="isDarkMode" />
+    <AppComponent10 :isDarkMode="isDarkMode" />
+    <AppComponent11 :isDarkMode="isDarkMode" />
+    <AppComponent12 :isDarkMode="isDarkMode" />
     <Footer />
 
     <!-- ✅ Same modal overlay as Portfolio.vue -->
@@ -49,7 +57,7 @@
 
 <script setup>
 import Header from '../components/Header.vue'
-import { ref, reactive, watch, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, watch, onMounted, onUnmounted, provide } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -82,6 +90,32 @@ const pageContainer = ref(null)
 const mouse         = reactive({ x: 0, y: 0 })
 const phoneRotation = reactive({ x: 0, y: 0 })
 let rafId = null
+
+// ── Theme state — matches ReplacementGlass.vue exactly ──
+const isDarkMode = ref(true)
+
+const applyGlobalThemeClass = (isDark) => {
+  if (isDark) {
+    document.documentElement.classList.add('theme-dark')
+    document.documentElement.classList.remove('theme-light')
+  } else {
+    document.documentElement.classList.add('theme-light')
+    document.documentElement.classList.remove('theme-dark')
+  }
+}
+
+const toggleTheme = () => {
+  isDarkMode.value = !isDarkMode.value
+  const activeTheme = isDarkMode.value ? 'dark' : 'light'
+
+  localStorage.setItem('webhive-theme', activeTheme)
+  applyGlobalThemeClass(isDarkMode.value)
+}
+
+// Provide reactive state + toggle so Header.vue and all child section
+// components can inject them, same pattern as ReplacementGlass.vue
+provide('isDarkMode', isDarkMode)
+provide('toggleTheme', toggleTheme)
 
 // ✅ Modal logic — identical to Portfolio.vue
 const activeModal = ref(null)
@@ -121,6 +155,17 @@ const handleMouseMove = (e) => {
 }
 
 onMounted(() => {
+  // Check the universal site theme preference. Defaults to dark. - Matching ReplacementGlass.vue
+  const savedTheme = localStorage.getItem('webhive-theme')
+  if (savedTheme) {
+    isDarkMode.value = savedTheme === 'dark'
+  } else {
+    isDarkMode.value = true
+  }
+
+  // Keep root context token up-to-date instantly
+  applyGlobalThemeClass(isDarkMode.value)
+
   window.addEventListener('mousemove', handleMouseMove, { passive: true })
 })
 
