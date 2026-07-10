@@ -150,7 +150,7 @@ import MyExpenseTrackerApp from '../components/MyExpenseTrackerApp.vue'
 import BookLibraryApp from '../components/BookLibraryApp.vue'
 import MagentoConnectorApp from '../components/MagentoConnectorApp.vue'
 
-import { ref, reactive, watch, onMounted } from 'vue'
+import { ref, reactive, watch, onMounted, provide } from 'vue'
 import gsap from 'gsap'
 
 // 1. Keeps initial state true so default load mounts as dark mode directly
@@ -197,6 +197,13 @@ const toggleTheme = () => {
   localStorage.setItem('webhive-theme', activeTheme)
   applyGlobalThemeClass(isDarkMode.value)
 }
+
+// Provide reactive state + toggle so any child component that injects
+// 'isDarkMode' / 'toggleTheme' (the convention used across every other
+// section component in this project) receives the real, live value —
+// not just whichever ones happen to also accept it as a prop.
+provide('isDarkMode', isDarkMode)
+provide('toggleTheme', toggleTheme)
 
 // Lock body scroll when modal is open
 watch(activeModal, (val) => {
