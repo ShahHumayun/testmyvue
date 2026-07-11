@@ -24,22 +24,25 @@
       <span class="rg-tag">Custom Quoting</span>
     </div>
 
-    <div
-      class="rg-image"
-      ref="imageRef"
-      @mousemove="onTilt"
-      @mouseleave="onTiltReset"
-    >
-      <img
-        class="rg-image__photo"
-        src="https://images.unsplash.com/photo-1435575653489-b0873ec954e2?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="Precision-cut glass panels representing the ReplacementGlass.co product world"
-      />
-      <div class="rg-image__shine" ref="shineRef"></div>
-      <div class="rg-image__border"></div>
-    </div>
+    <!-- ✅ NEW: two-column row — image + description side by side -->
+    <div class="rg-hero__content-row">
+      <div
+        class="rg-image"
+        ref="imageRef"
+        @mousemove="onTilt"
+        @mouseleave="onTiltReset"
+      >
+        <img
+          class="rg-image__photo"
+          src="https://images.unsplash.com/photo-1435575653489-b0873ec954e2?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Precision-cut glass panels representing the ReplacementGlass.co product world"
+        />
+        <div class="rg-image__shine" ref="shineRef"></div>
+        <div class="rg-image__border"></div>
+      </div>
 
-    <p class="rg-hero__description" ref="descriptionRef">ReplacementGlass.co is a custom eCommerce platform specializing in precision-cut glass products for residential and commercial applications. The website allows customers to order custom-sized tempered, annealed, ceramic, and mirror glass tailored to their exact specifications. With an intuitive product customization process, secure checkout, and comprehensive product catalog, the platform simplifies purchasing replacement glass for tabletops, cabinets, shelves, fireplaces, mirrors, and other custom applications. The company emphasizes high-quality craftsmanship, competitive wholesale pricing, and dependable nationwide shipping backed by decades of industry experience.</p>
+      <p class="rg-hero__description" ref="descriptionRef">ReplacementGlass.co is a custom eCommerce platform specializing in precision-cut glass products for residential and commercial applications. The website allows customers to order custom-sized tempered, annealed, ceramic, and mirror glass tailored to their exact specifications. With an intuitive product customization process, secure checkout, and comprehensive product catalog, the platform simplifies purchasing replacement glass for tabletops, cabinets, shelves, fireplaces, mirrors, and other custom applications. The company emphasizes high-quality craftsmanship, competitive wholesale pricing, and dependable nationwide shipping backed by decades of industry experience.</p>
+    </div>
   </section>
 </template>
 
@@ -104,14 +107,14 @@ onMounted(() => {
     )
     .fromTo(
       descriptionRef.value,
-      { y: 16, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6 },
-      '-=0.2'
+      { x: 24, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.6 },
+      '-=0.6'
     )
 })
 </script>
 
-<style scoped> 
+<style scoped>
 /* CSS Variables Context Definition mapping */
 .theme-dark {
   --hero-bg: #000000;
@@ -276,11 +279,22 @@ onMounted(() => {
   background: rgba(0, 255, 163, 0.12);
 }
 
+/* ✅ NEW: two-column content row wrapper */
+.rg-hero__content-row {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 100%);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  text-align: left;
+}
+
 /* Image Wrapper */
 .rg-image {
   position: relative;
-  z-index: 1;
-  width: min(980px, 100%);
+  width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 20px;
   overflow: hidden;
@@ -320,45 +334,49 @@ onMounted(() => {
     rgba(0, 255, 163, 0.16) 45%,
     rgba(255, 255, 255, 0.22) 50%,
     rgba(0, 255, 163, 0.16) 55%,
-    transparent 100__
+    transparent 100%
   );
   pointer-events: none;
 }
 
 .rg-hero__description {
   position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 760px;
-  margin: 44px auto 0;
+  margin: 0;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   line-height: 1.85;
   color: var(--text-description);
   transition: color 0.4s ease;
-  
-  /* Layout adjustments: Clean, crisp text block alignment formatting */
-  text-align: justify;
-  text-justify: inter-word;
-  white-space: normal;
+  text-align: left;
 }
 
 /* Responsive Structural Breakpoints */
+@media (max-width: 900px) {
+  .rg-hero__content-row {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .rg-hero__description {
+    text-align: left;
+    margin-top: 8px;
+  }
+}
+
 @media (max-width: 640px) {
-  .rg-hero { 
-    padding: 100px 20px 60px; 
+  .rg-hero {
+    padding: 100px 20px 60px;
   }
   .rg-hero__title {
     font-size: 2.2rem;
     line-height: 1.15;
     letter-spacing: -0.01em;
   }
-  .rg-hero__tagline { 
-    font-size: 0.95rem; 
+  .rg-hero__tagline {
+    font-size: 0.95rem;
     line-height: 1.6;
   }
-  .rg-image { 
-    aspect-ratio: 4 / 3; 
+  .rg-image {
+    aspect-ratio: 4 / 3;
     border-radius: 12px;
   }
   .rg-image__border {
@@ -367,9 +385,6 @@ onMounted(() => {
   .rg-hero__description {
     font-size: 0.92rem;
     line-height: 1.75;
-    margin-top: 32px;
-    /* Retain clean left styling on small mobile views to look better on narrow ports */
-    text-align: left; 
   }
 }
 

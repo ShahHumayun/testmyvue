@@ -1,16 +1,30 @@
 <template>
   <section :class="['rg-overview', isDarkMode ? 'theme-dark' : 'theme-light']" ref="sectionRef">
+
+    <!-- TOP ROW: image + the business problem / what was built -->
     <div class="rg-overview__grid">
+      <div class="rg-overview__visual">
+        <div class="rg-overview__image-wrap">
+          <img
+            class="rg-overview__image"
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
+            alt="Minimal precision-cut structural architectural glass pane setup, reflecting the product focus of Replacement Glass"
+          />
+          <div class="rg-overview__image-border"></div>
+        </div>
+      </div>
+
       <div class="rg-overview__text">
         <span class="rg-label">Overview</span>
         <h2 class="rg-overview__heading">
           Turning a walk-in glass shop into an online storefront
         </h2>
-        <p class="rg-overview__para">
-         This project was developed as a modern eCommerce solution focused on delivering a seamless online shopping experience for custom glass products. The primary objective was to simplify the process of ordering precision-cut glass by providing an intuitive interface where customers can easily browse products, customize dimensions, select glass types, and complete secure online purchases.
-        </p>
-        <p class="rg-overview__para">
-          The application was designed with a strong emphasis on usability, responsiveness, and performance. Every page is optimized to provide clear product information, straightforward navigation, and an efficient checkout experience across desktop, tablet, and mobile devices. The modular architecture ensures the platform remains scalable and maintainable as new product categories and features are introduced.
+        <p class="rg-overview__intro">
+          Before this project, ordering a custom-cut glass panel meant calling
+          the shop, describing measurements over the phone, and waiting on a
+          manual quote. There was no way for a customer to see pricing,
+          compare glass types, or place an order without picking up the phone
+          first — which slowed down every sale and put extra load on staff.
         </p>
 
         <div class="rg-overview__role">
@@ -28,36 +42,37 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="rg-overview__visual">
-        <div class="rg-overview__image-wrap">
-          <img
-            class="rg-overview__image"
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
-            alt="Minimal precision-cut structural architectural glass pane setup, reflecting the product focus of Replacement Glass"
-          />
-          <div class="rg-overview__image-border"></div>
+    <!-- BOTTOM: full-width — how it was designed/built to solve that problem -->
+    <div class="rg-overview__details" ref="detailsRef">
+      <p class="rg-overview__para">
+        The solution centers on a guided product configurator: customers pick
+        a glass type — tempered, annealed, mirror, or ceramic — enter exact
+        dimensions, and see a live price before adding anything to cart. Every
+        screen was built mobile-first, since most inbound traffic for a local
+        glass business comes from people searching on their phone mid-project,
+        standing in front of the window or cabinet they're trying to measure.
+      </p>
+
+      <div class="rg-stats" ref="statsRef">
+        <div class="rg-stat">
+          <span class="rg-stat__number">
+            <span ref="statOne">0</span>+
+          </span>
+          <span class="rg-stat__label">Glass Types Cataloged</span>
         </div>
-
-        <div class="rg-stats" ref="statsRef">
-          <div class="rg-stat">
-            <span class="rg-stat__number">
-              <span ref="statOne">0</span>+
-            </span>
-            <span class="rg-stat__label">Glass Types Cataloged</span>
-          </div>
-          <div class="rg-stat">
-            <span class="rg-stat__number">
-              <span ref="statTwo">0</span>
-            </span>
-            <span class="rg-stat__label">Vue Components Built</span>
-          </div>
-          <div class="rg-stat">
-            <span class="rg-stat__number">
-              <span ref="statThree">0</span>%
-            </span>
-            <span class="rg-stat__label">Mobile-First Layout</span>
-          </div>
+        <div class="rg-stat">
+          <span class="rg-stat__number">
+            <span ref="statTwo">0</span>+
+          </span>
+          <span class="rg-stat__label">Product Categories</span>
+        </div>
+        <div class="rg-stat">
+          <span class="rg-stat__number">
+            <span ref="statThree">0</span>%
+          </span>
+          <span class="rg-stat__label">Mobile-Responsive Design</span>
         </div>
       </div>
     </div>
@@ -75,6 +90,7 @@ gsap.registerPlugin(ScrollTrigger)
 const isDarkMode = inject('isDarkMode', ref(true))
 
 const sectionRef = ref(null)
+const detailsRef = ref(null)
 const statsRef = ref(null)
 const statOne = ref(null)
 const statTwo = ref(null)
@@ -111,7 +127,7 @@ onMounted(() => {
 
   gsap.fromTo(
     '.rg-overview__image-wrap',
-    { x: 40, opacity: 0 },
+    { x: -40, opacity: 0 },
     {
       x: 0,
       opacity: 1,
@@ -121,13 +137,25 @@ onMounted(() => {
     }
   )
 
+  gsap.fromTo(
+    detailsRef.value.querySelector('.rg-overview__para'),
+    { y: 20, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 0.6,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: detailsRef.value, start: 'top 85%' }
+    }
+  )
+
   const st = ScrollTrigger.create({
     trigger: statsRef.value,
     start: 'top 85%',
     once: true,
     onEnter: () => {
       animateCount(statOne.value, 12, '')
-      animateCount(statTwo.value, 24, '')
+      animateCount(statTwo.value, 5, '')
       animateCount(statThree.value, 100, '')
     }
   })
@@ -171,13 +199,14 @@ onBeforeUnmount(() => {
   transition: background-color 0.4s ease;
 }
 
+/* Top row: image | intro text */
 .rg-overview__grid {
   max-width: 1160px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 72px;
-  align-items: start;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 56px;
+  align-items: center;
 }
 
 .rg-label {
@@ -196,16 +225,16 @@ onBeforeUnmount(() => {
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   color: var(--text-heading);
   line-height: 1.25;
-  margin: 0 0 22px;
+  margin: 0 0 18px;
   transition: color 0.4s ease;
 }
 
-.rg-overview__para {
+.rg-overview__intro {
   font-family: 'Inter', sans-serif;
   font-size: 0.98rem;
   line-height: 1.75;
   color: var(--text-body);
-  margin: 0 0 18px;
+  margin: 0;
   transition: color 0.4s ease;
 }
 
@@ -213,8 +242,8 @@ onBeforeUnmount(() => {
   display: flex;
   flex-wrap: wrap;
   gap: 28px;
-  margin-top: 32px;
-  padding-top: 28px;
+  margin-top: 28px;
+  padding-top: 24px;
   border-top: 1px solid var(--border-line);
   transition: border-color 0.4s ease;
 }
@@ -267,11 +296,28 @@ onBeforeUnmount(() => {
   transition: border-color 0.4s ease;
 }
 
+/* Bottom full-width detail block */
+.rg-overview__details {
+  max-width: 820px;
+  margin: 56px auto 0;
+  padding-top: 44px;
+  border-top: 1px solid var(--border-line);
+  transition: border-color 0.4s ease;
+}
+
+.rg-overview__para {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: var(--text-body);
+  margin: 0 0 36px;
+  transition: color 0.4s ease;
+}
+
 .rg-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin-top: 28px;
 }
 
 .rg-stat {
@@ -304,7 +350,7 @@ onBeforeUnmount(() => {
 @media (max-width: 900px) {
   .rg-overview__grid {
     grid-template-columns: 1fr;
-    gap: 44px;
+    gap: 36px;
   }
 }
 

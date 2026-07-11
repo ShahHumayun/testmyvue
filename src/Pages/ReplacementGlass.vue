@@ -5,9 +5,6 @@
     <main>
       <HeroSection :isDarkMode="isDarkMode" />
       <Overview :isDarkMode="isDarkMode" />
-      <TechStack :tags="techTags" :isDarkMode="isDarkMode" />
-      <Features :features="coreFeatures" :isDarkMode="isDarkMode" />
-      <ProjectGallery :images="galleryImages" :isDarkMode="isDarkMode" />
       <ResultSection :isDarkMode="isDarkMode" />
     </main>
 
@@ -23,9 +20,6 @@ import Footer from '../components/footer.vue'
 // Keeping your exact import names intact
 import HeroSection from '../components/ReplacementGlassComponents/HeroSection.vue'
 import Overview from '../components/ReplacementGlassComponents/Overview.vue'
-import TechStack from '../components/ReplacementGlassComponents/TechStack.vue'
-import Features from '../components/ReplacementGlassComponents/Features.vue'
-import ProjectGallery from '../components/ReplacementGlassComponents/ProjectGallery.vue'
 import ResultSection from '../components/ReplacementGlassComponents/ResultSection.vue'
 
 // Set default theme state to true (Pure Black/Dark mode by default) - Matching Home.vue

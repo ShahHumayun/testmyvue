@@ -6,8 +6,8 @@
       </router-link>
 
       <div class="nav-actions">
-        <router-link to="/consultation" class="consult-btn">
-          Consultation
+        <router-link to="/" class="consult-btn">
+          Home
         </router-link>
 
         <button 
@@ -43,7 +43,7 @@
             :key="item"
             class="menu-item-wrap"
           >
-            <span class="menu-index">0{{ index + 1 }}</span>
+            
             <router-link 
               :to="item === 'Consultation' ? '/consultation' : '/' + item.toLowerCase()" 
               @click="toggleMenu" 
@@ -54,7 +54,7 @@
           </div>
 
           <div class="menu-item-wrap overlay-btn-item">
-            <span class="menu-index">0{{ menuItems.length + 1 }}</span>
+           
             <router-link to="/consultation" class="consult-btn-overlay" @click="toggleMenu">
               Consultation
             </router-link>
@@ -76,7 +76,7 @@ const toggleTheme = inject('toggleTheme', () => {})
 const isMenuOpen = ref(false)
 
 // CHANGED: Replaced 'Home' with 'Consultation' in the primary menu items list
-const menuItems = ['Consultation', 'About', 'Services', 'Portfolio', 'Culture', 'Contact']
+const menuItems = [ 'About', 'Services', 'Portfolio', 'Culture', 'Contact']
 
 const toggleMenu = () => { 
   isMenuOpen.value = !isMenuOpen.value 
