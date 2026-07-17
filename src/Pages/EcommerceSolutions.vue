@@ -2,7 +2,8 @@
   <div
     ref="pageContainer"
     :class="[
-      'font-sans relative overflow-hidden selection:bg-[#00ffa3] selection:text-[#000000]',
+      'font-sans relative overflow-hidden',
+      selectionClasses,
       isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
     ]"
   >
@@ -11,7 +12,7 @@
 
     <div 
       class="pointer-events-none fixed inset-0 z-10 opacity-25 transition-opacity duration-300 will-change-transform"
-      :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(0, 255, 163, 0.12), transparent 80%)` }"
+      :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(${glowRGB}, 0.12), transparent 80%)` }"
     ></div>
 
    <ecommercecomponent1 :isDarkMode="isDarkMode" />
@@ -37,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, reactive, provide } from 'vue'
+import { ref, onMounted, onUnmounted, reactive, computed, provide } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -71,6 +72,16 @@ let rafId = null
 
 // ── Theme state — matches ReplacementGlass.vue / AppDevelopment.vue / WebDevelopment.vue exactly ──
 const isDarkMode = ref(true)
+
+// Accent color driving the cursor spotlight glow: brand green in dark mode, orange in light mode
+const glowRGB = computed(() => (isDarkMode.value ? '0, 255, 163' : '249, 115, 22'))
+
+// Text-selection highlight color, same accent logic
+const selectionClasses = computed(() =>
+  isDarkMode.value
+    ? 'selection:bg-[#00ffa3] selection:text-[#000000]'
+    : 'selection:bg-[#f97316] selection:text-[#000000]'
+)
 
 const applyGlobalThemeClass = (isDark) => {
   if (isDark) {

@@ -169,7 +169,7 @@ const isMenuOpen = ref(false)
 const currentYear = new Date().getFullYear()
 const isChatOpen = ref(false)
 
-const menuItems = ['Home', 'About', 'Portfolio', 'Culture', 'Studio', 'Contact']
+const menuItems = ['Home', 'About', 'Portfolio', 'Culture', 'Studio', 'Policies']
 
 const servicesList = ref([
   {
@@ -375,7 +375,8 @@ onUnmounted(() => {
 }
 
 .theme-dark { background-color: #0b0c10; color: #ffffff; }
-.theme-light { background-color: #f4f6f9; color: #0f172a; }
+/* Light theme overrides --brand-accent to vibrant orange and uses a solid white background */
+.theme-light { --brand-accent: #f97316; background-color: #ffffff; color: #0f172a; }
 
 .bg-overlay {
   position: absolute;
@@ -426,8 +427,11 @@ onUnmounted(() => {
   box-sizing: border-box;
 }
 
+/* Light theme: solid navbar, no blur */
 .theme-light .navbar {
-  background: rgba(15, 23, 42, 0.03);
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
@@ -473,6 +477,9 @@ onUnmounted(() => {
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
+}
+.theme-light .consult-btn:hover {
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 
 .theme-toggle {
@@ -569,7 +576,11 @@ onUnmounted(() => {
   padding: clamp(24px, 5vh, 48px) clamp(20px, 6vw, 48px);
 }
 .theme-dark .nav-overlay { background-color: rgba(11, 12, 16, 0.96); }
-.theme-light .nav-overlay { background-color: rgba(255, 255, 255, 0.96); }
+.theme-light .nav-overlay {
+  background-color: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
 
 .nav-links-container {
   display: flex;
@@ -619,6 +630,9 @@ onUnmounted(() => {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+.theme-light .consult-btn-overlay:hover {
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+}
 
 @media (min-width: 1024px) {
   .nav-overlay {
@@ -653,7 +667,8 @@ onUnmounted(() => {
   pointer-events: none;
   z-index: 1;
 }
-.theme-light .ambient-glow { opacity: 0.15; background-color: #a7f3d0; }
+/* Glow removed entirely in light theme (would otherwise look like a blurry orange stain on white) */
+.theme-light .ambient-glow { display: none; }
 
 .services-hero {
   max-width: 920px;
@@ -672,7 +687,7 @@ onUnmounted(() => {
   display: inline-block;
   margin-bottom: 24px;
 }
-.theme-light .section-tag { color: #059669; font-weight: 600; }
+.theme-light .section-tag { font-weight: 600; }
 
 .services-title {
   font-size: clamp(2.4rem, 6.5vw, 5rem);
@@ -692,7 +707,7 @@ onUnmounted(() => {
   background-clip: text;
 }
 .theme-light .highlight-text {
-  background: linear-gradient(135deg, #0f172a 40%, #059669 100%);
+  background: linear-gradient(135deg, #0f172a 40%, #f97316 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -750,6 +765,9 @@ onUnmounted(() => {
   background: linear-gradient(135deg, rgba(0, 255, 163, 0.12), transparent 60%);
   pointer-events: none;
 }
+.theme-light .row-img-tint {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), transparent 60%);
+}
 .row-glow-dot {
   position: absolute;
   bottom: -30px;
@@ -761,6 +779,8 @@ onUnmounted(() => {
   filter: blur(60px);
   opacity: 0.25;
 }
+/* Removed in light theme — same reasoning as ambient-glow, avoids an orange blur smear on white */
+.theme-light .row-glow-dot { display: none; }
 
 .row-content { display: flex; flex-direction: column; }
 .row-tag {
@@ -771,7 +791,7 @@ onUnmounted(() => {
   color: var(--brand-accent);
   margin-bottom: 14px;
 }
-.theme-light .row-tag { color: #059669; font-weight: 600; }
+.theme-light .row-tag { font-weight: 600; }
 .row-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; margin-bottom: 16px; }
 .row-desc { font-size: 15px; line-height: 1.7; color: rgba(255, 255, 255, 0.65); margin-bottom: 24px; }
 .theme-light .row-desc { color: #475569; }
@@ -811,6 +831,8 @@ onUnmounted(() => {
   opacity: 0.1;
   z-index: 1;
 }
+/* Removed in light theme — no blurry orange background behind the CTA */
+.theme-light .cta-glow { display: none; }
 
 .cta-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: 18px; position: relative; z-index: 5; }
 .cta-subtitle { font-size: clamp(14px, 1.6vw, 17px); line-height: 1.6; color: rgba(255, 255, 255, 0.65); max-width: 560px; margin: 0 auto 36px; position: relative; z-index: 5; }
@@ -831,8 +853,18 @@ onUnmounted(() => {
   border-radius: 4px;
   transition: background-color 0.3s, transform 0.2s;
 }
-.theme-light .btn-start-project { background-color: #0f172a; color: #ffffff; }
 .btn-start-project:hover { background-color: var(--brand-accent); color: #0b0c10; transform: translateY(-2px); }
+
+/* Light theme: button is always the brand accent color, no hover effect at all */
+.theme-light .btn-start-project {
+  background-color: var(--brand-accent);
+  color: #0f172a;
+}
+.theme-light .btn-start-project:hover {
+  background-color: var(--brand-accent);
+  color: #0f172a;
+  transform: none;
+}
 
 .animate-scroll-element { opacity: 0; }
 
@@ -848,7 +880,7 @@ onUnmounted(() => {
   border-top: 1px solid;
 }
 .theme-dark .copyright-section { color: rgba(255, 255, 255, 0.4); background-color: rgba(9, 9, 11, 0.6); border-top-color: rgba(255, 255, 255, 0.05); }
-.theme-light .copyright-section { color: rgba(15, 23, 42, 0.5); background-color: rgba(241, 245, 249, 0.6); border-top-color: rgba(15, 23, 42, 0.06); }
+.theme-light .copyright-section { color: rgba(15, 23, 42, 0.5); background-color: #ffffff; border-top-color: rgba(15, 23, 42, 0.06); }
 
 /* ── Floating Chat Widget (new, isolated) ── */
 .chat-fab {
@@ -868,6 +900,9 @@ onUnmounted(() => {
   z-index: 950;
   box-shadow: 0 8px 24px rgba(0, 255, 163, 0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.theme-light .chat-fab {
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
 }
 .chat-fab:hover { transform: translateY(-2px) scale(1.05); }
 .chat-fab:active { transform: scale(0.95); }

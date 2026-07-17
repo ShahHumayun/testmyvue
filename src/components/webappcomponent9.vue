@@ -2,7 +2,7 @@
   <section :class="['faq-section py-32 px-6 border-b relative z-20 transition-colors duration-400', isDarkMode ? 'theme-dark' : 'theme-light']">
     <div class="max-w-4xl mx-auto">
       <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-16 text-center faq-heading">
-        Frequently Asked <span class="text-[#00ffa3]">Questions</span>
+        Frequently Asked <span class="accent-text">Questions</span>
       </h2>
       <div ref="faqAccordion" class="space-y-4">
         <div 
@@ -35,7 +35,6 @@
               </p>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -49,9 +48,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Inject global theme state context seamlessly
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const faqAccordion = ref(null)
 const activeFaq = ref(null)
 
@@ -85,102 +82,54 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* ── Encapsulated Visual Protection Boundaries ── */
+.theme-dark { --accent-color: #00ffa3; }
+.theme-light { --accent-color: #f97316; }
+
 .theme-dark {
   background-color: #000000 !important;
-  border-color: #171717 !important; /* border-neutral-900 equivalent */
+  border-color: #171717 !important;
   --heading-color: #ffffff;
-  --card-bg: #0a0a0a; /* bg-neutral-950 equivalent */
-  --card-border: #171717; /* border-neutral-900 equivalent */
+  --card-bg: #0a0a0a;
+  --card-border: #171717;
   --card-active-bg: rgba(10, 10, 10, 0.8);
-  --card-active-border: #262626; /* border-neutral-800 equivalent */
+  --card-active-border: #262626;
   --question-color: #ffffff;
-  --arrow-bg: #171717; /* bg-neutral-900 equivalent */
-  --arrow-border: #262626; /* border-neutral-800 equivalent */
-  --arrow-svg-color: #a3a3a3; /* text-neutral-400 equivalent */
+  --arrow-bg: #171717;
+  --arrow-border: #262626;
+  --arrow-svg-color: #a3a3a3;
   --answer-color: #a3a3a3;
   --answer-border: #171717;
 }
 
 .theme-light {
   background-color: #ffffff !important;
-  border-color: #e2e8f0 !important; /* border-slate-200 equivalent */
-  --heading-color: #0f172a; /* text-slate-900 equivalent */
+  border-color: #e2e8f0 !important;
+  --heading-color: #0f172a;
   --card-bg: #ffffff;
   --card-border: #e2e8f0;
-  --card-active-bg: #f8fafc; /* bg-slate-50 equivalent */
-  --card-active-border: #cbd5e1; /* border-slate-300 equivalent */
+  --card-active-bg: #f8fafc;
+  --card-active-border: #cbd5e1;
   --question-color: #0f172a;
-  --arrow-bg: #f1f5f9; /* bg-slate-100 equivalent */
+  --arrow-bg: #f1f5f9;
   --arrow-border: #cbd5e1;
-  --arrow-svg-color: #64748b; /* text-slate-500 equivalent */
-  --answer-color: #475569; /* text-slate-600 equivalent */
+  --arrow-svg-color: #64748b;
+  --answer-color: #475569;
   --answer-border: #e2e8f0;
 }
 
-/* ── Explicit Selector Rule Mappings ── */
-.faq-section {
-  width: 100% !important;
-}
+.accent-text { color: var(--accent-color); }
+.faq-heading { color: var(--heading-color) !important; }
+.faq-card { background-color: var(--card-bg) !important; border: 1px solid var(--card-border) !important; }
+.faq-card--active { background-color: var(--card-active-bg) !important; border-color: var(--card-active-border) !important; }
+.faq-question { color: var(--question-color) !important; }
+.group:hover .faq-question { color: var(--accent-color) !important; }
+.arrow-circle { background-color: var(--arrow-bg) !important; border-color: var(--arrow-border) !important; }
+.arrow-circle--active { border-color: color-mix(in srgb, var(--accent-color), transparent 70%) !important; }
+.arrow-icon { color: var(--arrow-svg-color) !important; }
+.group:hover .arrow-icon { color: var(--question-color) !important; }
+.faq-answer { color: var(--answer-color) !important; border-color: var(--answer-border) !important; }
 
-.faq-heading {
-  color: var(--heading-color) !important;
-  transition: color 0.4s ease;
-}
-
-.faq-card {
-  background-color: var(--card-bg) !important;
-  border: 1px solid var(--card-border) !important;
-}
-
-.faq-card--active {
-  background-color: var(--card-active-bg) !important;
-  border-color: var(--card-active-border) !important;
-}
-
-.faq-question {
-  color: var(--question-color) !important;
-}
-
-/* Text-only accent response on trigger hover items */
-.group:hover .faq-question {
-  color: #00ffa3 !important;
-}
-
-.arrow-circle {
-  background-color: var(--arrow-bg) !important;
-  border-color: var(--arrow-border) !important;
-}
-
-.arrow-circle--active {
-  border-color: rgba(0, 255, 163, 0.3) !important;
-}
-
-.arrow-icon {
-  color: var(--arrow-svg-color) !important;
-}
-
-.group:hover .arrow-icon {
-  color: #ffffff !important;
-}
-
-.faq-answer {
-  color: var(--answer-color) !important;
-  border-color: var(--answer-border) !important;
-}
-
-/* ── Functional Animation Structural Drawer Layout ── */
-.accordion-drawer {
-  display: grid;
-  transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
-  padding: 0 24px;
-}
-
-.drawer-content {
-  overflow: hidden;
-}
-
-.accordion-drawer[style*="grid-template-rows: 1fr"] {
-  padding-bottom: 24px;
-}
+.accordion-drawer { display: grid; transition: grid-template-rows 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease; padding: 0 24px; }
+.drawer-content { overflow: hidden; }
+.accordion-drawer[style*="grid-template-rows: 1fr"] { padding-bottom: 24px; }
 </style>

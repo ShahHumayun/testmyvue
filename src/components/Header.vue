@@ -76,7 +76,7 @@ const toggleTheme = inject('toggleTheme', () => {})
 const isMenuOpen = ref(false)
 
 // CHANGED: Replaced 'Home' with 'Consultation' in the primary menu items list
-const menuItems = [ 'About', 'Services', 'Portfolio', 'Culture', 'Contact']
+const menuItems = [ 'About', 'Services', 'Portfolio', 'Culture','Studio' ,'Policies']
 
 const toggleMenu = () => { 
   isMenuOpen.value = !isMenuOpen.value 
@@ -113,7 +113,8 @@ const onMenuLeave = (el, done) => {
 }
 
 .theme-light {
-  --brand-accent: #00ffa3;
+  /* CHANGED: light-theme accent now vibrant orange instead of green */
+  --brand-accent: #f97316;
   --navbar-bg: rgba(15, 23, 42, 0.03);
   --navbar-border: rgba(15, 23, 42, 0.08);
   --navbar-shadow: rgba(15, 23, 42, 0.08);
@@ -188,6 +189,10 @@ const onMenuLeave = (el, done) => {
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
+}
+/* CHANGED: orange hover glow for light theme */
+.theme-light .consult-btn:hover {
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 
 /* Theme Switcher Toggle styling */
@@ -335,6 +340,10 @@ const onMenuLeave = (el, done) => {
 .consult-btn-overlay:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
+}
+/* CHANGED: orange hover glow for light theme */
+.theme-light .consult-btn-overlay:hover {
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
 
 @media (min-width: 1024px) {

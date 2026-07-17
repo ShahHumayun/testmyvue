@@ -219,7 +219,7 @@ watch(activeModal, (val) => {
   else window.removeEventListener('keydown', handleKeydown)
 })
 
-const menuItems = ['Home', 'About', 'Services', 'Culture', 'Studio', 'Contact']
+const menuItems = ['Home', 'About', 'Services', 'Culture', 'Studio', 'Policies']
 const currentYear = new Date().getFullYear()
 
 const parallax = reactive({ bgX: 0, bgY: 0 })
@@ -299,7 +299,9 @@ onMounted(() => {
   background-color: #000000;
   color: #ffffff;
 }
+/* CHANGED: light theme now overrides --brand-accent to vibrant orange and keeps a solid white background */
 .theme-light {
+  --brand-accent: #f97316;
   background-color: #ffffff;
   color: #0f172a;
 }
@@ -393,6 +395,10 @@ onMounted(() => {
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
+}
+/* CHANGED: orange hover glow for light theme */
+.theme-light .consult-btn:hover {
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 .consult-btn:active { transform: translateY(0); }
 
@@ -547,6 +553,10 @@ onMounted(() => {
 .consult-btn-overlay:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
+}
+/* CHANGED: orange hover glow for light theme */
+.theme-light .consult-btn-overlay:hover {
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
 
 @media (min-width: 1024px) {
@@ -719,6 +729,10 @@ onMounted(() => {
   z-index: 950;
   box-shadow: 0 8px 24px rgba(0, 255, 163, 0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+/* CHANGED: light-theme chat button glow now vibrant orange (background already inherits --brand-accent) */
+.theme-light .chat-fab {
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
 }
 .chat-fab:hover { transform: translateY(-2px) scale(1.05); }
 .chat-fab:active { transform: scale(0.95); }

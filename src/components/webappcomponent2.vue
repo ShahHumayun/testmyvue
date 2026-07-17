@@ -23,7 +23,6 @@ import { ref, onMounted, inject } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-// Injected from parent context with a safe local default fallback
 const isDarkMode = inject('isDarkMode', ref(true))
 
 gsap.registerPlugin(ScrollTrigger)
@@ -58,44 +57,35 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* ----------------------------------------- */
-/* ROOT STYLES & THEME SWITCHING             */
-/* ----------------------------------------- */
 .stats-section {
   padding: 6rem 1.5rem;
   position: relative;
   z-index: 20;
   width: 100% !important;
-  
-  /* Bind structural styles dynamically to the root variables */
   background-color: var(--bg-main) !important;
   color: var(--text-main) !important;
   border-bottom: 1px solid var(--border-color) !important;
   transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
 }
 
-/* Using :where() makes sure Vue targets the variables directly 
-   on the root .stats-section element when the class shifts.
-*/
 .stats-section:where(.theme-dark) {
   --bg-main: #000000;
   --text-main: #ffffff;
-  --text-muted: #a3a3a3;   /* neutral-400 */
-  --text-sub: #525252;     /* neutral-500 */
-  --border-color: #171717; /* neutral-900 */
+  --text-muted: #a3a3a3;
+  --text-sub: #525252;
+  --border-color: #171717;
+  --accent-color: #00ffa3;
 }
 
 .stats-section:where(.theme-light) {
-  --bg-main: #ffffff;      /* Changed to solid white background */
-  --text-main: #0f172a;    /* slate-900 */
-  --text-muted: #475569;   /* slate-600 */
-  --text-sub: #64748b;     /* slate-500 */
-  --border-color: #e2e8f0; /* slate-200 */
+  --bg-main: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-sub: #64748b;
+  --border-color: #e2e8f0;
+  --accent-color: #000000; /* Changed from green to black */
 }
 
-/* ----------------------------------------- */
-/* TYPOGRAPHY ELEMENTS                       */
-/* ----------------------------------------- */
 .section-subtitle {
   text-align: center;
   font-size: 0.875rem;
@@ -110,9 +100,9 @@ onMounted(() => {
 .counter-display {
   font-size: 2.25rem;
   font-weight: 900;
-  color: #00ffa3 !important;
+  color: var(--accent-color) !important;
   letter-spacing: -0.025em;
-  text-shadow: 0 0 15px rgba(0, 255, 163, 0.15);
+  transition: color 0.5s ease;
 }
 
 @media (min-width: 768px) {

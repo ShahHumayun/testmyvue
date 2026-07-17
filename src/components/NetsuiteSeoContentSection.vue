@@ -1,14 +1,14 @@
 <template>
   <section
     :class="[
-      'py-32 px-6 border-b relative z-20',
-      isDarkMode ? 'border-neutral-900 bg-neutral-950/20 text-neutral-400' : 'border-neutral-200 bg-white text-neutral-600'
+      'py-32 px-6 border-b relative z-20 transition-colors duration-500',
+      isDarkMode ? 'border-neutral-900 bg-neutral-950/20 text-neutral-400 theme-dark' : 'border-neutral-200 bg-white text-neutral-600 theme-light'
     ]"
   >
     <div class="max-w-4xl mx-auto space-y-8 tracking-wide text-sm md:text-base leading-relaxed">
       
       <h2 :class="['text-2xl md:text-4xl font-extrabold tracking-tight text-center mb-12', isDarkMode ? 'text-white' : 'text-black']">
-        Why NetSuite Integration Is Essential For <span class="text-[#00ffa3]">Modern Businesses</span>
+        Why NetSuite Integration Is Essential For <span class="accent-text">Modern Businesses</span>
       </h2>
 
       <div class="space-y-8">
@@ -64,3 +64,10 @@ const contentBlocks = [
   }
 ]
 </script>
+
+<style scoped>
+.theme-dark { --accent-color: #00ffa3; }
+.theme-light { --accent-color: #f97316; }
+
+.accent-text { color: var(--accent-color); }
+</style>

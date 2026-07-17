@@ -1,7 +1,7 @@
 <template>
   <section :class="['testimonials-section py-32 px-6 border-b relative z-20 transition-colors duration-500', isDarkMode ? 'theme-dark' : 'theme-light']">
     <div class="max-w-4xl mx-auto text-center space-y-12">
-      <h2 class="text-sm font-bold tracking-widest text-[#00ffa3] uppercase">Trusted By Ecommerce Brands</h2>
+      <h2 class="text-sm font-bold tracking-widest uppercase accent-text">Trusted By Ecommerce Brands</h2>
       
       <div class="relative min-h-[120px] flex items-center justify-center">
         <transition name="carousel-fade" mode="out-in">
@@ -23,7 +23,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted, inject } from 'vue'
 
-// Inject global theme state context seamlessly
 const isDarkMode = inject('isDarkMode', ref(true))
 
 const testimonials = [
@@ -43,25 +42,24 @@ onUnmounted(() => clearInterval(timer))
 </script>
 
 <style scoped>
-/* ── Encapsulated Visual Protection Boundaries ── */
 .theme-dark {
   background: linear-gradient(to bottom, #000000, #0a0a0a, #000000) !important;
-  border-color: #171717 !important; /* border-neutral-900 equivalent */
+  border-color: #171717 !important;
+  --accent-color: #00ffa3;
   --text-quote: #ffffff;
-  --dot-bg: #262626; /* bg-neutral-800 equivalent */
+  --dot-bg: #262626;
 }
 
 .theme-light {
-  background: #ffffff !important; /* Overrides gradient to solid white background */
-  border-color: #e2e8f0 !important; /* border-slate-200 equivalent */
-  --text-quote: #000000; /* requested text to black */
-  --dot-bg: #cbd5e1; /* slate-300 equivalent */
+  background: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  --accent-color: #f97316;
+  --text-quote: #000000;
+  --dot-bg: #cbd5e1;
 }
 
-/* ── Explicit Selector Rule Mappings ── */
-.testimonials-section {
-  width: 100% !important;
-}
+.testimonials-section { width: 100% !important; }
+.accent-text { color: var(--accent-color) !important; }
 
 .quote-text {
   color: var(--text-quote) !important;
@@ -70,25 +68,18 @@ onUnmounted(() => clearInterval(timer))
 
 .dot-indicator {
   background-color: var(--dot-bg) !important;
-  width: 0.5rem !important; /* w-2 equivalent */
+  width: 0.5rem !important;
 }
 
 .dot-indicator.active-dot {
-  background-color: #00ffa3 !important;
-  width: 1.5rem !important; /* w-6 equivalent */
+  background-color: var(--accent-color) !important;
+  width: 1.5rem !important;
 }
 
-/* ── Carousel Slide Transition Effects ── */
 .carousel-fade-enter-active,
 .carousel-fade-leave-active {
   transition: opacity .4s ease, transform .4s ease;
 }
-.carousel-fade-enter-from {
-  opacity: 0;
-  transform: translateY(8px);
-}
-.carousel-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-8px);
-}
+.carousel-fade-enter-from { opacity: 0; transform: translateY(8px); }
+.carousel-fade-leave-to { opacity: 0; transform: translateY(-8px); }
 </style>

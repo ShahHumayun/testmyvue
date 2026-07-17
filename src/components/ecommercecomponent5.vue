@@ -2,7 +2,7 @@
   <section :class="['process-section py-32 px-6 border-b relative z-20 transition-colors duration-500', isDarkMode ? 'theme-dark' : 'theme-light']">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-24 text-center process-heading">
-        From Idea <span class="text-[#00ffa3]">To Revenue Generation</span>
+        From Idea <span :class="isDarkMode ? 'text-[#00ffa3]' : 'text-[#f97316]'">To Revenue Generation</span>
       </h2>
       
       <div class="relative block lg:flex items-start justify-between gap-6 space-y-12 lg:space-y-0">
@@ -31,7 +31,6 @@
 <script setup>
 import { ref, inject } from 'vue'
 
-// Inject global theme state context seamlessly
 const isDarkMode = inject('isDarkMode', ref(true))
 
 const steps = [
@@ -44,45 +43,35 @@ const steps = [
 </script>
 
 <style scoped>
-/* ── Encapsulated Visual Protection Boundaries ── */
 .theme-dark {
   background-color: #000000 !important;
-  border-color: #171717 !important; /* border-neutral-900 equivalent */
+  border-color: #171717 !important;
+  --accent-color: #00ffa3;
   --heading-color: #ffffff;
   --line-color: #171717;
-  --node-bg: #0a0a0a; /* bg-neutral-950 equivalent */
-  --node-border: #262626; /* border-neutral-800 equivalent */
-  --node-text: #737373; /* text-neutral-500 equivalent */
+  --node-bg: #0a0a0a;
+  --node-border: #262626;
+  --node-text: #737373;
   --title-color: #ffffff;
-  --desc-color: #a3a3a3; /* text-neutral-400 equivalent */
+  --desc-color: #a3a3a3;
 }
 
 .theme-light {
   background-color: #ffffff !important;
-  border-color: #e2e8f0 !important; /* border-slate-200 equivalent */
-  --heading-color: #0f172a; /* text-slate-900 equivalent */
+  border-color: #e2e8f0 !important;
+  --accent-color: #f97316;
+  --heading-color: #0f172a;
   --line-color: #e2e8f0;
   --node-bg: #ffffff;
-  --node-border: #cbd5e1; /* border-slate-300 equivalent */
-  --node-text: #475569; /* text-slate-600 equivalent */
+  --node-border: #cbd5e1;
+  --node-text: #475569;
   --title-color: #000000;
-  --desc-color: #000000; /* requested pure black description text */
+  --desc-color: #000000;
 }
 
-/* ── Explicit Selector Rule Mappings ── */
-.process-section {
-  width: 100% !important;
-}
-
-.process-heading {
-  color: var(--heading-color) !important;
-  transition: color 0.4s ease;
-}
-
-.desktop-timeline-line {
-  background-color: var(--line-color) !important;
-  transition: background-color 0.4s ease;
-}
+.process-section { width: 100% !important; }
+.process-heading { color: var(--heading-color) !important; transition: color 0.4s ease; }
+.desktop-timeline-line { background-color: var(--line-color) !important; transition: background-color 0.4s ease; }
 
 .step-badge-node {
   background-color: var(--node-bg) !important;
@@ -91,21 +80,12 @@ const steps = [
 }
 
 .group:hover .step-badge-node {
-  border-color: #00ffa3 !important;
-  color: #00ffa3 !important;
-  box-shadow: 0 0 20px rgba(0, 255, 163, 0.15);
+  border-color: var(--accent-color) !important;
+  color: var(--accent-color) !important;
+  box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.15);
 }
 
-.step-card-title {
-  color: var(--title-color) !important;
-}
-
-.group:hover .step-card-title {
-  color: #00ffa3 !important;
-}
-
-.step-card-description {
-  color: var(--desc-color) !important;
-  transition: color 0.4s ease;
-}
+.step-card-title { color: var(--title-color) !important; }
+.group:hover .step-card-title { color: var(--accent-color) !important; }
+.step-card-description { color: var(--desc-color) !important; transition: color 0.4s ease; }
 </style>

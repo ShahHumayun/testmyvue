@@ -2,13 +2,13 @@
   <!-- 5. COMMON PLATFORMS WE INTEGRATE -->
   <section
     :class="[
-      'py-32 px-6 border-b relative z-20 overflow-hidden',
-      isDarkMode ? 'border-neutral-900 bg-neutral-950/10' : 'border-neutral-200 bg-white'
+      'py-32 px-6 border-b relative z-20 overflow-hidden transition-colors duration-500',
+      isDarkMode ? 'border-neutral-900 bg-neutral-950/10 theme-dark' : 'border-neutral-200 bg-white theme-light'
     ]"
   >
     <div class="max-w-7xl mx-auto relative">
       <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight text-center mb-24', isDarkMode ? 'text-white' : 'text-black']">
-        Platforms We Connect <span class="text-[#00ffa3]">With NetSuite</span>
+        Platforms We Connect <span class="accent-text">With NetSuite</span>
       </h2>
 
       <!-- Platform Integration Central Hub Grid Node Display -->
@@ -17,7 +17,7 @@
           v-for="(plat, idx) in platformsList"
           :key="idx"
           :class="[
-            'p-6 rounded-lg text-center group cursor-default transition-all duration-300 hover:border-[#00ffa3]/60 hover:shadow-[0_0_20px_rgba(0,255,163,0.03)] border',
+            'p-6 rounded-lg text-center group cursor-default transition-all duration-300 hover:border-[var(--accent-color)]/60 hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.03)] border',
             isDarkMode
               ? 'bg-black border-neutral-900'
               : 'bg-white border-transparent shadow-md hover:shadow-xl shadow-neutral-200/70'
@@ -46,7 +46,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const platformTargetGrid = ref(null)
 
 const platformsList = [
@@ -59,7 +58,6 @@ const platformsList = [
 let scrollTriggerInstance = null
 
 onMounted(() => {
-  // Platform Logo Map Grid Components Reveals
   const anim = gsap.fromTo(platformTargetGrid.value.children, { opacity: 0, scale: 0.96 }, {
     opacity: 1, scale: 1, duration: 0.6, stagger: 0.05, ease: 'power2.out',
     scrollTrigger: { trigger: platformTargetGrid.value, start: 'top 85%' }
@@ -71,3 +69,10 @@ onUnmounted(() => {
   if (scrollTriggerInstance) scrollTriggerInstance.kill()
 })
 </script>
+
+<style scoped>
+.theme-dark { --accent-color: #00ffa3; --accent-rgb: 0, 255, 163; }
+.theme-light { --accent-color: #f97316; --accent-rgb: 249, 115, 22; }
+
+.accent-text { color: var(--accent-color); }
+</style>

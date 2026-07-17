@@ -6,7 +6,7 @@ import Services from '../Pages/Services.vue'
 import Portfolio from '../Pages/Portfolio.vue'
 import Culture from '../Pages/Culture.vue'
 import Studio from '../Pages/Studio.vue' 
-import Contact from '../Pages/Contact.vue'
+import Policies from '../Pages/Policies.vue'
 import Consultation from '../Pages/Consultation.vue'
 import WebAppDevelopment from '../Pages/WebAppDevelopment.vue'
 import AppDevelopment from '../Pages/AppDevelopment.vue'
@@ -21,7 +21,7 @@ const routes = [
   { path: '/portfolio', component: Portfolio },
   { path: '/culture', component: Culture },
   { path: '/studio', component: Studio },
-  { path: '/contact', component: Contact },
+  { path: '/policies', component: Policies },
   { path: '/consultation', component: Consultation },
   { path: '/webappdevelopment', component: WebAppDevelopment },
   { path: '/appdevelopment', component: AppDevelopment },

@@ -2,7 +2,8 @@
   <div
     ref="pageWrapper"
     :class="[
-      'font-sans relative overflow-hidden selection:bg-[#00ffa3] selection:text-[#000000]',
+      'font-sans relative overflow-hidden',
+      selectionClasses,
       isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
     ]"
   >
@@ -10,7 +11,7 @@
     <!-- Real-time Enterprise Interactive Network Background Dynamic Mesh -->
     <div
       class="pointer-events-none fixed inset-0 z-10 opacity-30 transition-opacity duration-500"
-      :style="{ background: `radial-gradient(800px circle at ${pointer.x}px ${pointer.y}px, rgba(0,255,163,0.12), transparent 75%)` }"
+      :style="{ background: `radial-gradient(800px circle at ${pointer.x}px ${pointer.y}px, rgba(${glowRGB},0.12), transparent 75%)` }"
     ></div>
      <Header /><br>
     <NetsuiteHeroSection :isDarkMode="isDarkMode" />
@@ -40,7 +41,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, provide } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted, provide } from 'vue'
 
 import Header from '../components/Header.vue'
 import NetsuiteHeroSection from '../components/NetsuiteHeroSection.vue'
@@ -68,6 +69,16 @@ const pageWrapper = ref(null)
 
 // ── Theme state — matches ReplacementGlass.vue / AppDevelopment.vue / WebDevelopment.vue / EcommerceSolutions.vue exactly ──
 const isDarkMode = ref(true)
+
+// Accent color driving the pointer spotlight glow: brand green in dark mode, orange in light mode
+const glowRGB = computed(() => (isDarkMode.value ? '0,255,163' : '249,115,22'))
+
+// Text-selection highlight color, same accent logic
+const selectionClasses = computed(() =>
+  isDarkMode.value
+    ? 'selection:bg-[#00ffa3] selection:text-[#000000]'
+    : 'selection:bg-[#f97316] selection:text-[#000000]'
+)
 
 const applyGlobalThemeClass = (isDark) => {
   if (isDark) {

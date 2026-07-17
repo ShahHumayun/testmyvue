@@ -87,11 +87,8 @@ const pillars = ref([
 </script>
 
 <style scoped>
-/* ----------------------------------------- */
-/* 1. LAYER COMPONENT SETUP                  */
-/* ----------------------------------------- */
 .why-webhive-section {
-  --brand-accent: #00ffa3;
+  --accent-color: #00ffa3;
   --transition-speed: 0.5s;
   
   width: 100%;
@@ -108,19 +105,18 @@ const pillars = ref([
   box-sizing: border-box !important;
 }
 
-/* Dynamic Themes mirroring homecomponent1.vue style */
 .theme-dark {
   background-color: #0b0c10;
   color: #ffffff;
+  --accent-color: #00ffa3;
 }
 .theme-light {
   background-color: #f8fafc;
   color: #0f172a;
+  --accent-color: #f97316;
 }
 
-.why-webhive-section *,
-.why-webhive-section *::before,
-.why-webhive-section *::after {
+.why-webhive-section *, .why-webhive-section *::before, .why-webhive-section *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -136,20 +132,13 @@ const pillars = ref([
   justify-content: center !important;
 }
 
-/* ----------------------------------------- */
-/* 2. HEADER TYPOGRAPHY                      */
-/* ----------------------------------------- */
-.section-header {
-  text-align: center !important;
-  margin-bottom: clamp(40px, 6vh, 64px);
-}
-
+.section-header { text-align: center !important; margin-bottom: clamp(40px, 6vh, 64px); }
 .mini-title {
   font-family: monospace;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.25em;
-  color: var(--brand-accent);
+  color: var(--accent-color);
   display: block;
   margin-bottom: 8px;
 }
@@ -161,19 +150,13 @@ const pillars = ref([
   letter-spacing: -0.02em;
 }
 
-/* ----------------------------------------- */
-/* 3. COMPACT SQUARED GRID CONTAINER         */
-/* ----------------------------------------- */
 .cards-grid {
   display: grid !important;
   grid-template-columns: repeat(2, 1fr);
   gap: 32px;
-  grid-auto-rows: 1fr;
   width: 100%;
   max-width: 1150px;
   margin: 0 auto !important;
-  justify-content: center !important;
-  align-content: center !important;
 }
 
 .value-card {
@@ -188,173 +171,43 @@ const pillars = ref([
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
 }
 
-/* Adaptive Card Styling based on Theme Contexts */
-.theme-dark .value-card {
-  background-color: rgba(255, 255, 255, 0.015);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-.theme-light .value-card {
-  background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
-}
+.theme-dark .value-card { background-color: rgba(255, 255, 255, 0.015); border: 1px solid rgba(255, 255, 255, 0.06); }
+.theme-light .value-card { background-color: #ffffff; border: 1px solid rgba(15, 23, 42, 0.08); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
 
-.value-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(0, 255, 163, 0.35);
-}
-.theme-dark .value-card:hover {
-  background-color: rgba(255, 255, 255, 0.03);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
-}
-.theme-light .value-card:hover {
-  background-color: #ffffff;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
-}
+.value-card:hover { transform: translateY(-8px); border-color: color-mix(in srgb, var(--accent-color), transparent 65%); }
+.theme-dark .value-card:hover { background-color: rgba(255, 255, 255, 0.03); box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45); }
+.theme-light .value-card:hover { background-color: #ffffff; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); }
 
-/* Featured Card Treatment */
-.theme-dark .value-card.featured-card {
-  background: linear-gradient(160deg, rgba(0, 255, 163, 0.07), rgba(255, 255, 255, 0.015) 60%);
-  border-color: rgba(0, 255, 163, 0.25);
-}
-.theme-light .value-card.featured-card {
-  background: linear-gradient(160deg, rgba(0, 255, 163, 0.04), #ffffff 60%);
-  border-color: rgba(5, 150, 105, 0.2);
-}
+.theme-dark .value-card.featured-card { background: linear-gradient(160deg, color-mix(in srgb, var(--accent-color), transparent 93%), rgba(255, 255, 255, 0.015) 60%); border-color: color-mix(in srgb, var(--accent-color), transparent 75%); }
+.theme-light .value-card.featured-card { background: linear-gradient(160deg, color-mix(in srgb, var(--accent-color), transparent 96%), #ffffff 60%); border-color: color-mix(in srgb, var(--accent-color), transparent 80%); }
 
-.card-inner-padding-box {
-  padding: 45px 36px !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box !important;
-}
+.card-inner-padding-box { padding: 45px 36px !important; display: flex; flex-direction: column; align-items: center; width: 100%; height: 100%; }
 
-/* ----------------------------------------- */
-/* 4. CARD ROW & ICONS                       */
-/* ----------------------------------------- */
-.card-top-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-
-.icon-wrapper {
-  position: relative;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.card-top-row { display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+.icon-wrapper { position: relative; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
 
 .icon-inner {
-  width: 100%;
-  height: 100%;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  border: 1px solid rgba(0, 255, 163, 0.2);
+  width: 100%; height: 100%; border-radius: 14px; display: flex; align-items: center; justify-content: center; z-index: 2;
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
   transition: transform 0.3s ease, background-color 0.3s ease;
+  background: color-mix(in srgb, var(--accent-color), transparent 94%);
 }
 
-.theme-dark .icon-inner { background: rgba(0, 255, 163, 0.06); }
-.theme-light .icon-inner { background: rgba(5, 150, 105, 0.04); border-color: rgba(5, 150, 105, 0.15); }
+.icon-inner :deep(svg) { width: 30px; height: 30px; stroke: var(--accent-color); transition: stroke 0.3s; }
 
-.icon-inner :deep(svg) {
-  width: 30px;
-  height: 30px;
-  stroke: var(--brand-accent);
-  transition: stroke 0.3s;
-}
-.theme-light .icon-inner :deep(svg) { stroke: #059669; }
-
-.icon-glow {
-  position: absolute;
-  inset: -4px;
-  background-color: var(--brand-accent);
-  border-radius: 16px;
-  filter: blur(16px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 1;
-}
-.theme-light .icon-glow { background-color: #00ffa3; }
-
-.value-card:hover .icon-glow { opacity: 0.4; }
-.theme-light .value-card:hover .icon-glow { opacity: 0.2; }
-
+.icon-glow { position: absolute; inset: -4px; background-color: var(--accent-color); border-radius: 16px; filter: blur(16px); opacity: 0; transition: opacity 0.3s ease; z-index: 1; }
+.value-card:hover .icon-glow { opacity: 0.2; }
 .value-card:hover .icon-inner { transform: scale(1.08) rotate(-4deg); }
 
-.theme-dark .featured-card .icon-inner { background: rgba(0, 255, 163, 0.12); border-color: rgba(0, 255, 163, 0.35); }
-.theme-light .featured-card .icon-inner { background: rgba(5, 150, 105, 0.08); border-color: rgba(5, 150, 105, 0.3); }
-
-/* ----------------------------------------- */
-/* 5. TEXT CONTENT FIELD CONNECTIONS         */
-/* ----------------------------------------- */
-.card-content {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex-grow: 1;
-  text-align: center; 
-  align-items: center;
-  box-sizing: border-box;
-}
-
-.card-title {
-  font-size: clamp(20px, 2.1vw, 25px);
-  font-weight: 800;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-}
-
-.card-desc {
-  font-size: 14.5px;
-  line-height: 1.65;
-  max-width: 480px; 
-  transition: color var(--transition-speed);
-}
+.card-content { display: flex; flex-direction: column; gap: 12px; flex-grow: 1; text-align: center; align-items: center; }
+.card-title { font-size: clamp(20px, 2.1vw, 25px); font-weight: 800; line-height: 1.3; }
+.card-desc { font-size: 14.5px; line-height: 1.65; transition: color var(--transition-speed); }
 .theme-dark .card-desc { color: rgba(255, 255, 255, 0.6); }
 .theme-light .card-desc { color: #475569; }
 
-/* ----------------------------------------- */
-/* 6. BOTTOM DECORATIVE ACCENTS              */
-/* ----------------------------------------- */
-.card-bottom-accent {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  transform: scaleX(0);
-  transform-origin: center; 
-  background: var(--brand-accent);
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.theme-light .card-bottom-accent { background: #059669; }
-
+.card-bottom-accent { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; transform: scaleX(0); transform-origin: center; background: var(--accent-color); transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
 .value-card:hover .card-bottom-accent { transform: scaleX(1); }
 
-/* ----------------------------------------- */
-/* 7. DURABLE MEDIA VIEWPORT RESPONSIVENESS  */
-/* ----------------------------------------- */
-@media (max-width: 868px) {
-  .cards-grid {
-    grid-template-columns: 1fr !important; 
-    gap: 24px;
-  }
-}
-
-@media (max-width: 540px) {
-  .card-inner-padding-box { padding: 32px 20px !important; }
-  .value-card { min-height: 240px; }
-  .icon-wrapper { width: 52px; height: 52px; }
-  .icon-inner :deep(svg) { width: 26px; height: 26px; }
-}
+@media (max-width: 868px) { .cards-grid { grid-template-columns: 1fr !important; gap: 24px; } }
+@media (max-width: 540px) { .card-inner-padding-box { padding: 32px 20px !important; } .value-card { min-height: 240px; } }
 </style>

@@ -1,14 +1,13 @@
 <template>
-  <!-- 8. BUSINESS CHALLENGES WE SOLVE -->
   <section
     :class="[
-      'py-32 px-6 border-b relative z-20',
-      isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
+      'py-32 px-6 border-b relative z-20 transition-colors duration-500',
+      isDarkMode ? 'border-neutral-900 theme-dark' : 'border-neutral-200 theme-light'
     ]"
   >
     <div class="max-w-7xl mx-auto">
       <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight text-center mb-20', isDarkMode ? 'text-white' : 'text-black']">
-        Eliminate Operational <span class="text-[#00ffa3]">Bottlenecks</span>
+        Eliminate Operational <span class="accent-text">Bottlenecks</span>
       </h2>
       <div ref="challengesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div
@@ -21,11 +20,10 @@
         >
           <div>
             <span :class="['text-[10px] font-mono tracking-widest block mb-2 uppercase', isDarkMode ? 'text-neutral-600' : 'text-neutral-500']">SYSTEM STATE INTERCEPT</span>
-            <h3 :class="['text-base font-bold group-hover:text-[#00ffa3] transition-colors', isDarkMode ? 'text-neutral-300' : 'text-black']">
+            <h3 :class="['text-base font-bold transition-colors group-hover:text-[var(--accent-color)]', isDarkMode ? 'text-neutral-300' : 'text-black']">
               {{ card.challenge }}
             </h3>
           </div>
-          <!-- Interactive Dynamic Transformation Hint Text Node -->
           <div
             :class="[
               'border-t pt-4 text-xs font-mono transition-colors flex items-center justify-between',
@@ -33,7 +31,7 @@
             ]"
           >
             <span>Resolution Layer</span>
-            <span class="opacity-0 group-hover:opacity-100 transition-opacity text-[#00ffa3] font-bold">→ {{ card.solution }}</span>
+            <span class="opacity-0 group-hover:opacity-100 transition-opacity accent-text font-bold">→ {{ card.solution }}</span>
           </div>
         </div>
       </div>
@@ -49,7 +47,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const challengesGrid = ref(null)
 
 const challengeMatrix = [
@@ -66,7 +63,6 @@ const challengeMatrix = [
 let scrollTriggerInstance = null
 
 onMounted(() => {
-  // Challenges Conversion Matrix Grid Cascade Loading
   const anim = gsap.fromTo(challengesGrid.value.children, { opacity: 0, y: 25 }, {
     opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power2.out',
     scrollTrigger: { trigger: challengesGrid.value, start: 'top 85%' }
@@ -74,22 +70,19 @@ onMounted(() => {
   scrollTriggerInstance = anim.scrollTrigger
 })
 
-onUnmounted(() => {
-  if (scrollTriggerInstance) scrollTriggerInstance.kill()
-})
+onUnmounted(() => { if (scrollTriggerInstance) scrollTriggerInstance.kill() })
 </script>
 
 <style scoped>
-/* System challenge conversion dynamic text updates overlay metrics */
+.theme-dark { --accent-color: #00ffa3; }
+.theme-light { --accent-color: #f97316; }
+
+.accent-text { color: var(--accent-color); }
+
 .challenge-node-card:hover {
-  border-color: rgba(0, 255, 163, 0.4);
+  border-color: color-mix(in srgb, var(--accent-color), transparent 60%);
 }
 
-.theme-dark .challenge-node-card:hover {
-  background-color: #050505;
-}
-
-.theme-light .challenge-node-card:hover {
-  background-color: #f8fafc;
-}
+.theme-dark .challenge-node-card:hover { background-color: #050505; }
+.theme-light .challenge-node-card:hover { background-color: #f8fafc; }
 </style>

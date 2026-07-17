@@ -167,7 +167,7 @@ const isMenuOpen = ref(false)
 const currentYear = new Date().getFullYear()
 
 // Restored local page item sequence context matching architectural layout rules
-const menuItems = ['Home', 'About', 'Services', 'Portfolio', 'Culture', 'Contact']
+const menuItems = ['Home', 'About', 'Services', 'Portfolio', 'Culture', 'Policies']
 
 const parallax = reactive({
   bgX: 0,
@@ -290,7 +290,8 @@ const onMenuLeave = (el, done) => {
   color: #ffffff;
 }
 .theme-light {
-  background-color: #f4f6f9;
+  --brand-accent: #f97316;
+  background-color: #ffffff;
   color: #0f172a;
 }
 
@@ -342,7 +343,9 @@ const onMenuLeave = (el, done) => {
 }
 
 .theme-light .navbar {
-  background: rgba(15, 23, 42, 0.03);
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
@@ -388,6 +391,9 @@ const onMenuLeave = (el, done) => {
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
+}
+.theme-light .consult-btn:hover {
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 
 .theme-toggle {
@@ -484,7 +490,11 @@ const onMenuLeave = (el, done) => {
   padding: clamp(24px, 5vh, 48px) clamp(20px, 6vw, 48px);
 }
 .theme-dark .nav-overlay { background-color: rgba(11, 12, 16, 0.96); }
-.theme-light .nav-overlay { background-color: rgba(255, 255, 255, 0.96); }
+.theme-light .nav-overlay {
+  background-color: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
 
 .nav-links-container {
   display: flex;
@@ -534,6 +544,9 @@ const onMenuLeave = (el, done) => {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+.theme-light .consult-btn-overlay:hover {
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+}
 
 @media (min-width: 1024px) {
   .nav-overlay {
@@ -567,6 +580,9 @@ const onMenuLeave = (el, done) => {
   left: 20%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+}
+.theme-light .ambient-glow {
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%);
 }
 
 .studio-section {
@@ -622,7 +638,7 @@ const onMenuLeave = (el, done) => {
   gap: clamp(18px, 2vw, 28px);
 }
 .theme-light .glass-card {
-  background: rgba(255, 255, 255, 0.75);
+  background: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
@@ -644,6 +660,7 @@ const onMenuLeave = (el, done) => {
 .studio-icon {
   width: 22px;
   height: 22px;
+  stroke: var(--brand-accent);
 }
 
 .info-text {
@@ -694,6 +711,7 @@ const onMenuLeave = (el, done) => {
 .nav-arrow {
   width: 16px;
   height: 16px;
+  stroke: var(--brand-accent);
 }
 
 /* ----------------------------------------- */
@@ -744,5 +762,5 @@ const onMenuLeave = (el, done) => {
   border-top: 1px solid;
 }
 .theme-dark .copyright-section { color: rgba(255, 255, 255, 0.4); background-color: rgba(9, 9, 11, 0.6); border-top-color: rgba(255, 255, 255, 0.05); }
-.theme-light .copyright-section { color: rgba(15, 23, 42, 0.5); background-color: rgba(241, 245, 249, 0.6); border-top-color: rgba(15, 23, 42, 0.06); }
+.theme-light .copyright-section { color: rgba(15, 23, 42, 0.5); background-color: #ffffff; border-top-color: rgba(15, 23, 42, 0.06); }
 </style>

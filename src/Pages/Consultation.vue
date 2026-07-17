@@ -202,7 +202,7 @@ const isMenuOpen = ref(false)
 const isScrolled = ref(false)
 const submissionPending = ref(false)
 
-const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Contact']
+const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Policies']
 
 const SUPABASE_URL = 'https://sfdmzyvhwrqzcschtudb.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNmZG16eXZod3JxemNzY2h0dWRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMDUxMzAsImV4cCI6MjA5Njg4MTEzMH0.HSleUjf4AzorG5GBoTGnmwuGhQ2uGNBG84gZsf4NwuY'
@@ -418,7 +418,8 @@ const onMenuLeave = (el, done) => {
   color: #ffffff;
 }
 .theme-light {
-  background-color: #f4f6f9;
+  --brand-accent: #f97316;
+  background-color: #ffffff;
   color: #0f172a;
 }
 
@@ -475,7 +476,9 @@ const onMenuLeave = (el, done) => {
 }
 
 .theme-light .navbar {
-  background: rgba(15, 23, 42, 0.03);
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
@@ -523,6 +526,9 @@ const onMenuLeave = (el, done) => {
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
+}
+.theme-light .consult-btn:hover {
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 .consult-btn:active { transform: translateY(0); }
 
@@ -580,11 +586,18 @@ const onMenuLeave = (el, done) => {
 .pill-btn:hover {
   border-color: rgba(0, 255, 163, 0.4);
 }
+.theme-light .pill-btn:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+}
 .pill-btn.active {
   background: rgba(0, 255, 163, 0.1);
-  border-color: #00ffa3;
-  color: #00ffa3;
+  border-color: var(--brand-accent);
+  color: var(--brand-accent);
   box-shadow: 0 0 15px rgba(0, 255, 163, 0.1);
+}
+.theme-light .pill-btn.active {
+  background: rgba(249, 115, 22, 0.1);
+  box-shadow: 0 0 15px rgba(249, 115, 22, 0.1);
 }
 @media (max-width: 480px) {
   .theme-toggle { width: 34px; height: 18px; padding: 2px; }
@@ -675,7 +688,11 @@ const onMenuLeave = (el, done) => {
   padding-bottom: max(clamp(24px, 5vh, 48px), env(safe-area-inset-bottom));
 }
 .theme-dark .nav-overlay { background-color: rgba(11, 12, 16, 0.96); }
-.theme-light .nav-overlay { background-color: rgba(255, 255, 255, 0.96); }
+.theme-light .nav-overlay {
+  background-color: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
 
 .nav-links-container {
   display: flex;
@@ -736,6 +753,9 @@ const onMenuLeave = (el, done) => {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+.theme-light .consult-btn-overlay:hover {
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+}
 
 @media (min-width: 1024px) {
   .nav-overlay {
@@ -787,7 +807,7 @@ const onMenuLeave = (el, done) => {
   z-index: -1;
 }
 .theme-dark .ambient-glow { background-color: var(--brand-accent); }
-.theme-light .ambient-glow { background-color: #a7f3d0; mix-blend-mode: multiply; opacity: 0.25; }
+.theme-light .ambient-glow { background-color: #fdba74; mix-blend-mode: multiply; opacity: 0.25; }
 
 /* ----------------------------------------- */
 /* CONTACT SECTION                           */
@@ -817,7 +837,7 @@ const onMenuLeave = (el, done) => {
 .theme-light .contact-title { color: #0f172a; }
 
 .accent {
-  color: #00ffa3;
+  color: var(--brand-accent);
 }
 
 .contact-subtitle {
@@ -844,7 +864,9 @@ const onMenuLeave = (el, done) => {
               box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .theme-light .contact-form {
-  background: rgba(15, 23, 42, 0.03);
+  background: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border: 1px solid rgba(15, 23, 42, 0.1);
 }
 @media (min-width: 640px) {
@@ -854,8 +876,11 @@ const onMenuLeave = (el, done) => {
   }
 }
 .contact-form:hover {
-  border-color: #00ffa3;
+  border-color: var(--brand-accent);
   box-shadow: 0 0 30px rgba(0, 255, 163, 0.15);
+}
+.theme-light .contact-form:hover {
+  box-shadow: 0 0 30px rgba(249, 115, 22, 0.15);
 }
 
 .form-row {
@@ -895,7 +920,7 @@ const onMenuLeave = (el, done) => {
   color: #0f172a;
 }
 .form-input::placeholder { color: #6b7280; }
-.form-input:focus { border-color: #00ffa3; }
+.form-input:focus { border-color: var(--brand-accent); }
 
 .form-input.input-validation-failed {
   border-color: #ef4444 !important;
@@ -921,8 +946,12 @@ const onMenuLeave = (el, done) => {
 }
 .api-status-banner.success {
   background: rgba(0, 255, 163, 0.1);
-  color: #00ffa3;
+  color: var(--brand-accent);
   border: 1px solid rgba(0, 255, 163, 0.2);
+}
+.theme-light .api-status-banner.success {
+  background: rgba(249, 115, 22, 0.1);
+  border: 1px solid rgba(249, 115, 22, 0.2);
 }
 .api-status-banner.error {
   background: rgba(239, 68, 68, 0.1);
@@ -932,7 +961,7 @@ const onMenuLeave = (el, done) => {
 
 .submit-btn {
   width: 100%;
-  background-color: #00ffa3;
+  background-color: var(--brand-accent);
   color: #000000;
   font-family: 'Inter', sans-serif;
   font-size: clamp(0.7rem, 1.5vw, 0.875rem);
@@ -946,6 +975,9 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2;
   box-shadow: 0 4px 20px rgba(0, 255, 163, 0.2);
 }
+.theme-light .submit-btn {
+  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.2);
+}
 .submit-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -956,6 +988,9 @@ const onMenuLeave = (el, done) => {
 .submit-btn:not(:disabled):hover {
   transform: scale(1.02);
   box-shadow: 0 6px 24px rgba(0, 255, 163, 0.3);
+}
+.theme-light .submit-btn:not(:disabled):hover {
+  box-shadow: 0 6px 24px rgba(249, 115, 22, 0.3);
 }
 .submit-btn:not(:disabled):active {
   transform: scale(0.99);
@@ -987,7 +1022,7 @@ const onMenuLeave = (el, done) => {
 }
 .theme-light .copyright-section {
   color: rgba(15, 23, 42, 0.5);
-  background-color: rgba(241, 245, 249, 0.6);
+  background-color: #ffffff;
   border-top-color: rgba(15, 23, 42, 0.04);
 }
 </style>

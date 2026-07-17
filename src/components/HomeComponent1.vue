@@ -280,7 +280,8 @@ const handleServiceClick = (service) => {
 /* ----------------------------------------- */
 .services-component-wrapper {
   --brand-accent: #00ffa3;
-  --brand-accent-light: #059669;
+  /* CHANGED: this file's dedicated light-theme accent variable now vibrant orange */
+  --brand-accent-light: #f97316;
   width: 100%;
   font-family: system-ui, -apple-system, sans-serif;
   box-sizing: border-box;

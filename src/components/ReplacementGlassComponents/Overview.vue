@@ -34,7 +34,7 @@
           </div>
           <div class="rg-role-item">
             <span class="rg-role-label">Stack</span>
-            <span class="rg-role-value">Vue.js, Component Architecture</span>
+            <span class="rg-role-value">PHP, Wordpress</span>
           </div>
           <div class="rg-role-item">
             <span class="rg-role-label">Focus</span>
@@ -178,7 +178,9 @@ onBeforeUnmount(() => {
   --border-line: rgba(255, 255, 255, 0.1);
   --stat-bg: rgba(255, 255, 255, 0.02);
   --stat-border: rgba(255, 255, 255, 0.08);
+  --accent-color: #00ffa3;
   --img-border: rgba(0, 255, 163, 0.3);
+  --img-shadow: rgba(0, 255, 163, 0.08);
 }
 
 .theme-light {
@@ -190,7 +192,9 @@ onBeforeUnmount(() => {
   --border-line: rgba(15, 23, 42, 0.08);
   --stat-bg: #f8fafc;
   --stat-border: rgba(15, 23, 42, 0.08);
-  --img-border: rgba(0, 255, 163, 0.2);
+  --accent-color: #F97316; /* Orange replacement */
+  --img-border: rgba(249, 115, 22, 0.3);
+  --img-shadow: rgba(249, 115, 22, 0.08);
 }
 
 .rg-overview {
@@ -199,7 +203,6 @@ onBeforeUnmount(() => {
   transition: background-color 0.4s ease;
 }
 
-/* Top row: image | intro text */
 .rg-overview__grid {
   max-width: 1160px;
   margin: 0 auto;
@@ -215,7 +218,7 @@ onBeforeUnmount(() => {
   font-size: 12.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #00ffa3;
+  color: var(--accent-color);
   margin-bottom: 14px;
 }
 
@@ -270,7 +273,6 @@ onBeforeUnmount(() => {
   transition: color 0.4s ease;
 }
 
-/* Visual column */
 .rg-overview__image-wrap {
   position: relative;
   border-radius: 14px;
@@ -291,12 +293,11 @@ onBeforeUnmount(() => {
   inset: 0;
   border: 1px solid var(--img-border);
   border-radius: 14px;
-  box-shadow: inset 0 0 40px rgba(0, 255, 163, 0.08);
+  box-shadow: inset 0 0 40px var(--img-shadow);
   pointer-events: none;
   transition: border-color 0.4s ease;
 }
 
-/* Bottom full-width detail block */
 .rg-overview__details {
   max-width: 820px;
   margin: 56px auto 0;
@@ -336,7 +337,7 @@ onBeforeUnmount(() => {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
   font-size: 1.7rem;
-  color: #00ffa3;
+  color: var(--accent-color);
 }
 
 .rg-stat__label {
@@ -348,12 +349,8 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 900px) {
-  .rg-overview__grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
+  .rg-overview__grid { grid-template-columns: 1fr; gap: 36px; }
 }
-
 @media (max-width: 480px) {
   .rg-stats { grid-template-columns: 1fr; }
 }

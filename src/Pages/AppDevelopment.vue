@@ -2,7 +2,8 @@
   <div
     ref="pageContainer"
     :class="[
-      'font-sans relative overflow-hidden selection:bg-[#00ffa3] selection:text-[#000000]',
+      'font-sans relative overflow-hidden',
+      selectionClasses,
       isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
     ]"
   >
@@ -11,7 +12,7 @@
 
     <div 
       class="pointer-events-none fixed inset-0 z-10 opacity-25 transition-opacity duration-300 will-change-transform"
-      :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(0, 255, 163, 0.12), transparent 80%)` }"
+      :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(${glowRGB}, 0.12), transparent 80%)` }"
     ></div>
     <br><br>
 
@@ -57,7 +58,7 @@
 
 <script setup>
 import Header from '../components/Header.vue'
-import { ref, reactive, watch, onMounted, onUnmounted, provide } from 'vue'
+import { ref, reactive, computed, watch, onMounted, onUnmounted, provide } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -93,6 +94,16 @@ let rafId = null
 
 // ── Theme state — matches ReplacementGlass.vue exactly ──
 const isDarkMode = ref(true)
+
+// Accent color driving the cursor spotlight glow: brand green in dark mode, orange in light mode
+const glowRGB = computed(() => (isDarkMode.value ? '0, 255, 163' : '249, 115, 22'))
+
+// Text-selection highlight color, same accent logic
+const selectionClasses = computed(() =>
+  isDarkMode.value
+    ? 'selection:bg-[#00ffa3] selection:text-[#000000]'
+    : 'selection:bg-[#f97316] selection:text-[#000000]'
+)
 
 const applyGlobalThemeClass = (isDark) => {
   if (isDark) {
@@ -178,7 +189,9 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* ✅ Identical modal styles to Portfolio.vue */
+/* ✅ Identical modal styles to Portfolio.vue, with a light-theme accent override.
+   The modal is Teleported to <body>, outside this component's themed wrapper,
+   so the light-theme variant targets the theme class already applied to <html>. */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -207,6 +220,14 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
 }
+:global(html.theme-light) .modal-card {
+  border: 1px solid rgba(249, 115, 22, 0.25);
+  box-shadow:
+    0 0 0 1px rgba(249, 115, 22, 0.1),
+    0 0 40px rgba(249, 115, 22, 0.15),
+    0 0 80px rgba(249, 115, 22, 0.08),
+    0 30px 60px rgba(0, 0, 0, 0.8);
+}
 
 .modal-scroll-inner {
   overflow-y: auto;
@@ -215,9 +236,13 @@ onUnmounted(() => {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 255, 163, 0.2) transparent;
 }
+:global(html.theme-light) .modal-scroll-inner {
+  scrollbar-color: rgba(249, 115, 22, 0.2) transparent;
+}
 .modal-scroll-inner::-webkit-scrollbar { width: 4px; }
 .modal-scroll-inner::-webkit-scrollbar-track { background: transparent; }
 .modal-scroll-inner::-webkit-scrollbar-thumb { background: rgba(0, 255, 163, 0.2); border-radius: 4px; }
+:global(html.theme-light) .modal-scroll-inner::-webkit-scrollbar-thumb { background: rgba(249, 115, 22, 0.2); }
 
 .modal-close-btn {
   position: fixed;
@@ -239,7 +264,12 @@ onUnmounted(() => {
   box-shadow: 0 4px 24px rgba(0, 255, 163, 0.45);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+:global(html.theme-light) .modal-close-btn {
+  background: #f97316;
+  box-shadow: 0 4px 24px rgba(249, 115, 22, 0.45);
+}
 .modal-close-btn:hover  { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0, 255, 163, 0.6); }
+:global(html.theme-light) .modal-close-btn:hover { box-shadow: 0 8px 32px rgba(249, 115, 22, 0.6); }
 .modal-close-btn:active { transform: translateY(0); }
 .close-x    { font-size: 11px; font-weight: 900; line-height: 1; }
 .close-text { line-height: 1; }

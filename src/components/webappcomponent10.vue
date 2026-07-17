@@ -4,13 +4,13 @@
     
     <div class="max-w-3xl mx-auto relative z-10 space-y-6">
       <h2 ref="ctaHeading" class="text-3xl md:text-6xl font-extrabold tracking-tight leading-tight cta-title">
-        Ready To Build Your Next <br><span class="text-[#00ffa3]">Web Application?</span>
+        Ready To Build Your Next <br><span class="accent-text">Web Application?</span>
       </h2>
       <p ref="ctaText" class="text-base md:text-lg max-w-xl mx-auto leading-relaxed cta-description">
         Let's turn your idea into a secure, scalable and high-performing digital solution.
       </p>
       <div ref="ctaBtnContainer" class="pt-6">
-        <button @click="emitNavigate" class="cta-pulse-btn px-10 py-5 bg-[#00ffa3] text-[#000000] font-black rounded-xl tracking-wide transition-transform duration-300">
+        <button @click="emitNavigate" class="cta-pulse-btn px-10 py-5 bg-[var(--accent-color)] text-[#000000] font-black rounded-xl tracking-wide transition-transform duration-300">
           Schedule A Free Consultation
         </button>
       </div>
@@ -25,7 +25,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Inject global theme state context seamlessly
 const isDarkMode = inject('isDarkMode', ref(true))
 
 const emit = defineEmits(['navigate'])
@@ -51,56 +50,47 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* ── Encapsulated Visual Protection Boundaries ── */
+/* Theme variable mapping */
+.theme-dark { --accent-color: #00ffa3; }
+.theme-light { --accent-color: #f97316; }
+
 .theme-dark {
   background-color: #000000 !important;
   --title-color: #ffffff;
-  --desc-color: #a3a3a3; /* text-neutral-400 equivalent */
+  --desc-color: #a3a3a3;
   --glow-bg: rgba(0, 255, 163, 0.1);
-  --glow-filter: blur(140px);
 }
 
 .theme-light {
   background-color: #ffffff !important;
-  --title-color: #0f172a; /* text-slate-900 equivalent */
-  --desc-color: #475569; /* text-slate-600 equivalent */
-  --glow-bg: rgba(0, 255, 163, 0.15);
-  --glow-filter: blur(100px);
+  --title-color: #0f172a;
+  --desc-color: #475569;
+  --glow-bg: rgba(249, 115, 22, 0.15);
 }
 
-/* ── Explicit Selector Rule Overrides ── */
-.cta-section {
-  width: 100% !important;
-}
+.accent-text { color: var(--accent-color); }
 
+.cta-section { width: 100% !important; }
 .glow-blur {
   background-color: var(--glow-bg) !important;
-  filter: var(--glow-filter) !important;
-  transition: background-color 0.4s ease, filter 0.4s ease;
+  filter: blur(100px) !important;
+  transition: background-color 0.4s ease;
 }
+.cta-title { color: var(--title-color) !important; transition: color 0.4s ease; }
+.cta-description { color: var(--desc-color) !important; transition: color 0.4s ease; }
 
-.cta-title {
-  color: var(--title-color) !important;
-  transition: color 0.4s ease;
-}
-
-.cta-description {
-  color: var(--desc-color) !important;
-  transition: color 0.4s ease;
-}
-
-/* ── Precise Pulsing Button Keyframes ── */
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 25px rgba(0, 255, 163, 0.25); }
-  50% { box-shadow: 0 0 45px rgba(0, 255, 163, 0.55); }
-}
-
+/* Dynamic pulsing button */
 .cta-pulse-btn {
   animation: pulseGlow 4s infinite ease-in-out;
 }
 
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 25px color-mix(in srgb, var(--accent-color), transparent 75%); }
+  50% { box-shadow: 0 0 45px color-mix(in srgb, var(--accent-color), transparent 45%); }
+}
+
 .cta-pulse-btn:hover {
   transform: scale(1.03) !important;
-  box-shadow: 0 0 55px rgba(0, 255, 163, 0.75) !important;
+  box-shadow: 0 0 55px color-mix(in srgb, var(--accent-color), transparent 25%) !important;
 }
 </style>

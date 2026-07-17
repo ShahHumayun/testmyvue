@@ -7,15 +7,16 @@
   >
     <div class="max-w-7xl mx-auto">
       <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight mb-20 text-center', isDarkMode ? 'text-white' : 'text-black']">
-        Modern Technologies For <span class="text-[#00ffa3]">Future-Ready Apps</span>
+        Modern Technologies For 
+        <span :class="isDarkMode ? 'text-[#00ffa3]' : 'text-[#f97316]'">Future-Ready Apps</span>
       </h2>
       
       <div ref="techGrid" class="grid grid-cols-1 md:grid-cols-3 gap-12">
         <div v-for="(cat, idx) in techStack" :key="idx" class="flex flex-col items-center">
           <h3
             :class="[
-              'text-sm font-bold tracking-[0.2em] uppercase text-[#00ffa3] mb-8 pb-4 border-b whitespace-nowrap',
-              isDarkMode ? 'border-neutral-800' : 'border-neutral-200'
+              'text-sm font-bold tracking-[0.2em] uppercase mb-8 pb-4 border-b whitespace-nowrap',
+              isDarkMode ? 'text-[#00ffa3] border-neutral-800' : 'text-[#f97316] border-neutral-200'
             ]"
           >
             {{ cat.category }}
@@ -30,8 +31,10 @@
               <div class="w-6 flex justify-center">
                 <span
                   :class="[
-                    'w-2 h-2 rounded-full group-hover:bg-[#00ffa3] group-hover:shadow-[0_0_8px_#00ffa3] transition-all duration-300',
-                    isDarkMode ? 'bg-neutral-800' : 'bg-neutral-300'
+                    'w-2 h-2 rounded-full transition-all duration-300',
+                    isDarkMode 
+                      ? 'bg-neutral-800 group-hover:bg-[#00ffa3] group-hover:shadow-[0_0_8px_#00ffa3]' 
+                      : 'bg-neutral-300 group-hover:bg-[#f97316] group-hover:shadow-[0_0_8px_#f97316]'
                   ]"
                 ></span>
               </div>
@@ -55,7 +58,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const techGrid = ref(null)
 
 const techStack = [

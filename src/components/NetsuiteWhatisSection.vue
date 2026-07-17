@@ -1,16 +1,16 @@
 <template>
   <section
     :class="[
-      'py-32 px-6 border-b relative z-20',
-      isDarkMode ? 'border-neutral-900 bg-black' : 'border-neutral-200 bg-white'
+      'py-32 px-6 border-b relative z-20 transition-colors duration-500',
+      isDarkMode ? 'border-neutral-900 bg-black theme-dark' : 'border-neutral-200 bg-white theme-light'
     ]"
   >
     <div class="max-w-5xl mx-auto">
       
       <div class="text-center space-y-6 mb-20 fade-up-animation">
         <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight leading-tight', isDarkMode ? 'text-white' : 'text-black']">
-          Seamless Integration: <span class="text-[#00ffa3]">Magento to NetSuite</span> and <br/>
-          <span class="text-[#00ffa3]">NetSuite to Magento</span> for Enhanced eCommerce Efficiency
+          Seamless Integration: <span class="accent-text">Magento to NetSuite</span> and <br/>
+          <span class="accent-text">NetSuite to Magento</span> for Enhanced eCommerce Efficiency
         </h2>
         <p :class="['max-w-3xl mx-auto text-lg md:text-xl leading-relaxed', isDarkMode ? 'text-neutral-400' : 'text-neutral-600']">
           NetSuite Magento Integration enables businesses to connect their ERP and eCommerce platforms, 
@@ -24,7 +24,7 @@
           v-for="(feature, index) in features" 
           :key="index" 
           :class="[
-            'p-6 rounded-2xl border hover:border-[#00ffa3]/30 transition-all duration-300',
+            'p-6 rounded-2xl border hover:border-[var(--accent-color)]/30 transition-all duration-300',
             isDarkMode
               ? 'bg-neutral-900/30 border-neutral-800'
               : 'bg-white border-transparent shadow-md hover:shadow-xl shadow-neutral-200/70'
@@ -32,8 +32,8 @@
         >
           <div class="flex items-start gap-3 mb-3">
             <div class="mt-1 flex-shrink-0">
-              <div class="w-5 h-5 rounded-full bg-[#00ffa3]/10 border border-[#00ffa3] flex items-center justify-center">
-                <svg class="w-3 h-3 text-[#00ffa3]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+              <div class="w-5 h-5 rounded-full bg-[var(--accent-color)]/10 border border-[var(--accent-color)] flex items-center justify-center">
+                <svg class="w-3 h-3 accent-text" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
@@ -72,6 +72,11 @@ const features = [
 </script>
 
 <style scoped>
+.theme-dark { --accent-color: #00ffa3; }
+.theme-light { --accent-color: #f97316; }
+
+.accent-text { color: var(--accent-color); }
+
 .fade-up-animation {
   animation: fadeUp 1s ease-out forwards;
 }

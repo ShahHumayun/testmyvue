@@ -2,13 +2,13 @@
   <!-- 11. SUCCESS METRICS -->
   <section
     :class="[
-      'py-32 px-6 border-b relative z-20',
-      isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
+      'py-32 px-6 border-b relative z-20 transition-colors duration-500',
+      isDarkMode ? 'border-neutral-900 theme-dark' : 'border-neutral-200 theme-light'
     ]"
   >
     <div class="max-w-7xl mx-auto">
       <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight text-center mb-20', isDarkMode ? 'text-white' : 'text-black']">
-        Delivering Measurable <span class="text-[#00ffa3]">Business Impact</span>
+        Delivering Measurable <span class="accent-text">Business Impact</span>
       </h2>
       <div ref="metricsTargetGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div
@@ -21,8 +21,8 @@
               : 'bg-white border-transparent shadow-md hover:shadow-xl shadow-neutral-200/70 transition-shadow duration-300'
           ]"
         >
-          <div class="absolute bottom-0 right-0 w-16 h-16 bg-[#00ffa3]/5 blur-xl group-hover:bg-[#00ffa3]/10 transition-colors"></div>
-          <div class="text-4xl md:text-5xl font-black text-[#00ffa3] font-mono tracking-tight">
+          <div class="absolute bottom-0 right-0 w-16 h-16 accent-bg-5 blur-xl group-hover:accent-bg-10 transition-colors"></div>
+          <div class="text-4xl md:text-5xl font-black accent-text font-mono tracking-tight">
             <span class="impact-value-counter" :data-target="m.value">0</span>{{ m.suffix }}
           </div>
           <p
@@ -47,7 +47,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const metricsTargetGrid = ref(null)
 
 const impactMetrics = [
@@ -60,7 +59,6 @@ const impactMetrics = [
 let triggers = []
 
 onMounted(() => {
-  // Final Operational Metrics Display Block Numbers Rolling Trigger
   const impactCounters = metricsTargetGrid.value.querySelectorAll('.impact-value-counter')
   impactCounters.forEach((counter) => {
     const targetVal = parseInt(counter.getAttribute('data-target'), 10)
@@ -76,3 +74,12 @@ onUnmounted(() => {
   triggers.forEach(t => t.kill())
 })
 </script>
+
+<style scoped>
+.theme-dark { --accent-color: #00ffa3; }
+.theme-light { --accent-color: #f97316; }
+
+.accent-text { color: var(--accent-color); }
+.accent-bg-5 { background-color: color-mix(in srgb, var(--accent-color), transparent 95%); }
+.accent-bg-10 { background-color: color-mix(in srgb, var(--accent-color), transparent 90%); }
+</style>

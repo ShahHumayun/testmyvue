@@ -3,7 +3,7 @@
     <div class="max-w-4xl mx-auto space-y-8 tracking-wide text-sm md:text-base leading-relaxed content-wrapper">
       
       <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight text-center mb-12 main-essay-heading">
-        Why Ecommerce Development Is Essential For <span class="text-[#00ffa3]">Modern Businesses</span>
+        Why Ecommerce Development Is Essential For <span class="accent-text">Modern Businesses</span>
       </h2>
       
       <div class="space-y-6">
@@ -24,7 +24,6 @@
 <script setup>
 import { ref, inject } from 'vue'
 
-// Inject global theme state context seamlessly
 const isDarkMode = inject('isDarkMode', ref(true))
 
 const blocks = [
@@ -63,40 +62,27 @@ const blocks = [
 </script>
 
 <style scoped>
-/* ── Encapsulated Visual Protection Boundaries ── */
 .theme-dark {
   background-color: #000000 !important;
-  border-color: #171717 !important; /* border-neutral-900 equivalent */
+  border-color: #171717 !important;
+  --accent-color: #00ffa3;
   --main-title-color: #ffffff;
   --subheading-color: #ffffff;
-  --body-text-color: #a3a3a3; /* text-neutral-400 equivalent */
+  --body-text-color: #a3a3a3;
 }
 
 .theme-light {
-  background-color: #ffffff !important; /* Forces solid white background */
-  border-color: #e2e8f0 !important; /* border-slate-200 equivalent */
-  --main-title-color: #0f172a; /* text-slate-900 equivalent */
-  --subheading-color: #000000; /* requested text to black */
-  --body-text-color: #000000; /* requested text to black */
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  --accent-color: #f97316;
+  --main-title-color: #0f172a;
+  --subheading-color: #000000;
+  --body-text-color: #000000;
 }
 
-/* ── Explicit Selector Rule Mappings ── */
-.essay-section {
-  width: 100% !important;
-}
-
-.main-essay-heading {
-  color: var(--main-title-color) !important;
-  transition: color 0.4s ease;
-}
-
-.block-subheading {
-  color: var(--subheading-color) !important;
-  transition: color 0.4s ease;
-}
-
-.block-body-paragraph {
-  color: var(--body-text-color) !important;
-  transition: color 0.4s ease;
-}
+.essay-section { width: 100% !important; }
+.accent-text { color: var(--accent-color) !important; }
+.main-essay-heading { color: var(--main-title-color) !important; transition: color 0.4s ease; }
+.block-subheading { color: var(--subheading-color) !important; transition: color 0.4s ease; }
+.block-body-paragraph { color: var(--body-text-color) !important; transition: color 0.4s ease; }
 </style>

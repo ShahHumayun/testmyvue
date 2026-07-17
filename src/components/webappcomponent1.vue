@@ -5,19 +5,18 @@
       isDarkMode ? 'bg-black text-white theme-dark' : 'bg-white text-[#0f172a] theme-light'
     ]"
   >
-
     <section
       :class="[
         'relative min-h-screen flex items-center justify-center px-6 overflow-hidden border-b z-20 pt-24',
         isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
       ]"
     >
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,255,163,0.05),transparent_70%)]"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--accent-gradient-fade),transparent_70%)]"></div>
       
       <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-20 w-full">
         
         <div class="lg:col-span-6 space-y-6 text-left">
-          <span ref="heroLabel" class="inline-block text-xs font-bold tracking-[0.3em] text-[#00ffa3] uppercase bg-[#00ffa3]/10 px-4 py-1.5 rounded-full border border-[#00ffa3]/20 shadow-[0_0_15px_rgba(0,255,163,0.1)]">
+          <span ref="heroLabel" class="inline-block text-xs font-bold tracking-[0.3em] text-[var(--accent-color)] uppercase bg-[var(--accent-bg-light)] px-4 py-1.5 rounded-full border border-[var(--accent-border)] shadow-[0_0_15px_var(--accent-shadow)]">
             Web Application Development
           </span>
           <h1
@@ -28,7 +27,7 @@
             ]"
           >
             Building Powerful Web Applications <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00ffa3] to-emerald-400">That Grow Your Business</span>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-color)] to-[var(--accent-secondary)]">That Grow Your Business</span>
           </h1>
           <p
             ref="heroSubtitle"
@@ -39,7 +38,7 @@
           <div ref="heroButtons" class="flex flex-col sm:flex-row items-center gap-4 pt-4">
             <button 
               @click="router.push('/consultation')" 
-              class="w-full sm:w-auto px-8 py-4 bg-[#00ffa3] text-[#000000] font-bold rounded-lg shadow-[0_0_30px_rgba(0,255,163,0.3)] hover:shadow-[0_0_40px_rgba(0,255,163,0.5)] transition-all duration-300 hover:scale-[1.02]"
+              class="w-full sm:w-auto px-8 py-4 bg-[var(--accent-color)] text-black font-bold rounded-lg shadow-[0_0_30px_var(--accent-shadow-intense)] hover:shadow-[0_0_40px_var(--accent-shadow-hover)] transition-all duration-300 hover:scale-[1.02]"
             >
               Start Your Project
             </button>
@@ -61,7 +60,7 @@
           <div
             ref="monitor"
             :class="[
-              'w-full max-w-[650px] aspect-[16/10] border-[8px] rounded-lg shadow-[0_0_80px_rgba(0,255,163,0.1)] relative',
+              'w-full max-w-[650px] aspect-[16/10] border-[8px] rounded-lg shadow-[0_0_80px_var(--accent-shadow)] relative',
               isDarkMode ? 'bg-neutral-900 border-neutral-800' : 'bg-neutral-50 border-black'
             ]"
           >
@@ -69,7 +68,7 @@
               <div class="flex gap-1.5 mr-4">
                 <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
                 <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
-                <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-[var(--accent-color)]/50"></div>
               </div>
               <span :class="['text-[10px] font-bold tracking-widest uppercase', isDarkMode ? 'text-neutral-500' : 'text-neutral-500']">The Explorers</span>
             </div>
@@ -103,10 +102,7 @@ const heroSubtitle = ref(null)
 const heroButtons = ref(null)
 const monitor = ref(null)
 
-// Injected from WebDevelopment.vue's provide() — no more local/private
-// isDarkMode state, so this always reflects the real shared toggle
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const currentDot = ref(0)
 let interval = null
 
@@ -133,7 +129,31 @@ onUnmounted(() => clearInterval(interval))
 </script>
 
 <style scoped>
-.page-wrapper { --brand-accent: #00ffa3; --transition-speed: 0.5s; width: 100%; min-height: 100vh; position: relative; }
+.page-wrapper { width: 100%; min-height: 100vh; position: relative; }
+
+/* Dynamic theme variables */
+.theme-dark {
+  --accent-color: #00ffa3;
+  --accent-secondary: #34d399;
+  --accent-bg-light: rgba(0, 255, 163, 0.1);
+  --accent-border: rgba(0, 255, 163, 0.2);
+  --accent-shadow: rgba(0, 255, 163, 0.1);
+  --accent-shadow-intense: rgba(0, 255, 163, 0.3);
+  --accent-shadow-hover: rgba(0, 255, 163, 0.5);
+  --accent-gradient-fade: rgba(0, 255, 163, 0.05);
+}
+
+.theme-light {
+  --accent-color: #f97316;
+  --accent-secondary: #fb923c;
+  --accent-bg-light: rgba(249, 115, 22, 0.1);
+  --accent-border: rgba(249, 115, 22, 0.2);
+  --accent-shadow: rgba(249, 115, 22, 0.1);
+  --accent-shadow-intense: rgba(249, 115, 22, 0.3);
+  --accent-shadow-hover: rgba(249, 115, 22, 0.5);
+  --accent-gradient-fade: rgba(249, 115, 22, 0.05);
+}
+
 .travel-fade-enter-active, .travel-fade-leave-active { transition: opacity 0.6s ease-in-out; }
 .travel-fade-enter-from, .travel-fade-leave-to { opacity: 0; }
 </style>

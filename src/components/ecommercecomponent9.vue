@@ -2,7 +2,7 @@
   <section :class="['industries-section py-32 px-6 border-b relative z-20 transition-colors duration-500', isDarkMode ? 'theme-dark' : 'theme-light']">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-20 text-center industries-main-heading">
-        Ecommerce Solutions For <span class="text-[#00ffa3]">Every Industry</span>
+        Ecommerce Solutions For <span :class="isDarkMode ? 'text-[#00ffa3]' : 'text-[#f97316]'">Every Industry</span>
       </h2>
       
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -26,7 +26,6 @@
 <script setup>
 import { ref, inject } from 'vue'
 
-// Inject global theme state context seamlessly
 const isDarkMode = inject('isDarkMode', ref(true))
 
 const industries = [
@@ -42,54 +41,44 @@ const industries = [
 </script>
 
 <style scoped>
-/* ── Encapsulated Visual Protection Boundaries ── */
 .theme-dark {
   background-color: #000000 !important;
-  border-color: #171717 !important; /* border-neutral-900 equivalent */
+  border-color: #171717 !important;
+  --accent-color: #00ffa3;
   --heading-color: #ffffff;
-  --card-bg: #0a0a0a; /* bg-neutral-950 equivalent */
-  --card-hover-bg: #171717; /* bg-neutral-900 equivalent */
+  --card-bg: #0a0a0a;
+  --card-hover-bg: #171717;
   --card-border: #171717;
   --title-color: #ffffff;
-  --info-color: #737373; /* text-neutral-500 equivalent */
+  --info-color: #737373;
 }
 
 .theme-light {
   background-color: #ffffff !important;
-  border-color: #e2e8f0 !important; /* border-slate-200 equivalent */
-  --heading-color: #0f172a; /* text-slate-900 equivalent */
+  border-color: #e2e8f0 !important;
+  --accent-color: #f97316;
+  --heading-color: #0f172a;
   --card-bg: #ffffff;
-  --card-hover-bg: #f8fafc; /* bg-slate-50 equivalent */
+  --card-hover-bg: #f8fafc;
   --card-border: #e2e8f0;
-  --title-color: #000000; /* requested text to black */
-  --info-color: #000000;  /* requested text to black */
+  --title-color: #000000;
+  --info-color: #000000;
 }
 
-/* ── Explicit Selector Rule Mappings ── */
-.industries-section {
-  width: 100% !important;
-}
-
-.industries-main-heading {
-  color: var(--heading-color) !important;
-  transition: color 0.4s ease;
-}
+.industries-section { width: 100% !important; }
+.industries-main-heading { color: var(--heading-color) !important; transition: color 0.4s ease; }
 
 .industry-card {
   background-color: var(--card-bg) !important;
   border: 1px solid var(--card-border) !important;
 }
 
-.industry-card:hover {
-  background-color: var(--card-hover-bg) !important;
-}
+.industry-card:hover { background-color: var(--card-hover-bg) !important; }
+.industry-card-title { color: var(--title-color) !important; }
 
-.industry-card-title {
-  color: var(--title-color) !important;
-}
-
+/* Uses the dynamic accent color on hover */
 .industry-card:hover .industry-card-title {
-  color: #00ffa3 !important;
+  color: var(--accent-color) !important;
 }
 
 .industry-card-info {

@@ -1,14 +1,13 @@
 <template>
-  <!-- 16. FINAL CTA -->
   <section
     :class="[
-      'py-32 px-6 border-b relative z-20',
-      isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
+      'py-32 px-6 border-b relative z-20 transition-colors duration-500',
+      isDarkMode ? 'border-neutral-900 theme-dark' : 'border-neutral-200 theme-light'
     ]"
   >
     <div class="max-w-7xl mx-auto">
       <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight text-center mb-6', isDarkMode ? 'text-white' : 'text-black']">
-        Ready To Simplify Your <span class="text-[#00ffa3]">NetSuite Integration?</span>
+        Ready To Simplify Your <span class="accent-text">NetSuite Integration?</span>
       </h2>
       <p :class="['text-center max-w-2xl mx-auto text-sm md:text-base mb-20', isDarkMode ? 'text-neutral-400' : 'text-neutral-600']">
         Whether you're connecting Magento, automating order flows, or unifying your entire commerce stack — our team is ready to build it with you.
@@ -20,19 +19,19 @@
           :key="i"
           :to="cta.link"
           :class="[
-            'border rounded-lg p-6 transition-all duration-300 group hover:border-[#00ffa3]/40 block',
+            'border rounded-lg p-6 transition-all duration-300 group hover:border-[var(--accent-color)]/40 block',
             isDarkMode
               ? 'bg-neutral-950 border-neutral-900 hover:bg-neutral-900/60'
               : 'bg-white border-transparent shadow-md hover:shadow-xl shadow-neutral-200/70'
           ]"
         >
-          <h3 :class="['text-lg font-bold group-hover:text-[#00ffa3] transition-colors mb-2', isDarkMode ? 'text-white' : 'text-black']">
+          <h3 :class="['text-lg font-bold group-hover:text-[var(--accent-color)] transition-colors mb-2', isDarkMode ? 'text-white' : 'text-black']">
             {{ cta.title }}
           </h3>
           <p :class="['text-xs leading-relaxed font-mono mb-4', isDarkMode ? 'text-neutral-500' : 'text-neutral-600']">
             {{ cta.description }}
           </p>
-          <span class="text-xs font-mono uppercase tracking-wider text-[#00ffa3] group-hover:translate-x-1 transition-transform inline-block">
+          <span class="text-xs font-mono uppercase tracking-wider accent-text group-hover:translate-x-1 transition-transform inline-block">
             {{ cta.action }} →
           </span>
         </router-link>
@@ -41,7 +40,7 @@
       <div class="text-center mt-16">
         <router-link
           to="/consultation"
-          class="inline-block px-10 py-4 bg-[#00ffa3] text-[#000000] font-bold text-sm uppercase tracking-wider rounded border border-[#00ffa3] hover:bg-transparent hover:text-[#00ffa3] transition-all duration-300 shadow-[0_0_25px_rgba(0,255,163,0.15)]"
+          class="inline-block px-10 py-4 bg-[var(--accent-color)] text-[#000000] font-bold text-sm uppercase tracking-wider rounded border border-[var(--accent-color)] hover:bg-transparent hover:text-[var(--accent-color)] transition-all duration-300 shadow-[0_0_25px_rgba(var(--accent-rgb),0.15)]"
         >
           Schedule A Consultation
         </router-link>
@@ -58,7 +57,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const ctaTargetGrid = ref(null)
 
 const ctaPaths = [
@@ -85,7 +83,6 @@ const ctaPaths = [
 let scrollTriggerInstance = null
 
 onMounted(() => {
-  // Final CTA Grid Nodes Rendering Sequence
   const anim = gsap.fromTo(ctaTargetGrid.value.children, { opacity: 0, y: 20 }, {
     opacity: 1, y: 0, duration: 0.6, stagger: 0.06, ease: 'power2.out',
     scrollTrigger: { trigger: ctaTargetGrid.value, start: 'top 85%' }
@@ -97,3 +94,10 @@ onUnmounted(() => {
   if (scrollTriggerInstance) scrollTriggerInstance.kill()
 })
 </script>
+
+<style scoped>
+.theme-dark { --accent-color: #00ffa3; --accent-rgb: 0, 255, 163; }
+.theme-light { --accent-color: #f97316; --accent-rgb: 249, 115, 22; }
+
+.accent-text { color: var(--accent-color); }
+</style>

@@ -2,7 +2,8 @@
   <section :class="['faq-section py-20 px-6 transition-colors duration-400', isDarkMode ? 'theme-dark' : 'theme-light']">
     <div class="max-w-3xl mx-auto">
       <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-12 text-center faq-heading">
-        Frequently Asked <span class="text-[#00ffa3]">Questions</span>
+        Frequently Asked 
+        <span :class="isDarkMode ? 'text-[#00ffa3]' : 'text-[#f97316]'">Questions</span>
       </h2>
       
       <div class="space-y-4">
@@ -15,7 +16,7 @@
             @click="toggleFaq(idx)"
             class="w-full flex items-center justify-between p-6 text-left focus:outline-none group"
           >
-            <span class="font-bold group-hover:text-[#00ffa3] transition-colors faq-question">
+            <span class="font-bold transition-colors faq-question">
               {{ item.question }}
             </span>
             <span 
@@ -46,9 +47,7 @@
 <script setup>
 import { ref, inject } from 'vue'
 
-// Inject the shared site theme preference seamlessly
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const activeFaq = ref(null)
 
 const faqs = [
@@ -66,17 +65,16 @@ const toggleFaq = (index) => {
 </script>
 
 <style scoped>
-/* Encapsulated Visual Protection Boundaries */
 .theme-dark {
   background-color: #000000 !important;
+  --accent-color: #00ffa3;
   --heading-color: #ffffff;
-  --card-bg: #0a0a0a; /* bg-neutral-950 */
-  --card-border: #171717; /* border-neutral-900 */
-  --card-border-active: #262626; /* border-neutral-800 */
+  --card-bg: #0a0a0a;
+  --card-border: #171717;
+  --card-border-active: #262626;
   --question-color: #ffffff;
   --circle-bg: #171717;
   --circle-border: #262626;
-  --circle-border-active: rgba(0, 255, 163, 0.3);
   --chevron-color: #a3a3a3;
   --answer-color: #a3a3a3;
   --divider-color: rgba(23, 23, 23, 0.5);
@@ -84,6 +82,7 @@ const toggleFaq = (index) => {
 
 .theme-light {
   background-color: #ffffff !important;
+  --accent-color: #f97316;
   --heading-color: #0f172a;
   --card-bg: #f8fafc;
   --card-border: rgba(15, 23, 42, 0.08);
@@ -91,49 +90,19 @@ const toggleFaq = (index) => {
   --question-color: #0f172a;
   --circle-bg: #f1f5f9;
   --circle-border: rgba(15, 23, 42, 0.08);
-  --circle-border-active: rgba(0, 255, 163, 0.4);
   --chevron-color: #475569;
   --answer-color: #475569;
   --divider-color: rgba(15, 23, 42, 0.06);
 }
 
-/* Explicit Structural Rules */
-.faq-heading {
-  color: var(--heading-color) !important;
-  transition: color 0.4s ease;
-}
-
-.faq-card {
-  background-color: var(--card-bg) !important;
-  border-color: var(--card-border) !important;
-}
-
-.faq-card--active {
-  border-color: var(--card-border-active) !important;
-}
-
-.faq-question {
-  color: var(--question-color) !important;
-}
-
-.faq-icon-circle {
-  background-color: var(--circle-bg) !important;
-  border: 1px solid var(--circle-border) !important;
-}
-
-.faq-icon-circle--active {
-  border-color: var(--circle-border-active) !important;
-}
-
-.faq-chevron {
-  color: var(--chevron-color) !important;
-}
-
-.faq-answer-panel {
-  color: var(--answer-color) !important;
-}
-
-.faq-answer-text {
-  border-color: var(--divider-color) !important;
-}
+.faq-heading { color: var(--heading-color) !important; transition: color 0.4s ease; }
+.faq-card { background-color: var(--card-bg) !important; border-color: var(--card-border) !important; }
+.faq-card--active { border-color: var(--card-border-active) !important; }
+.faq-card:hover .faq-question { color: var(--accent-color) !important; }
+.faq-question { color: var(--question-color) !important; transition: color 0.3s ease; }
+.faq-icon-circle { background-color: var(--circle-bg) !important; border: 1px solid var(--circle-border) !important; }
+.faq-icon-circle--active { border-color: var(--accent-color) !important; }
+.faq-chevron { color: var(--chevron-color) !important; }
+.faq-answer-panel { color: var(--answer-color) !important; }
+.faq-answer-text { border-color: var(--divider-color) !important; }
 </style>

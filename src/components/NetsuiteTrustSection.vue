@@ -2,8 +2,8 @@
   <!-- 2. TRUST SECTION -->
   <section
     :class="[
-      'py-20 px-6 border-b relative z-20',
-      isDarkMode ? 'border-neutral-900 bg-neutral-950/20' : 'border-neutral-200 bg-white'
+      'py-20 px-6 border-b relative z-20 transition-colors duration-500',
+      isDarkMode ? 'border-neutral-900 bg-neutral-950/20 theme-dark' : 'border-neutral-200 bg-white theme-light'
     ]"
   >
     <div class="max-w-7xl mx-auto">
@@ -21,7 +21,9 @@
               : 'bg-white border-transparent shadow-md hover:shadow-xl shadow-neutral-200/70 transition-shadow duration-300'
           ]"
         >
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-[1px] bg-gradient-to-r from-transparent via-[#00ffa3]/40 to-transparent"></div>
+          <!-- Updated gradient to use accent color -->
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-[1px] bg-gradient-to-r from-transparent via-[var(--accent-color)]/40 to-transparent"></div>
+          
           <div :class="['text-3xl md:text-5xl font-black tracking-tight font-mono mb-2', isDarkMode ? 'text-white' : 'text-black']">
             <span class="trust-value-counter" :data-target="stat.value">0</span>{{ stat.suffix }}
           </div>
@@ -40,7 +42,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const trustGrid = ref(null)
 
 const trustStats = [
@@ -53,7 +54,6 @@ const trustStats = [
 let triggers = []
 
 onMounted(() => {
-  // Trust Value Accumulation Metrics Counter Logic
   const trustCounters = trustGrid.value.querySelectorAll('.trust-value-counter')
   trustCounters.forEach((cnt) => {
     const targetVal = parseInt(cnt.getAttribute('data-target'), 10)
@@ -69,3 +69,8 @@ onUnmounted(() => {
   triggers.forEach(t => t.kill())
 })
 </script>
+
+<style scoped>
+.theme-dark { --accent-color: #00ffa3; }
+.theme-light { --accent-color: #f97316; }
+</style>

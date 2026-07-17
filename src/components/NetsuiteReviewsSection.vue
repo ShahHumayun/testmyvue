@@ -1,8 +1,8 @@
 <template>
   <section
     :class="[
-      'py-32 px-6 border-b relative z-20',
-      isDarkMode ? 'border-neutral-800 bg-neutral-900' : 'border-neutral-200 bg-neutral-50'
+      'py-32 px-6 border-b relative z-20 transition-colors duration-500',
+      isDarkMode ? 'border-neutral-800 bg-neutral-900 theme-dark' : 'border-neutral-200 bg-neutral-50 theme-light'
     ]"
   >
     <div class="max-w-5xl mx-auto text-center space-y-12">
@@ -15,7 +15,7 @@
             <blockquote :class="['text-lg md:text-xl font-medium leading-relaxed italic', isDarkMode ? 'text-neutral-300' : 'text-neutral-700']">
               "{{ testimonials[active].quote }}"
             </blockquote>
-            <p class="text-[#00ffa3] font-bold text-sm tracking-wide">
+            <p class="accent-text font-bold text-sm tracking-wide">
               {{ testimonials[active].name }}
             </p>
           </div>
@@ -25,7 +25,7 @@
       <div class="flex justify-center gap-2">
         <button v-for="(_, idx) in testimonials" :key="idx" @click="setActive(idx)"
           class="h-2 rounded-full transition-all duration-300"
-          :class="active === idx ? 'bg-[#00ffa3] w-8' : (isDarkMode ? 'bg-neutral-700 w-2' : 'bg-neutral-300 w-2')" />
+          :class="active === idx ? 'bg-[var(--accent-color)] w-8' : (isDarkMode ? 'bg-neutral-700 w-2' : 'bg-neutral-300 w-2')" />
       </div>
     </div>
   </section>
@@ -73,6 +73,11 @@ onUnmounted(() => clearInterval(timer))
 </script>
 
 <style scoped>
+.theme-dark { --accent-color: #00ffa3; }
+.theme-light { --accent-color: #f97316; }
+
+.accent-text { color: var(--accent-color); }
+
 .carousel-fade-enter-active, .carousel-fade-leave-active { transition: opacity .5s ease, transform .5s ease }
 .carousel-fade-enter-from { opacity: 0; transform: translateY(15px) }
 .carousel-fade-leave-to { opacity: 0; transform: translateY(-15px) }

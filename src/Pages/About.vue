@@ -231,7 +231,7 @@ const isScrolled = ref(false)
 const workSection = ref(null)
 const isChatOpen = ref(false)
 
-const menuItems = ['Home', 'Services', 'Portfolio', 'Culture', 'Studio', 'Contact']
+const menuItems = ['Home', 'Services', 'Portfolio', 'Culture', 'Studio', 'Policies']
 
 const projects = ref([
   { 
@@ -412,7 +412,8 @@ const onMenuLeave = (el, done) => {
 }
 
 .theme-dark { background-color: #0b0c10; color: #ffffff; }
-.theme-light { background-color: #f4f6f9; color: #0f172a; }
+/* CHANGED: light theme now overrides --brand-accent to vibrant orange and uses a solid white background */
+.theme-light { --brand-accent: #f97316; background-color: #ffffff; color: #0f172a; }
 
 .bg-overlay {
   position: absolute;
@@ -515,6 +516,10 @@ const onMenuLeave = (el, done) => {
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
+}
+/* CHANGED: orange hover glow for light theme */
+.theme-light .consult-btn:hover {
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 .consult-btn:active { transform: translateY(0); }
 
@@ -673,6 +678,10 @@ const onMenuLeave = (el, done) => {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+/* CHANGED: orange hover glow for light theme */
+.theme-light .consult-btn-overlay:hover {
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+}
 
 @media (min-width: 1024px) {
   .nav-overlay {
@@ -694,7 +703,8 @@ const onMenuLeave = (el, done) => {
 
 .about-hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 140px clamp(16px, 5vw, 60px) 80px; position: relative; z-index: 10; }
 .ambient-glow { position: absolute; width: min(600px, 80vw); height: min(600px, 80vw); background-color: var(--brand-accent); border-radius: 50%; filter: blur(150px); opacity: 0.12; pointer-events: none; }
-.theme-light .ambient-glow { opacity: 0.2; background-color: #a7f3d0; }
+/* CHANGED: light-theme glow now uses a soft orange tint */
+.theme-light .ambient-glow { opacity: 0.2; background-color: #fdba74; }
 
 .hero-content-block { text-align: center; max-width: 940px; width: 100%; }
 .section-tag { font-family: monospace; font-size: 13px; text-transform: uppercase; letter-spacing: 0.25em; color: var(--brand-accent); display: inline-block; margin-bottom: 24px; }
@@ -703,7 +713,8 @@ const onMenuLeave = (el, done) => {
 .theme-light .about-title { color: #0f172a; }
 
 .highlight-text { background: linear-gradient(135deg, #ffffff 20%, var(--brand-accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.theme-light .highlight-text { background: linear-gradient(135deg, #0f172a 40%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+/* CHANGED: light-theme gradient endpoint now vibrant orange */
+.theme-light .highlight-text { background: linear-gradient(135deg, #0f172a 40%, #f97316 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
 .about-subtitle { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; max-width: 700px; margin: 0 auto 44px; color: rgba(255, 255, 255, 0.65); }
 .theme-light .about-subtitle { color: #475569; }
@@ -721,7 +732,8 @@ const onMenuLeave = (el, done) => {
 
 .services-section { padding: 80px clamp(16px, 5vw, 60px); max-width: 1400px; margin: 0 auto; position: relative; z-index: 10; }
 .mini-title { font-family: monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--brand-accent); display: block; margin-bottom: 8px; }
-.theme-light .mini-title { color: #059669; font-weight: 600; }
+/* CHANGED: light-theme mini title now vibrant orange */
+.theme-light .mini-title { color: #f97316; font-weight: 600; }
 .section-main-heading { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: 48px; text-transform: uppercase; }
 
 .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
@@ -739,9 +751,13 @@ const onMenuLeave = (el, done) => {
 
 .showcase-grid { 
   display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); 
+  grid-template-columns: repeat(2, 1fr); 
   gap: 32px; 
   align-items: stretch; 
+}
+/* CHANGED: stack to a single column only when there isn't room for two even cards, so the two project images stay in line on normal screens */
+@media (max-width: 860px) {
+  .showcase-grid { grid-template-columns: 1fr; }
 }
 
 .project-card { 
@@ -764,7 +780,8 @@ const onMenuLeave = (el, done) => {
 .card-inner { padding: 32px; display: flex; flex-direction: column; flex-grow: 1; }
 .card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .project-type { font-family: monospace; font-size: 12px; text-transform: uppercase; color: var(--brand-accent); letter-spacing: 0.05em; }
-.theme-light .project-type { color: #059669; font-weight: 600; }
+/* CHANGED: light-theme project type label now vibrant orange */
+.theme-light .project-type { color: #f97316; font-weight: 600; }
 .project-tag-dot { width: 6px; height: 6px; background-color: rgba(255, 255, 255, 0.2); border-radius: 50%; }
 
 .project-title { font-size: 22px; font-weight: 800; margin-bottom: 12px; line-height: 1.3; }
@@ -779,6 +796,8 @@ const onMenuLeave = (el, done) => {
 .contact-container { max-width: 1200px; margin: 0 auto; text-align: center; }
 .contact-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.01em; margin-bottom: 12px; }
 .title-underline { width: 50px; height: 3px; background-color: #00ffa3; margin: 0 auto; margin-bottom: 28px; }
+/* CHANGED: light-theme underline now vibrant orange */
+.theme-light .title-underline { background-color: #f97316; }
 .contact-subtitle { font-size: clamp(14px, 1.8vw, 17px); line-height: 1.6; max-width: 820px; margin: 0 auto 60px; color: rgba(255, 255, 255, 0.7); }
 .theme-light .contact-subtitle { color: #475569; }
 
@@ -798,7 +817,7 @@ const onMenuLeave = (el, done) => {
 
 .footer-group { width: 100%; position: relative; z-index: 10; margin-top: auto; }
 .copyright-section { width: 100%; text-align: center; padding: 30px 20px; font-size: 11px; letter-spacing: 0.05em; border-top: 1px solid; }
-.theme-dark .copyright-section { color: rgba(255, 255, 255, 0.4); background-color: rgba(9, 9, 11, 0.6); border-top-color: rgba(255, 255, 255, 0.05); }
+.theme-dark .copyright-section { color: rgba(255, 255, 255, 0.4); background-color: rgba(9, 9, 21, 0.6); border-top-color: rgba(255, 255, 255, 0.05); }
 .theme-light .copyright-section { color: rgba(15, 23, 42, 0.5); background-color: rgba(241, 245, 249, 0.6); border-top-color: rgba(15, 23, 42, 0.06); }
 
 .chat-fab {
@@ -818,6 +837,10 @@ const onMenuLeave = (el, done) => {
   z-index: 950;
   box-shadow: 0 8px 24px rgba(0, 255, 163, 0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+/* CHANGED: light-theme chat button glow now vibrant orange (background already inherits --brand-accent) */
+.theme-light .chat-fab {
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
 }
 .chat-fab:hover { transform: translateY(-2px) scale(1.05); }
 .chat-fab:active { transform: scale(0.95); }

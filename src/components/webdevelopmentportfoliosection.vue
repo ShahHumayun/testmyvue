@@ -156,6 +156,10 @@ onMounted(() => {
   background-color: var(--blur-glow-color) !important;
   filter: blur(150px) !important;
 }
+/* CHANGED: blurry ambient background fully removed in light theme for a clean solid white surface */
+.theme-light .dynamic-glow-blur {
+  display: none !important;
+}
 
 .section-tag {
   color: var(--tag-text-color) !important;
@@ -214,6 +218,10 @@ onMounted(() => {
 .project-card:hover .project-card-title {
   color: #00ffa3 !important;
 }
+/* CHANGED: light-theme hover title color now vibrant orange (was hardcoded green for both themes) */
+.theme-light .project-card:hover .project-card-title {
+  color: #f97316 !important;
+}
 
 .project-card-description {
   color: var(--card-text-desc) !important;
@@ -228,5 +236,11 @@ onMounted(() => {
   background-color: #00ffa3 !important;
   color: #000000 !important;
   border-color: #00ffa3 !important;
+}
+/* CHANGED: light-theme hover button now vibrant orange (was hardcoded green for both themes) */
+.theme-light .project-card-btn:hover {
+  background-color: #f97316 !important;
+  color: #000000 !important;
+  border-color: #f97316 !important;
 }
 </style>

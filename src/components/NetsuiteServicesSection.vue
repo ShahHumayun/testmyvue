@@ -2,38 +2,38 @@
   <!-- 4. INTEGRATION SERVICES -->
   <section
     :class="[
-      'py-32 px-6 border-b relative z-20',
-      isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
+      'py-32 px-6 border-b relative z-20 transition-colors duration-500',
+      isDarkMode ? 'border-neutral-900 theme-dark' : 'border-neutral-200 theme-light'
     ]"
   >
     <div class="max-w-7xl mx-auto">
       <h2 :class="['text-3xl md:text-5xl font-bold tracking-tight text-center mb-20', isDarkMode ? 'text-white' : 'text-black']">
-        Comprehensive <span class="text-[#00ffa3]">NetSuite Integration Solutions</span>
+        Comprehensive <span class="accent-text">NetSuite Integration Solutions</span>
       </h2>
       <div ref="servicesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="(svc, idx) in coreServices"
           :key="idx"
           :class="[
-            'group rounded-xl p-8 hover:border-[#00ffa3] transition-all duration-500 relative overflow-hidden flex flex-col justify-between border',
+            'group rounded-xl p-8 hover:border-[var(--accent-color)] transition-all duration-500 relative overflow-hidden flex flex-col justify-between border',
             isDarkMode
               ? 'bg-neutral-950 border-neutral-900'
               : 'bg-white border-transparent shadow-md hover:shadow-xl shadow-neutral-200/70'
           ]"
         >
           <!-- Decorative Vector Corner Mesh -->
-          <div class="absolute top-0 right-0 w-24 h-24 bg-[radial-gradient(ellipse_at_top_right,rgba(0,255,163,0.03),transparent_60%)] group-hover:bg-[radial-gradient(ellipse_at_top_right,rgba(0,255,163,0.08),transparent_60%)] transition-colors"></div>
+          <div class="absolute top-0 right-0 w-24 h-24 accent-mesh transition-colors"></div>
 
           <div class="space-y-4">
             <div
               :class="[
-                'w-10 h-10 rounded flex items-center justify-center text-lg text-[#00ffa3] border',
+                'w-10 h-10 rounded flex items-center justify-center text-lg accent-text border',
                 isDarkMode ? 'bg-neutral-900 border-neutral-800' : 'bg-neutral-100 border-neutral-200'
               ]"
             >
               {{ svc.icon }}
             </div>
-            <h3 :class="['text-xl font-bold tracking-tight group-hover:text-[#00ffa3] transition-colors', isDarkMode ? 'text-white' : 'text-black']">
+            <h3 :class="['text-xl font-bold tracking-tight group-hover:text-[var(--accent-color)] transition-colors', isDarkMode ? 'text-white' : 'text-black']">
               {{ svc.title }}
             </h3>
             <p :class="['text-sm leading-relaxed', isDarkMode ? 'text-neutral-400' : 'text-neutral-600']">
@@ -63,7 +63,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const servicesContainer = ref(null)
 
 const coreServices = [
@@ -78,7 +77,6 @@ const coreServices = [
 let scrollTriggerInstance = null
 
 onMounted(() => {
-  // Core Service Card Presentation Delivery Cascade
   const anim = gsap.fromTo(servicesContainer.value.children, { opacity: 0, y: 30 }, {
     opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out',
     scrollTrigger: { trigger: servicesContainer.value, start: 'top 80%' }
@@ -90,3 +88,16 @@ onUnmounted(() => {
   if (scrollTriggerInstance) scrollTriggerInstance.kill()
 })
 </script>
+
+<style scoped>
+.theme-dark { --accent-color: #00ffa3; }
+.theme-light { --accent-color: #f97316; }
+
+.accent-text { color: var(--accent-color); }
+.accent-mesh { 
+  background: radial-gradient(ellipse at top right, color-mix(in srgb, var(--accent-color), transparent 97%), transparent 60%); 
+}
+.group:hover .accent-mesh {
+  background: radial-gradient(ellipse at top right, color-mix(in srgb, var(--accent-color), transparent 92%), transparent 60%);
+}
+</style>

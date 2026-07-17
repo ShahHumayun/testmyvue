@@ -2,8 +2,10 @@
   <div
     ref="pageContainer"
     :class="[
-      'font-sans relative overflow-hidden selection:bg-[#00ffa3] selection:text-[#000000]',
-      isDarkMode ? 'bg-[#000000] text-[#ffffff] theme-dark' : 'bg-white text-[#0f172a] theme-light'
+      'font-sans relative overflow-hidden',
+      isDarkMode
+        ? 'bg-[#000000] text-[#ffffff] theme-dark selection:bg-[#00ffa3] selection:text-[#000000]'
+        : 'bg-white text-[#0f172a] theme-light selection:bg-[#f97316] selection:text-[#000000]'
     ]"
   >
 
@@ -12,7 +14,7 @@
     <div 
       ref="mouseGlow" 
       class="pointer-events-none fixed inset-0 z-10 opacity-30 transition-opacity duration-300 will-change-transform"
-      :style="{ background: `radial-gradient(600px circle at ${mouse.x}px ${mouse.y}px, rgba(0, 255, 163, 0.15), transparent 80%)` }"
+      :style="{ background: `radial-gradient(600px circle at ${mouse.x}px ${mouse.y}px, ${glowColor}, transparent 80%)` }"
     ></div>
 
     <webappcomponent1 :isDarkMode="isDarkMode" @navigate="navigateToConsultation" />
@@ -32,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, reactive, provide } from 'vue'
+import { ref, computed, onMounted, onUnmounted, reactive, provide } from 'vue'
 import { useRouter } from 'vue-router'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -59,6 +61,11 @@ let rafId = null
 
 // ── Theme state — matches ReplacementGlass.vue / AppDevelopment.vue exactly ──
 const isDarkMode = ref(true)
+
+// CHANGED: cursor-follow glow now tracks theme — vibrant orange in light mode, original green in dark mode
+const glowColor = computed(() =>
+  isDarkMode.value ? 'rgba(0, 255, 163, 0.15)' : 'rgba(249, 115, 22, 0.15)'
+)
 
 const applyGlobalThemeClass = (isDark) => {
   if (isDark) {

@@ -147,7 +147,7 @@ const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)
 
-const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Contact']
+const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Policies']
 const currentYear = new Date().getFullYear()
 
 const parallax = reactive({
@@ -265,7 +265,8 @@ const onMenuLeave = (el, done) => {
 
 /* CHANGED: Made dark mode default background pitch pure black */
 .theme-dark { background-color: #000000; color: #ffffff; }
-.theme-light { background-color: #f4f6f9; color: #0f172a; }
+/* CHANGED: light theme now overrides --brand-accent to vibrant orange and uses a solid white background */
+.theme-light { --brand-accent: #f97316; background-color: #ffffff; color: #0f172a; }
 
 .bg-overlay {
   position: absolute;
@@ -364,6 +365,10 @@ const onMenuLeave = (el, done) => {
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
+}
+/* CHANGED: orange hover glow for light theme */
+.theme-light .consult-btn:hover {
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 .consult-btn:active { transform: translateY(0); }
 
@@ -522,6 +527,10 @@ const onMenuLeave = (el, done) => {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+/* CHANGED: orange hover glow for light theme */
+.theme-light .consult-btn-overlay:hover {
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+}
 
 @media (min-width: 1024px) {
   .nav-overlay {
@@ -573,7 +582,8 @@ const onMenuLeave = (el, done) => {
   opacity: 0.12;
 }
 .theme-dark .ambient-glow-hero { background-color: var(--brand-accent); }
-.theme-light .ambient-glow-hero { background-color: #a7f3d0; mix-blend-mode: multiply; opacity: 0.2; }
+/* CHANGED: glow removed entirely in light theme for a clean solid white background */
+.theme-light .ambient-glow-hero { display: none; }
 
 .main-title {
   font-size: clamp(3.5rem, 11vw, 9rem);
@@ -588,8 +598,9 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
   margin-bottom: 20px;
 }
+/* CHANGED: light-theme gradient endpoint now vibrant orange */
 .theme-light .main-title {
-  background: linear-gradient(to right, #0f172a 40%, #059669 100%);
+  background: linear-gradient(to right, #0f172a 40%, #f97316 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -659,6 +670,10 @@ const onMenuLeave = (el, done) => {
   z-index: 950;
   box-shadow: 0 8px 24px rgba(0, 255, 163, 0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+/* CHANGED: light-theme chat button glow now vibrant orange (background already inherits --brand-accent) */
+.theme-light .chat-fab {
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
 }
 .chat-fab:hover { transform: translateY(-2px) scale(1.05); }
 .chat-fab:active { transform: scale(0.95); }

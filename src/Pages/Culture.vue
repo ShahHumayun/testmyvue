@@ -185,7 +185,7 @@ const currentYear = new Date().getFullYear()
 const isChatOpen = ref(false)
 
 // Synchronized to map items array architecture perfectly
-const menuItems = ['Home', 'About', 'Services', 'Portfolio', 'Studio', 'Contact']
+const menuItems = ['Home', 'About', 'Services', 'Portfolio', 'Studio', 'Policies']
 
 const pillars = ref([
   {
@@ -414,7 +414,8 @@ onUnmounted(() => {
 }
 
 .theme-dark { background-color: #0b0c10; color: #ffffff; }
-.theme-light { background-color: #f4f6f9; color: #0f172a; }
+/* CHANGED: light theme now overrides --brand-accent to vibrant orange and uses a solid white background */
+.theme-light { --brand-accent: #f97316; background-color: #ffffff; color: #0f172a; }
 
 .bg-overlay {
   position: absolute;
@@ -516,6 +517,10 @@ onUnmounted(() => {
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
+}
+/* CHANGED: orange hover glow for light theme */
+.theme-light .consult-btn:hover {
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 .consult-btn:active { transform: translateY(0); }
 
@@ -677,6 +682,10 @@ onUnmounted(() => {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+/* CHANGED: orange hover glow for light theme */
+.theme-light .consult-btn-overlay:hover {
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+}
 
 @media (min-width: 1024px) {
   .nav-overlay {
@@ -720,9 +729,10 @@ onUnmounted(() => {
   opacity: 0.08;
   pointer-events: none;
 }
+/* CHANGED: light-theme glow now uses a soft orange tint */
 .theme-light .ambient-glow {
   opacity: 0.15;
-  background-color: #a7f3d0;
+  background-color: #fdba74;
 }
 
 /* ----------------------------------------- */
@@ -744,7 +754,8 @@ onUnmounted(() => {
   display: inline-block;
   margin-bottom: 24px;
 }
-.theme-light .section-tag { color: #059669; font-weight: 600; }
+/* CHANGED: light-theme section tag now vibrant orange */
+.theme-light .section-tag { color: #f97316; font-weight: 600; }
 
 .culture-title {
   font-size: clamp(2.4rem, 6.5vw, 5rem);
@@ -763,8 +774,9 @@ onUnmounted(() => {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+/* CHANGED: light-theme gradient endpoint now vibrant orange */
 .theme-light .highlight-text {
-  background: linear-gradient(135deg, #0f172a 40%, #059669 100%);
+  background: linear-gradient(135deg, #0f172a 40%, #f97316 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -890,6 +902,10 @@ onUnmounted(() => {
   background: linear-gradient(135deg, rgba(0, 255, 163, 0.12), transparent 60%);
   pointer-events: none;
 }
+/* CHANGED: light-theme image tint now vibrant orange */
+.theme-light .row-img-tint {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), transparent 60%);
+}
 
 .row-glow-dot {
   position: absolute;
@@ -918,7 +934,8 @@ onUnmounted(() => {
   color: var(--brand-accent);
   margin-bottom: 14px;
 }
-.theme-light .row-tag { color: #059669; font-weight: 600; }
+/* CHANGED: light-theme row tag now vibrant orange */
+.theme-light .row-tag { color: #f97316; font-weight: 600; }
 
 .row-title {
   font-size: clamp(1.6rem, 3vw, 2.4rem);
@@ -994,7 +1011,8 @@ onUnmounted(() => {
   opacity: 0.1;
   pointer-events: none;
 }
-.theme-light .cta-glow { opacity: 0.15; background-color: #a7f3d0; }
+/* CHANGED: light-theme CTA glow now uses a soft orange tint */
+.theme-light .cta-glow { opacity: 0.15; background-color: #fdba74; }
 
 .cta-title {
   font-size: clamp(1.8rem, 4vw, 3rem);
@@ -1097,6 +1115,10 @@ onUnmounted(() => {
   z-index: 950;
   box-shadow: 0 8px 24px rgba(0, 255, 163, 0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+/* CHANGED: light-theme chat button glow now vibrant orange (background already inherits --brand-accent) */
+.theme-light .chat-fab {
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
 }
 .chat-fab:hover { transform: translateY(-2px) scale(1.05); }
 .chat-fab:active { transform: scale(0.95); }

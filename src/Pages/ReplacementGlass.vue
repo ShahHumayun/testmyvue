@@ -1,31 +1,85 @@
 <template>
-  <div :class="['showcase-page-container', isDarkMode ? 'theme-dark' : 'theme-light']">
-    <Header />
+  <div
+    ref="pageWrapper"
+    :class="[
+      'font-sans relative overflow-hidden',
+      selectionClasses,
+      isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
+    ]"
+  >
 
-    <main>
-      <HeroSection :isDarkMode="isDarkMode" />
-      <Overview :isDarkMode="isDarkMode" />
-      <ResultSection :isDarkMode="isDarkMode" />
-    </main>
-
+    <!-- Real-time Enterprise Interactive Network Background Dynamic Mesh -->
+    <div
+      class="pointer-events-none fixed inset-0 z-10 opacity-30 transition-opacity duration-500"
+      :style="{ background: `radial-gradient(800px circle at ${pointer.x}px ${pointer.y}px, rgba(${glowRGB},0.12), transparent 75%)` }"
+    ></div>
+     <Header /><br>
+    <NetsuiteHeroSection :isDarkMode="isDarkMode" />
+    <NetsuiteTrustSection :isDarkMode="isDarkMode" />
+    <NetsuiteWhatisSection :isDarkMode="isDarkMode" />
+    <NetsuiteServicesSection :isDarkMode="isDarkMode" />
+    <NetsuitePlaformSection :isDarkMode="isDarkMode" />
+    <NetsuiteWhyChooseSection :isDarkMode="isDarkMode" />
+    <NetsuiteProcessSection :isDarkMode="isDarkMode" />
+    <NetsuiteChallengeSection :isDarkMode="isDarkMode" />
+    <NetsuiteAutomationSection :isDarkMode="isDarkMode" />
+    <NetsuiteIndustriesSection :isDarkMode="isDarkMode" />
+    <NetsuiteMetricsSection :isDarkMode="isDarkMode" />
+    <NetsuiteReviewsSection :isDarkMode="isDarkMode" />
+    <NetsuiteTechStackSection :isDarkMode="isDarkMode" />
+    <NetsuiteFAQSection :isDarkMode="isDarkMode" />
+    <NetsuiteSeoContentSection :isDarkMode="isDarkMode" />
+    <NetsuiteFinalCtaSection :isDarkMode="isDarkMode" />
     <Footer />
+
+
+
+
+    
+
   </div>
 </template>
 
 <script setup>
-import { ref, provide, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted, provide } from 'vue'
+
 import Header from '../components/Header.vue'
+import NetsuiteHeroSection from '../components/NetsuiteHeroSection.vue'
+import NetsuiteTrustSection from '../components/NetsuiteTrustSection.vue'
+import NetsuiteWhatisSection from '../components/NetsuiteWhatisSection.vue'
+import NetsuiteServicesSection from '../components/NetsuiteServicesSection.vue'
+import NetsuitePlaformSection from '../components/NetsuitePlatformSection.vue'
+import NetsuiteWhyChooseSection from '../components/NetsuiteWhyChooseSection.vue'
+import NetsuiteProcessSection from '../components/NetsuiteProcessSection.vue'
+import NetsuiteChallengeSection from '../components/NetsuiteChallengeSection.vue'
+import NetsuiteAutomationSection from '../components/NetsuiteAutomationSection.vue'
+import NetsuiteIndustriesSection from '../components/NetsuiteIndustriesSection.vue'
+import NetsuiteMetricsSection from '../components/NetsuiteMetricsSection.vue'
+import NetsuiteReviewsSection from '../components/NetsuiteReviewsSection.vue'
+import NetsuiteTechStackSection from '../components/NetsuiteTechStackSection.vue'
+import NetsuiteFAQSection from '../components/NetsuiteFAQSection.vue'
+import NetsuiteSeoContentSection from '../components/NetsuiteSeoContentSection.vue'
+import NetsuiteFinalCtaSection from '../components/NetsuiteFinalCtaSection.vue'
 import Footer from '../components/footer.vue'
 
-// Keeping your exact import names intact
-import HeroSection from '../components/ReplacementGlassComponents/HeroSection.vue'
-import Overview from '../components/ReplacementGlassComponents/Overview.vue'
-import ResultSection from '../components/ReplacementGlassComponents/ResultSection.vue'
 
-// Set default theme state to true (Pure Black/Dark mode by default) - Matching Home.vue
+// Page-level identity ref (kept for parity with the original single-file markup;
+// not currently targeted by any animation)
+const pageWrapper = ref(null)
+
+// ── Theme state — matches ReplacementGlass.vue / AppDevelopment.vue / WebDevelopment.vue / EcommerceSolutions.vue exactly ──
 const isDarkMode = ref(true)
 
-// Helper function to update the global HTML class token - Matching Home.vue
+// Accent color driving the pointer spotlight glow: brand green in dark mode, orange in light mode
+const glowRGB = computed(() => (isDarkMode.value ? '0,255,163' : '249,115,22'))
+
+// Text-selection highlight color, same accent logic
+const selectionClasses = computed(() =>
+  isDarkMode.value
+    ? 'selection:bg-[#00ffa3] selection:text-[#000000]'
+    : 'selection:bg-[#f97316] selection:text-[#000000]'
+)
+
 const applyGlobalThemeClass = (isDark) => {
   if (isDark) {
     document.documentElement.classList.add('theme-dark')
@@ -36,83 +90,52 @@ const applyGlobalThemeClass = (isDark) => {
   }
 }
 
-// Saved under a unified local storage key and updates root HTML element classes - Matching Home.vue
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
   const activeTheme = isDarkMode.value ? 'dark' : 'light'
-  
+
   localStorage.setItem('webhive-theme', activeTheme)
   applyGlobalThemeClass(isDarkMode.value)
 }
 
-// ── CRITICAL ADDITION FOR THE HEADER TOGGLE BUTTON TO WORK ──
-// We provide the reactive state and the toggle function so Header.vue can inject them
+// Provide reactive state + toggle so Header.vue and all child section
+// components can inject them, same pattern as the other page components
 provide('isDarkMode', isDarkMode)
 provide('toggleTheme', toggleTheme)
 
+// Page-level pointer tracking, used by the fixed background mesh that sits
+// above every section. This stays here rather than in a single section
+// because it is a full-viewport effect, not tied to any one section.
+const pointer = reactive({ x: 0, y: 0 })
+let pointerRaf = null
+
+const handlePointerMove = (e) => {
+  if (!pointerRaf) {
+    pointerRaf = requestAnimationFrame(() => {
+      pointer.x = e.clientX
+      pointer.y = e.clientY
+      pointerRaf = null
+    })
+  }
+}
+
 onMounted(() => {
-  // Check the universal site theme preference. Defaults to dark. - Matching Home.vue
+  // Check the universal site theme preference. Defaults to dark. - Matching AppDevelopment.vue
   const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
   } else {
     isDarkMode.value = true
   }
-  
-  // Keep root context token up-to-date instantly - Matching Home.vue
+
+  // Keep root context token up-to-date instantly
   applyGlobalThemeClass(isDarkMode.value)
+
+  window.addEventListener('mousemove', handlePointerMove, { passive: true })
 })
 
-// --- Mock Data Structures for Props ---
-const projectStats = [
-  { label: 'E-Commerce Funnel Steps', value: '3 Steps' },
-  { label: 'Asset Payload Reduction', value: '42%' },
-  { label: 'Mobile Core Web Vitals', value: '98/100' }
-]
-
-const techTags = ['Vue 3', 'Vite', 'Tailwind CSS', 'GSAP Animations', 'JavaScript']
-
-const coreFeatures = [
-  { title: 'Custom Glass Configurator', detail: 'An interactive, step-by-step layout wizard tailored to input exact shape specifications cleanly.' },
-  { title: 'Instant Quote Engine', detail: 'Calculates dimension adjustments and structural properties on-the-fly inside the client frontend.' }
-]
-
-const galleryImages = [
-  'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=1200'
-]
-
-const projectChallenges = {
-  problem: 'Handling variable dimensional matrices dynamically without compounding heavy rendering overhead or complex layout shifts on budget viewports.',
-  solution: 'Engineered clean utility grids that handle isolated dynamic prop updates on sub-components using lightweight Vue reactive states.'
-}
-
-const processSteps = [
-  { phase: '01. System Layout', detail: 'Structuring layout grids and implementing strict scoping across deep component wrappers.' },
-  { phase: '02. Optimization', detail: 'Refining animation cycles using lightweight scroll trigger timelines to preserve frames.' }
-]
+onUnmounted(() => {
+  window.removeEventListener('mousemove', handlePointerMove)
+  cancelAnimationFrame(pointerRaf)
+})
 </script>
-
-<style scoped>
-/* Unified structural view layout styles */
-.showcase-page-container {
-  min-height: 100vh;
-  transition: background-color 0.4s ease, color 0.4s ease;
-}
-
-.showcase-page-container.theme-dark {
-  background-color: #000000;
-  color: #ffffff;
-}
-
-.showcase-page-container.theme-light {
-  background-color: #ffffff;
-  color: #000000;
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  gap: 6rem; /* Space between sections */
-  padding-top: 100px; /* Protect content from spilling under the fixed navigation navbar */
-}
-</style>

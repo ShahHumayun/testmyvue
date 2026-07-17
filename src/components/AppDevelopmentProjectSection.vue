@@ -113,6 +113,10 @@ onMounted(() => {
   border-radius: 50%;
   pointer-events: none;
 }
+/* CHANGED: blurry ambient background fully removed in light theme for a clean solid white surface */
+.theme-light .bg-glow {
+  display: none;
+}
 
 /* ── Header ── */
 .section-header {
@@ -134,6 +138,10 @@ onMounted(() => {
   font-size: 0.875rem;
   margin-bottom: 24px;
   display: block;
+}
+/* CHANGED: light-theme section label now vibrant orange (was hardcoded green for both themes) */
+.theme-light .section-label {
+  color: #f97316 !important;
 }
 
 .section-title {
@@ -200,6 +208,10 @@ onMounted(() => {
 
 .project-card:hover {
   border-color: rgba(0, 255, 163, 0.5) !important;
+}
+/* CHANGED: light-theme card hover border now vibrant orange (was hardcoded green for both themes) */
+.theme-light .project-card:hover {
+  border-color: rgba(249, 115, 22, 0.5) !important;
 }
 
 /* ── Card image ── */
@@ -280,5 +292,11 @@ onMounted(() => {
   background-color: #00ffa3 !important;
   color: #000000 !important;
   border-color: #00ffa3 !important;
+}
+/* CHANGED: light-theme button hover now vibrant orange (was hardcoded green for both themes) */
+.theme-light .view-btn:hover {
+  background-color: #f97316 !important;
+  color: #000000 !important;
+  border-color: #f97316 !important;
 }
 </style>

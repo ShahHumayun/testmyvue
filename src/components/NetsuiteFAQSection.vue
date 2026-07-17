@@ -1,13 +1,13 @@
 <template>
   <section
     :class="[
-      'py-32 px-6 border-b relative z-20',
-      isDarkMode ? 'border-neutral-800 bg-black' : 'border-neutral-200 bg-white'
+      'py-32 px-6 border-b relative z-20 transition-colors duration-500',
+      isDarkMode ? 'border-neutral-800 bg-black theme-dark' : 'border-neutral-200 bg-white theme-light'
     ]"
   >
     <div class="max-w-4xl mx-auto">
       <h2 :class="['text-3xl md:text-4xl font-bold tracking-tight text-center mb-16', isDarkMode ? 'text-white' : 'text-black']">
-        Frequently Asked <span class="text-[#00ffa3]">Questions</span>
+        Frequently Asked <span class="accent-text">Questions</span>
       </h2>
       
       <div ref="faqContainer" class="space-y-4">
@@ -19,16 +19,15 @@
             isDarkMode ? 'bg-black border-neutral-800' : 'bg-white border-neutral-200'
           ]"
         >
-          <!-- Question Button -->
           <button @click="toggleFaq(idx)" class="w-full flex items-center justify-between p-6 text-left group">
-            <h3 :class="['font-bold text-base md:text-lg group-hover:text-[#00ffa3] transition-colors', isDarkMode ? 'text-white' : 'text-black']">
+            <h3 :class="['font-bold text-base md:text-lg group-hover:text-[var(--accent-color)] transition-colors', isDarkMode ? 'text-white' : 'text-black']">
               {{ item.question }}
             </h3>
             <span
               :class="[
                 'ml-4 flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-transform duration-300 border',
                 isDarkMode ? 'bg-neutral-900 border-neutral-800' : 'bg-neutral-100 border-neutral-200',
-                { 'border-[#00ffa3]/30': activeFaq === idx }
+                { 'border-[var(--accent-color)]/30': activeFaq === idx }
               ]"
               :style="{ transform: activeFaq === idx ? 'rotate(180deg)' : 'rotate(0deg)' }"
             >
@@ -38,7 +37,6 @@
             </span>
           </button>
           
-          <!-- Animated Answer Wrapper -->
           <div class="answer-wrapper overflow-hidden" style="height: 0;">
             <div :class="['p-6 pt-0 text-sm md:text-base leading-relaxed border-t', isDarkMode ? 'text-neutral-400 border-neutral-900' : 'text-neutral-600 border-neutral-200']">
               {{ item.answer }}
@@ -55,7 +53,6 @@ import { ref, inject } from 'vue'
 import { gsap } from 'gsap'
 
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const faqContainer = ref(null)
 const activeFaq = ref(null)
 
@@ -69,10 +66,7 @@ const faqsList = [
 ]
 
 const toggleFaq = (idx) => {
-  // Scoped to this component's own FAQ list — avoids grabbing
-  // .answer-wrapper elements from any other FAQ instance on the page
   const elements = faqContainer.value.querySelectorAll('.answer-wrapper')
-
   if (activeFaq.value === idx) {
     gsap.to(elements[idx], { height: 0, duration: 0.4, ease: "power2.inOut" })
     activeFaq.value = null
@@ -85,3 +79,9 @@ const toggleFaq = (idx) => {
   }
 }
 </script>
+
+<style scoped>
+.theme-dark { --accent-color: #00ffa3; }
+.theme-light { --accent-color: #f97316; }
+.accent-text { color: var(--accent-color); }
+</style>

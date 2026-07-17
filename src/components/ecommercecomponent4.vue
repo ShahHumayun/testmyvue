@@ -4,16 +4,11 @@
       
       <div class="video-showcase-box border rounded-2xl overflow-hidden aspect-square shadow-[0_0_50px_-15px_rgba(0,0,0,0.3)] relative">
         <video 
-          autoplay 
-          loop 
-          muted 
-          playsinline 
-          preload="auto"
+          autoplay loop muted playsinline preload="auto"
           poster="https://images.pexels.com/photos/5903961/pexels-photo-5903961.jpeg?auto=compress&cs=tinysrgb&w=1200"
           class="w-full h-full object-cover video-mask"
           src="https://videos.pexels.com/video-files/5903961/5903961-hd_1920_1080_25fps.mp4"
-        >
-        </video>
+        ></video>
         <div class="absolute inset-0 media-gradient-overlay"></div>
         
         <div class="absolute top-8 left-8">
@@ -24,7 +19,7 @@
 
       <div class="space-y-8">
         <h2 class="text-5xl font-bold tracking-tight leading-tight section-main-title">
-          Why Businesses <br/><span class="text-[#00ffa3]">Invest In Ecommerce</span>
+          Why Businesses <br/><span :class="isDarkMode ? 'text-[#00ffa3]' : 'text-[#f97316]'">Invest In Ecommerce</span>
         </h2>
         
         <ul ref="whyList" class="space-y-6">
@@ -36,7 +31,6 @@
           </li>
         </ul>
       </div>
-      
     </div>
   </section>
 </template>
@@ -47,10 +41,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
-
-// Inject global theme state context seamlessly
 const isDarkMode = inject('isDarkMode', ref(true))
-
 const whyList = ref(null)
 
 const commerceBenefits = [
@@ -63,100 +54,44 @@ const commerceBenefits = [
 onMounted(() => {
   const items = whyList.value.querySelectorAll('.benefit-item')
   gsap.set(items, { opacity: 0, x: -20 })
-  
   gsap.to(items, {
-    opacity: 1,
-    x: 0,
-    duration: 0.8,
-    stagger: 0.1,
-    ease: "power2.out",
-    scrollTrigger: {
-      trigger: whyList.value,
-      start: "top 80%"
-    }
+    opacity: 1, x: 0, duration: 0.8, stagger: 0.1, ease: "power2.out",
+    scrollTrigger: { trigger: whyList.value, start: "top 80%" }
   })
 })
 </script>
 
 <style scoped>
-/* ── Encapsulated Visual Protection Boundaries ── */
 .theme-dark {
   background-color: #000000 !important;
-  border-color: #171717 !important; /* border-neutral-900 equivalent */
+  border-color: #171717 !important;
+  --accent-color: #00ffa3;
   --section-title-color: #ffffff;
   --benefit-txt: #ffffff;
-  --circle-border: rgba(0, 255, 163, 0.5);
-  --check-color: #00ffa3;
-  
-  /* Media Card Elements */
-  --showcase-bg: #0a0a0a; /* bg-neutral-950 equivalent */
-  --showcase-border: #171717; /* border-neutral-900 equivalent */
+  --showcase-bg: #0a0a0a;
+  --showcase-border: #171717;
   --video-opacity: 0.8;
   --video-overlay: rgba(0, 0, 0, 0.4);
-  --media-tag: #a3a3a3; /* text-neutral-400 equivalent */
-  --media-title: #ffffff;
 }
 
 .theme-light {
   background-color: #ffffff !important;
-  border-color: #e2e8f0 !important; /* border-slate-200 equivalent */
+  border-color: #e2e8f0 !important;
+  --accent-color: #f97316;
   --section-title-color: #000000;
-  --benefit-txt: #000000; /* requested pure black description text */
-  --circle-border: #000000;
-  --check-color: #000000;
-  
-  /* Media Card Elements */
+  --benefit-txt: #000000;
   --showcase-bg: #ffffff;
   --showcase-border: #e2e8f0;
   --video-opacity: 0.95;
-  --video-overlay: rgba(0, 0, 0, 0.15); /* light tint for readability */
-  --media-tag: #ffffff;
-  --media-title: #ffffff;
+  --video-overlay: rgba(0, 0, 0, 0.15);
 }
 
-/* ── Explicit Selector Rule Mappings ── */
-.benefits-section {
-  width: 100% !important;
-}
-
-.video-showcase-box {
-  background-color: var(--showcase-bg) !important;
-  border: 1px solid var(--showcase-border) !important;
-}
-
-.video-mask {
-  opacity: var(--video-opacity) !important;
-}
-
-.media-gradient-overlay {
-  background-color: var(--video-overlay) !important;
-}
-
-.media-label-tag {
-  color: var(--media-tag) !important;
-}
-
-.media-label-title {
-  color: var(--media-title) !important;
-}
-
-.section-main-title {
-  color: var(--section-title-color) !important;
-  transition: color 0.4s ease;
-}
-
-.svg-circle {
-  border-color: var(--circle-border) !important;
-  transition: border-color 0.4s ease;
-}
-
-.check-vector {
-  color: var(--check-color) !important;
-  transition: color 0.4s ease;
-}
-
-.benefit-text-row {
-  color: var(--benefit-txt) !important;
-  transition: color 0.4s ease;
-}
+.video-showcase-box { background-color: var(--showcase-bg) !important; border: 1px solid var(--showcase-border) !important; }
+.video-mask { opacity: var(--video-opacity) !important; }
+.media-gradient-overlay { background-color: var(--video-overlay) !important; }
+.media-label-tag, .media-label-title { color: #ffffff !important; }
+.section-main-title { color: var(--section-title-color) !important; }
+.svg-circle { border-color: var(--accent-color) !important; }
+.check-vector { color: var(--accent-color) !important; }
+.benefit-text-row { color: var(--benefit-txt) !important; }
 </style>
