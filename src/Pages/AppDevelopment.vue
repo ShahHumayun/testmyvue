@@ -59,6 +59,7 @@
 <script setup>
 import Header from '../components/Header.vue'
 import { ref, reactive, computed, watch, onMounted, onUnmounted, provide } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -128,8 +129,11 @@ const toggleTheme = () => {
 provide('isDarkMode', isDarkMode)
 provide('toggleTheme', toggleTheme)
 
-// ✅ Modal logic — identical to Portfolio.vue
-const activeModal = ref(null)
+// ✅ Modal logic — now URL/history-aware instead of a plain ref.
+// activeModal is derived from route.query.app, so browser back/forward
+// naturally restores it after navigating away (e.g. to /consultation).
+const route  = useRoute()
+const router = useRouter()
 
 const modalMap = {
   'Taylor Allergy':     TaylorAllergyApp,
@@ -138,8 +142,21 @@ const modalMap = {
   'Magento Connector':  MagentoConnectorApp,
 }
 
-const openModal  = (projectTitle) => { const c = modalMap[projectTitle]; if (c) activeModal.value = c }
-const closeModal = () => { activeModal.value = null }
+const activeModal = computed(() => {
+  const key = route.query.app
+  return key && modalMap[key] ? modalMap[key] : null
+})
+
+const openModal = (projectTitle) => {
+  if (!modalMap[projectTitle]) return
+  router.push({ query: { ...route.query, app: projectTitle } })
+}
+
+const closeModal = () => {
+  const newQuery = { ...route.query }
+  delete newQuery.app
+  router.push({ query: newQuery })
+}
 
 watch(activeModal, (val) => {
   document.body.style.overflow = val ? 'hidden' : ''

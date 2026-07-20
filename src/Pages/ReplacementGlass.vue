@@ -14,22 +14,9 @@
       :style="{ background: `radial-gradient(800px circle at ${pointer.x}px ${pointer.y}px, rgba(${glowRGB},0.12), transparent 75%)` }"
     ></div>
      <Header /><br>
-    <NetsuiteHeroSection :isDarkMode="isDarkMode" />
-    <NetsuiteTrustSection :isDarkMode="isDarkMode" />
-    <NetsuiteWhatisSection :isDarkMode="isDarkMode" />
-    <NetsuiteServicesSection :isDarkMode="isDarkMode" />
-    <NetsuitePlaformSection :isDarkMode="isDarkMode" />
-    <NetsuiteWhyChooseSection :isDarkMode="isDarkMode" />
-    <NetsuiteProcessSection :isDarkMode="isDarkMode" />
-    <NetsuiteChallengeSection :isDarkMode="isDarkMode" />
-    <NetsuiteAutomationSection :isDarkMode="isDarkMode" />
-    <NetsuiteIndustriesSection :isDarkMode="isDarkMode" />
-    <NetsuiteMetricsSection :isDarkMode="isDarkMode" />
-    <NetsuiteReviewsSection :isDarkMode="isDarkMode" />
-    <NetsuiteTechStackSection :isDarkMode="isDarkMode" />
-    <NetsuiteFAQSection :isDarkMode="isDarkMode" />
-    <NetsuiteSeoContentSection :isDarkMode="isDarkMode" />
-    <NetsuiteFinalCtaSection :isDarkMode="isDarkMode" />
+    <HeroSection :isDarkMode="isDarkMode" />
+    <Overview :isDarkMode="isDarkMode" />
+    <ResultSection :isDarkMode="isDarkMode" />
     <Footer />
 
 
@@ -44,22 +31,9 @@
 import { ref, reactive, computed, onMounted, onUnmounted, provide } from 'vue'
 
 import Header from '../components/Header.vue'
-import NetsuiteHeroSection from '../components/NetsuiteHeroSection.vue'
-import NetsuiteTrustSection from '../components/NetsuiteTrustSection.vue'
-import NetsuiteWhatisSection from '../components/NetsuiteWhatisSection.vue'
-import NetsuiteServicesSection from '../components/NetsuiteServicesSection.vue'
-import NetsuitePlaformSection from '../components/NetsuitePlatformSection.vue'
-import NetsuiteWhyChooseSection from '../components/NetsuiteWhyChooseSection.vue'
-import NetsuiteProcessSection from '../components/NetsuiteProcessSection.vue'
-import NetsuiteChallengeSection from '../components/NetsuiteChallengeSection.vue'
-import NetsuiteAutomationSection from '../components/NetsuiteAutomationSection.vue'
-import NetsuiteIndustriesSection from '../components/NetsuiteIndustriesSection.vue'
-import NetsuiteMetricsSection from '../components/NetsuiteMetricsSection.vue'
-import NetsuiteReviewsSection from '../components/NetsuiteReviewsSection.vue'
-import NetsuiteTechStackSection from '../components/NetsuiteTechStackSection.vue'
-import NetsuiteFAQSection from '../components/NetsuiteFAQSection.vue'
-import NetsuiteSeoContentSection from '../components/NetsuiteSeoContentSection.vue'
-import NetsuiteFinalCtaSection from '../components/NetsuiteFinalCtaSection.vue'
+import HeroSection from '../components/ReplacementGlassComponents/HeroSection.vue'
+import Overview from '../components/ReplacementGlassComponents/Overview.vue'
+import ResultSection from '../components/ReplacementGlassComponents/ResultSection.vue'
 import Footer from '../components/footer.vue'
 
 
