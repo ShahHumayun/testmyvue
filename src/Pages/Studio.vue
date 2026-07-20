@@ -128,6 +128,19 @@
                   <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                 </svg>
               </a>
+
+              <button 
+                type="button" 
+                class="navigation-link go-back-link" 
+                @click="goBack"
+                aria-label="Go back to previous page"
+              >
+                <svg class="nav-arrow back-arrow" viewBox="0 0 24 24" fill="none" stroke="#00ffa3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Go Back</span>
+              </button>
             </div>
           </div>
 
@@ -160,7 +173,10 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import gsap from 'gsap'
+
+const router = useRouter()
 
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
@@ -207,6 +223,11 @@ const toggleTheme = () => {
   
   localStorage.setItem('webhive-theme', activeTheme)
   applyGlobalThemeClass(isDarkMode.value)
+}
+
+// NEW: Go back to the previous page in history
+function goBack() {
+  router.back()
 }
 
 onMounted(() => {
@@ -692,9 +713,15 @@ const onMenuLeave = (el, done) => {
   margin-top: 10px;
 }
 
+/* CHANGED: cta-container now holds two parallel links (Direct Navigation Map + Go Back) */
 .cta-container {
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(20px, 3vw, 36px);
 }
+
 .navigation-link {
   display: inline-flex;
   align-items: center;
@@ -704,6 +731,11 @@ const onMenuLeave = (el, done) => {
   font-size: 16px;
   text-decoration: none;
   transition: opacity 0.2s;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
 }
 .navigation-link:hover {
   opacity: 0.85;
@@ -712,6 +744,17 @@ const onMenuLeave = (el, done) => {
   width: 16px;
   height: 16px;
   stroke: var(--brand-accent);
+}
+
+/* NEW: Go Back button — same color/typography treatment as navigation-link */
+.go-back-link {
+  order: -1;
+}
+.back-arrow {
+  transition: transform 0.2s ease;
+}
+.go-back-link:hover .back-arrow {
+  transform: translateX(-3px);
 }
 
 /* ----------------------------------------- */

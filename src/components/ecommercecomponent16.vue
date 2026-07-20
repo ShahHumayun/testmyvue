@@ -10,14 +10,28 @@
       <button class="pulse-glow-btn px-10 py-5 bg-[var(--accent-color)] text-black font-bold rounded-lg transition-all">
         Start Your Ecommerce Project
       </button>
+
+      <div class="cta-back-wrap">
+        <button class="cta-back-btn" @click="goBack" aria-label="Go back to previous page">
+          <span class="cta-back-arrow" aria-hidden="true">←</span>
+          Go Back
+        </button>
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
 import { ref, inject } from 'vue'
+import { useRouter } from 'vue-router'
 
 const isDarkMode = inject('isDarkMode', ref(true))
+
+const router = useRouter()
+
+function goBack() {
+  router.back()
+}
 </script>
 
 <style scoped>
@@ -67,5 +81,41 @@ const isDarkMode = inject('isDarkMode', ref(true))
 
 .pulse-glow-btn:hover {
   box-shadow: 0 0 55px var(--pulse-high) !important;
+}
+
+.cta-back-wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.cta-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 13.5px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-back-btn:hover {
+  background-color: var(--accent-color) !important;
+  transform: scale(1.03);
+  box-shadow: 0 0 55px color-mix(in srgb, var(--accent-color), transparent 25%);
+}
+
+.cta-back-arrow {
+  transition: transform 0.2s ease;
+}
+
+.cta-back-btn:hover .cta-back-arrow {
+  transform: translateX(-3px);
 }
 </style>

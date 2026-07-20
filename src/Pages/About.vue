@@ -145,6 +145,13 @@
           </div>
         </div>
       </div>
+
+      <div class="back-btn-row">
+        <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
+          <span class="go-back-arrow" aria-hidden="true">←</span>
+          Go Back
+        </button>
+      </div>
     </section>
 
     <section class="contact-screenshot-section">
@@ -218,11 +225,18 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ChatBot from '../components/ChatBot.vue'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const router = useRouter()
+
+function goBack() {
+  router.back()
+}
 
 // Enforced dark default matching Home.vue setup
 const isDarkMode = ref(true)
@@ -752,6 +766,7 @@ const onMenuLeave = (el, done) => {
 .showcase-grid { 
   display: grid; 
   grid-template-columns: repeat(2, 1fr); 
+  grid-auto-rows: 1fr;
   gap: 32px; 
   align-items: stretch; 
 }
@@ -763,6 +778,7 @@ const onMenuLeave = (el, done) => {
 .project-card { 
   display: flex;
   flex-direction: column;
+  height: 100%;
   border-radius: 8px; 
   background-color: rgba(255, 255, 255, 0.02); 
   border: 1px solid rgba(255, 255, 255, 0.05); 
@@ -791,6 +807,48 @@ const onMenuLeave = (el, done) => {
 .project-tech-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
 .tech-pill { font-family: monospace; font-size: 11px; padding: 4px 10px; background-color: rgba(255, 255, 255, 0.04); border-radius: 4px; color: rgba(255, 255, 255, 0.8); }
 .theme-light .tech-pill { background-color: #f1f5f9; color: #334155; }
+
+.back-btn-row {
+  max-width: 42rem;
+  margin: 5rem auto 0;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 5;
+}
+
+.go-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.go-back-btn:hover {
+  background-color: var(--brand-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 255, 163, 0.3);
+}
+.theme-light .go-back-btn:hover {
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);
+}
+
+.go-back-arrow {
+  transition: transform 0.2s ease;
+}
+.go-back-btn:hover .go-back-arrow {
+  transform: translateX(-3px);
+}
 
 .contact-screenshot-section { padding: 80px clamp(16px, 5vw, 60px) 100px; position: relative; z-index: 10; width: 100%; }
 .contact-container { max-width: 1200px; margin: 0 auto; text-align: center; }

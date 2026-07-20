@@ -44,6 +44,13 @@
         >
           Schedule A Consultation
         </router-link>
+
+        <div class="mt-6">
+          <button @click="goBack" class="back-btn" aria-label="Go back to previous page">
+            <span class="back-arrow" aria-hidden="true">←</span>
+            Go Back
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -51,6 +58,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, inject } from 'vue'
+import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -58,6 +66,12 @@ gsap.registerPlugin(ScrollTrigger)
 
 const isDarkMode = inject('isDarkMode', ref(true))
 const ctaTargetGrid = ref(null)
+
+const router = useRouter()
+
+function goBack() {
+  router.back()
+}
 
 const ctaPaths = [
   {
@@ -100,4 +114,38 @@ onUnmounted(() => {
 .theme-light { --accent-color: #f97316; --accent-rgb: 249, 115, 22; }
 
 .accent-text { color: var(--accent-color); }
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 60%);
+  color: var(--accent-color);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: var(--accent-color);
+  color: #000000;
+  border-color: var(--accent-color);
+  transform: scale(1.03);
+  box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.35);
+}
+
+.back-arrow {
+  transition: transform 0.2s ease;
+}
+
+.back-btn:hover .back-arrow {
+  transform: translateX(-3px);
+}
 </style>

@@ -1,13 +1,7 @@
 <template>
-  <div 
-    :class="['hero-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']"
-    @mousemove="handleMouseMove"
-  >
+  <div :class="['hero-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']" @mousemove="handleMouseMove">
     <div class="bg-overlay">
-      <div 
-        class="bg-grid-lines"
-        :style="{ transform: `translate(${parallax.bgX}px, ${parallax.bgY}px)` }"
-      ></div>
+      <div class="bg-grid-lines" :style="{ transform: `translate(${parallax.bgX}px, ${parallax.bgY}px)` }"></div>
     </div>
 
     <!-- FIXED FLOATING NAVBAR SYSTEM -->
@@ -21,24 +15,13 @@
           Home
         </router-link>
 
-        <button 
-          @click="toggleTheme"
-          class="theme-toggle"
-          aria-label="Toggle Theme"
-        >
-          <div 
-            class="toggle-thumb"
-            :class="{ 'toggle-active': isDarkMode }"
-          >
+        <button @click="toggleTheme" class="theme-toggle" aria-label="Toggle Theme">
+          <div class="toggle-thumb" :class="{ 'toggle-active': isDarkMode }">
             <span class="toggle-icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
           </div>
         </button>
 
-        <button 
-          @click="toggleMenu" 
-          class="menu-trigger"
-          :class="{ 'menu-active': isMenuOpen }"
-        >
+        <button @click="toggleMenu" class="menu-trigger" :class="{ 'menu-active': isMenuOpen }">
           <span class="burger-line line-top"></span>
           <span class="burger-line line-mid"></span>
           <span class="burger-line line-bot"></span>
@@ -50,17 +33,9 @@
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
-          <div 
-            v-for="(item, index) in menuItems" 
-            :key="item"
-            class="menu-item-wrap"
-          >
+          <div v-for="(item, index) in menuItems" :key="item" class="menu-item-wrap">
             <span class="menu-index">0{{ index + 1 }}</span>
-            <router-link 
-              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
-              @click="toggleMenu" 
-              class="menu-link"
-            >
+            <router-link :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" @click="toggleMenu" class="menu-link">
               {{ item }}
             </router-link>
           </div>
@@ -77,10 +52,8 @@
 
     <!-- POLICY CONTENT -->
     <main class="hero-main">
-      <div 
-        class="ambient-glow"
-        :style="{ transform: `translate(${parallax.bgX * -0.5}px, ${parallax.bgY * -0.5}px)` }"
-      ></div>
+      <div class="ambient-glow" :style="{ transform: `translate(${parallax.bgX * -0.5}px, ${parallax.bgY * -0.5}px)` }">
+      </div>
 
       <section class="policy-hero">
         <span class="hero-eyebrow">Legal</span>
@@ -91,15 +64,8 @@
         </p>
 
         <div class="doc-tabs" role="tablist">
-          <button
-            v-for="tab in tabs"
-            :key="tab.id"
-            role="tab"
-            :aria-selected="activeDoc === tab.id"
-            class="doc-tab"
-            :class="{ 'doc-tab-active': activeDoc === tab.id }"
-            @click="switchDoc(tab.id)"
-          >
+          <button v-for="tab in tabs" :key="tab.id" role="tab" :aria-selected="activeDoc === tab.id" class="doc-tab"
+            :class="{ 'doc-tab-active': activeDoc === tab.id }" @click="switchDoc(tab.id)">
             {{ tab.label }}
           </button>
         </div>
@@ -107,26 +73,25 @@
 
       <section class="policy-body">
         <aside class="index-rail" aria-label="Section navigation">
-          <a
-            v-for="(sec, i) in currentSections"
-            :key="sec.id"
-            :href="'#' + sec.id"
-            class="rail-link"
-            :class="{ 'rail-link-active': activeSectionId === sec.id }"
-            @click.prevent="goToSection(sec.id)"
-          >
+          <a v-for="(sec, i) in currentSections" :key="sec.id" :href="'#' + sec.id" class="rail-link"
+            :class="{ 'rail-link-active': activeSectionId === sec.id }" @click.prevent="goToSection(sec.id)">
             <span class="rail-index">{{ String(i + 1).padStart(2, '0') }}</span>
             <span class="rail-label">{{ sec.title }}</span>
           </a>
+
+          <button type="button" class="rail-link go-back-rail-link" @click="goBack"
+            aria-label="Go back to previous page">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round" class="rail-back-arrow">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span class="rail-label">Go Back</span>
+          </button>
         </aside>
 
         <article class="policy-content" ref="contentRef">
-          <div
-            v-for="(sec, i) in currentSections"
-            :key="sec.id"
-            :id="sec.id"
-            class="policy-section"
-          >
+          <div v-for="(sec, i) in currentSections" :key="sec.id" :id="sec.id" class="policy-section">
             <div class="section-head">
               <span class="section-index">{{ String(i + 1).padStart(2, '0') }}</span>
               <h2 class="section-title">{{ sec.title }}</h2>
@@ -140,14 +105,11 @@
               <li v-for="(item, li) in sec.list" :key="li">{{ item }}</li>
             </ul>
 
-            <a
-              v-if="sec.crossLink"
-              class="cross-link"
-              :href="'#' + sec.crossLink.target"
-              @click.prevent="goToSection(sec.crossLink.target, sec.crossLink.doc)"
-            >
+            <a v-if="sec.crossLink" class="cross-link" :href="'#' + sec.crossLink.target"
+              @click.prevent="goToSection(sec.crossLink.target, sec.crossLink.doc)">
               {{ sec.crossLink.label }}
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="cross-link-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" class="cross-link-arrow">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
@@ -167,7 +129,10 @@
 
 <script setup>
 import { ref, reactive, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import gsap from 'gsap'
+
+const router = useRouter()
 
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
@@ -195,7 +160,7 @@ const applyGlobalThemeClass = (isDark) => {
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
   const activeTheme = isDarkMode.value ? 'dark' : 'light'
-  
+
   localStorage.setItem('webhive-theme', activeTheme)
   applyGlobalThemeClass(isDarkMode.value)
 }
@@ -213,6 +178,11 @@ const handleMouseMove = (e) => {
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
+}
+
+// NEW: Go back to the previous page in history
+function goBack() {
+  router.back()
 }
 
 /* -------------------------------------------------- */
@@ -439,21 +409,21 @@ onUnmounted(() => {
 })
 
 const onMenuEnter = (el, done) => {
-  gsap.fromTo(el, 
-    { opacity: 0 }, 
+  gsap.fromTo(el,
+    { opacity: 0 },
     { opacity: 1, duration: 0.4, ease: 'power2.out' }
   )
-  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
-    { yPercent: 100 }, 
+  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'),
+    { yPercent: 100 },
     { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out', delay: 0.1, onComplete: done }
   )
 }
 
 const onMenuLeave = (el, done) => {
-  gsap.to(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
+  gsap.to(el.querySelectorAll('.menu-link, .consult-btn-overlay'),
     { yPercent: -100, duration: 0.4, stagger: 0.03, ease: 'power3.in' }
   )
-  gsap.to(el, 
+  gsap.to(el,
     { opacity: 0, duration: 0.4, ease: 'power2.in', delay: 0.15, onComplete: done }
   )
 }
@@ -463,6 +433,7 @@ const onMenuLeave = (el, done) => {
 :global(html) {
   scroll-behavior: smooth;
 }
+
 :global(html),
 :global(body) {
   margin: 0;
@@ -475,7 +446,7 @@ const onMenuLeave = (el, done) => {
 .hero-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
-  
+
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -499,6 +470,7 @@ const onMenuLeave = (el, done) => {
   background-color: #0b0c10;
   color: #ffffff;
 }
+
 .theme-light {
   --brand-accent: #f97316;
   background-color: #ffffff;
@@ -516,19 +488,22 @@ const onMenuLeave = (el, done) => {
   overflow: hidden;
   z-index: 0;
 }
+
 .bg-grid-lines {
   position: absolute;
   inset: -40px;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   background-size: 40px 40px;
 }
+
 .theme-dark .bg-grid-lines {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(0, 255, 163, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 255, 163, 0.04) 1px, transparent 1px);
 }
+
 .theme-light .bg-grid-lines {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
@@ -576,8 +551,13 @@ const onMenuLeave = (el, done) => {
   align-items: center;
 }
 
-.theme-light .logo { color: #0f172a; }
-.logo .dot { color: var(--brand-accent); }
+.theme-light .logo {
+  color: #0f172a;
+}
+
+.logo .dot {
+  color: var(--brand-accent);
+}
 
 .nav-actions {
   display: flex;
@@ -600,10 +580,12 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   white-space: nowrap;
 }
+
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
 }
+
 .theme-light .consult-btn:hover {
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
@@ -622,13 +604,20 @@ const onMenuLeave = (el, done) => {
   transition: background-color 0.3s;
   flex-shrink: 0;
 }
+
 @media (max-width: 480px) {
-  .theme-toggle { width: 34px; height: 18px; padding: 2px; }
+  .theme-toggle {
+    width: 34px;
+    height: 18px;
+    padding: 2px;
+  }
 }
+
 .theme-dark .theme-toggle {
   background-color: rgba(0, 255, 163, 0.1);
   border: 1px solid rgba(0, 255, 163, 0.2);
 }
+
 .toggle-thumb {
   width: 16px;
   height: 16px;
@@ -639,16 +628,28 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #fbbf24;
 }
+
 .toggle-active {
   transform: translateX(18px);
   background-color: #111827;
   border: 1px solid var(--brand-accent);
 }
+
 @media (max-width: 480px) {
-  .toggle-thumb { width: 13px; height: 13px; }
-  .toggle-active { transform: translateX(15px); }
+  .toggle-thumb {
+    width: 13px;
+    height: 13px;
+  }
+
+  .toggle-active {
+    transform: translateX(15px);
+  }
 }
-.toggle-icon { font-size: 9px; user-select: none; }
+
+.toggle-icon {
+  font-size: 9px;
+  user-select: none;
+}
 
 .menu-trigger {
   width: 34px;
@@ -665,28 +666,52 @@ const onMenuLeave = (el, done) => {
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
 }
+
 @media (max-width: 480px) {
-  .menu-trigger { width: 30px; height: 30px; gap: 3px; }
+  .menu-trigger {
+    width: 30px;
+    height: 30px;
+    gap: 3px;
+  }
 }
+
 .theme-dark .menu-trigger {
   background-color: rgba(24, 24, 27, 0.8);
   border: 1px solid #27272a;
 }
+
 .theme-light .menu-trigger {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
 }
+
 .burger-line {
   height: 1.5px;
   width: 15px;
   transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
-.theme-dark .burger-line { background-color: #ffffff; }
-.theme-light .burger-line { background-color: #0f172a; }
 
-.menu-active .line-top { transform: translateY(5px) rotate(45deg); background-color: var(--brand-accent) !important; }
-.menu-active .line-mid { opacity: 0; }
-.menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
+.theme-dark .burger-line {
+  background-color: #ffffff;
+}
+
+.theme-light .burger-line {
+  background-color: #0f172a;
+}
+
+.menu-active .line-top {
+  transform: translateY(5px) rotate(45deg);
+  background-color: var(--brand-accent) !important;
+}
+
+.menu-active .line-mid {
+  opacity: 0;
+}
+
+.menu-active .line-bot {
+  transform: translateY(-5px) rotate(-45deg);
+  background-color: var(--brand-accent) !important;
+}
 
 /* ----------------------------------------- */
 /* 4. NAVIGATION OVERLAY SYSTEM              */
@@ -707,7 +732,11 @@ const onMenuLeave = (el, done) => {
   padding-top: max(clamp(24px, 5vh, 48px), env(safe-area-inset-top));
   padding-bottom: max(clamp(24px, 5vh, 48px), env(safe-area-inset-bottom));
 }
-.theme-dark .nav-overlay { background-color: rgba(11, 12, 16, 0.96); }
+
+.theme-dark .nav-overlay {
+  background-color: rgba(11, 12, 16, 0.96);
+}
+
 .theme-light .nav-overlay {
   background-color: #ffffff;
   backdrop-filter: none;
@@ -722,8 +751,16 @@ const onMenuLeave = (el, done) => {
   max-width: 800px;
 }
 
-.menu-item-wrap { overflow: hidden; display: flex; align-items: center; }
-.overlay-btn-item { margin-top: clamp(4px, 1vh, 12px); }
+.menu-item-wrap {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.overlay-btn-item {
+  margin-top: clamp(4px, 1vh, 12px);
+}
+
 .menu-index {
   font-family: monospace;
   font-size: clamp(12px, 1.5vw, 14px);
@@ -734,6 +771,7 @@ const onMenuLeave = (el, done) => {
   opacity: 0.7;
   flex-shrink: 0;
 }
+
 .menu-link {
   font-size: clamp(1.1rem, 3vw, 2.2rem);
   font-weight: 900;
@@ -744,9 +782,18 @@ const onMenuLeave = (el, done) => {
   line-height: 1.1;
   word-break: break-word;
 }
-.theme-dark .menu-link { color: #ffffff; }
-.theme-light .menu-link { color: #0f172a; }
-.menu-link:hover { color: var(--brand-accent); }
+
+.theme-dark .menu-link {
+  color: #ffffff;
+}
+
+.theme-light .menu-link {
+  color: #0f172a;
+}
+
+.menu-link:hover {
+  color: var(--brand-accent);
+}
 
 .consult-btn-overlay {
   text-decoration: none;
@@ -763,10 +810,12 @@ const onMenuLeave = (el, done) => {
   will-change: transform;
   white-space: nowrap;
 }
+
 .consult-btn-overlay:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+
 .theme-light .consult-btn-overlay:hover {
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
@@ -780,9 +829,18 @@ const onMenuLeave = (el, done) => {
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
-  .menu-link { font-size: clamp(1.2rem, 4.5vw, 2rem); }
-  .nav-links-container { gap: clamp(4px, 1.2vh, 10px); }
-  .menu-index { font-size: 11px; }
+  .menu-link {
+    font-size: clamp(1.2rem, 4.5vw, 2rem);
+  }
+
+  .nav-links-container {
+    gap: clamp(4px, 1.2vh, 10px);
+  }
+
+  .menu-index {
+    font-size: 11px;
+  }
+
   .consult-btn-overlay {
     font-size: clamp(0.9rem, 2.5vw, 1.2rem);
     padding: 6px clamp(14px, 2.5vw, 24px);
@@ -816,8 +874,16 @@ const onMenuLeave = (el, done) => {
   right: -10%;
   z-index: 0;
 }
-.theme-dark .ambient-glow { background-color: var(--brand-accent); }
-.theme-light .ambient-glow { background-color: #fdba74; mix-blend-mode: multiply; opacity: 0.2; }
+
+.theme-dark .ambient-glow {
+  background-color: var(--brand-accent);
+}
+
+.theme-light .ambient-glow {
+  background-color: #fdba74;
+  mix-blend-mode: multiply;
+  opacity: 0.2;
+}
 
 /* ----------------------------------------- */
 /* 6. POLICY HERO                            */
@@ -847,7 +913,9 @@ const onMenuLeave = (el, done) => {
   margin-bottom: 16px;
 }
 
-.accent-text { color: var(--brand-accent); }
+.accent-text {
+  color: var(--brand-accent);
+}
 
 .hero-subtitle {
   font-size: clamp(14px, 1.4vw, 17px);
@@ -856,7 +924,10 @@ const onMenuLeave = (el, done) => {
   color: #9ca3af;
   margin-bottom: clamp(24px, 3vw, 36px);
 }
-.theme-light .hero-subtitle { color: #4b5563; }
+
+.theme-light .hero-subtitle {
+  color: #4b5563;
+}
 
 .doc-tabs {
   display: inline-flex;
@@ -866,6 +937,7 @@ const onMenuLeave = (el, done) => {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
+
 .theme-light .doc-tabs {
   background: rgba(15, 23, 42, 0.04);
   border: 1px solid rgba(15, 23, 42, 0.08);
@@ -884,7 +956,11 @@ const onMenuLeave = (el, done) => {
   transition: background-color 0.25s, color 0.25s, opacity 0.25s;
   white-space: nowrap;
 }
-.doc-tab:hover { opacity: 0.9; }
+
+.doc-tab:hover {
+  opacity: 0.9;
+}
+
 .doc-tab-active {
   background-color: var(--brand-accent);
   color: #0f172a;
@@ -914,8 +990,15 @@ const onMenuLeave = (el, done) => {
   overflow-y: auto;
   padding-right: 8px;
 }
-.index-rail::-webkit-scrollbar { width: 4px; }
-.index-rail::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+.index-rail::-webkit-scrollbar {
+  width: 4px;
+}
+
+.index-rail::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
 
 .rail-link {
   display: flex;
@@ -931,21 +1014,77 @@ const onMenuLeave = (el, done) => {
   font-size: 13px;
   line-height: 1.35;
 }
-.rail-link:hover { opacity: 0.85; background: rgba(255, 255, 255, 0.04); }
-.theme-light .rail-link:hover { background: rgba(15, 23, 42, 0.04); }
+
+.rail-link:hover {
+  opacity: 0.85;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.theme-light .rail-link:hover {
+  background: rgba(15, 23, 42, 0.04);
+}
+
 .rail-link-active {
   opacity: 1;
   border-left-color: var(--brand-accent);
   background: rgba(255, 255, 255, 0.05);
   font-weight: 700;
 }
-.theme-light .rail-link-active { background: rgba(15, 23, 42, 0.05); }
+
+.theme-light .rail-link-active {
+  background: rgba(15, 23, 42, 0.05);
+}
 
 .rail-index {
   font-family: monospace;
   font-size: 11px;
   color: var(--brand-accent);
   flex-shrink: 0;
+}
+
+/* NEW: Go Back entry pinned after the section links inside the rail */
+.go-back-rail-link {
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: none;
+  border-left: 2px solid transparent;
+  background: transparent;
+  color: var(--brand-accent);
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0.85;
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  text-align: left;
+}
+
+.theme-light .go-back-rail-link {
+  border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+.go-back-rail-link:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border-left-color: var(--brand-accent);
+}
+
+.theme-light .go-back-rail-link:hover {
+  background: rgba(15, 23, 42, 0.04);
+}
+
+.rail-back-arrow {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.go-back-rail-link:hover .rail-back-arrow {
+  transform: translateX(-3px);
 }
 
 .policy-content {
@@ -958,8 +1097,14 @@ const onMenuLeave = (el, done) => {
   padding: clamp(28px, 4vw, 40px) 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
-.theme-light .policy-section { border-bottom-color: rgba(15, 23, 42, 0.08); }
-.policy-section:last-child { border-bottom: none; }
+
+.theme-light .policy-section {
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+.policy-section:last-child {
+  border-bottom: none;
+}
 
 .section-head {
   display: flex;
@@ -967,6 +1112,7 @@ const onMenuLeave = (el, done) => {
   gap: 16px;
   margin-bottom: 16px;
 }
+
 .section-index {
   font-family: monospace;
   font-size: 13px;
@@ -974,6 +1120,7 @@ const onMenuLeave = (el, done) => {
   opacity: 0.85;
   flex-shrink: 0;
 }
+
 .section-title {
   font-size: clamp(1.15rem, 2vw, 1.5rem);
   font-weight: 800;
@@ -987,20 +1134,30 @@ const onMenuLeave = (el, done) => {
   margin-bottom: 14px;
   max-width: 720px;
 }
-.section-text:last-child { margin-bottom: 0; }
-.theme-light .section-text { color: #4b5563; }
+
+.section-text:last-child {
+  margin-bottom: 0;
+}
+
+.theme-light .section-text {
+  color: #4b5563;
+}
 
 .section-list {
   margin-top: 4px;
   padding-left: 20px;
   max-width: 720px;
 }
+
 .section-list li {
   font-size: 14px;
   line-height: 1.8;
   color: #9ca3af;
 }
-.theme-light .section-list li { color: #4b5563; }
+
+.theme-light .section-list li {
+  color: #4b5563;
+}
 
 .cross-link {
   display: inline-flex;
@@ -1013,13 +1170,21 @@ const onMenuLeave = (el, done) => {
   text-decoration: none;
   transition: opacity 0.2s;
 }
-.cross-link:hover { opacity: 0.8; }
-.cross-link-arrow { width: 14px; height: 14px; }
+
+.cross-link:hover {
+  opacity: 0.8;
+}
+
+.cross-link-arrow {
+  width: 14px;
+  height: 14px;
+}
 
 @media (max-width: 900px) {
   .policy-body {
     grid-template-columns: 1fr;
   }
+
   .index-rail {
     position: sticky;
     top: calc(60px + clamp(10px, 2vw, 22px) + 8px);
@@ -1032,15 +1197,44 @@ const onMenuLeave = (el, done) => {
     background: inherit;
     z-index: 5;
   }
+
   .rail-link {
     border-left: none;
     border-bottom: 2px solid transparent;
     white-space: nowrap;
     padding: 8px 10px;
   }
-  .rail-link-active { border-bottom-color: var(--brand-accent); }
-  .rail-label { display: none; }
-  .rail-index { font-size: 12px; }
+
+  .rail-link-active {
+    border-bottom-color: var(--brand-accent);
+  }
+
+  .rail-label {
+    display: none;
+  }
+
+  .rail-index {
+    font-size: 12px;
+  }
+
+  .go-back-rail-link {
+    width: auto;
+    margin-top: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-top: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0;
+  }
+
+  .theme-light .go-back-rail-link {
+    border-left-color: rgba(15, 23, 42, 0.15);
+  }
+
+  .rail-back-arrow {
+    width: 16px;
+    height: 16px;
+  }
 }
 
 /* ----------------------------------------- */
@@ -1060,11 +1254,13 @@ const onMenuLeave = (el, done) => {
   font-size: 11px;
   border-top: 1px solid;
 }
+
 .theme-dark .copyright-section {
   color: rgba(255, 255, 255, 0.4);
   background-color: rgba(9, 9, 11, 0.6);
   border-top-color: rgba(255, 255, 255, 0.05);
 }
+
 .theme-light .copyright-section {
   color: rgba(15, 23, 42, 0.5);
   background-color: #ffffff;

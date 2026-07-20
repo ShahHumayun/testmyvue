@@ -1,7 +1,6 @@
 <template>
   <section :class="['cta-section relative py-36 px-6 overflow-hidden text-center z-20 transition-colors duration-400', isDarkMode ? 'theme-dark' : 'theme-light']">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] glow-blur rounded-full pointer-events-none"></div>
-    
+
     <div class="max-w-3xl mx-auto relative z-10 space-y-6">
       <h2 ref="ctaHeading" class="text-3xl md:text-6xl font-extrabold tracking-tight leading-tight cta-title">
         Ready To Build Your Next <br><span class="accent-text">Web Application?</span>
@@ -14,18 +13,32 @@
           Schedule A Free Consultation
         </button>
       </div>
+
+      <div class="cta-back-wrap">
+        <button class="cta-back-btn" @click="goBack" aria-label="Go back to previous page">
+          <span class="cta-back-arrow" aria-hidden="true">←</span>
+          Go Back
+        </button>
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
 import { ref, onMounted, inject } from 'vue'
+import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const isDarkMode = inject('isDarkMode', ref(true))
+
+const router = useRouter()
+
+function goBack() {
+  router.back()
+}
 
 const emit = defineEmits(['navigate'])
 const ctaHeading = ref(null)
@@ -58,24 +71,54 @@ onMounted(() => {
   background-color: #000000 !important;
   --title-color: #ffffff;
   --desc-color: #a3a3a3;
-  --glow-bg: rgba(0, 255, 163, 0.1);
 }
 
 .theme-light {
   background-color: #ffffff !important;
   --title-color: #0f172a;
   --desc-color: #475569;
-  --glow-bg: rgba(249, 115, 22, 0.15);
 }
 
 .accent-text { color: var(--accent-color); }
 
 .cta-section { width: 100% !important; }
-.glow-blur {
-  background-color: var(--glow-bg) !important;
-  filter: blur(100px) !important;
-  transition: background-color 0.4s ease;
+
+.cta-back-wrap {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
 }
+
+.cta-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 13.5px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-back-btn:hover {
+  background-color: var(--accent-color) !important;
+  transform: scale(1.03);
+  box-shadow: 0 0 55px color-mix(in srgb, var(--accent-color), transparent 25%);
+}
+
+.cta-back-arrow {
+  transition: transform 0.2s ease;
+}
+
+.cta-back-btn:hover .cta-back-arrow {
+  transform: translateX(-3px);
+}
+
 .cta-title { color: var(--title-color) !important; transition: color 0.4s ease; }
 .cta-description { color: var(--desc-color) !important; transition: color 0.4s ease; }
 

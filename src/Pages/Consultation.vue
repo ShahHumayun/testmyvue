@@ -180,6 +180,13 @@
             {{ submissionPending ? 'Processing Request...' : 'Send Message' }}
           </button>
         </form>
+
+        <div class="back-btn-row">
+          <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
+            <span class="go-back-arrow" aria-hidden="true">←</span>
+            Go Back
+          </button>
+        </div>
       </section>
     </main>
 
@@ -194,6 +201,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { createClient } from '@supabase/supabase-js'
 import gsap from 'gsap'
 
@@ -201,6 +209,12 @@ const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)
 const submissionPending = ref(false)
+
+const router = useRouter()
+
+function goBack() {
+  router.back()
+}
 
 const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Policies']
 
@@ -816,6 +830,46 @@ const onMenuLeave = (el, done) => {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+}
+
+.back-btn-row {
+  max-width: 42rem;
+  margin: 1.5rem auto 0;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.go-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #000000;
+
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.go-back-btn:hover {
+  background-color: var(--brand-accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 255, 163, 0.3);
+}
+.theme-light .go-back-btn:hover {
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);
+}
+
+.go-back-arrow {
+  transition: transform 0.2s ease;
+}
+.go-back-btn:hover .go-back-arrow {
+  transform: translateX(-3px);
 }
 
 .contact-header {

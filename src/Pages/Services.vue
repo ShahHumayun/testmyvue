@@ -126,6 +126,13 @@
           Start a Project
         </router-link>
       </section>
+
+      <div class="back-btn-row">
+        <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
+          <span class="go-back-arrow" aria-hidden="true">←</span>
+          Go Back
+        </button>
+      </div>
     </main>
 
     <footer class="footer-group">
@@ -158,11 +165,18 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ChatBot from '../components/ChatBot.vue'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const router = useRouter()
+
+function goBack() {
+  router.back()
+}
 
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
@@ -864,6 +878,59 @@ onUnmounted(() => {
   background-color: var(--brand-accent);
   color: #0f172a;
   transform: none;
+}
+
+/* ----------------------------------------- */
+/* GO BACK BUTTON (matches Start a Project)   */
+/* ----------------------------------------- */
+.back-btn-row {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.go-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #0b0c10;
+  border: none;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+.go-back-btn:hover {
+  background-color: var(--brand-accent);
+  color: #0b0c10;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 255, 163, 0.3);
+}
+
+/* Light theme: same brand-accent color scheme as Start a Project, but keeps its own hover effect */
+.theme-light .go-back-btn {
+  background-color: var(--brand-accent);
+  color: #0f172a;
+}
+.theme-light .go-back-btn:hover {
+  background-color: var(--brand-accent);
+  color: #0f172a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3);
+}
+
+.go-back-arrow {
+  transition: transform 0.2s ease;
+}
+.go-back-btn:hover .go-back-arrow {
+  transform: translateX(-3px);
 }
 
 .animate-scroll-element { opacity: 0; }
