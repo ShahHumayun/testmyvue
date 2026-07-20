@@ -100,5 +100,12 @@ onMounted(() => {
 
 /* Global overrides using the accent variable */
 .graphic-card { background-color: var(--graphic-card-bg, #0a0a0a); border: 1px solid var(--graphic-card-border, #171717); }
+
+/* Card stays dark in both themes, so its inner text must stay light in both themes too */
+.excerpt-text { color: rgba(255, 255, 255, 0.75) !important; }
+.highlight-text { color: #ffffff !important; }
+.badge-label { color: rgba(255, 255, 255, 0.9) !important; }
+.badge-box { background-color: rgba(255, 255, 255, 0.04) !important; border: 1px solid rgba(255, 255, 255, 0.08) !important; }
+
 /* ... (remaining styles remain same) */
 </style>
