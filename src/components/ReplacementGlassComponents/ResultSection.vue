@@ -1,6 +1,13 @@
 <template>
   <section :class="['rg-result', isDarkMode ? 'theme-dark' : 'theme-light']" ref="sectionRef">
 
+    <div class="rg-back-wrap">
+      <button class="rg-back-btn" @click="goBack" aria-label="Go back to previous page">
+        <span class="rg-back-arrow" aria-hidden="true">←</span>
+        Back
+      </button>
+    </div>
+
     <!-- TOP ROW: text | image -->
     <div class="rg-result__grid">
       <div class="rg-result__text">
@@ -71,6 +78,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, inject } from 'vue'
+import { useRouter } from 'vue-router'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -78,6 +86,12 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Inject the shared site theme preference seamlessly
 const isDarkMode = inject('isDarkMode', ref(true))
+
+const router = useRouter()
+
+function goBack() {
+  router.back()
+}
 
 const sectionRef = ref(null)
 const detailsRef = ref(null)
@@ -176,6 +190,41 @@ onBeforeUnmount(() => {
   background: var(--result-bg);
   padding: 100px 24px;
   transition: background-color 0.4s ease;
+}
+
+.rg-back-wrap {
+  max-width: 1160px;
+  margin: 0 auto 32px;
+}
+
+.rg-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid var(--cta-border);
+  color: var(--text-heading);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+.rg-back-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  transform: translateX(-2px);
+}
+
+.rg-back-arrow {
+  transition: transform 0.2s ease;
+}
+
+.rg-back-btn:hover .rg-back-arrow {
+  transform: translateX(-3px);
 }
 
 .rg-result__grid {
