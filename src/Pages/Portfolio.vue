@@ -82,6 +82,27 @@
         @open-modal="openModal"
       />
       <EcommerceprojectsSection :isDarkMode="isDarkMode"/>
+
+      <section class="culture-cta animate-scroll-element">
+        <div class="cta-glow"></div>
+        <h2 class="cta-title">
+          Build Something <span class="highlight-text">Great</span> With Us.
+        </h2>
+        <p class="cta-subtitle">
+          Whether you're a client or a future teammate — there's always room
+          at the table.
+        </p>
+        <router-link to="/consultation" class="btn-start-project">
+          Start a Project
+        </router-link>
+      </section>
+
+      <div class="back-btn-row">
+        <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
+          <span class="go-back-arrow" aria-hidden="true">←</span>
+          Go Back
+        </button>
+      </div>
     </main>
 
     <footer class="footer-group">
@@ -150,8 +171,18 @@ import MyExpenseTrackerApp from '../components/MyExpenseTrackerApp.vue'
 import BookLibraryApp from '../components/BookLibraryApp.vue'
 import MagentoConnectorApp from '../components/MagentoConnectorApp.vue'
 
-import { ref, reactive, watch, onMounted, provide } from 'vue'
+import { ref, reactive, watch, onMounted, onUnmounted, provide } from 'vue'
+import { useRouter } from 'vue-router'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const router = useRouter()
+
+function goBack() {
+  router.back()
+}
 
 // 1. Keeps initial state true so default load mounts as dark mode directly
 const isDarkMode = ref(true)
@@ -260,6 +291,26 @@ onMounted(() => {
 
   // Keep root context token up-to-date instantly on view mount
   applyGlobalThemeClass(isDarkMode.value)
+
+  gsap.set('.culture-cta', { opacity: 1 })
+
+  gsap.from('.culture-cta', {
+    scrollTrigger: {
+      trigger: '.culture-cta',
+      start: 'top 85%',
+      toggleActions: 'play none none none'
+    },
+    y: 40,
+    opacity: 0,
+    duration: 0.8,
+    ease: 'power3.out'
+  })
+
+  setTimeout(() => ScrollTrigger.refresh(), 300)
+})
+
+onUnmounted(() => {
+  ScrollTrigger.getAll().forEach(t => t.kill())
 })
 </script>
 
@@ -582,6 +633,155 @@ onMounted(() => {
   gap: 24px;
   padding-top: calc(60px + clamp(10px, 2vw, 22px) + 50px);
   padding-bottom: 60px;
+}
+
+/* ----------------------------------------- */
+/* CLOSING CTA SECTION (from Culture.vue)     */
+/* ----------------------------------------- */
+.culture-cta {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 80px 40px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: rgba(255, 255, 255, 0.01);
+  overflow: hidden;
+}
+.theme-light .culture-cta {
+  background-color: #ffffff;
+  border-color: rgba(15, 23, 42, 0.06);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.02);
+}
+
+.cta-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background-color: var(--brand-accent);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(150px);
+  opacity: 0.1;
+  pointer-events: none;
+}
+/* CHANGED: light-theme CTA glow now uses a soft orange tint */
+.theme-light .cta-glow { opacity: 0.15; background-color: #fdba74; }
+
+.cta-title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.highlight-text {
+  background: linear-gradient(135deg, #ffffff 20%, var(--brand-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* CHANGED: light-theme gradient endpoint now vibrant orange */
+.theme-light .highlight-text {
+  background: linear-gradient(135deg, #0f172a 40%, #f97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cta-subtitle {
+  font-size: clamp(14px, 1.6vw, 17px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 560px;
+  margin: 0 auto 36px;
+  position: relative;
+  z-index: 1;
+}
+.theme-light .cta-subtitle { color: #475569; }
+
+.btn-start-project {
+  position: relative;
+  z-index: 1;
+  text-decoration: none;
+  display: inline-block;
+  background-color: #ffffff;
+  color: #0b0c10;
+  border: 1px solid transparent;
+  padding: 18px 38px;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+/* CHANGED: light-theme button now vibrant orange instead of dark navy */
+.theme-light .btn-start-project {
+  background-color: #f97316;
+  color: #ffffff;
+}
+.btn-start-project:hover {
+  background-color: var(--brand-accent);
+  color: #0b0c10;
+  transform: translateY(-2px);
+}
+
+/* ----------------------------------------- */
+/* GO BACK BUTTON (matches Start a Project)   */
+/* ----------------------------------------- */
+.back-btn-row {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.go-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #0b0c10;
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 10px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+/* CHANGED: light-theme button now vibrant orange instead of dark navy */
+.theme-light .go-back-btn {
+  background-color: #f97316;
+  color: #ffffff;
+}
+.go-back-btn:hover {
+  background-color: var(--brand-accent);
+  color: #0b0c10;
+  transform: translateY(-2px);
+}
+
+.go-back-arrow {
+  transition: transform 0.2s ease;
+}
+.go-back-btn:hover .go-back-arrow {
+  transform: translateX(-3px);
+}
+
+/* ----------------------------------------- */
+/* SCROLL-IN ANIMATION (matches Culture.vue) */
+/* ----------------------------------------- */
+.animate-scroll-element {
+  opacity: 0;
 }
 
 /* FOOTER */

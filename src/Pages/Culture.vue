@@ -1,13 +1,7 @@
 <template>
-  <div 
-    :class="['culture-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']"
-    @mousemove="handleMouseMove"
-  >
+  <div :class="['culture-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']" @mousemove="handleMouseMove">
     <div class="bg-overlay">
-      <div 
-        class="bg-grid-lines"
-        :style="{ transform: `translate(${parallax.bgX}px, ${parallax.bgY}px)` }"
-      ></div>
+      <div class="bg-grid-lines" :style="{ transform: `translate(${parallax.bgX}px, ${parallax.bgY}px)` }"></div>
     </div>
 
     <header class="navbar">
@@ -20,24 +14,13 @@
           Consultation
         </router-link>
 
-        <button 
-          @click="toggleTheme"
-          class="theme-toggle"
-          aria-label="Toggle Theme"
-        >
-          <div 
-            class="toggle-thumb"
-            :class="{ 'toggle-active': isDarkMode }"
-          >
+        <button @click="toggleTheme" class="theme-toggle" aria-label="Toggle Theme">
+          <div class="toggle-thumb" :class="{ 'toggle-active': isDarkMode }">
             <span class="toggle-icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
           </div>
         </button>
 
-        <button 
-          @click="toggleMenu" 
-          class="menu-trigger"
-          :class="{ 'menu-active': isMenuOpen }"
-        >
+        <button @click="toggleMenu" class="menu-trigger" :class="{ 'menu-active': isMenuOpen }">
           <span class="burger-line line-top"></span>
           <span class="burger-line line-mid"></span>
           <span class="burger-line line-bot"></span>
@@ -48,17 +31,9 @@
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
-          <div 
-            v-for="(item, index) in menuItems" 
-            :key="item"
-            class="menu-item-wrap"
-          >
+          <div v-for="(item, index) in menuItems" :key="item" class="menu-item-wrap">
             <span class="menu-index">0{{ index + 1 }}</span>
-            <router-link 
-              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
-              @click="toggleMenu" 
-              class="menu-link"
-            >
+            <router-link :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" @click="toggleMenu" class="menu-link">
               {{ item }}
             </router-link>
           </div>
@@ -90,11 +65,7 @@
       </section>
 
       <section class="pillars-section">
-        <div 
-          v-for="pillar in pillars" 
-          :key="pillar.title" 
-          class="pillar-card animate-scroll-element"
-        >
+        <div v-for="pillar in pillars" :key="pillar.title" class="pillar-card animate-scroll-element">
           <div class="pillar-icon">{{ pillar.icon }}</div>
           <h3>{{ pillar.title }}</h3>
           <p>{{ pillar.desc }}</p>
@@ -102,12 +73,8 @@
       </section>
 
       <section class="showcase-rows">
-        <div 
-          v-for="row in showcaseRows" 
-          :key="row.title"
-          class="showcase-row animate-scroll-element"
-          :class="{ 'row-reverse': row.reverse }"
-        >
+        <div v-for="row in showcaseRows" :key="row.title" class="showcase-row animate-scroll-element"
+          :class="{ 'row-reverse': row.reverse }">
           <div class="row-media">
             <img :src="row.image" :alt="row.title" class="row-img" />
             <div class="row-img-tint"></div>
@@ -156,15 +123,14 @@
       </div>
     </footer>
 
-     <button
-      class="chat-fab"
-      @click="isChatOpen = !isChatOpen"
-      :aria-label="isChatOpen ? 'Close chat' : 'Open chat'"
-    >
-      <svg v-if="!isChatOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8-1.06 0-2.077-.16-3.02-.457L3 21l1.5-4.5C3.55 15.163 3 13.632 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z" />
+    <button class="chat-fab" @click="isChatOpen = !isChatOpen" :aria-label="isChatOpen ? 'Close chat' : 'Open chat'">
+      <svg v-if="!isChatOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" width="24" height="24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8-1.06 0-2.077-.16-3.02-.457L3 21l1.5-4.5C3.55 15.163 3 13.632 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z" />
       </svg>
-      <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+      <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" width="22" height="22">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
       </svg>
     </button>
@@ -291,7 +257,7 @@ const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value }
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
   const activeTheme = isDarkMode.value ? 'dark' : 'light'
-  
+
   localStorage.setItem('webhive-theme', activeTheme)
   applyGlobalThemeClass(isDarkMode.value)
 }
@@ -310,13 +276,13 @@ onMounted(() => {
 
   gsap.set('.showcase-row, .culture-cta', { opacity: 1 })
 
-  gsap.fromTo('.animate-title', 
-    { y: 50, opacity: 0 }, 
+  gsap.fromTo('.animate-title',
+    { y: 50, opacity: 0 },
     { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.2 }
   )
 
-  gsap.fromTo('.animate-fade-in', 
-    { opacity: 0, y: 25 }, 
+  gsap.fromTo('.animate-fade-in',
+    { opacity: 0, y: 25 },
     { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.4 }
   )
 
@@ -338,7 +304,7 @@ onMounted(() => {
     const content = row.querySelector('.row-content')
     const isReverse = row.classList.contains('row-reverse')
 
-    gsap.fromTo(media, 
+    gsap.fromTo(media,
       { opacity: 0, x: isReverse ? 60 : -60, scale: 0.95 },
       {
         opacity: 1, x: 0, scale: 1, duration: 0.9, ease: 'power3.out',
@@ -346,7 +312,7 @@ onMounted(() => {
       }
     )
 
-    gsap.fromTo(content, 
+    gsap.fromTo(content,
       { opacity: 0, x: isReverse ? -60 : 60 },
       {
         opacity: 1, x: 0, duration: 0.9, ease: 'power3.out', delay: 0.15,
@@ -380,8 +346,8 @@ onMounted(() => {
 
 const onMenuEnter = (el, done) => {
   gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })
-  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
-    { yPercent: 100 }, 
+  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'),
+    { yPercent: 100 },
     { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out', delay: 0.1, onComplete: done }
   )
 }
@@ -402,6 +368,7 @@ onUnmounted(() => {
   overflow-y: auto !important;
   height: auto !important;
 }
+
 :global(body) {
   margin: 0;
   padding: 0;
@@ -427,9 +394,17 @@ onUnmounted(() => {
   flex-direction: column;
 }
 
-.theme-dark { background-color: #0b0c10; color: #ffffff; }
+.theme-dark {
+  background-color: #0b0c10;
+  color: #ffffff;
+}
+
 /* CHANGED: light theme now overrides --brand-accent to vibrant orange and uses a solid white background */
-.theme-light { --brand-accent: #f97316; background-color: #ffffff; color: #0f172a; }
+.theme-light {
+  --brand-accent: #f97316;
+  background-color: #ffffff;
+  color: #0f172a;
+}
 
 .bg-overlay {
   position: absolute;
@@ -438,19 +413,22 @@ onUnmounted(() => {
   pointer-events: none;
   overflow: hidden;
 }
+
 .bg-grid-lines {
   position: absolute;
   inset: -40px;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   background-size: 40px 40px;
 }
+
 .theme-dark .bg-grid-lines {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(0, 255, 163, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 255, 163, 0.04) 1px, transparent 1px);
 }
+
 .theme-light .bg-grid-lines {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
@@ -525,18 +503,26 @@ onUnmounted(() => {
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   white-space: nowrap;
 }
+
 @media (max-width: 480px) {
-  .consult-btn { display: none; }
+  .consult-btn {
+    display: none;
+  }
 }
+
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
 }
+
 /* CHANGED: orange hover glow for light theme */
 .theme-light .consult-btn:hover {
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
-.consult-btn:active { transform: translateY(0); }
+
+.consult-btn:active {
+  transform: translateY(0);
+}
 
 .theme-toggle {
   width: 40px;
@@ -552,13 +538,20 @@ onUnmounted(() => {
   transition: background-color 0.3s;
   flex-shrink: 0;
 }
+
 @media (max-width: 480px) {
-  .theme-toggle { width: 34px; height: 18px; padding: 2px; }
+  .theme-toggle {
+    width: 34px;
+    height: 18px;
+    padding: 2px;
+  }
 }
+
 .theme-dark .theme-toggle {
   background-color: rgba(0, 255, 163, 0.1);
   border: 1px solid rgba(0, 255, 163, 0.2);
 }
+
 .toggle-thumb {
   width: 16px;
   height: 16px;
@@ -569,15 +562,24 @@ onUnmounted(() => {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #fbbf24;
 }
+
 .toggle-active {
   transform: translateX(18px);
   background-color: #111827;
   border: 1px solid var(--brand-accent);
 }
+
 @media (max-width: 480px) {
-  .toggle-thumb { width: 13px; height: 13px; }
-  .toggle-active { transform: translateX(15px); }
+  .toggle-thumb {
+    width: 13px;
+    height: 13px;
+  }
+
+  .toggle-active {
+    transform: translateX(15px);
+  }
 }
+
 .toggle-icon {
   font-size: 9px;
   user-select: none;
@@ -598,28 +600,52 @@ onUnmounted(() => {
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
 }
+
 @media (max-width: 480px) {
-  .menu-trigger { width: 30px; height: 30px; gap: 3px; }
+  .menu-trigger {
+    width: 30px;
+    height: 30px;
+    gap: 3px;
+  }
 }
+
 .theme-dark .menu-trigger {
   background-color: rgba(24, 24, 27, 0.8);
   border: 1px solid #27272a;
 }
+
 .theme-light .menu-trigger {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
 }
+
 .burger-line {
   height: 1.5px;
   width: 15px;
   transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
-.theme-dark .burger-line { background-color: #ffffff; }
-.theme-light .burger-line { background-color: #0f172a; }
 
-.menu-active .line-top { transform: translateY(5px) rotate(45deg); background-color: var(--brand-accent) !important; }
-.menu-active .line-mid { opacity: 0; }
-.menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
+.theme-dark .burger-line {
+  background-color: #ffffff;
+}
+
+.theme-light .burger-line {
+  background-color: #0f172a;
+}
+
+.menu-active .line-top {
+  transform: translateY(5px) rotate(45deg);
+  background-color: var(--brand-accent) !important;
+}
+
+.menu-active .line-mid {
+  opacity: 0;
+}
+
+.menu-active .line-bot {
+  transform: translateY(-5px) rotate(-45deg);
+  background-color: var(--brand-accent) !important;
+}
 
 /* ----------------------------------------- */
 /* NAVIGATION OVERLAY                        */
@@ -640,8 +666,14 @@ onUnmounted(() => {
   padding-top: max(clamp(24px, 5vh, 48px), env(safe-area-inset-top));
   padding-bottom: max(clamp(24px, 5vh, 48px), env(safe-area-inset-bottom));
 }
-.theme-dark .nav-overlay { background-color: rgba(11, 12, 16, 0.96); }
-.theme-light .nav-overlay { background-color: rgba(255, 255, 255, 0.96); }
+
+.theme-dark .nav-overlay {
+  background-color: rgba(11, 12, 16, 0.96);
+}
+
+.theme-light .nav-overlay {
+  background-color: rgba(255, 255, 255, 0.96);
+}
 
 .nav-links-container {
   display: flex;
@@ -651,8 +683,16 @@ onUnmounted(() => {
   max-width: 800px;
 }
 
-.menu-item-wrap { overflow: hidden; display: flex; align-items: center; }
-.overlay-btn-item { margin-top: clamp(4px, 1vh, 12px); }
+.menu-item-wrap {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.overlay-btn-item {
+  margin-top: clamp(4px, 1vh, 12px);
+}
+
 .menu-index {
   font-family: monospace;
   font-size: clamp(12px, 1.5vw, 14px);
@@ -663,6 +703,7 @@ onUnmounted(() => {
   opacity: 0.7;
   flex-shrink: 0;
 }
+
 .menu-link {
   font-size: clamp(1.1rem, 3vw, 2.2rem);
   font-weight: 900;
@@ -673,9 +714,18 @@ onUnmounted(() => {
   line-height: 1.1;
   word-break: break-word;
 }
-.theme-dark .menu-link { color: #ffffff; }
-.theme-light .menu-link { color: #0f172a; }
-.menu-link:hover { color: var(--brand-accent); }
+
+.theme-dark .menu-link {
+  color: #ffffff;
+}
+
+.theme-light .menu-link {
+  color: #0f172a;
+}
+
+.menu-link:hover {
+  color: var(--brand-accent);
+}
 
 .consult-btn-overlay {
   text-decoration: none;
@@ -692,10 +742,12 @@ onUnmounted(() => {
   will-change: transform;
   white-space: nowrap;
 }
+
 .consult-btn-overlay:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+
 /* CHANGED: orange hover glow for light theme */
 .theme-light .consult-btn-overlay:hover {
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
@@ -710,9 +762,18 @@ onUnmounted(() => {
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
-  .menu-link { font-size: clamp(1.2rem, 4.5vw, 2rem); }
-  .nav-links-container { gap: clamp(4px, 1.2vh, 10px); }
-  .menu-index { font-size: 11px; }
+  .menu-link {
+    font-size: clamp(1.2rem, 4.5vw, 2rem);
+  }
+
+  .nav-links-container {
+    gap: clamp(4px, 1.2vh, 10px);
+  }
+
+  .menu-index {
+    font-size: 11px;
+  }
+
   .consult-btn-overlay {
     font-size: clamp(0.9rem, 2.5vw, 1.2rem);
     padding: 6px clamp(14px, 2.5vw, 24px);
@@ -743,6 +804,7 @@ onUnmounted(() => {
   opacity: 0.08;
   pointer-events: none;
 }
+
 /* CHANGED: light-theme glow now uses a soft orange tint */
 .theme-light .ambient-glow {
   opacity: 0.15;
@@ -768,8 +830,12 @@ onUnmounted(() => {
   display: inline-block;
   margin-bottom: 24px;
 }
+
 /* CHANGED: light-theme section tag now vibrant orange */
-.theme-light .section-tag { color: #f97316; font-weight: 600; }
+.theme-light .section-tag {
+  color: #f97316;
+  font-weight: 600;
+}
 
 .culture-title {
   font-size: clamp(2.4rem, 6.5vw, 5rem);
@@ -780,7 +846,10 @@ onUnmounted(() => {
   margin-bottom: 28px;
   color: #ffffff;
 }
-.theme-light .culture-title { color: #0f172a; }
+
+.theme-light .culture-title {
+  color: #0f172a;
+}
 
 .highlight-text {
   background: linear-gradient(135deg, #ffffff 20%, var(--brand-accent) 100%);
@@ -788,6 +857,7 @@ onUnmounted(() => {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
 /* CHANGED: light-theme gradient endpoint now vibrant orange */
 .theme-light .highlight-text {
   background: linear-gradient(135deg, #0f172a 40%, #f97316 100%);
@@ -802,7 +872,10 @@ onUnmounted(() => {
   margin: 0 auto;
   color: rgba(255, 255, 255, 0.65);
 }
-.theme-light .culture-subtitle { color: #475569; }
+
+.theme-light .culture-subtitle {
+  color: #475569;
+}
 
 /* ----------------------------------------- */
 /* PILLARS GRID                              */
@@ -823,11 +896,13 @@ onUnmounted(() => {
   text-align: left;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
 }
+
 .theme-light .pillar-card {
   background-color: #ffffff;
   border-color: rgba(15, 23, 42, 0.06);
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.01);
 }
+
 .pillar-card:hover {
   transform: translateY(-6px);
   border-color: var(--brand-accent);
@@ -838,17 +913,22 @@ onUnmounted(() => {
   margin-bottom: 18px;
   display: inline-block;
 }
+
 .pillar-card h3 {
   font-size: 19px;
   font-weight: 800;
   margin-bottom: 10px;
 }
+
 .pillar-card p {
   font-size: 14px;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.6);
 }
-.theme-light .pillar-card p { color: #475569; }
+
+.theme-light .pillar-card p {
+  color: #475569;
+}
 
 /* ----------------------------------------- */
 /* ALTERNATING SHOWCASE ROWS                 */
@@ -871,17 +951,20 @@ onUnmounted(() => {
 .row-reverse {
   direction: rtl;
 }
+
 .row-reverse .row-content,
 .row-reverse .row-media {
   direction: ltr;
 }
 
 @media (max-width: 860px) {
+
   .showcase-row,
   .row-reverse {
     grid-template-columns: 1fr;
     direction: ltr;
   }
+
   .row-reverse .row-media {
     order: -1;
   }
@@ -896,6 +979,7 @@ onUnmounted(() => {
   border: 1px solid rgba(255, 255, 255, 0.06);
   background-color: rgba(0, 0, 0, 0.1);
 }
+
 .theme-light .row-media {
   border-color: rgba(15, 23, 42, 0.08);
 }
@@ -906,6 +990,7 @@ onUnmounted(() => {
   object-fit: cover;
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
+
 .row-media:hover .row-img {
   transform: scale(1.04);
 }
@@ -916,6 +1001,7 @@ onUnmounted(() => {
   background: linear-gradient(135deg, rgba(0, 255, 163, 0.12), transparent 60%);
   pointer-events: none;
 }
+
 /* CHANGED: light-theme image tint now vibrant orange */
 .theme-light .row-img-tint {
   background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), transparent 60%);
@@ -933,7 +1019,10 @@ onUnmounted(() => {
   opacity: 0.25;
   pointer-events: none;
 }
-.theme-light .row-glow-dot { opacity: 0.18; }
+
+.theme-light .row-glow-dot {
+  opacity: 0.18;
+}
 
 .row-content {
   display: flex;
@@ -948,8 +1037,12 @@ onUnmounted(() => {
   color: var(--brand-accent);
   margin-bottom: 14px;
 }
+
 /* CHANGED: light-theme row tag now vibrant orange */
-.theme-light .row-tag { color: #f97316; font-weight: 600; }
+.theme-light .row-tag {
+  color: #f97316;
+  font-weight: 600;
+}
 
 .row-title {
   font-size: clamp(1.6rem, 3vw, 2.4rem);
@@ -965,7 +1058,10 @@ onUnmounted(() => {
   color: rgba(255, 255, 255, 0.65);
   margin-bottom: 24px;
 }
-.theme-light .row-desc { color: #475569; }
+
+.theme-light .row-desc {
+  color: #475569;
+}
 
 .row-points {
   display: flex;
@@ -973,6 +1069,7 @@ onUnmounted(() => {
   gap: 12px;
   list-style: none;
 }
+
 .row-points li {
   display: flex;
   align-items: center;
@@ -981,7 +1078,10 @@ onUnmounted(() => {
   font-weight: 500;
   color: rgba(255, 255, 255, 0.85);
 }
-.theme-light .row-points li { color: #1e293b; }
+
+.theme-light .row-points li {
+  color: #1e293b;
+}
 
 .point-dot {
   flex-shrink: 0;
@@ -1006,6 +1106,7 @@ onUnmounted(() => {
   background-color: rgba(255, 255, 255, 0.01);
   overflow: hidden;
 }
+
 .theme-light .culture-cta {
   background-color: #ffffff;
   border-color: rgba(15, 23, 42, 0.06);
@@ -1025,8 +1126,12 @@ onUnmounted(() => {
   opacity: 0.1;
   pointer-events: none;
 }
+
 /* CHANGED: light-theme CTA glow now uses a soft orange tint */
-.theme-light .cta-glow { opacity: 0.15; background-color: #fdba74; }
+.theme-light .cta-glow {
+  opacity: 0.15;
+  background-color: #fdba74;
+}
 
 .cta-title {
   font-size: clamp(1.8rem, 4vw, 3rem);
@@ -1046,7 +1151,10 @@ onUnmounted(() => {
   position: relative;
   z-index: 1;
 }
-.theme-light .cta-subtitle { color: #475569; }
+
+.theme-light .cta-subtitle {
+  color: #475569;
+}
 
 .btn-start-project {
   position: relative;
@@ -1064,7 +1172,13 @@ onUnmounted(() => {
   border-radius: 4px;
   transition: background-color 0.3s, color 0.3s, transform 0.2s;
 }
-.theme-light .btn-start-project { background-color: #0f172a; color: #ffffff; }
+
+/* CHANGED: light-theme button now vibrant orange instead of dark navy */
+.theme-light .btn-start-project {
+  background-color: #f97316;
+  color: #ffffff;
+}
+
 .btn-start-project:hover {
   background-color: var(--brand-accent);
   color: #0b0c10;
@@ -1099,7 +1213,13 @@ onUnmounted(() => {
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s, transform 0.2s;
 }
-.theme-light .go-back-btn { background-color: #0f172a; color: #ffffff; }
+
+/* CHANGED: light-theme button now vibrant orange instead of dark navy */
+.theme-light .go-back-btn {
+  background-color: #f97316;
+  color: #ffffff;
+}
+
 .go-back-btn:hover {
   background-color: var(--brand-accent);
   color: #0b0c10;
@@ -1109,6 +1229,7 @@ onUnmounted(() => {
 .go-back-arrow {
   transition: transform 0.2s ease;
 }
+
 .go-back-btn:hover .go-back-arrow {
   transform: translateX(-3px);
 }
@@ -1123,7 +1244,13 @@ onUnmounted(() => {
 /* ----------------------------------------- */
 /* MINIMALIST COPYRIGHT FOOTER               */
 /* ----------------------------------------- */
-.footer-group { width: 100%; position: relative; z-index: 10; margin-top: auto; }
+.footer-group {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  margin-top: auto;
+}
+
 .copyright-section {
   width: 100%;
   text-align: center;
@@ -1132,11 +1259,13 @@ onUnmounted(() => {
   letter-spacing: 0.05em;
   border-top: 1px solid;
 }
+
 .theme-dark .copyright-section {
   color: rgba(255, 255, 255, 0.4);
   background-color: rgba(9, 9, 11, 0.6);
   border-top-color: rgba(255, 255, 255, 0.05);
 }
+
 .theme-light .copyright-section {
   color: rgba(15, 23, 42, 0.5);
   background-color: rgba(241, 245, 249, 0.6);
@@ -1147,10 +1276,22 @@ onUnmounted(() => {
 /* RESPONSIVE TWEAKS                         */
 /* ----------------------------------------- */
 @media (max-width: 540px) {
-  .culture-hero { margin-bottom: 60px; }
-  .pillars-section { margin-bottom: 70px; }
-  .showcase-rows { gap: 60px; margin-bottom: 70px; }
-  .culture-cta { padding: 50px 24px; }
+  .culture-hero {
+    margin-bottom: 60px;
+  }
+
+  .pillars-section {
+    margin-bottom: 70px;
+  }
+
+  .showcase-rows {
+    gap: 60px;
+    margin-bottom: 70px;
+  }
+
+  .culture-cta {
+    padding: 50px 24px;
+  }
 }
 
 /* ── Floating Chat Widget (new, isolated) ── */
@@ -1172,12 +1313,19 @@ onUnmounted(() => {
   box-shadow: 0 8px 24px rgba(0, 255, 163, 0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
 /* CHANGED: light-theme chat button glow now vibrant orange (background already inherits --brand-accent) */
 .theme-light .chat-fab {
   box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
 }
-.chat-fab:hover { transform: translateY(-2px) scale(1.05); }
-.chat-fab:active { transform: scale(0.95); }
+
+.chat-fab:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.chat-fab:active {
+  transform: scale(0.95);
+}
 
 .chat-popup {
   position: fixed;
@@ -1210,12 +1358,16 @@ onUnmounted(() => {
   justify-content: center;
   transition: background 0.15s;
 }
-.chat-popup-close:hover { background: rgba(255, 255, 255, 0.2); }
+
+.chat-popup-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
 
 .chat-pop-enter-active,
 .chat-pop-leave-active {
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
+
 .chat-pop-enter-from,
 .chat-pop-leave-to {
   opacity: 0;

@@ -1,13 +1,7 @@
 <template>
-  <div 
-    :class="['services-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']"
-    @mousemove="handleMouseMove"
-  >
+  <div :class="['services-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']" @mousemove="handleMouseMove">
     <div class="bg-overlay">
-      <div 
-        class="bg-grid-lines"
-        :style="{ transform: `translate(${parallax.bgX}px, ${parallax.bgY}px)` }"
-      ></div>
+      <div class="bg-grid-lines" :style="{ transform: `translate(${parallax.bgX}px, ${parallax.bgY}px)` }"></div>
     </div>
 
     <header class="navbar">
@@ -20,24 +14,13 @@
           Consultation
         </router-link>
 
-        <button 
-          @click="toggleTheme"
-          class="theme-toggle"
-          aria-label="Toggle Theme"
-        >
-          <div 
-            class="toggle-thumb"
-            :class="{ 'toggle-active': isDarkMode }"
-          >
+        <button @click="toggleTheme" class="theme-toggle" aria-label="Toggle Theme">
+          <div class="toggle-thumb" :class="{ 'toggle-active': isDarkMode }">
             <span class="toggle-icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
           </div>
         </button>
 
-        <button 
-          @click="toggleMenu" 
-          class="menu-trigger"
-          :class="{ 'menu-active': isMenuOpen }"
-        >
+        <button @click="toggleMenu" class="menu-trigger" :class="{ 'menu-active': isMenuOpen }">
           <span class="burger-line line-top"></span>
           <span class="burger-line line-mid"></span>
           <span class="burger-line line-bot"></span>
@@ -48,17 +31,9 @@
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
-          <div 
-            v-for="(item, index) in menuItems" 
-            :key="item"
-            class="menu-item-wrap"
-          >
+          <div v-for="(item, index) in menuItems" :key="item" class="menu-item-wrap">
             <span class="menu-index">0{{ index + 1 }}</span>
-            <router-link 
-              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
-              @click="toggleMenu" 
-              class="menu-link"
-            >
+            <router-link :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" @click="toggleMenu" class="menu-link">
               {{ item }}
             </router-link>
           </div>
@@ -83,17 +58,14 @@
           <span class="highlight-text">Digital Architecture.</span>
         </h1>
         <p class="services-subtitle animate-fade-in">
-          We combine cutting-edge frontend engineering with robust system design to build highly secure, beautiful, and fluid digital platforms. Explore our technical capabilities below.
+          We combine cutting-edge frontend engineering with robust system design to build highly secure, beautiful, and
+          fluid digital platforms. Explore our technical capabilities below.
         </p>
       </section>
 
       <section class="showcase-rows">
-        <div 
-          v-for="service in servicesList" 
-          :key="service.title"
-          class="showcase-row animate-scroll-element"
-          :class="{ 'row-reverse': service.reverse }"
-        >
+        <div v-for="service in servicesList" :key="service.title" class="showcase-row animate-scroll-element"
+          :class="{ 'row-reverse': service.reverse }">
           <div class="row-media">
             <img :src="service.image" :alt="service.title" class="row-img" />
             <div class="row-img-tint"></div>
@@ -120,7 +92,8 @@
           Ready to Elevate Your <span class="highlight-text">Digital Stack</span>?
         </h2>
         <p class="cta-subtitle">
-          Let's align your product vision with production-grade architectural builds. Partner with WebHive to construct cleaner infrastructure.
+          Let's align your product vision with production-grade architectural builds. Partner with WebHive to construct
+          cleaner infrastructure.
         </p>
         <router-link to="/consultation" class="btn-start-project">
           Start a Project
@@ -130,7 +103,7 @@
       <div class="back-btn-row">
         <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
           <span class="go-back-arrow" aria-hidden="true">←</span>
-          Go Back
+          Back
         </button>
       </div>
     </main>
@@ -141,15 +114,14 @@
       </div>
     </footer>
 
-     <button
-      class="chat-fab"
-      @click="isChatOpen = !isChatOpen"
-      :aria-label="isChatOpen ? 'Close chat' : 'Open chat'"
-    >
-      <svg v-if="!isChatOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8-1.06 0-2.077-.16-3.02-.457L3 21l1.5-4.5C3.55 15.163 3 13.632 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z" />
+    <button class="chat-fab" @click="isChatOpen = !isChatOpen" :aria-label="isChatOpen ? 'Close chat' : 'Open chat'">
+      <svg v-if="!isChatOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" width="24" height="24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8-1.06 0-2.077-.16-3.02-.457L3 21l1.5-4.5C3.55 15.163 3 13.632 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z" />
       </svg>
-      <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+      <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" width="22" height="22">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
       </svg>
     </button>
@@ -253,7 +225,7 @@ const applyGlobalThemeClass = (isDark) => {
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
   const activeTheme = isDarkMode.value ? 'dark' : 'light'
-  
+
   localStorage.setItem('webhive-theme', activeTheme)
   applyGlobalThemeClass(isDarkMode.value)
 }
@@ -283,13 +255,13 @@ onMounted(() => {
 
   gsap.set('.showcase-row, .services-cta', { opacity: 1 })
 
-  gsap.fromTo('.animate-title', 
-    { y: 50, opacity: 0 }, 
+  gsap.fromTo('.animate-title',
+    { y: 50, opacity: 0 },
     { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.2 }
   )
 
-  gsap.fromTo('.animate-fade-in', 
-    { opacity: 0, y: 25 }, 
+  gsap.fromTo('.animate-fade-in',
+    { opacity: 0, y: 25 },
     { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.4 }
   )
 
@@ -298,7 +270,7 @@ onMounted(() => {
     const content = row.querySelector('.row-content')
     const isReverse = row.classList.contains('row-reverse')
 
-    gsap.fromTo(media, 
+    gsap.fromTo(media,
       { opacity: 0, x: isReverse ? 60 : -60, scale: 0.95 },
       {
         opacity: 1, x: 0, scale: 1, duration: 0.9, ease: 'power3.out',
@@ -306,7 +278,7 @@ onMounted(() => {
       }
     )
 
-    gsap.fromTo(content, 
+    gsap.fromTo(content,
       { opacity: 0, x: isReverse ? -60 : 60 },
       {
         opacity: 1, x: 0, duration: 0.9, ease: 'power3.out', delay: 0.15,
@@ -340,8 +312,8 @@ onMounted(() => {
 
 const onMenuEnter = (el, done) => {
   gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })
-  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
-    { yPercent: 100 }, 
+  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'),
+    { yPercent: 100 },
     { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out', delay: 0.1, onComplete: done }
   )
 }
@@ -363,6 +335,7 @@ onUnmounted(() => {
   overflow-y: auto !important;
   height: auto !important;
 }
+
 :global(body) {
   margin: 0;
   padding: 0;
@@ -388,9 +361,17 @@ onUnmounted(() => {
   flex-direction: column;
 }
 
-.theme-dark { background-color: #0b0c10; color: #ffffff; }
+.theme-dark {
+  background-color: #0b0c10;
+  color: #ffffff;
+}
+
 /* Light theme overrides --brand-accent to vibrant orange and uses a solid white background */
-.theme-light { --brand-accent: #f97316; background-color: #ffffff; color: #0f172a; }
+.theme-light {
+  --brand-accent: #f97316;
+  background-color: #ffffff;
+  color: #0f172a;
+}
 
 .bg-overlay {
   position: absolute;
@@ -400,19 +381,22 @@ onUnmounted(() => {
   overflow: hidden;
   z-index: 1;
 }
+
 .bg-grid-lines {
   position: absolute;
   inset: -40px;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   background-size: 40px 40px;
 }
+
 .theme-dark .bg-grid-lines {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(0, 255, 163, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 255, 163, 0.04) 1px, transparent 1px);
 }
+
 .theme-light .bg-grid-lines {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
@@ -461,8 +445,13 @@ onUnmounted(() => {
   align-items: center;
 }
 
-.theme-light .logo { color: #0f172a; }
-.logo .dot { color: var(--brand-accent); }
+.theme-light .logo {
+  color: #0f172a;
+}
+
+.logo .dot {
+  color: var(--brand-accent);
+}
 
 .nav-actions {
   display: flex;
@@ -485,13 +474,18 @@ onUnmounted(() => {
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   white-space: nowrap;
 }
+
 @media (max-width: 480px) {
-  .consult-btn { display: none; }
+  .consult-btn {
+    display: none;
+  }
 }
+
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
 }
+
 .theme-light .consult-btn:hover {
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
@@ -510,13 +504,20 @@ onUnmounted(() => {
   transition: background-color 0.3s;
   flex-shrink: 0;
 }
+
 @media (max-width: 480px) {
-  .theme-toggle { width: 34px; height: 18px; padding: 2px; }
+  .theme-toggle {
+    width: 34px;
+    height: 18px;
+    padding: 2px;
+  }
 }
+
 .theme-dark .theme-toggle {
   background-color: rgba(0, 255, 163, 0.1);
   border: 1px solid rgba(0, 255, 163, 0.2);
 }
+
 .toggle-thumb {
   width: 16px;
   height: 16px;
@@ -527,15 +528,23 @@ onUnmounted(() => {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #fbbf24;
 }
+
 .toggle-active {
   transform: translateX(18px);
   background-color: #111827;
   border: 1px solid var(--brand-accent);
 }
+
 @media (max-width: 480px) {
-  .toggle-active { transform: translateX(15px); }
+  .toggle-active {
+    transform: translateX(15px);
+  }
 }
-.toggle-icon { font-size: 9px; user-select: none; }
+
+.toggle-icon {
+  font-size: 9px;
+  user-select: none;
+}
 
 .menu-trigger {
   width: 34px;
@@ -552,25 +561,44 @@ onUnmounted(() => {
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
 }
+
 .theme-dark .menu-trigger {
   background-color: rgba(24, 24, 27, 0.8);
   border: 1px solid #27272a;
 }
+
 .theme-light .menu-trigger {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
 }
+
 .burger-line {
   height: 1.5px;
   width: 15px;
   transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
-.theme-dark .burger-line { background-color: #ffffff; }
-.theme-light .burger-line { background-color: #0f172a; }
 
-.menu-active .line-top { transform: translateY(5px) rotate(45deg); background-color: var(--brand-accent) !important; }
-.menu-active .line-mid { opacity: 0; }
-.menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
+.theme-dark .burger-line {
+  background-color: #ffffff;
+}
+
+.theme-light .burger-line {
+  background-color: #0f172a;
+}
+
+.menu-active .line-top {
+  transform: translateY(5px) rotate(45deg);
+  background-color: var(--brand-accent) !important;
+}
+
+.menu-active .line-mid {
+  opacity: 0;
+}
+
+.menu-active .line-bot {
+  transform: translateY(-5px) rotate(-45deg);
+  background-color: var(--brand-accent) !important;
+}
 
 /* ----------------------------------------- */
 /* NAVIGATION OVERLAY BLOCK                  */
@@ -589,7 +617,11 @@ onUnmounted(() => {
   overflow: hidden !important;
   padding: clamp(24px, 5vh, 48px) clamp(20px, 6vw, 48px);
 }
-.theme-dark .nav-overlay { background-color: rgba(11, 12, 16, 0.96); }
+
+.theme-dark .nav-overlay {
+  background-color: rgba(11, 12, 16, 0.96);
+}
+
 .theme-light .nav-overlay {
   background-color: #ffffff;
   backdrop-filter: none;
@@ -603,8 +635,17 @@ onUnmounted(() => {
   width: 100%;
   max-width: 800px;
 }
-.menu-item-wrap { overflow: hidden; display: flex; align-items: center; }
-.overlay-btn-item { margin-top: clamp(4px, 1vh, 12px); }
+
+.menu-item-wrap {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.overlay-btn-item {
+  margin-top: clamp(4px, 1vh, 12px);
+}
+
 .menu-index {
   font-family: monospace;
   font-size: clamp(12px, 1.5vw, 14px);
@@ -614,6 +655,7 @@ onUnmounted(() => {
   letter-spacing: 0.15em;
   opacity: 0.7;
 }
+
 .menu-link {
   font-size: clamp(1.1rem, 3vw, 2.2rem);
   font-weight: 900;
@@ -623,9 +665,18 @@ onUnmounted(() => {
   display: inline-block;
   line-height: 1.1;
 }
-.theme-dark .menu-link { color: #ffffff; }
-.theme-light .menu-link { color: #0f172a; }
-.menu-link:hover { color: var(--brand-accent); }
+
+.theme-dark .menu-link {
+  color: #ffffff;
+}
+
+.theme-light .menu-link {
+  color: #0f172a;
+}
+
+.menu-link:hover {
+  color: var(--brand-accent);
+}
 
 .consult-btn-overlay {
   text-decoration: none;
@@ -640,10 +691,12 @@ onUnmounted(() => {
   display: inline-block;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .consult-btn-overlay:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+
 .theme-light .consult-btn-overlay:hover {
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
@@ -681,8 +734,11 @@ onUnmounted(() => {
   pointer-events: none;
   z-index: 1;
 }
+
 /* Glow removed entirely in light theme (would otherwise look like a blurry orange stain on white) */
-.theme-light .ambient-glow { display: none; }
+.theme-light .ambient-glow {
+  display: none;
+}
 
 .services-hero {
   max-width: 920px;
@@ -701,7 +757,10 @@ onUnmounted(() => {
   display: inline-block;
   margin-bottom: 24px;
 }
-.theme-light .section-tag { font-weight: 600; }
+
+.theme-light .section-tag {
+  font-weight: 600;
+}
 
 .services-title {
   font-size: clamp(2.4rem, 6.5vw, 5rem);
@@ -712,7 +771,10 @@ onUnmounted(() => {
   margin-bottom: 28px;
   color: #ffffff;
 }
-.theme-light .services-title { color: #0f172a; }
+
+.theme-light .services-title {
+  color: #0f172a;
+}
 
 .highlight-text {
   background: linear-gradient(135deg, #ffffff 20%, var(--brand-accent) 100%);
@@ -720,6 +782,7 @@ onUnmounted(() => {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
 .theme-light .highlight-text {
   background: linear-gradient(135deg, #0f172a 40%, #f97316 100%);
   -webkit-background-clip: text;
@@ -733,7 +796,10 @@ onUnmounted(() => {
   margin: 0 auto;
   color: rgba(255, 255, 255, 0.65);
 }
-.theme-light .services-subtitle { color: #475569; }
+
+.theme-light .services-subtitle {
+  color: #475569;
+}
 
 /* ----------------------------------------- */
 /* ALTERNATING SHOWCASE GRID                 */
@@ -747,18 +813,34 @@ onUnmounted(() => {
   position: relative;
   z-index: 5;
 }
+
 .showcase-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(28px, 5vw, 70px);
   align-items: center;
 }
-.row-reverse { direction: rtl; }
-.row-reverse .row-content, .row-reverse .row-media { direction: ltr; }
+
+.row-reverse {
+  direction: rtl;
+}
+
+.row-reverse .row-content,
+.row-reverse .row-media {
+  direction: ltr;
+}
 
 @media (max-width: 860px) {
-  .showcase-row, .row-reverse { grid-template-columns: 1fr; direction: ltr; }
-  .row-reverse .row-media { order: -1; }
+
+  .showcase-row,
+  .row-reverse {
+    grid-template-columns: 1fr;
+    direction: ltr;
+  }
+
+  .row-reverse .row-media {
+    order: -1;
+  }
 }
 
 .row-media {
@@ -769,9 +851,21 @@ onUnmounted(() => {
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
-.theme-light .row-media { border-color: rgba(15, 23, 42, 0.08); }
-.row-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-.row-media:hover .row-img { transform: scale(1.04); }
+
+.theme-light .row-media {
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+.row-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.row-media:hover .row-img {
+  transform: scale(1.04);
+}
 
 .row-img-tint {
   position: absolute;
@@ -779,9 +873,11 @@ onUnmounted(() => {
   background: linear-gradient(135deg, rgba(0, 255, 163, 0.12), transparent 60%);
   pointer-events: none;
 }
+
 .theme-light .row-img-tint {
   background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), transparent 60%);
 }
+
 .row-glow-dot {
   position: absolute;
   bottom: -30px;
@@ -793,10 +889,17 @@ onUnmounted(() => {
   filter: blur(60px);
   opacity: 0.25;
 }
-/* Removed in light theme — same reasoning as ambient-glow, avoids an orange blur smear on white */
-.theme-light .row-glow-dot { display: none; }
 
-.row-content { display: flex; flex-direction: column; }
+/* Removed in light theme — same reasoning as ambient-glow, avoids an orange blur smear on white */
+.theme-light .row-glow-dot {
+  display: none;
+}
+
+.row-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .row-tag {
   font-family: monospace;
   font-size: 12px;
@@ -805,22 +908,62 @@ onUnmounted(() => {
   color: var(--brand-accent);
   margin-bottom: 14px;
 }
-.theme-light .row-tag { font-weight: 600; }
-.row-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 900; margin-bottom: 16px; }
-.row-desc { font-size: 15px; line-height: 1.7; color: rgba(255, 255, 255, 0.65); margin-bottom: 24px; }
-.theme-light .row-desc { color: #475569; }
 
-.row-points { display: flex; flex-direction: column; gap: 12px; list-style: none; }
-.row-points li { display: flex; align-items: center; gap: 12px; font-size: 14px; color: rgba(255, 255, 255, 0.85); }
-.theme-light .row-points li { color: #1e293b; }
-.point-dot { width: 7px; height: 7px; border-radius: 50%; background-color: var(--brand-accent); box-shadow: 0 0 8px var(--brand-accent); }
+.theme-light .row-tag {
+  font-weight: 600;
+}
+
+.row-title {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 900;
+  margin-bottom: 16px;
+}
+
+.row-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 24px;
+}
+
+.theme-light .row-desc {
+  color: #475569;
+}
+
+.row-points {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+}
+
+.row-points li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.theme-light .row-points li {
+  color: #1e293b;
+}
+
+.point-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--brand-accent);
+  box-shadow: 0 0 8px var(--brand-accent);
+}
 
 /* ----------------------------------------- */
 /* CLOSING CTA BLOCK (FIXED HITBOX CONTEXT)   */
 /* ----------------------------------------- */
 .services-cta {
   position: relative;
-  z-index: 30; /* Elevated above background layouts and blurring elements */
+  z-index: 30;
+  /* Elevated above background layouts and blurring elements */
   pointer-events: auto;
   max-width: 1000px;
   margin: 0 auto;
@@ -831,7 +974,12 @@ onUnmounted(() => {
   background-color: rgba(255, 255, 255, 0.01);
   overflow: hidden;
 }
-.theme-light .services-cta { background-color: #ffffff; border-color: rgba(15, 23, 42, 0.06); }
+
+.theme-light .services-cta {
+  background-color: #ffffff;
+  border-color: rgba(15, 23, 42, 0.06);
+}
+
 .cta-glow {
   position: absolute;
   width: 400px;
@@ -845,17 +993,40 @@ onUnmounted(() => {
   opacity: 0.1;
   z-index: 1;
 }
-/* Removed in light theme — no blurry orange background behind the CTA */
-.theme-light .cta-glow { display: none; }
 
-.cta-title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: 18px; position: relative; z-index: 5; }
-.cta-subtitle { font-size: clamp(14px, 1.6vw, 17px); line-height: 1.6; color: rgba(255, 255, 255, 0.65); max-width: 560px; margin: 0 auto 36px; position: relative; z-index: 5; }
-.theme-light .cta-subtitle { color: #475569; }
+/* Removed in light theme — no blurry orange background behind the CTA */
+.theme-light .cta-glow {
+  display: none;
+}
+
+.cta-title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 5;
+}
+
+.cta-subtitle {
+  font-size: clamp(14px, 1.6vw, 17px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 560px;
+  margin: 0 auto 36px;
+  position: relative;
+  z-index: 5;
+}
+
+.theme-light .cta-subtitle {
+  color: #475569;
+}
 
 .btn-start-project {
   position: relative;
-  z-index: 10; /* Placed over internal glow layer */
-  pointer-events: auto !important; /* Explicit browser directive to accept click actions */
+  z-index: 10;
+  /* Placed over internal glow layer */
+  pointer-events: auto !important;
+  /* Explicit browser directive to accept click actions */
   text-decoration: none;
   display: inline-block;
   background-color: #ffffff;
@@ -867,17 +1038,24 @@ onUnmounted(() => {
   border-radius: 4px;
   transition: background-color 0.3s, transform 0.2s;
 }
-.btn-start-project:hover { background-color: var(--brand-accent); color: #0b0c10; transform: translateY(-2px); }
 
-/* Light theme: button is always the brand accent color, no hover effect at all */
+.btn-start-project:hover {
+  background-color: var(--brand-accent);
+  color: #0b0c10;
+  transform: translateY(-2px);
+}
+
+/* Light theme: background stays the brand accent orange at all times; text is white normally and flips to black on hover, with the same lift as Portfolio.vue */
 .theme-light .btn-start-project {
   background-color: var(--brand-accent);
-  color: #0f172a;
+  color: #ffffff;
 }
+
 .theme-light .btn-start-project:hover {
   background-color: var(--brand-accent);
-  color: #0f172a;
-  transform: none;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3);
 }
 
 /* ----------------------------------------- */
@@ -907,6 +1085,7 @@ onUnmounted(() => {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
 }
+
 .go-back-btn:hover {
   background-color: var(--brand-accent);
   color: #0b0c10;
@@ -914,14 +1093,15 @@ onUnmounted(() => {
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.3);
 }
 
-/* Light theme: same brand-accent color scheme as Start a Project, but keeps its own hover effect */
+/* Light theme: background stays the brand accent orange at all times; text is white normally and flips to black on hover, matching Start a Project */
 .theme-light .go-back-btn {
   background-color: var(--brand-accent);
-  color: #0f172a;
+  color: #ffffff;
 }
+
 .theme-light .go-back-btn:hover {
   background-color: var(--brand-accent);
-  color: #0f172a;
+  color: #000000;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3);
 }
@@ -929,16 +1109,25 @@ onUnmounted(() => {
 .go-back-arrow {
   transition: transform 0.2s ease;
 }
+
 .go-back-btn:hover .go-back-arrow {
   transform: translateX(-3px);
 }
 
-.animate-scroll-element { opacity: 0; }
+.animate-scroll-element {
+  opacity: 0;
+}
 
 /* ----------------------------------------- */
 /* FOOTER                                    */
 /* ----------------------------------------- */
-.footer-group { width: 100%; position: relative; z-index: 10; margin-top: auto; }
+.footer-group {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  margin-top: auto;
+}
+
 .copyright-section {
   width: 100%;
   text-align: center;
@@ -946,8 +1135,18 @@ onUnmounted(() => {
   font-size: 11px;
   border-top: 1px solid;
 }
-.theme-dark .copyright-section { color: rgba(255, 255, 255, 0.4); background-color: rgba(9, 9, 11, 0.6); border-top-color: rgba(255, 255, 255, 0.05); }
-.theme-light .copyright-section { color: rgba(15, 23, 42, 0.5); background-color: #ffffff; border-top-color: rgba(15, 23, 42, 0.06); }
+
+.theme-dark .copyright-section {
+  color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(9, 9, 11, 0.6);
+  border-top-color: rgba(255, 255, 255, 0.05);
+}
+
+.theme-light .copyright-section {
+  color: rgba(15, 23, 42, 0.5);
+  background-color: #ffffff;
+  border-top-color: rgba(15, 23, 42, 0.06);
+}
 
 /* ── Floating Chat Widget (new, isolated) ── */
 .chat-fab {
@@ -968,11 +1167,18 @@ onUnmounted(() => {
   box-shadow: 0 8px 24px rgba(0, 255, 163, 0.35);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
 .theme-light .chat-fab {
   box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
 }
-.chat-fab:hover { transform: translateY(-2px) scale(1.05); }
-.chat-fab:active { transform: scale(0.95); }
+
+.chat-fab:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.chat-fab:active {
+  transform: scale(0.95);
+}
 
 .chat-popup {
   position: fixed;
@@ -1005,12 +1211,16 @@ onUnmounted(() => {
   justify-content: center;
   transition: background 0.15s;
 }
-.chat-popup-close:hover { background: rgba(255, 255, 255, 0.2); }
+
+.chat-popup-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
 
 .chat-pop-enter-active,
 .chat-pop-leave-active {
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
+
 .chat-pop-enter-from,
 .chat-pop-leave-to {
   opacity: 0;
