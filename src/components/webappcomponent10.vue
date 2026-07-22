@@ -1,5 +1,6 @@
 <template>
-  <section :class="['cta-section relative py-36 px-6 overflow-hidden text-center z-20 transition-colors duration-400', isDarkMode ? 'theme-dark' : 'theme-light']">
+  <section
+    :class="['cta-section relative py-36 px-6 overflow-hidden text-center z-20 transition-colors duration-400', isDarkMode ? 'theme-dark' : 'theme-light']">
 
     <div class="max-w-3xl mx-auto relative z-10 space-y-6">
       <h2 ref="ctaHeading" class="text-3xl md:text-6xl font-extrabold tracking-tight leading-tight cta-title">
@@ -9,7 +10,8 @@
         Let's turn your idea into a secure, scalable and high-performing digital solution.
       </p>
       <div ref="ctaBtnContainer" class="pt-6">
-        <button @click="emitNavigate" class="cta-pulse-btn px-10 py-5 bg-[var(--accent-color)] text-[#000000] font-black rounded-xl tracking-wide transition-transform duration-300">
+        <button @click="emitNavigate"
+          class="cta-pulse-btn px-10 py-5 bg-[var(--accent-color)] text-[#000000] font-black rounded-xl tracking-wide transition-transform duration-300">
           Schedule A Free Consultation
         </button>
       </div>
@@ -57,15 +59,20 @@ onMounted(() => {
     }
   })
   finalCtaTl.fromTo(ctaHeading.value, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' })
-            .fromTo(ctaText.value, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
-            .fromTo(ctaBtnContainer.value, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8, ease: 'elastic.out(1, 0.75)' }, '-=0.4')
+    .fromTo(ctaText.value, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
+    .fromTo(ctaBtnContainer.value, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.8, ease: 'elastic.out(1, 0.75)' }, '-=0.4')
 })
 </script>
 
 <style scoped>
 /* Theme variable mapping */
-.theme-dark { --accent-color: #00ffa3; }
-.theme-light { --accent-color: #f97316; }
+.theme-dark {
+  --accent-color: #00ffa3;
+}
+
+.theme-light {
+  --accent-color: #f97316;
+}
 
 .theme-dark {
   background-color: #000000 !important;
@@ -79,9 +86,13 @@ onMounted(() => {
   --desc-color: #475569;
 }
 
-.accent-text { color: var(--accent-color); }
+.accent-text {
+  color: var(--accent-color);
+}
 
-.cta-section { width: 100% !important; }
+.cta-section {
+  width: 100% !important;
+}
 
 .cta-back-wrap {
   display: flex;
@@ -111,6 +122,20 @@ onMounted(() => {
   box-shadow: 0 0 55px color-mix(in srgb, var(--accent-color), transparent 25%);
 }
 
+/* Light theme: background stays locked to the accent orange; text is white normally and flips to black on hover */
+.theme-light .cta-back-btn {
+  background-color: var(--accent-color) !important;
+  color: #ffffff !important;
+  border: 1px solid transparent !important;
+}
+
+.theme-light .cta-back-btn:hover {
+  background-color: var(--accent-color) !important;
+  color: #000000 !important;
+  transform: scale(1.03);
+  box-shadow: 0 0 55px color-mix(in srgb, var(--accent-color), transparent 25%);
+}
+
 .cta-back-arrow {
   transition: transform 0.2s ease;
 }
@@ -119,21 +144,18 @@ onMounted(() => {
   transform: translateX(-3px);
 }
 
-.cta-title { color: var(--title-color) !important; transition: color 0.4s ease; }
-.cta-description { color: var(--desc-color) !important; transition: color 0.4s ease; }
-
-/* Dynamic pulsing button */
-.cta-pulse-btn {
-  animation: pulseGlow 4s infinite ease-in-out;
+.cta-title {
+  color: var(--title-color) !important;
+  transition: color 0.4s ease;
 }
 
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 25px color-mix(in srgb, var(--accent-color), transparent 75%); }
-  50% { box-shadow: 0 0 45px color-mix(in srgb, var(--accent-color), transparent 45%); }
+.cta-description {
+  color: var(--desc-color) !important;
+  transition: color 0.4s ease;
 }
 
+/* Pulsing glow removed per request — button keeps its hover scale but no longer glows */
 .cta-pulse-btn:hover {
   transform: scale(1.03) !important;
-  box-shadow: 0 0 55px color-mix(in srgb, var(--accent-color), transparent 25%) !important;
 }
 </style>
