@@ -148,7 +148,7 @@ import ProofOfWork from '../components/HomeComponents/ProofOfWork.vue'
 import Insights from '../components/HomeComponents/Insights.vue'
 import Reviews from '../components/HomeComponents/Reviews.vue'
 import HomeCtaSection from '../components/HomeComponents/HomeCtaSection.vue'
-import Footer from '../components/Footer.vue'
+import Footer from '../components/footer.vue'
 import ChatBot from '../components/ChatBot.vue'
 
 const isChatOpen = ref(false)
