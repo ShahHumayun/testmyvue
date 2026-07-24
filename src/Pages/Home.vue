@@ -927,6 +927,15 @@ const onMenuLeave = (el, done) => {
   box-sizing: border-box;
 }
 
+/* Side arrows are hidden below 1024px, so the extra side padding that
+   clears them on desktop is no longer needed here */
+@media (max-width: 1024px) {
+  .hero-intro-viewport {
+    padding-left: clamp(20px, 6vw, 80px);
+    padding-right: clamp(20px, 6vw, 80px);
+  }
+}
+
 .ambient-glow-hero {
   position: absolute;
   width: min(550px, 80vw);
@@ -1009,25 +1018,10 @@ const onMenuLeave = (el, done) => {
   right: clamp(14px, 3vw, 32px);
 }
 
-@media (max-width: 768px) {
+/* Hidden on mobile/tablet — desktop-only affordance, autoplay still runs */
+@media (max-width: 1024px) {
   .carousel-side-arrow {
-    width: 38px;
-    height: 38px;
-  }
-}
-
-@media (max-width: 480px) {
-  .carousel-side-arrow {
-    width: 34px;
-    height: 34px;
-  }
-
-  .carousel-side-arrow-left {
-    left: 12px;
-  }
-
-  .carousel-side-arrow-right {
-    right: 12px;
+    display: none;
   }
 }
 
