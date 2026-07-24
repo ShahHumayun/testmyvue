@@ -55,6 +55,23 @@
 
         <canvas ref="networkCanvas" class="network-canvas" aria-hidden="true"></canvas>
 
+        <!-- Side carousel arrows: pinned left/right of the carousel, vertically
+             centered. Autoplay is untouched — these just call the same
+             prevSlide/nextSlide handlers and reset the same timer. -->
+        <button class="carousel-side-arrow carousel-side-arrow-left" @click="prevSlide" aria-label="Previous slide">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.25" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+
+        <button class="carousel-side-arrow carousel-side-arrow-right" @click="nextSlide" aria-label="Next slide">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.25" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
+
         <div class="hero-content-left" ref="heroContentRef"
           :style="{ transform: `translate(${parallax.headingX * 0.6}px, ${parallax.headingY * 0.6}px)` }"
           @mouseenter="handleHeroMouseEnter" @mouseleave="handleHeroMouseLeave">
@@ -87,34 +104,6 @@
               </div>
             </div>
           </Transition>
-
-          <div class="carousel-dock" :class="{ 'carousel-dock-paused': isPaused }">
-            <button class="carousel-arrow carousel-arrow-prev" @click="prevSlide" aria-label="Previous slide">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2.25" width="16" height="16">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
-              </svg>
-            </button>
-
-            <div class="carousel-dots">
-              <button v-for="(slide, index) in slides" :key="index" class="carousel-dot"
-                :class="{ 'carousel-dot-active': index === activeSlide }" @click="goToSlide(index)"
-                :aria-label="`Go to slide ${index + 1}`">
-                <span v-if="index === activeSlide" class="carousel-dot-progress" :key="'progress-' + activeSlide"
-                  :style="{ animationDuration: (AUTOPLAY_DELAY / 1000) + 's' }"></span>
-              </button>
-            </div>
-
-            <button class="carousel-arrow carousel-arrow-next" @click="nextSlide" aria-label="Next slide">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2.25" width="16" height="16">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
-
-            <span class="carousel-counter" aria-hidden="true">{{ String(activeSlide + 1).padStart(2, '0') }} / {{
-              String(slides.length).padStart(2, '0') }}</span>
-          </div>
         </div>
       </div>
 
@@ -933,7 +922,7 @@ const onMenuLeave = (el, done) => {
   align-items: flex-start;
   text-align: left;
   position: relative;
-  padding: clamp(100px, 16vh, 160px) clamp(20px, 6vw, 80px) clamp(60px, 10vh, 100px);
+  padding: clamp(100px, 16vh, 160px) clamp(64px, 9vw, 120px) clamp(60px, 10vh, 100px);
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -966,6 +955,80 @@ const onMenuLeave = (el, done) => {
   height: 100%;
   pointer-events: none;
   z-index: 1;
+}
+
+/* Carousel side arrows — pinned to the left/right edges of the carousel,
+   vertically centered, frosted-glass circles matching the navbar treatment.
+   The wider hero-intro-viewport side padding above keeps the text clear
+   of these at every screen size. */
+.carousel-side-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  z-index: 5;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.theme-dark .carousel-side-arrow {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.theme-light .carousel-side-arrow {
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: rgba(15, 23, 42, 0.7);
+}
+
+.carousel-side-arrow:hover {
+  background-color: var(--brand-accent);
+  color: #0f172a;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.carousel-side-arrow:active {
+  transform: translateY(-50%) scale(0.94);
+}
+
+.carousel-side-arrow-left {
+  left: clamp(14px, 3vw, 32px);
+}
+
+.carousel-side-arrow-right {
+  right: clamp(14px, 3vw, 32px);
+}
+
+@media (max-width: 768px) {
+  .carousel-side-arrow {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-side-arrow {
+    width: 34px;
+    height: 34px;
+  }
+
+  .carousel-side-arrow-left {
+    left: 12px;
+  }
+
+  .carousel-side-arrow-right {
+    right: 12px;
+  }
 }
 
 .hero-content-left {
@@ -1118,148 +1181,6 @@ const onMenuLeave = (el, done) => {
   .hero-btn {
     white-space: normal;
     text-align: center;
-  }
-}
-
-/* Hero carousel control dock — mirrors the navbar's frosted-glass treatment
-   so the slider chrome reads as native to the site, not a bolted-on widget */
-.carousel-dock {
-  display: inline-flex;
-  align-items: center;
-  gap: clamp(10px, 1.6vw, 16px);
-  margin-top: clamp(16px, 2.4vh, 24px);
-  padding: 7px clamp(10px, 1.4vw, 14px) 7px 7px;
-  border-radius: 9999px;
-  backdrop-filter: blur(15px) saturate(180%);
-  -webkit-backdrop-filter: blur(15px) saturate(180%);
-  transition: border-color 0.3s ease, background-color 0.3s ease;
-}
-
-.theme-dark .carousel-dock {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.theme-light .carousel-dock {
-  background: rgba(15, 23, 42, 0.03);
-  border: 1px solid rgba(15, 23, 42, 0.08);
-}
-
-.carousel-arrow {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease, color 0.25s ease;
-  flex-shrink: 0;
-}
-
-.theme-dark .carousel-arrow {
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.theme-light .carousel-arrow {
-  color: rgba(15, 23, 42, 0.7);
-}
-
-.carousel-arrow:hover {
-  background-color: var(--brand-accent);
-  color: #0f172a;
-  transform: scale(1.08);
-}
-
-.carousel-arrow:active {
-  transform: scale(0.94);
-}
-
-.carousel-dots {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.carousel-dot {
-  position: relative;
-  width: 20px;
-  height: 5px;
-  border-radius: 3px;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  overflow: hidden;
-  background-color: rgba(148, 163, 184, 0.35);
-  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
-}
-
-.theme-light .carousel-dot {
-  background-color: rgba(15, 23, 42, 0.15);
-}
-
-.carousel-dot-active {
-  width: 32px;
-}
-
-.carousel-dot-progress {
-  position: absolute;
-  inset: 0;
-  background-color: var(--brand-accent);
-  border-radius: inherit;
-  transform-origin: left center;
-  transform: scaleX(0);
-  animation-name: carousel-dot-fill;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
-}
-
-.carousel-dock-paused .carousel-dot-progress {
-  animation-play-state: paused;
-}
-
-@keyframes carousel-dot-fill {
-  from {
-    transform: scaleX(0);
-  }
-
-  to {
-    transform: scaleX(1);
-  }
-}
-
-.carousel-counter {
-  font-family: monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  opacity: 0.55;
-  white-space: nowrap;
-  padding-left: 2px;
-}
-
-.theme-dark .carousel-counter {
-  color: #ffffff;
-}
-
-.theme-light .carousel-counter {
-  color: #0f172a;
-}
-
-@media (max-width: 480px) {
-  .carousel-dock {
-    gap: 10px;
-    padding: 6px 10px 6px 6px;
-  }
-
-  .carousel-arrow {
-    width: 30px;
-    height: 30px;
-  }
-
-  .carousel-counter {
-    display: none;
   }
 }
 
