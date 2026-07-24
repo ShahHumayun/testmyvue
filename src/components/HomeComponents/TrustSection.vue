@@ -28,10 +28,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, inject } from 'vue'
+import { ref, onMounted, onUnmounted, inject, computed } from 'vue'
 import { gsap } from 'gsap'
 
-const isDarkMode = inject('isDarkMode', ref(true))
+// Accept an explicit :darkMode prop, falling back to inject() so this
+// component still works on pages using the provide() pattern instead.
+const props = defineProps({
+    darkMode: { type: Boolean, default: undefined }
+})
+
+const injectedIsDarkMode = inject('isDarkMode', ref(true))
+
+const isDarkMode = computed(() =>
+    props.darkMode !== undefined ? props.darkMode : injectedIsDarkMode.value
+)
 
 const counterContainer = ref(null)
 const stats = [

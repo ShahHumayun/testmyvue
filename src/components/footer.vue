@@ -1,5 +1,5 @@
 <template>
-  <footer :class="[
+  <footer ref="footerRef" :class="[
     'py-20 px-6 relative z-20',
     isDarkMode ? 'bg-black' : 'bg-white'
   ]">
@@ -89,9 +89,24 @@
 </template>
 
 <script setup>
-import { ref, inject, computed } from 'vue'
+import { ref, inject, computed, onMounted } from 'vue'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-const isDarkMode = inject('isDarkMode', ref(true))
+gsap.registerPlugin(ScrollTrigger)
+
+// Accept an explicit prop (e.g. About.vue's :darkMode="isDarkMode"),
+// but fall back to injected theme context if no prop was passed
+// (e.g. components relying on Home.vue's provide('isDarkMode', ...)).
+const props = defineProps({
+  darkMode: { type: Boolean, default: undefined }
+})
+
+const injectedIsDarkMode = inject('isDarkMode', ref(true))
+
+const isDarkMode = computed(() =>
+  props.darkMode !== undefined ? props.darkMode : injectedIsDarkMode.value
+)
 
 const currentYear = computed(() => new Date().getFullYear())
 
@@ -104,6 +119,39 @@ const companyLinks = [
   { label: 'Policies', to: '/policies' },
   { label: 'Consultation', to: '/consultation' }
 ]
+
+// Scroll-triggered entrance animation, same pattern as the ReplacementGlass hero:
+// brand block -> nav columns (staggered) -> bottom bar, each fading/sliding in.
+const footerRef = ref(null)
+
+onMounted(() => {
+  if (!footerRef.value) return
+
+  const brandEl = footerRef.value.querySelector('.footer-brand')
+  const columnEls = footerRef.value.querySelectorAll('.footer-column')
+  const bottomEl = footerRef.value.querySelector('.footer-bottom')
+
+  const trigger = {
+    trigger: footerRef.value,
+    start: 'top 85%',
+    toggleActions: 'play none none none'
+  }
+
+  gsap.fromTo(brandEl,
+    { y: 30, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', scrollTrigger: trigger }
+  )
+
+  gsap.fromTo(columnEls,
+    { y: 24, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.6, stagger: 0.12, ease: 'power3.out', delay: 0.15, scrollTrigger: trigger }
+  )
+
+  gsap.fromTo(bottomEl,
+    { opacity: 0 },
+    { opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.3, scrollTrigger: trigger }
+  )
+})
 </script>
 
 <style scoped>

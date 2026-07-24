@@ -194,11 +194,8 @@
       </div>
     </section>
 
-    <footer class="footer-group">
-      <div class="copyright-section">
-        <p>&copy; {{ new Date().getFullYear() }} WebHive Technologies. All rights reserved.</p>
-      </div>
-    </footer>
+
+   <Footer :darkMode="isDarkMode" />
 
     <!-- Floating chat widget -->
     <button
@@ -229,6 +226,7 @@ import { useRouter } from 'vue-router'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ChatBot from '../components/ChatBot.vue'
+import Footer from '../components/footer.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -953,4 +951,6 @@ const onMenuLeave = (el, done) => {
     width: auto;
   }
 }
+
+
 </style>

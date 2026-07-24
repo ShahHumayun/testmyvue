@@ -56,32 +56,64 @@
         <canvas ref="networkCanvas" class="network-canvas" aria-hidden="true"></canvas>
 
         <div class="hero-content-left" ref="heroContentRef"
-          :style="{ transform: `translate(${parallax.headingX * 0.6}px, ${parallax.headingY * 0.6}px)` }">
-          <div class="hero-eyebrow">
-            <span>Headless CMS</span>
-            <span class="eyebrow-sep">·</span>
-            <span>Next.js</span>
-            <span class="eyebrow-sep">·</span>
-            <span>Senior-led</span>
-          </div>
+          :style="{ transform: `translate(${parallax.headingX * 0.6}px, ${parallax.headingY * 0.6}px)` }"
+          @mouseenter="handleHeroMouseEnter" @mouseleave="handleHeroMouseLeave">
 
-          <h1 class="main-title">
-            <span class="title-line">Content systems that scale.</span>
-            <span class="title-accent">Shipped on Next.js.</span>
-          </h1>
+          <Transition mode="out-in" :css="false" @enter="onSlideEnter" @leave="onSlideLeave">
+            <div class="hero-slide" :key="activeSlide">
+              <div class="hero-eyebrow">
+                <template v-for="(tag, i) in slides[activeSlide].eyebrow" :key="tag">
+                  <span>{{ tag }}</span>
+                  <span v-if="i < slides[activeSlide].eyebrow.length - 1" class="eyebrow-sep">·</span>
+                </template>
+              </div>
 
-          <p class="hero-subtitle">
-            Headless CMS and Next.js for marketing teams that need to ship without waiting on developers. Strapi,
-            Contentful, Sanity, Builder.io, Shopify, and WordPress — built for speed, SEO, and editorial teams.
-          </p>
+              <h1 class="main-title">
+                <span class="title-line">{{ slides[activeSlide].titleLine }}</span>
+                <span class="title-accent">{{ slides[activeSlide].titleAccent }}</span>
+              </h1>
 
-          <div class="hero-cta-group">
-            <router-link to="/free-estimate" class="hero-btn hero-btn-primary">
-              Get a Free Estimate
-            </router-link>
-            <router-link to="/headless-cms-implementation" class="hero-btn hero-btn-secondary">
-              Headless CMS Implementation
-            </router-link>
+              <p class="hero-subtitle">
+                {{ slides[activeSlide].subtitle }}
+              </p>
+
+              <div class="hero-cta-group">
+                <router-link :to="slides[activeSlide].primaryLink" class="hero-btn hero-btn-primary">
+                  {{ slides[activeSlide].primaryText }}
+                </router-link>
+                <router-link :to="slides[activeSlide].secondaryLink" class="hero-btn hero-btn-secondary">
+                  {{ slides[activeSlide].secondaryText }}
+                </router-link>
+              </div>
+            </div>
+          </Transition>
+
+          <div class="carousel-dock" :class="{ 'carousel-dock-paused': isPaused }">
+            <button class="carousel-arrow carousel-arrow-prev" @click="prevSlide" aria-label="Previous slide">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.25" width="16" height="16">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+
+            <div class="carousel-dots">
+              <button v-for="(slide, index) in slides" :key="index" class="carousel-dot"
+                :class="{ 'carousel-dot-active': index === activeSlide }" @click="goToSlide(index)"
+                :aria-label="`Go to slide ${index + 1}`">
+                <span v-if="index === activeSlide" class="carousel-dot-progress" :key="'progress-' + activeSlide"
+                  :style="{ animationDuration: (AUTOPLAY_DELAY / 1000) + 's' }"></span>
+              </button>
+            </div>
+
+            <button class="carousel-arrow carousel-arrow-next" @click="nextSlide" aria-label="Next slide">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2.25" width="16" height="16">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+
+            <span class="carousel-counter" aria-hidden="true">{{ String(activeSlide + 1).padStart(2, '0') }} / {{
+              String(slides.length).padStart(2, '0') }}</span>
           </div>
         </div>
       </div>
@@ -171,6 +203,121 @@ const parallax = reactive({
   bgX: 0,
   bgY: 0
 })
+
+// --- Hero carousel: rotates through core service pitches (top section only) ---
+const slides = [
+  {
+    eyebrow: ['Magento', 'E-commerce', 'Senior-led'],
+    titleLine: 'Magento stores built to convert.',
+    titleAccent: 'Engineered for scale.',
+    subtitle: 'Custom Magento development for merchants who\'ve outgrown templates — from theme builds and performance tuning to full platform migrations that keep checkout fast under real traffic.',
+    primaryText: 'Get a Free Estimate',
+    primaryLink: '/free-estimate',
+    secondaryText: 'Magento Development',
+    secondaryLink: '/magento-development'
+  },
+  {
+    eyebrow: ['NetSuite', 'ERP', 'Integrations'],
+    titleLine: 'Systems that talk to each other.',
+    titleAccent: 'NetSuite, integrated right.',
+    subtitle: 'Custom NetSuite integrations and automations that connect your storefront, ERP, and internal tools — no more manual data entry, no more disconnected spreadsheets.',
+    primaryText: 'Get a Free Estimate',
+    primaryLink: '/free-estimate',
+    secondaryText: 'NetSuite Integration',
+    secondaryLink: '/netsuite-integration'
+  },
+  {
+    eyebrow: ['Next.js', 'React', 'Senior-led'],
+    titleLine: 'Web apps built on Next.js.',
+    titleAccent: 'Fast, scalable, SEO-ready.',
+    subtitle: 'Next.js builds for teams that need speed without sacrificing flexibility — server-side rendering, clean architecture, and performance budgets that hold up at scale.',
+    primaryText: 'Get a Free Estimate',
+    primaryLink: '/free-estimate',
+    secondaryText: 'Next.js Development',
+    secondaryLink: '/nextjs-development'
+  },
+  {
+    eyebrow: ['Shopify', 'Shopify Plus', 'Custom Storefronts'],
+    titleLine: 'Shopify storefronts that sell.',
+    titleAccent: 'Built to grow with you.',
+    subtitle: 'Shopify and Shopify Plus storefronts engineered for conversion — custom themes, app integrations, and migrations handled end to end by a senior team.',
+    primaryText: 'Get a Free Estimate',
+    primaryLink: '/free-estimate',
+    secondaryText: 'Shopify Development',
+    secondaryLink: '/shopify-development'
+  }
+]
+
+const activeSlide = ref(0)
+const slideDirection = ref(1) // 1 = moving forward (next), -1 = moving backward (prev)
+const isPaused = ref(false)
+let autoplayTimer = null
+const AUTOPLAY_DELAY = 4000
+
+const goToSlide = (index) => {
+  if (index === activeSlide.value) return
+  slideDirection.value = index > activeSlide.value ? 1 : -1
+  activeSlide.value = index
+  startAutoplay()
+}
+
+const nextSlide = () => {
+  slideDirection.value = 1
+  activeSlide.value = (activeSlide.value + 1) % slides.length
+  startAutoplay()
+}
+
+const prevSlide = () => {
+  slideDirection.value = -1
+  activeSlide.value = (activeSlide.value - 1 + slides.length) % slides.length
+  startAutoplay()
+}
+
+const startAutoplay = () => {
+  stopAutoplay()
+  autoplayTimer = setInterval(() => {
+    slideDirection.value = 1
+    activeSlide.value = (activeSlide.value + 1) % slides.length
+  }, AUTOPLAY_DELAY)
+}
+
+const stopAutoplay = () => {
+  if (autoplayTimer) {
+    clearInterval(autoplayTimer)
+    autoplayTimer = null
+  }
+}
+
+// Hover over the hero content pauses autoplay (both the JS timer and the
+// dot progress-fill animation, which is driven off the same isPaused flag)
+const handleHeroMouseEnter = () => {
+  isPaused.value = true
+  stopAutoplay()
+}
+
+const handleHeroMouseLeave = () => {
+  isPaused.value = false
+  startAutoplay()
+}
+
+const onSlideEnter = (el, done) => {
+  gsap.fromTo(
+    el,
+    { opacity: 0, x: slideDirection.value * 36 },
+    { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out', onComplete: done }
+  )
+}
+
+const onSlideLeave = (el, done) => {
+  gsap.to(el, {
+    opacity: 0,
+    x: slideDirection.value * -36,
+    duration: 0.35,
+    ease: 'power3.in',
+    onComplete: done
+  })
+}
+// --- end hero carousel ---
 
 // --- Neuron / molecule style network animation (canvas + GSAP ticker) ---
 const networkCanvas = ref(null)
@@ -327,6 +474,7 @@ onMounted(() => {
   applyGlobalThemeClass(isDarkMode.value)
 
   initNetworkAnimation()
+  startAutoplay()
 
   if (heroContentRef.value) {
     gsap.fromTo(
@@ -341,6 +489,7 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
   window.removeEventListener('resize', handleNetworkResize)
   if (networkTicker) gsap.ticker.remove(networkTicker)
+  stopAutoplay()
 })
 
 const onMenuEnter = (el, done) => {
@@ -823,6 +972,11 @@ const onMenuLeave = (el, done) => {
   position: relative;
   z-index: 2;
   max-width: 720px;
+  min-height: 340px;
+}
+
+.hero-slide {
+  width: 100%;
 }
 
 .hero-eyebrow {
@@ -893,7 +1047,7 @@ const onMenuLeave = (el, done) => {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: clamp(12px, 2vw, 16px);
+  gap: clamp(8px, 1.2vw, 12px);
   margin-top: clamp(28px, 4vh, 40px);
 }
 
@@ -964,6 +1118,148 @@ const onMenuLeave = (el, done) => {
   .hero-btn {
     white-space: normal;
     text-align: center;
+  }
+}
+
+/* Hero carousel control dock — mirrors the navbar's frosted-glass treatment
+   so the slider chrome reads as native to the site, not a bolted-on widget */
+.carousel-dock {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(10px, 1.6vw, 16px);
+  margin-top: clamp(16px, 2.4vh, 24px);
+  padding: 7px clamp(10px, 1.4vw, 14px) 7px 7px;
+  border-radius: 9999px;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.theme-dark .carousel-dock {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-light .carousel-dock {
+  background: rgba(15, 23, 42, 0.03);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.carousel-arrow {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease, color 0.25s ease;
+  flex-shrink: 0;
+}
+
+.theme-dark .carousel-arrow {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.theme-light .carousel-arrow {
+  color: rgba(15, 23, 42, 0.7);
+}
+
+.carousel-arrow:hover {
+  background-color: var(--brand-accent);
+  color: #0f172a;
+  transform: scale(1.08);
+}
+
+.carousel-arrow:active {
+  transform: scale(0.94);
+}
+
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.carousel-dot {
+  position: relative;
+  width: 20px;
+  height: 5px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgba(148, 163, 184, 0.35);
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+}
+
+.theme-light .carousel-dot {
+  background-color: rgba(15, 23, 42, 0.15);
+}
+
+.carousel-dot-active {
+  width: 32px;
+}
+
+.carousel-dot-progress {
+  position: absolute;
+  inset: 0;
+  background-color: var(--brand-accent);
+  border-radius: inherit;
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation-name: carousel-dot-fill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.carousel-dock-paused .carousel-dot-progress {
+  animation-play-state: paused;
+}
+
+@keyframes carousel-dot-fill {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.carousel-counter {
+  font-family: monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  opacity: 0.55;
+  white-space: nowrap;
+  padding-left: 2px;
+}
+
+.theme-dark .carousel-counter {
+  color: #ffffff;
+}
+
+.theme-light .carousel-counter {
+  color: #0f172a;
+}
+
+@media (max-width: 480px) {
+  .carousel-dock {
+    gap: 10px;
+    padding: 6px 10px 6px 6px;
+  }
+
+  .carousel-arrow {
+    width: 30px;
+    height: 30px;
+  }
+
+  .carousel-counter {
+    display: none;
   }
 }
 

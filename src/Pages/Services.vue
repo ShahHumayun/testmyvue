@@ -108,11 +108,8 @@
       </div>
     </main>
 
-    <footer class="footer-group">
-      <div class="copyright-section">
-        <p>&copy; {{ currentYear }} WebHive Technologies. All rights reserved.</p>
-      </div>
-    </footer>
+    <Footer :darkMode="isDarkMode" />
+
 
     <button class="chat-fab" @click="isChatOpen = !isChatOpen" :aria-label="isChatOpen ? 'Close chat' : 'Open chat'">
       <svg v-if="!isChatOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -141,6 +138,7 @@ import { useRouter } from 'vue-router'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ChatBot from '../components/ChatBot.vue'
+import Footer from '../components/footer.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 

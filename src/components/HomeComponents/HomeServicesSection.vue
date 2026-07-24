@@ -86,9 +86,20 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
+import { ref, inject, computed } from 'vue'
 
-const isDarkMode = inject('isDarkMode', ref(true))
+// Accept an explicit :darkMode prop (Home.vue already passes one, but it was
+// previously being silently dropped since this component never declared it).
+// Falls back to inject() so it still works if a page uses provide() instead.
+const props = defineProps({
+    darkMode: { type: Boolean, default: undefined }
+})
+
+const injectedIsDarkMode = inject('isDarkMode', ref(true))
+
+const isDarkMode = computed(() =>
+    props.darkMode !== undefined ? props.darkMode : injectedIsDarkMode.value
+)
 
 const services = [
     {
