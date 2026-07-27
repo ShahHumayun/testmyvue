@@ -1,48 +1,57 @@
 <template>
-  <section :class="['hero-section relative min-h-screen flex items-center justify-center px-6 overflow-hidden border-b z-20 transition-colors duration-500', isDarkMode ? 'theme-dark' : 'theme-light']">
+  <section
+    :class="['hero-section relative min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 overflow-hidden border-b z-20 transition-colors duration-500', isDarkMode ? 'theme-dark' : 'theme-light']">
     <div class="absolute inset-0 bg-radial-glow"></div>
     <div class="absolute inset-0 grid-overlay pointer-events-none"></div>
-    
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-20 w-full pt-24 pb-12">
-      
-      <div class="lg:col-span-7 space-y-6 text-left order-2 lg:order-1">
-        <span ref="heroLabel" class="inline-block text-xs font-bold tracking-[0.3em] uppercase px-4 py-1.5 rounded-full border shadow-[0_0_15px_var(--shadow-color)] hero-label-badge">
+
+    <div
+      class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 md:gap-12 lg:gap-12 xl:gap-16 2xl:gap-20 items-center relative z-20 w-full pt-20 sm:pt-24 md:pt-24 lg:pt-24 xl:pt-28 2xl:pt-32 pb-10 sm:pb-12">
+
+      <div class="lg:col-span-7 space-y-4 sm:space-y-6 text-left order-2 lg:order-1">
+        <span ref="heroLabel"
+          class="inline-block text-[10px] sm:text-xs xl:text-sm 2xl:text-base font-bold tracking-[0.3em] uppercase px-3 py-1 sm:px-4 sm:py-1.5 xl:px-5 xl:py-2 rounded-full border shadow-[0_0_15px_var(--shadow-color)] hero-label-badge">
           Ecommerce Development Solutions
         </span>
-        <h1 ref="heroTitle" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] hero-main-title">
+        <h1 ref="heroTitle"
+          class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-extrabold tracking-tight leading-[1.1] hero-main-title">
           <span class="inline-block mr-3">Build</span>
           <span class="inline-block mr-3">Online</span>
-          <span class="inline-block mr-3 text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-color)] to-[var(--accent-gradient-end)]">Stores</span>
+          <span
+            class="inline-block mr-3 text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent-color)] to-[var(--accent-gradient-end)]">Stores</span>
           <br>
           <span class="inline-block mr-3">That</span>
           <span class="inline-block mr-3">Convert</span>
           <span class="inline-block">Visitors</span>
         </h1>
-        <p ref="heroSubtitle" class="text-base md:text-xl leading-relaxed max-w-2xl hero-description">
-          We create high-performance ecommerce platforms that deliver seamless shopping experiences, increase conversions, and help businesses scale globally. From startup stores to enterprise commerce solutions, we build platforms designed to sell.
+        <p ref="heroSubtitle"
+          class="text-sm sm:text-base md:text-lg lg:text-xl xl:text-xl 2xl:text-2xl leading-relaxed max-w-2xl hero-description">
+          We create high-performance ecommerce platforms that deliver seamless shopping experiences, increase
+          conversions, and help businesses scale globally. From startup stores to enterprise commerce solutions, we
+          build platforms designed to sell.
         </p>
-        <div ref="heroButtons" class="flex flex-col sm:flex-row items-center gap-4 pt-4">
-          <button class="w-full sm:w-auto px-8 py-4 bg-[var(--accent-color)] text-[var(--btn-text-color)] font-bold rounded-lg shadow-[0_0_30px_var(--shadow-color)] hover:shadow-[0_0_40px_var(--shadow-color-hover)] transition-all duration-300 transform hover:scale-[1.02]">
+        <div ref="heroButtons" class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 pt-3 sm:pt-4">
+          <button
+            class="w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 xl:px-9 2xl:px-10 2xl:py-5 text-sm sm:text-base 2xl:text-lg bg-[var(--accent-color)] text-[var(--btn-text-color)] font-bold rounded-lg shadow-[0_0_30px_var(--shadow-color)] hover:shadow-[0_0_40px_var(--shadow-color-hover)] transition-all duration-300 transform hover:scale-[1.02]">
             Launch Your Store
           </button>
-          <button class="w-full sm:w-auto px-8 py-4 border font-medium rounded-lg transition-all duration-300 secondary-action-btn">
+          <button
+            class="w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 xl:px-9 2xl:px-10 2xl:py-5 text-sm sm:text-base 2xl:text-lg border font-medium rounded-lg transition-all duration-300 secondary-action-btn">
             View Ecommerce Projects
           </button>
         </div>
       </div>
 
       <div class="lg:col-span-5 flex justify-center order-1 lg:order-2 content-perspective">
-        <div 
-          ref="floatingPanel"
-          class="relative w-72 h-96 rounded-2xl border p-6 shadow-2xl transition-transform duration-300 ease-out will-change-transform flex flex-col justify-between interactive-panel"
-          :style="{ transform: `rotateY(${parallax.y}deg) rotateX(${parallax.x}deg) translateY(${floatingOffset}px)` }"
-        >
+        <div ref="floatingPanel"
+          class="floating-panel-frame relative rounded-2xl border p-6 shadow-2xl transition-transform duration-300 ease-out will-change-transform flex flex-col justify-between interactive-panel"
+          :style="{ transform: `rotateY(${parallax.y}deg) rotateX(${parallax.x}deg) translateY(${floatingOffset}px)` }">
           <div class="flex items-center justify-between border-b pb-4 panel-header-border">
             <span class="text-[10px] font-mono uppercase tracking-widest matrix-tag">TRANSACTION MATRIX</span>
             <div class="w-2 h-2 rounded-full bg-[var(--accent-color)] animate-ping"></div>
           </div>
           <div class="flex-1 py-6 flex flex-col justify-center space-y-4">
-            <div class="w-full h-32 bg-gradient-to-tr from-[var(--accent-color-transparent)] to-transparent border border-[var(--accent-color-border)] rounded-xl flex items-center justify-center text-4xl shadow-inner">
+            <div
+              class="w-full h-32 bg-gradient-to-tr from-[var(--accent-color-transparent)] to-transparent border border-[var(--accent-color-border)] rounded-xl flex items-center justify-center text-4xl shadow-inner">
               📦
             </div>
             <div class="space-y-2">
@@ -95,7 +104,7 @@ const animateFloating = (time) => {
 onMounted(() => {
   window.addEventListener('mousemove', handleMouseMove)
   rafId = requestAnimationFrame(animateFloating)
-  
+
   const tl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 1 } })
   tl.from([heroLabel.value, heroTitle.value, heroSubtitle.value, heroButtons.value], {
     y: 40,
@@ -175,15 +184,134 @@ onUnmounted(() => {
   --panel-status-text: #475569;
 }
 
-.hero-label-badge { color: var(--badge-txt) !important; background-color: var(--badge-bg) !important; border-color: var(--badge-border) !important; }
-.hero-main-title { color: var(--title-txt) !important; }
-.hero-description { color: var(--desc-txt) !important; }
-.secondary-action-btn { background-color: var(--btn-sec-bg) !important; border-color: var(--btn-sec-border) !important; color: var(--btn-sec-text) !important; }
-.secondary-action-btn:hover { background-color: var(--btn-sec-hover-bg) !important; border-color: var(--btn-sec-hover-border) !important; }
-.theme-light .secondary-action-btn:hover { color: #ffffff !important; }
-.interactive-panel { background-color: var(--panel-bg) !important; border-color: var(--panel-border) !important; }
-.panel-header-border { border-color: var(--panel-divider) !important; }
-.matrix-tag { color: var(--panel-tag) !important; }
-.dummy-skeleton { background-color: var(--panel-skeleton) !important; }
-.status-badge { background-color: var(--panel-status-bg) !important; border-color: var(--panel-status-border) !important; color: var(--panel-status-text) !important; }
+.hero-label-badge {
+  color: var(--badge-txt) !important;
+  background-color: var(--badge-bg) !important;
+  border-color: var(--badge-border) !important;
+}
+
+.hero-main-title {
+  color: var(--title-txt) !important;
+}
+
+.hero-description {
+  color: var(--desc-txt) !important;
+}
+
+.secondary-action-btn {
+  background-color: var(--btn-sec-bg) !important;
+  border-color: var(--btn-sec-border) !important;
+  color: var(--btn-sec-text) !important;
+}
+
+.secondary-action-btn:hover {
+  background-color: var(--btn-sec-hover-bg) !important;
+  border-color: var(--btn-sec-hover-border) !important;
+}
+
+.theme-light .secondary-action-btn:hover {
+  color: #ffffff !important;
+}
+
+.interactive-panel {
+  background-color: var(--panel-bg) !important;
+  border-color: var(--panel-border) !important;
+}
+
+.panel-header-border {
+  border-color: var(--panel-divider) !important;
+}
+
+.matrix-tag {
+  color: var(--panel-tag) !important;
+}
+
+.dummy-skeleton {
+  background-color: var(--panel-skeleton) !important;
+}
+
+.status-badge {
+  background-color: var(--panel-status-bg) !important;
+  border-color: var(--panel-status-border) !important;
+  color: var(--panel-status-text) !important;
+}
+
+/* ==========================================================================
+   Outer content container: scales fluidly with viewport width instead of
+   jumping between fixed breakpoint values. !important guarantees this wins
+   even if the project's global Tailwind stylesheet loads after this
+   component's scoped styles.
+   ========================================================================== */
+.max-w-7xl {
+  max-width: clamp(320px, 94vw, 1500px) !important;
+}
+
+/* ==========================================================================
+   Floating panel mockup — this was a fixed w-72 h-96 (288 x 384px) with
+   zero responsive variants, exactly the same issue found in
+   AppComponent1's phone mockup. Kept at its original fixed size at every
+   breakpoint below; only the 2560px+ tier changes this, matching the same
+   principle applied there: everything else stays completely unchanged.
+   ========================================================================== */
+.floating-panel-frame {
+  width: 288px;
+  height: 384px;
+}
+
+/* ==========================================================================
+   Mobile Landscape / Small Tablets: 576px — 768px
+   No changes here — floating panel stays at its original fixed design size.
+   ========================================================================== */
+
+/* ==========================================================================
+   Laptops / Large Tablets: 769px — 1024px
+   No changes here — floating panel stays at its original fixed design size.
+   ========================================================================== */
+
+/* ==========================================================================
+   Desktops: 1025px — 1200px
+   No changes here — floating panel stays at its original fixed design size.
+   ========================================================================== */
+
+/* ==========================================================================
+   Extra Large Screens / Desktops / TVs: 1201px and up
+   No changes here — floating panel stays at its original fixed design size.
+   ========================================================================== */
+
+/* ==========================================================================
+   Ultra-wide / Large TVs: 1536px and up
+   No changes here — floating panel stays at its original fixed design size.
+   ========================================================================== */
+
+/* ==========================================================================
+   Very Large Desktops / Big TVs: 1920px and up
+   ========================================================================== */
+@media (min-width: 1920px) {
+  .max-w-7xl {
+    max-width: 1750px !important;
+  }
+}
+
+/* ==========================================================================
+   4K / Extra-Extra-Large Monitors: 2560px and up
+   This is the ONLY breakpoint where the floating panel mockup grows beyond
+   its original fixed design size — every other breakpoint above and below
+   this keeps the mockup completely unchanged, exactly as it was originally
+   designed.
+   ========================================================================== */
+@media (min-width: 2560px) {
+  .max-w-7xl {
+    max-width: 2050px !important;
+  }
+
+  .floating-panel-frame {
+    width: 385px;
+    height: 512px;
+  }
+}
+
+/* ==========================================================================
+   Very small phones: no changes to the mockup here either — it stays at
+   its original fixed design size.
+   ========================================================================== */
 </style>

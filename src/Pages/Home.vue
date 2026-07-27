@@ -499,7 +499,19 @@ const onMenuLeave = (el, done) => {
 :global(html) {
   scroll-behavior: smooth;
   overflow-y: auto !important;
+  overflow-x: hidden !important;
   height: auto !important;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE / legacy Edge */
+}
+
+:global(html::-webkit-scrollbar) {
+  display: none;
+  /* Chrome / Safari / Chromium Edge */
+  width: 0;
+  height: 0;
 }
 
 :global(body) {
@@ -509,11 +521,27 @@ const onMenuLeave = (el, done) => {
   overflow-y: auto !important;
   height: auto !important;
   width: 100% !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:global(body::-webkit-scrollbar) {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .hero-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
+  /* Shared vertical rhythm for the hero and every section below it.
+     Tightened across the board (was 56/88/128 max) so sections sit closer
+     together on every screen size, per CEO feedback on excess top/bottom
+     whitespace. Still vw-based with tight px ceilings so it scales
+     smoothly rather than jumping at breakpoints. */
+  --space-sm: clamp(18px, 2.6vw, 36px);
+  --space-md: clamp(22px, 3.6vw, 56px);
+  --space-lg: clamp(28px, 5vw, 84px);
   position: relative;
   width: 100%;
   min-height: 100vh;
@@ -562,21 +590,27 @@ const onMenuLeave = (el, done) => {
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
 
+/* =========================================================
+   NAVBAR — fluid base (clamp handles most scaling in between
+   breakpoints); explicit tier overrides further down.
+   ========================================================= */
 .navbar {
   position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%) translateZ(0);
-  will-change: transform, backdrop-filter;
-  width: 92%;
-  max-width: 1200px;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  will-change: backdrop-filter;
+  width: 100%;
+  max-width: 100%;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(15px) saturate(180%);
   -webkit-backdrop-filter: blur(15px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 0.8rem 1.5rem;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  padding: clamp(0.55rem, 1.4vw, 0.8rem) clamp(1rem, 2.6vw, 1.5rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -586,12 +620,12 @@ const onMenuLeave = (el, done) => {
 
 .theme-light .navbar {
   background: rgba(15, 23, 42, 0.03);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 .logo {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
   font-weight: 800;
   text-decoration: none;
   color: #ffffff;
@@ -631,12 +665,6 @@ const onMenuLeave = (el, done) => {
   white-space: nowrap;
 }
 
-@media (max-width: 480px) {
-  .consult-btn {
-    display: none;
-  }
-}
-
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
@@ -666,14 +694,6 @@ const onMenuLeave = (el, done) => {
   flex-shrink: 0;
 }
 
-@media (max-width: 480px) {
-  .theme-toggle {
-    width: 34px;
-    height: 18px;
-    padding: 2px;
-  }
-}
-
 .theme-dark .theme-toggle {
   background-color: rgba(0, 255, 163, 0.1);
   border: 1px solid rgba(0, 255, 163, 0.2);
@@ -696,17 +716,6 @@ const onMenuLeave = (el, done) => {
   border: 1px solid var(--brand-accent);
 }
 
-@media (max-width: 480px) {
-  .toggle-thumb {
-    width: 13px;
-    height: 13px;
-  }
-
-  .toggle-active {
-    transform: translateX(15px);
-  }
-}
-
 .toggle-icon {
   font-size: 9px;
   user-select: none;
@@ -726,14 +735,6 @@ const onMenuLeave = (el, done) => {
   z-index: 55;
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
-}
-
-@media (max-width: 480px) {
-  .menu-trigger {
-    width: 30px;
-    height: 30px;
-    gap: 3px;
-  }
 }
 
 .theme-dark .menu-trigger {
@@ -913,27 +914,24 @@ const onMenuLeave = (el, done) => {
   z-index: 10;
 }
 
+/* =========================================================
+   HERO / CAROUSEL — top & bottom padding and min-height cut
+   down at every tier so the carousel hugs its content instead
+   of leaving large empty margins (CEO feedback).
+   ========================================================= */
 .hero-intro-viewport {
   width: 100%;
-  min-height: 100vh;
+  min-height: clamp(460px, 66vh, 680px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  text-align: left;
+  align-items: center;
+  text-align: center;
   position: relative;
-  padding: clamp(100px, 16vh, 160px) clamp(64px, 9vw, 120px) clamp(60px, 10vh, 100px);
+  margin-top: 2%;
+  padding: clamp(76px, 6.5vh, 104px) clamp(64px, 9vw, 120px) clamp(20px, 3vh, 36px);
   overflow: hidden;
   box-sizing: border-box;
-}
-
-/* Side arrows are hidden below 1024px, so the extra side padding that
-   clears them on desktop is no longer needed here */
-@media (max-width: 1024px) {
-  .hero-intro-viewport {
-    padding-left: clamp(20px, 6vw, 80px);
-    padding-right: clamp(20px, 6vw, 80px);
-  }
 }
 
 .ambient-glow-hero {
@@ -967,9 +965,7 @@ const onMenuLeave = (el, done) => {
 }
 
 /* Carousel side arrows — pinned to the left/right edges of the carousel,
-   vertically centered, frosted-glass circles matching the navbar treatment.
-   The wider hero-intro-viewport side padding above keeps the text clear
-   of these at every screen size. */
+   vertically centered, frosted-glass circles matching the navbar treatment. */
 .carousel-side-arrow {
   position: absolute;
   top: 50%;
@@ -1018,18 +1014,14 @@ const onMenuLeave = (el, done) => {
   right: clamp(14px, 3vw, 32px);
 }
 
-/* Hidden on mobile/tablet — desktop-only affordance, autoplay still runs */
-@media (max-width: 1024px) {
-  .carousel-side-arrow {
-    display: none;
-  }
-}
-
 .hero-content-left {
   position: relative;
   z-index: 2;
   max-width: 720px;
-  min-height: 340px;
+  width: 100%;
+  min-height: clamp(220px, 28vh, 320px);
+  margin: clamp(16px, 2.4vh, 36px) auto 0;
+  text-align: center;
 }
 
 .hero-slide {
@@ -1039,6 +1031,8 @@ const onMenuLeave = (el, done) => {
 .hero-eyebrow {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   flex-wrap: wrap;
   gap: 8px;
   font-family: monospace;
@@ -1046,8 +1040,8 @@ const onMenuLeave = (el, done) => {
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-weight: 600;
-  margin-top: clamp(10px, 2.5vh, 24px);
-  margin-bottom: clamp(16px, 2.5vh, 24px);
+  margin-top: clamp(8px, 2vh, 20px);
+  margin-bottom: clamp(14px, 2vh, 20px);
   color: var(--brand-accent);
 }
 
@@ -1058,10 +1052,11 @@ const onMenuLeave = (el, done) => {
 .main-title {
   font-size: clamp(1.05rem, 5.15vw, 4.9rem);
   font-weight: 900;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.01em;
   line-height: 1.15;
   text-transform: none;
-  margin-bottom: clamp(20px, 3vh, 28px);
+  margin-bottom: clamp(16px, 2.4vh, 28px);
+  max-width: 100%;
 }
 
 .theme-dark .main-title {
@@ -1072,22 +1067,23 @@ const onMenuLeave = (el, done) => {
   color: #0f172a;
 }
 
-.title-line {
+.title-line,
+.title-accent {
   display: block;
   white-space: nowrap;
+  text-align: center;
 }
 
 .title-accent {
-  display: block;
   color: var(--brand-accent);
-  white-space: nowrap;
 }
 
 .hero-subtitle {
   font-family: system-ui, -apple-system, sans-serif;
-  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  font-size: clamp(0.95rem, 1.6vw, 1.35rem);
   line-height: 1.65;
   max-width: 640px;
+  margin: 0 auto;
   text-transform: none;
   letter-spacing: normal;
 }
@@ -1104,8 +1100,9 @@ const onMenuLeave = (el, done) => {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: clamp(8px, 1.2vw, 12px);
-  margin-top: clamp(28px, 4vh, 40px);
+  margin-top: clamp(22px, 3vh, 36px);
 }
 
 .hero-btn {
@@ -1166,36 +1163,21 @@ const onMenuLeave = (el, done) => {
   transform: translateY(0);
 }
 
-@media (max-width: 480px) {
-  .hero-cta-group {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .hero-btn {
-    white-space: normal;
-    text-align: center;
-  }
-}
-
-.home-trust-layout {
-  margin-top: clamp(60px, 10vh, 120px);
-  width: 100%;
-  max-width: 1400px;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
-}
-
-.home-company-trust-layout {
-  margin-top: clamp(60px, 10vh, 120px);
-  width: 100%;
-  max-width: 1400px;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
-}
-
-.home-services-layout {
-  margin-top: clamp(60px, 10vh, 120px);
+/* =========================================================
+   HOME SECTIONS — spacing now driven entirely by the tightened
+   --space-sm/md/lg tokens above, so every component gets the
+   reduced top/bottom rhythm automatically and consistently.
+   ========================================================= */
+.home-trust-layout,
+.home-company-trust-layout,
+.home-services-layout,
+.home-services-section-layout,
+.home-how-we-work-layout,
+.home-technology-layout,
+.home-proof-of-work-layout,
+.home-reviews-layout,
+.home-insights-layout {
+  margin-top: var(--space-md);
   width: 100%;
   max-width: 1400px;
   padding-left: clamp(16px, 4vw, 40px);
@@ -1203,56 +1185,8 @@ const onMenuLeave = (el, done) => {
 }
 
 .home-why-webhive-layout {
-  margin-top: clamp(80px, 12vh, 160px);
-  padding-bottom: clamp(100px, 15vh, 200px);
-  width: 100%;
-  max-width: 1400px;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
-}
-
-.home-services-section-layout {
-  margin-top: clamp(60px, 10vh, 120px);
-  width: 100%;
-  max-width: 1400px;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
-}
-
-.home-how-we-work-layout {
-  margin-top: clamp(60px, 10vh, 120px);
-  width: 100%;
-  max-width: 1400px;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
-}
-
-.home-technology-layout {
-  margin-top: clamp(60px, 10vh, 120px);
-  width: 100%;
-  max-width: 1400px;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
-}
-
-.home-proof-of-work-layout {
-  margin-top: clamp(60px, 10vh, 120px);
-  width: 100%;
-  max-width: 1400px;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
-}
-
-.home-reviews-layout {
-  margin-top: clamp(60px, 10vh, 120px);
-  width: 100%;
-  max-width: 1400px;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
-}
-
-.home-insights-layout {
-  margin-top: clamp(60px, 10vh, 120px);
+  margin-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
   width: 100%;
   max-width: 1400px;
   padding-left: clamp(16px, 4vw, 40px);
@@ -1260,8 +1194,8 @@ const onMenuLeave = (el, done) => {
 }
 
 .home-cta-layout {
-  margin-top: clamp(60px, 10vh, 120px);
-  padding-bottom: clamp(100px, 15vh, 200px);
+  margin-top: var(--space-md);
+  padding-bottom: var(--space-lg);
   width: 100%;
   max-width: 1400px;
   padding-left: clamp(16px, 4vw, 40px);
@@ -1369,11 +1303,428 @@ const onMenuLeave = (el, done) => {
   transform: translateY(16px) scale(0.96);
 }
 
+/* =========================================================================
+   BREAKPOINT TIERS
+   Organized by the exact ranges requested, desktop-first (max-width
+   cascades down).
+   ========================================================================= */
+
+/* ---------- Desktops — 1025px to 1200px ---------- */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .hero-content-left {
+    max-width: 760px;
+    margin-top: clamp(18px, 2.2vh, 32px);
+  }
+
+  .main-title {
+    font-size: clamp(2.1rem, 3vw, 2.6rem);
+  }
+
+  .hero-subtitle {
+    max-width: 600px;
+    font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  }
+}
+
+/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
+@media (min-width: 1201px) {
+  .navbar {
+    padding: 0.85rem 2.2rem;
+  }
+
+  .logo {
+    font-size: 1.45rem;
+  }
+
+  .nav-actions {
+    gap: 22px;
+  }
+
+  .consult-btn {
+    font-size: 14px;
+    padding: 11px 20px;
+  }
+
+  .hero-intro-viewport {
+    min-height: min(64vh, 720px);
+  }
+
+  .hero-content-left {
+    max-width: 900px;
+    margin-top: clamp(22px, 2.6vh, 36px);
+  }
+
+  .main-title {
+    font-size: clamp(2.4rem, 2.8vw, 3rem);
+  }
+
+  .hero-subtitle {
+    max-width: 680px;
+    font-size: clamp(1.1rem, 1.2vw, 1.3rem);
+  }
+}
+
+@media (min-width: 1536px) {
+  .navbar {
+    padding: 1rem 2.6rem;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+
+  .nav-actions {
+    gap: 26px;
+  }
+
+  .consult-btn {
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+
+  .theme-toggle {
+    width: 44px;
+    height: 24px;
+  }
+
+  .toggle-thumb {
+    width: 18px;
+    height: 18px;
+  }
+
+  .toggle-active {
+    transform: translateX(20px);
+  }
+
+  .menu-trigger {
+    width: 38px;
+    height: 38px;
+  }
+
+  .hero-intro-viewport {
+    padding-left: clamp(96px, 8vw, 160px);
+    padding-right: clamp(96px, 8vw, 160px);
+    min-height: min(60vh, 760px);
+  }
+
+  .hero-content-left {
+    max-width: 1220px;
+    margin-top: clamp(20px, 2.6vh, 40px);
+  }
+
+  .main-title {
+    font-size: clamp(2.6rem, 3vw, 3.3rem);
+  }
+
+  .hero-subtitle {
+    max-width: 760px;
+    font-size: clamp(1.2rem, 1.2vw, 1.45rem);
+  }
+
+  .home-trust-layout,
+  .home-company-trust-layout,
+  .home-services-layout,
+  .home-why-webhive-layout,
+  .home-services-section-layout,
+  .home-how-we-work-layout,
+  .home-technology-layout,
+  .home-proof-of-work-layout,
+  .home-reviews-layout,
+  .home-insights-layout,
+  .home-cta-layout {
+    max-width: 1560px;
+  }
+}
+
+/* ---------- 4K / UHD / large TVs — 1921px and up (e.g. 2560px) ---------- */
+@media (min-width: 1921px) {
+  .navbar {
+    padding: 1.1rem 3.2rem;
+  }
+
+  .logo {
+    font-size: 1.8rem;
+  }
+
+  .nav-actions {
+    gap: 30px;
+  }
+
+  .consult-btn {
+    font-size: 16px;
+    padding: 13px 26px;
+  }
+
+  .hero-intro-viewport {
+    padding-left: clamp(140px, 9vw, 260px);
+    padding-right: clamp(140px, 9vw, 260px);
+    min-height: min(56vh, 860px);
+  }
+
+  .hero-content-left {
+    max-width: 1560px;
+    margin-top: clamp(28px, 3vh, 56px);
+  }
+
+  .hero-eyebrow {
+    font-size: 19px;
+  }
+
+  .main-title {
+    font-size: clamp(3.2rem, 2.6vw, 4.2rem);
+    margin-bottom: 36px;
+  }
+
+  .hero-subtitle {
+    max-width: 860px;
+    font-size: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-btn {
+    font-size: 17px;
+    padding: 18px 34px;
+  }
+
+  .carousel-side-arrow {
+    width: 54px;
+    height: 54px;
+  }
+
+  .home-trust-layout,
+  .home-company-trust-layout,
+  .home-services-layout,
+  .home-why-webhive-layout,
+  .home-services-section-layout,
+  .home-how-we-work-layout,
+  .home-technology-layout,
+  .home-proof-of-work-layout,
+  .home-reviews-layout,
+  .home-insights-layout,
+  .home-cta-layout {
+    max-width: 1800px;
+  }
+}
+
+/* ---------- Laptops / Large Tablets — 769px to 1024px ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar {
+    padding: 0.7rem 1.6rem;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .nav-actions {
+    gap: 14px;
+  }
+
+  .consult-btn {
+    font-size: 12.5px;
+    padding: 9px 16px;
+  }
+
+  .hero-intro-viewport {
+    min-height: clamp(420px, 70svh, 600px);
+    padding: clamp(88px, 11vh, 112px) clamp(40px, 6vw, 80px) clamp(18px, 3vh, 32px);
+  }
+
+  .hero-content-left {
+    min-height: clamp(200px, 26vh, 300px);
+    max-width: 640px;
+  }
+
+  .main-title {
+    font-size: clamp(1.65rem, 4vw, 2.1rem);
+  }
+
+  .hero-subtitle {
+    max-width: 520px;
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+  }
+
+  .carousel-side-arrow {
+    display: none;
+  }
+
+  .nav-overlay {
+    align-items: center;
+    padding-left: clamp(60px, 8vw, 120px);
+    justify-content: flex-start;
+  }
+}
+
+/* ---------- Mobile Landscape / Tablets — 481px to 768px ---------- */
+@media (min-width: 481px) and (max-width: 768px) {
+  .navbar {
+    padding: 0.6rem 1.1rem;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+  }
+
+  .nav-actions {
+    gap: clamp(8px, 2vw, 14px);
+  }
+
+  .consult-btn {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .hero-intro-viewport {
+    min-height: clamp(400px, 74svh, 560px);
+    padding: clamp(84px, 13vh, 104px) clamp(24px, 6vw, 56px) clamp(16px, 3vh, 28px);
+  }
+
+  .hero-content-left {
+    min-height: clamp(190px, 30vh, 280px);
+    max-width: 90%;
+  }
+
+  .hero-subtitle {
+    max-width: 90%;
+  }
+
+  .hero-cta-group {
+    flex-wrap: wrap;
+  }
+
+  .carousel-side-arrow {
+    display: none;
+  }
+
+  .home-trust-layout,
+  .home-company-trust-layout,
+  .home-services-layout,
+  .home-why-webhive-layout,
+  .home-services-section-layout,
+  .home-how-we-work-layout,
+  .home-technology-layout,
+  .home-proof-of-work-layout,
+  .home-reviews-layout,
+  .home-insights-layout,
+  .home-cta-layout {
+    padding-left: clamp(18px, 5vw, 32px);
+    padding-right: clamp(18px, 5vw, 32px);
+  }
+}
+
+/* ---------- Mobile Portrait — 320px to 480px ---------- */
 @media (max-width: 480px) {
+  .navbar {
+    padding: 0.55rem 0.85rem;
+  }
+
+  .logo {
+    font-size: 1.05rem;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .consult-btn {
+    display: none;
+  }
+
+  .theme-toggle {
+    width: 34px;
+    height: 18px;
+    padding: 2px;
+  }
+
+  .toggle-thumb {
+    width: 13px;
+    height: 13px;
+  }
+
+  .toggle-active {
+    transform: translateX(15px);
+  }
+
+  .menu-trigger {
+    width: 30px;
+    height: 30px;
+    gap: 3px;
+  }
+
+  .hero-intro-viewport {
+    min-height: clamp(360px, 76svh, 500px);
+    padding: clamp(78px, 14vh, 96px) 20px clamp(14px, 3vh, 22px);
+  }
+
+  .hero-content-left {
+    min-height: clamp(180px, 34vh, 260px);
+  }
+
+  .hero-eyebrow {
+    margin-top: 6px;
+    margin-bottom: 12px;
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .main-title {
+    margin-bottom: 14px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    max-width: 95%;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 18px;
+  }
+
+  .hero-btn {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .carousel-side-arrow {
+    display: none;
+  }
+
+  .home-trust-layout,
+  .home-company-trust-layout,
+  .home-services-layout,
+  .home-why-webhive-layout,
+  .home-services-section-layout,
+  .home-how-we-work-layout,
+  .home-technology-layout,
+  .home-proof-of-work-layout,
+  .home-reviews-layout,
+  .home-insights-layout,
+  .home-cta-layout {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
   .chat-popup {
     left: 16px;
     right: 16px;
     width: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar {
+    padding: 0.5rem 0.7rem;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .hero-intro-viewport {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 </style>

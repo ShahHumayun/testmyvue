@@ -61,6 +61,15 @@
           We combine cutting-edge frontend engineering with robust system design to build highly secure, beautiful, and
           fluid digital platforms. Explore our technical capabilities below.
         </p>
+
+        <div class="cta-button-group animate-fade-in">
+          <router-link to="/portfolio" class="btn-our-work">
+            Our Work
+          </router-link>
+          <router-link to="/consultation" class="btn-start-project">
+            Start a Project
+          </router-link>
+        </div>
       </section>
 
       <section class="showcase-rows">
@@ -331,7 +340,16 @@ onUnmounted(() => {
 :global(html) {
   scroll-behavior: smooth;
   overflow-y: auto !important;
+  overflow-x: hidden !important;
   height: auto !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:global(html::-webkit-scrollbar) {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 :global(body) {
@@ -341,6 +359,14 @@ onUnmounted(() => {
   overflow-y: auto !important;
   height: auto !important;
   width: 100% !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:global(body::-webkit-scrollbar) {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 /* ----------------------------------------- */
@@ -349,6 +375,10 @@ onUnmounted(() => {
 .services-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
+  /* Shared vertical rhythm used across the page, matching Home/About/etc. */
+  --space-sm: clamp(18px, 2.6vw, 36px);
+  --space-md: clamp(22px, 3.6vw, 56px);
+  --space-lg: clamp(32px, 5.5vw, 96px);
   width: 100%;
   min-height: 100vh;
   position: relative;
@@ -399,23 +429,29 @@ onUnmounted(() => {
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
 
-/* ----------------------------------------- */
-/* NAVBAR ACCORDING TO CULTURE.VUE           */
-/* ----------------------------------------- */
+/* =========================================================
+   NAVBAR — full width, flush to the top and side edges, no
+   floating pill margin. Matches the Home.vue / About.vue
+   redesign exactly. Fluid base + explicit per-tier
+   growth/shrink further down.
+   ========================================================= */
 .navbar {
   position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  max-width: 1200px;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  will-change: backdrop-filter;
+  width: 100%;
+  max-width: 100%;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 0.8rem 1.5rem;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  padding: clamp(0.55rem, 1.4vw, 0.8rem) clamp(1rem, 2.6vw, 1.5rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -428,12 +464,12 @@ onUnmounted(() => {
   background: #ffffff;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 .logo {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
   font-weight: 800;
   text-decoration: none;
   color: #ffffff;
@@ -473,12 +509,6 @@ onUnmounted(() => {
   white-space: nowrap;
 }
 
-@media (max-width: 480px) {
-  .consult-btn {
-    display: none;
-  }
-}
-
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
@@ -503,14 +533,6 @@ onUnmounted(() => {
   flex-shrink: 0;
 }
 
-@media (max-width: 480px) {
-  .theme-toggle {
-    width: 34px;
-    height: 18px;
-    padding: 2px;
-  }
-}
-
 .theme-dark .theme-toggle {
   background-color: rgba(0, 255, 163, 0.1);
   border: 1px solid rgba(0, 255, 163, 0.2);
@@ -531,12 +553,6 @@ onUnmounted(() => {
   transform: translateX(18px);
   background-color: #111827;
   border: 1px solid var(--brand-accent);
-}
-
-@media (max-width: 480px) {
-  .toggle-active {
-    transform: translateX(15px);
-  }
 }
 
 .toggle-icon {
@@ -708,14 +724,17 @@ onUnmounted(() => {
 }
 
 /* ----------------------------------------- */
-/* SERVICES CANVAS                           */
+/* SERVICES CANVAS — fixed calc()-based top   */
+/* padding (tuned for the old floating navbar)*/
+/* replaced with fluid clamp() values so nav   */
+/* clearance scales cleanly at every breakpoint*/
 /* ----------------------------------------- */
 .services-main {
   flex: 1 1 0;
   position: relative;
   z-index: 10;
   width: 100%;
-  padding: calc(60px + clamp(10px, 2vw, 22px) + 50px) clamp(16px, 5vw, 60px) 60px;
+  padding: clamp(96px, 15vh, 150px) clamp(16px, 5vw, 60px) clamp(48px, 8vh, 90px);
 }
 
 .ambient-glow {
@@ -740,7 +759,7 @@ onUnmounted(() => {
 
 .services-hero {
   max-width: 920px;
-  margin: 40px auto 90px;
+  margin: clamp(20px, 3vh, 40px) auto clamp(50px, 8vw, 90px);
   text-align: center;
   position: relative;
   z-index: 5;
@@ -748,12 +767,12 @@ onUnmounted(() => {
 
 .section-tag {
   font-family: monospace;
-  font-size: 13px;
+  font-size: clamp(11px, 1.2vw, 13px);
   text-transform: uppercase;
   letter-spacing: 0.25em;
   color: var(--brand-accent);
   display: inline-block;
-  margin-bottom: 24px;
+  margin-bottom: clamp(16px, 2.4vh, 24px);
 }
 
 .theme-light .section-tag {
@@ -761,12 +780,12 @@ onUnmounted(() => {
 }
 
 .services-title {
-  font-size: clamp(2.4rem, 6.5vw, 5rem);
+  font-size: clamp(2.1rem, 6.5vw, 5rem);
   font-weight: 950;
   line-height: 1.15;
   text-transform: uppercase;
-  letter-spacing: -0.03em;
-  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+  margin-bottom: clamp(20px, 3vh, 28px);
   color: #ffffff;
 }
 
@@ -788,10 +807,10 @@ onUnmounted(() => {
 }
 
 .services-subtitle {
-  font-size: clamp(16px, 2vw, 19px);
+  font-size: clamp(15px, 2vw, 19px);
   line-height: 1.7;
   max-width: 760px;
-  margin: 0 auto;
+  margin: 0 auto clamp(28px, 4.4vh, 44px);
   color: rgba(255, 255, 255, 0.65);
 }
 
@@ -799,15 +818,47 @@ onUnmounted(() => {
   color: #475569;
 }
 
+.cta-button-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 1.6vw, 20px);
+  flex-wrap: wrap;
+}
+
+.btn-our-work {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: clamp(14px, 1.6vw, 18px) clamp(26px, 3vw, 38px);
+  font-weight: 700;
+  font-size: clamp(12.5px, 1vw, 14px);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: color 0.3s, border-color 0.3s, transform 0.2s;
+}
+
+.btn-our-work:hover {
+  color: var(--brand-accent);
+  border-color: var(--brand-accent);
+  transform: translateY(-2px);
+}
+
 /* ----------------------------------------- */
 /* ALTERNATING SHOWCASE GRID                 */
 /* ----------------------------------------- */
 .showcase-rows {
   max-width: 1300px;
-  margin: 0 auto 110px;
+  margin: 0 auto clamp(56px, 9vw, 110px);
   display: flex;
   flex-direction: column;
-  gap: 100px;
+  gap: clamp(48px, 8vw, 100px);
   position: relative;
   z-index: 5;
 }
@@ -912,13 +963,13 @@ onUnmounted(() => {
 }
 
 .row-title {
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
   font-weight: 900;
   margin-bottom: 16px;
 }
 
 .row-desc {
-  font-size: 15px;
+  font-size: clamp(14px, 1.1vw, 15px);
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.65);
   margin-bottom: 24px;
@@ -966,7 +1017,7 @@ onUnmounted(() => {
   max-width: 1000px;
   margin: 0 auto;
   text-align: center;
-  padding: 80px 40px;
+  padding: clamp(44px, 6vw, 80px) clamp(24px, 4vw, 40px);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.06);
   background-color: rgba(255, 255, 255, 0.01);
@@ -998,7 +1049,7 @@ onUnmounted(() => {
 }
 
 .cta-title {
-  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-size: clamp(1.6rem, 4vw, 3rem);
   font-weight: 900;
   margin-bottom: 18px;
   position: relative;
@@ -1029,9 +1080,9 @@ onUnmounted(() => {
   display: inline-block;
   background-color: #ffffff;
   color: #0b0c10;
-  padding: 18px 38px;
+  padding: clamp(14px, 1.6vw, 18px) clamp(26px, 3vw, 38px);
   font-weight: 700;
-  font-size: 14px;
+  font-size: clamp(12.5px, 1vw, 14px);
   text-transform: uppercase;
   border-radius: 4px;
   transition: background-color 0.3s, transform 0.2s;
@@ -1064,7 +1115,7 @@ onUnmounted(() => {
   z-index: 10;
   display: flex;
   justify-content: center;
-  margin-top: 3rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
 }
 
 .go-back-btn {
@@ -1225,11 +1276,393 @@ onUnmounted(() => {
   transform: translateY(16px) scale(0.96);
 }
 
+/* =========================================================================
+   BREAKPOINT TIERS
+   Organized by the exact ranges used across the rest of the site,
+   desktop-first (max-width cascades down). Navbar sizing mirrors the
+   Home.vue / About.vue implementation tier-for-tier.
+   ========================================================================= */
+
+/* ---------- Desktops — 1025px to 1200px ---------- */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .navbar {
+    padding: 0.75rem 1.8rem;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
+
+  .nav-actions {
+    gap: 16px;
+  }
+
+  .services-hero {
+    max-width: 800px;
+  }
+
+  .showcase-rows {
+    max-width: 1100px;
+  }
+}
+
+/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
+@media (min-width: 1201px) {
+  .navbar {
+    padding: 0.85rem 2.2rem;
+  }
+
+  .logo {
+    font-size: 1.45rem;
+  }
+
+  .nav-actions {
+    gap: 22px;
+  }
+
+  .consult-btn {
+    font-size: 14px;
+    padding: 11px 20px;
+  }
+
+  .services-hero {
+    max-width: 980px;
+  }
+
+  .services-title {
+    font-size: clamp(2.6rem, 5.4vw, 5.4rem);
+  }
+}
+
+@media (min-width: 1536px) {
+  .navbar {
+    padding: 1rem 2.6rem;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+
+  .nav-actions {
+    gap: 26px;
+  }
+
+  .consult-btn {
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+
+  .theme-toggle {
+    width: 44px;
+    height: 24px;
+  }
+
+  .toggle-thumb {
+    width: 18px;
+    height: 18px;
+  }
+
+  .toggle-active {
+    transform: translateX(20px);
+  }
+
+  .menu-trigger {
+    width: 38px;
+    height: 38px;
+  }
+
+  .services-hero {
+    max-width: 1100px;
+  }
+
+  .services-title {
+    font-size: clamp(3rem, 4.8vw, 6rem);
+  }
+
+  .services-subtitle {
+    max-width: 860px;
+    font-size: 1.2rem;
+  }
+
+  .showcase-rows {
+    max-width: 1560px;
+  }
+
+  .row-title {
+    font-size: clamp(1.8rem, 2.2vw, 2.6rem);
+  }
+
+  .services-cta {
+    max-width: 1180px;
+  }
+
+  .cta-title {
+    font-size: clamp(2rem, 3vw, 3.4rem);
+  }
+}
+
+/* ---------- 4K / UHD / large TVs — 1921px and up (e.g. 2560px) ---------- */
+@media (min-width: 1921px) {
+  .navbar {
+    padding: 1.1rem 3.2rem;
+  }
+
+  .logo {
+    font-size: 1.8rem;
+  }
+
+  .nav-actions {
+    gap: 30px;
+  }
+
+  .consult-btn {
+    font-size: 16px;
+    padding: 13px 26px;
+  }
+
+  .services-hero {
+    max-width: 1360px;
+  }
+
+  .services-title {
+    font-size: clamp(3.6rem, 4.4vw, 7rem);
+    margin-bottom: 36px;
+  }
+
+  .services-subtitle {
+    max-width: 1000px;
+    font-size: 1.35rem;
+    line-height: 1.75;
+  }
+
+  .showcase-rows {
+    max-width: 1900px;
+  }
+
+  .row-title {
+    font-size: clamp(2rem, 1.8vw, 3rem);
+  }
+
+  .row-desc {
+    font-size: 16px;
+  }
+
+  .services-cta {
+    max-width: 1400px;
+    padding: 96px 60px;
+  }
+
+  .cta-title {
+    font-size: clamp(2.4rem, 2.6vw, 3.8rem);
+  }
+
+  .cta-subtitle {
+    max-width: 700px;
+    font-size: 1.15rem;
+  }
+
+  .btn-our-work,
+  .btn-start-project {
+    font-size: 15px;
+    padding: 20px 44px;
+  }
+}
+
+/* ---------- Laptops / Large Tablets — 769px to 1024px ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar {
+    padding: 0.7rem 1.6rem;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .nav-actions {
+    gap: 14px;
+  }
+
+  .consult-btn {
+    font-size: 12.5px;
+    padding: 9px 16px;
+  }
+
+  .services-main {
+    padding: clamp(84px, 14vh, 116px) clamp(24px, 6vw, 48px) clamp(40px, 7vh, 72px);
+  }
+
+  .services-hero {
+    max-width: 660px;
+  }
+
+  .services-title {
+    font-size: clamp(2rem, 5.4vw, 3.2rem);
+  }
+
+  .showcase-rows {
+    max-width: 100%;
+    gap: clamp(56px, 8vw, 80px);
+  }
+}
+
+/* ---------- Mobile Landscape / Tablets — 481px to 768px ---------- */
+@media (min-width: 481px) and (max-width: 768px) {
+  .navbar {
+    padding: 0.6rem 1.1rem;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+  }
+
+  .nav-actions {
+    gap: clamp(8px, 2vw, 14px);
+  }
+
+  .consult-btn {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .services-main {
+    padding: clamp(78px, 15vh, 104px) clamp(20px, 6vw, 40px) clamp(32px, 6vh, 56px);
+  }
+
+  .services-hero {
+    max-width: 540px;
+  }
+
+  .services-title {
+    font-size: clamp(1.9rem, 7vw, 2.7rem);
+  }
+
+  .services-subtitle {
+    max-width: 90%;
+  }
+
+  .services-cta {
+    padding: clamp(36px, 7vw, 56px) clamp(20px, 5vw, 32px);
+  }
+}
+
+/* ---------- Mobile Portrait — 320px to 480px ---------- */
 @media (max-width: 480px) {
+  .navbar {
+    padding: 0.55rem 0.85rem;
+  }
+
+  .logo {
+    font-size: 1.05rem;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .consult-btn {
+    display: none;
+  }
+
+  .theme-toggle {
+    width: 34px;
+    height: 18px;
+    padding: 2px;
+  }
+
+  .toggle-thumb {
+    width: 13px;
+    height: 13px;
+  }
+
+  .toggle-active {
+    transform: translateX(15px);
+  }
+
+  .menu-trigger {
+    width: 30px;
+    height: 30px;
+    gap: 3px;
+  }
+
+  .services-main {
+    padding: clamp(74px, 15vh, 96px) 20px clamp(28px, 5vh, 44px);
+  }
+
+  .services-hero {
+    max-width: 100%;
+    margin-bottom: clamp(40px, 10vw, 60px);
+  }
+
+  .section-tag {
+    margin-bottom: 14px;
+  }
+
+  .services-title {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+    margin-bottom: 16px;
+  }
+
+  .services-subtitle {
+    font-size: 0.95rem;
+    max-width: 100%;
+  }
+
+  .showcase-rows {
+    gap: clamp(40px, 12vw, 56px);
+    margin-bottom: 48px;
+  }
+
+  .row-title {
+    font-size: clamp(1.3rem, 6.5vw, 1.7rem);
+  }
+
+  .services-cta {
+    padding: 32px 20px;
+  }
+
+  .cta-title {
+    font-size: clamp(1.4rem, 7.5vw, 1.9rem);
+  }
+
+  .cta-button-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .btn-our-work {
+    width: 100%;
+    text-align: center;
+  }
+
+  .btn-start-project {
+    width: 100%;
+    text-align: center;
+  }
+
   .chat-popup {
     left: 16px;
     right: 16px;
     width: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar {
+    padding: 0.5rem 0.7rem;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .services-main {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .services-title {
+    font-size: clamp(1.3rem, 8.5vw, 1.75rem);
   }
 }
 </style>

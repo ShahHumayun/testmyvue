@@ -73,55 +73,53 @@ const techStack = [
 </script>
 
 <style scoped>
+/* ==========================================================================
+   Base (mobile-first foundation — applies from 0px up unless overridden)
+   ========================================================================== */
+
 .tech-header {
     max-width: 720px;
-    margin: 0 auto 56px auto;
+    margin: 0 auto 40px auto;
     text-align: center;
 }
 
 .tech-eyebrow {
     display: block;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .tech-heading {
-    font-size: clamp(1.9rem, 4vw, 2.75rem);
+    font-size: clamp(1.6rem, 7vw, 2.75rem);
     font-weight: 900;
     letter-spacing: -0.02em;
     line-height: 1.15;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .tech-paragraph {
-    font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+    font-size: clamp(0.9rem, 3.6vw, 1.1rem);
     line-height: 1.6;
     max-width: 560px;
     margin: 0 auto;
 }
 
-/* Grid layout: 4 columns in desktop */
+/* Outer section container: scales fluidly with viewport width instead of
+   jumping between fixed breakpoint values. Overrides Tailwind's max-w-7xl. */
+.max-w-7xl {
+    max-width: clamp(320px, 94vw, 1600px);
+}
+
+/* Grid layout: single column by default (mobile portrait) */
 .tech-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 1100px;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 100%;
     margin: 0 auto;
-}
-
-@media (max-width: 900px) {
-    .tech-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 480px) {
-    .tech-grid {
-        grid-template-columns: repeat(1, 1fr);
-    }
 }
 
 /* Rectangular Card Layout (Horizontal Flex) */
@@ -130,10 +128,10 @@ const techStack = [
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    padding: 20px 24px;
+    padding: 16px 18px;
     border-radius: 12px;
     border: 1px solid;
-    gap: 16px;
+    gap: 14px;
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
@@ -162,8 +160,8 @@ const techStack = [
 }
 
 .tech-icon-wrapper {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -177,8 +175,250 @@ const techStack = [
 }
 
 .tech-name {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 700;
     white-space: nowrap;
+}
+
+/* ==========================================================================
+   Mobile Landscape / Small Tablets: 576px — 768px
+   ========================================================================== */
+@media (min-width: 576px) {
+    .tech-header {
+        margin-bottom: 48px;
+    }
+
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .tech-card {
+        padding: 18px 20px;
+    }
+
+    .tech-icon-wrapper {
+        width: 34px;
+        height: 34px;
+    }
+
+    .tech-name {
+        font-size: 0.98rem;
+    }
+}
+
+/* ==========================================================================
+   Laptops / Large Tablets: 768px — 992px
+   ========================================================================== */
+@media (min-width: 768px) {
+    .tech-header {
+        margin-bottom: 52px;
+    }
+
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .tech-card {
+        padding: 20px 22px;
+    }
+
+    .tech-icon-wrapper {
+        width: 36px;
+        height: 36px;
+    }
+
+    .tech-name {
+        font-size: 1rem;
+    }
+}
+
+/* ==========================================================================
+   Laptops / Large Tablets (upper range): 992px — 1024px
+   Four-up grid starts to feel comfortable here
+   ========================================================================== */
+@media (min-width: 992px) {
+    .tech-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    .tech-header {
+        margin-bottom: 56px;
+    }
+
+    .tech-card {
+        padding: 20px 24px;
+    }
+}
+
+/* ==========================================================================
+   Desktops: 1025px — 1200px
+   ========================================================================== */
+@media (min-width: 1025px) {
+    .tech-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+}
+
+/* ==========================================================================
+   Extra Large Screens / Desktops / TVs: 1201px and up
+   ========================================================================== */
+@media (min-width: 1201px) {
+    .tech-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+
+    }
+
+    .tech-header {
+        margin-bottom: 56px;
+    }
+}
+
+/* ==========================================================================
+   Ultra-wide / Large TVs: 1536px and up
+   Scale up spacing and type so content doesn't feel lost on huge displays
+   ========================================================================== */
+@media (min-width: 1536px) {
+    .tech-grid {
+        
+        gap: 26px;
+    }
+
+    .tech-heading {
+        font-size: 3rem;
+    }
+
+    .tech-paragraph {
+        font-size: 1.15rem;
+        max-width: 600px;
+    }
+
+    .tech-card {
+        padding: 24px 26px;
+    }
+
+    .tech-icon-wrapper {
+        width: 40px;
+        height: 40px;
+    }
+
+    .tech-name {
+        font-size: 1.05rem;
+    }
+}
+
+/* ==========================================================================
+   Very Large Desktops / Big TVs: 1920px and up
+   Keeps scaling instead of plateauing at 1536px, so content doesn't shrink
+   relative to a much larger viewport / viewing distance.
+   ========================================================================== */
+@media (min-width: 1920px) {
+    .tech-grid {
+        
+        gap: 30px;
+    }
+
+    .tech-heading {
+        font-size: 3.4rem;
+    }
+
+    .tech-paragraph {
+        font-size: 1.25rem;
+        max-width: 660px;
+    }
+
+    .tech-eyebrow {
+        font-size: 1rem;
+    }
+
+    .tech-card {
+        padding: 28px 30px;
+    }
+
+    .tech-icon-wrapper {
+        width: 44px;
+        height: 44px;
+    }
+
+    .tech-name {
+        font-size: 1.15rem;
+    }
+}
+
+/* ==========================================================================
+   4K / Extra-Extra-Large Monitors: 2560px and up
+   Real 4K displays (or 27"+ high-res laptop panels) render content
+   physically small at 1920px-tier sizing. This tier keeps the grid, type,
+   and card sizing growing proportionally instead of looking undersized.
+   ========================================================================== */
+@media (min-width: 2560px) {
+    .max-w-7xl {
+        max-width: 2100px;
+    }
+
+    .tech-grid {
+        gap: 38px;
+    }
+
+    .tech-eyebrow {
+        font-size: 1.1rem;
+    }
+
+    .tech-heading {
+        font-size: 4rem;
+    }
+
+    .tech-paragraph {
+        font-size: 1.4rem;
+        max-width: 760px;
+    }
+
+    .tech-card {
+        padding: 34px 36px;
+    }
+
+    .tech-icon-wrapper {
+        width: 50px;
+        height: 50px;
+    }
+
+    .tech-name {
+        font-size: 1.28rem;
+    }
+}
+
+/* ==========================================================================
+   Very small phones: keep things tight at the extreme low end (<= 380px)
+   ========================================================================== */
+@media (max-width: 380px) {
+    .tech-eyebrow {
+        font-size: 0.75rem;
+    }
+
+    .tech-heading {
+        font-size: 1.45rem;
+    }
+
+    .tech-paragraph {
+        font-size: 0.85rem;
+    }
+
+    .tech-card {
+        padding: 14px 16px;
+        gap: 12px;
+    }
+
+    .tech-icon-wrapper {
+        width: 28px;
+        height: 28px;
+    }
+
+    .tech-name {
+        font-size: 0.88rem;
+    }
 }
 </style>

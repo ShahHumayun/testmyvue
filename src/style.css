@@ -1,7 +1,33 @@
 @import "tailwindcss";
+
 /* Apply a default dark background at the root level */
-html, body {
-  background-color: #060606 !important; /* Use your preferred dark/black theme color code */
+html,
+body {
+  background-color: #060606 !important;
+  /* Use your preferred dark/black theme color code */
   color: #ffffff;
+
+  /* Page-level scroll behavior — applies to every route */
+  margin: 0;
+  padding: 0;
+  width: 100% !important;
+  height: auto !important;
+  scroll-behavior: smooth;
+  overflow-x: hidden !important;
+  /* blocks left/right drag on every page */
+  overflow-y: auto !important;
+
+  /* Hide the visible scrollbar while keeping scroll functional */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE / legacy Edge */
 }
 
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  /* Chrome / Safari / Chromium Edge */
+  width: 0;
+  height: 0;
+}

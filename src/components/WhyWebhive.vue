@@ -1,19 +1,15 @@
 <template>
   <section :class="['why-webhive-section', props.darkMode ? 'theme-dark' : 'theme-light']">
     <div class="section-container">
-      
+
       <div class="section-header">
         <span class="mini-title">Value Proposition</span>
         <h2 class="section-heading">Why Webhive</h2><br>
       </div>
 
       <div class="cards-grid">
-        <div 
-          v-for="(card, index) in pillars" 
-          :key="index" 
-          class="value-card"
-          :class="{ 'featured-card': card.featured }"
-        >
+        <div v-for="(card, index) in pillars" :key="index" class="value-card"
+          :class="{ 'featured-card': card.featured }">
           <div class="card-inner-padding-box">
             <div class="card-top-row">
               <div class="icon-wrapper">
@@ -90,10 +86,10 @@ const pillars = ref([
 .why-webhive-section {
   --accent-color: #00ffa3;
   --transition-speed: 0.5s;
-  
+
   width: 100%;
   max-width: 100%;
-  padding: clamp(60px, 8vh, 120px) 24px;
+  padding: clamp(48px, 8vh, 120px) clamp(16px, 4vw, 24px);
   font-family: system-ui, -apple-system, sans-serif;
   position: relative;
   z-index: 10;
@@ -110,13 +106,16 @@ const pillars = ref([
   color: #ffffff;
   --accent-color: #00ffa3;
 }
+
 .theme-light {
   background-color: #f8fafc;
   color: #0f172a;
   --accent-color: #f97316;
 }
 
-.why-webhive-section *, .why-webhive-section *::before, .why-webhive-section *::after {
+.why-webhive-section *,
+.why-webhive-section *::before,
+.why-webhive-section *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -124,7 +123,10 @@ const pillars = ref([
 
 .section-container {
   width: 100%;
-  max-width: 1150px;
+  /* Fluid width: scales continuously with the viewport instead of jumping
+     between fixed breakpoint values. margin: auto keeps it centered at
+     every screen size, from the smallest phone to the largest TV. */
+  max-width: clamp(320px, 92vw, 1500px);
   margin: 0 auto !important;
   display: flex !important;
   flex-direction: column !important;
@@ -132,19 +134,23 @@ const pillars = ref([
   justify-content: center !important;
 }
 
-.section-header { text-align: center !important; margin-bottom: clamp(40px, 6vh, 64px); }
+.section-header {
+  text-align: center !important;
+  margin-bottom: clamp(32px, 6vh, 64px);
+}
+
 .mini-title {
   font-family: monospace;
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.22em;
   color: var(--accent-color);
   display: block;
   margin-bottom: 8px;
 }
 
 .section-heading {
-  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-size: clamp(1.7rem, 4.5vw, 3.2rem);
   font-weight: 950;
   text-transform: uppercase;
   letter-spacing: -0.02em;
@@ -152,10 +158,10 @@ const pillars = ref([
 
 .cards-grid {
   display: grid !important;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
   width: 100%;
-  max-width: 1150px;
+  max-width: clamp(320px, 92vw, 1500px);
   margin: 0 auto !important;
 }
 
@@ -163,51 +169,460 @@ const pillars = ref([
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 280px;
-  border-radius: 16px;
+  min-height: 220px;
+  border-radius: 14px;
   position: relative;
   overflow: hidden;
-  padding: 0 !important; 
+  padding: 0 !important;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s, background-color var(--transition-speed);
 }
 
-.theme-dark .value-card { background-color: rgba(255, 255, 255, 0.015); border: 1px solid rgba(255, 255, 255, 0.06); }
-.theme-light .value-card { background-color: #ffffff; border: 1px solid rgba(15, 23, 42, 0.08); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); }
+.theme-dark .value-card {
+  background-color: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
 
-.value-card:hover { transform: translateY(-8px); border-color: color-mix(in srgb, var(--accent-color), transparent 65%); }
-.theme-dark .value-card:hover { background-color: rgba(255, 255, 255, 0.03); box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45); }
-.theme-light .value-card:hover { background-color: #ffffff; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); }
+.theme-light .value-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+}
 
-.theme-dark .value-card.featured-card { background: linear-gradient(160deg, color-mix(in srgb, var(--accent-color), transparent 93%), rgba(255, 255, 255, 0.015) 60%); border-color: color-mix(in srgb, var(--accent-color), transparent 75%); }
-.theme-light .value-card.featured-card { background: linear-gradient(160deg, color-mix(in srgb, var(--accent-color), transparent 96%), #ffffff 60%); border-color: color-mix(in srgb, var(--accent-color), transparent 80%); }
+.value-card:hover {
+  transform: translateY(-8px);
+  border-color: color-mix(in srgb, var(--accent-color), transparent 65%);
+}
 
-.card-inner-padding-box { padding: 45px 36px !important; display: flex; flex-direction: column; align-items: center; width: 100%; height: 100%; }
+.theme-dark .value-card:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+}
 
-.card-top-row { display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
-.icon-wrapper { position: relative; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
+.theme-light .value-card:hover {
+  background-color: #ffffff;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.theme-dark .value-card.featured-card {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent-color), transparent 93%), rgba(255, 255, 255, 0.015) 60%);
+  border-color: color-mix(in srgb, var(--accent-color), transparent 75%);
+}
+
+.theme-light .value-card.featured-card {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent-color), transparent 96%), #ffffff 60%);
+  border-color: color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+
+.card-inner-padding-box {
+  padding: 28px 22px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.icon-wrapper {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .icon-inner {
-  width: 100%; height: 100%; border-radius: 14px; display: flex; align-items: center; justify-content: center; z-index: 2;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
   border: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
   transition: transform 0.3s ease, background-color 0.3s ease;
   background: color-mix(in srgb, var(--accent-color), transparent 94%);
 }
 
-.icon-inner :deep(svg) { width: 30px; height: 30px; stroke: var(--accent-color); transition: stroke 0.3s; }
+.icon-inner :deep(svg) {
+  width: 24px;
+  height: 24px;
+  stroke: var(--accent-color);
+  transition: stroke 0.3s;
+}
 
-.icon-glow { position: absolute; inset: -4px; background-color: var(--accent-color); border-radius: 16px; filter: blur(16px); opacity: 0; transition: opacity 0.3s ease; z-index: 1; }
-.value-card:hover .icon-glow { opacity: 0.2; }
-.value-card:hover .icon-inner { transform: scale(1.08) rotate(-4deg); }
+.icon-glow {
+  position: absolute;
+  inset: -4px;
+  background-color: var(--accent-color);
+  border-radius: 16px;
+  filter: blur(16px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
 
-.card-content { display: flex; flex-direction: column; gap: 12px; flex-grow: 1; text-align: center; align-items: center; }
-.card-title { font-size: clamp(20px, 2.1vw, 25px); font-weight: 800; line-height: 1.3; }
-.card-desc { font-size: 14.5px; line-height: 1.65; transition: color var(--transition-speed); }
-.theme-dark .card-desc { color: rgba(255, 255, 255, 0.6); }
-.theme-light .card-desc { color: #475569; }
+.value-card:hover .icon-glow {
+  opacity: 0.2;
+}
 
-.card-bottom-accent { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; transform: scaleX(0); transform-origin: center; background: var(--accent-color); transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
-.value-card:hover .card-bottom-accent { transform: scaleX(1); }
+.value-card:hover .icon-inner {
+  transform: scale(1.08) rotate(-4deg);
+}
 
-@media (max-width: 868px) { .cards-grid { grid-template-columns: 1fr !important; gap: 24px; } }
-@media (max-width: 540px) { .card-inner-padding-box { padding: 32px 20px !important; } .value-card { min-height: 240px; } }
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+  text-align: center;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.card-desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  transition: color var(--transition-speed);
+}
+
+.theme-dark .card-desc {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.theme-light .card-desc {
+  color: #475569;
+}
+
+.card-bottom-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: center;
+  background: var(--accent-color);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.value-card:hover .card-bottom-accent {
+  transform: scaleX(1);
+}
+
+/* ==========================================================================
+   Mobile Landscape / Small Tablets: 576px — 768px
+   Still a single column here — the cards read better full-width until
+   there's genuinely enough room for two columns side by side.
+   ========================================================================== */
+@media (min-width: 576px) {
+  .cards-grid {
+    gap: 18px;
+  }
+
+  .card-inner-padding-box {
+    padding: 32px 26px !important;
+  }
+
+  .value-card {
+    min-height: 240px;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .card-desc {
+    font-size: 14px;
+  }
+}
+
+/* ==========================================================================
+   Laptops / Large Tablets: 769px — 1024px
+   Two-column grid begins here.
+   ========================================================================== */
+@media (min-width: 769px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+
+  .value-card {
+    min-height: 260px;
+  }
+
+  .card-inner-padding-box {
+    padding: 36px 30px !important;
+  }
+
+  .icon-wrapper {
+    width: 52px;
+    height: 52px;
+  }
+
+  .icon-inner :deep(svg) {
+    width: 26px;
+    height: 26px;
+  }
+
+  .card-title {
+    font-size: clamp(19px, 2vw, 22px);
+  }
+
+  .card-desc {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 992px) {
+  .cards-grid {
+    gap: 26px;
+  }
+
+  .card-inner-padding-box {
+    padding: 40px 32px !important;
+  }
+}
+
+/* ==========================================================================
+   Desktops: 1025px — 1200px
+   ========================================================================== */
+@media (min-width: 1025px) {
+  .cards-grid {
+    gap: 30px;
+  }
+
+  .value-card {
+    min-height: 270px;
+  }
+
+  .card-inner-padding-box {
+    padding: 42px 34px !important;
+  }
+
+  .icon-wrapper {
+    width: 56px;
+    height: 56px;
+  }
+
+  .icon-inner :deep(svg) {
+    width: 28px;
+    height: 28px;
+  }
+
+  .card-title {
+    font-size: clamp(20px, 2.1vw, 25px);
+  }
+
+  .card-desc {
+    font-size: 14.5px;
+  }
+}
+
+/* ==========================================================================
+   Extra Large Screens / Desktops / TVs: 1201px and up
+   ========================================================================== */
+@media (min-width: 1201px) {
+  .cards-grid {
+    gap: 32px;
+  }
+
+  .card-inner-padding-box {
+    padding: 45px 36px !important;
+  }
+
+  .icon-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+
+  .icon-inner :deep(svg) {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* ==========================================================================
+   Ultra-wide / Large TVs: 1536px and up
+   Scale up spacing and type so content doesn't feel lost on huge displays
+   ========================================================================== */
+@media (min-width: 1536px) {
+  .section-heading {
+    font-size: 3.5rem;
+  }
+
+  .cards-grid {
+    gap: 36px;
+  }
+
+  .value-card {
+    min-height: 290px;
+  }
+
+  .card-inner-padding-box {
+    padding: 50px 40px !important;
+  }
+
+  .icon-wrapper {
+    width: 66px;
+    height: 66px;
+  }
+
+  .icon-inner :deep(svg) {
+    width: 33px;
+    height: 33px;
+  }
+
+  .card-title {
+    font-size: 1.7rem;
+  }
+
+  .card-desc {
+    font-size: 15.5px;
+  }
+}
+
+/* ==========================================================================
+   Very Large Desktops / Big TVs: 1920px and up
+   Keeps scaling instead of plateauing at 1536px, so cards don't shrink
+   relative to a much larger viewport / viewing distance.
+   ========================================================================== */
+@media (min-width: 1920px) {
+  .section-heading {
+    font-size: 3.9rem;
+  }
+
+  .cards-grid {
+    gap: 40px;
+  }
+
+  .value-card {
+    min-height: 310px;
+  }
+
+  .card-inner-padding-box {
+    padding: 54px 44px !important;
+  }
+
+  .icon-wrapper {
+    width: 72px;
+    height: 72px;
+  }
+
+  .icon-inner :deep(svg) {
+    width: 36px;
+    height: 36px;
+  }
+
+  .card-title {
+    font-size: 1.85rem;
+  }
+
+  .card-desc {
+    font-size: 16.5px;
+  }
+}
+
+/* ==========================================================================
+   4K / Extra-Extra-Large Monitors: 2560px and up
+   Real 4K displays (or 27"+ high-res laptop panels) render content
+   physically small at 1920px-tier sizing. This tier keeps the container,
+   cards, and icons growing proportionally instead of looking undersized.
+   ========================================================================== */
+@media (min-width: 2560px) {
+  .section-container {
+    max-width: 1900px;
+  }
+
+  .cards-grid {
+    max-width: 1900px;
+    gap: 46px;
+  }
+
+  .section-heading {
+    font-size: 4.4rem;
+  }
+
+  .value-card {
+    min-height: 330px;
+  }
+
+  .card-inner-padding-box {
+    padding: 60px 48px !important;
+  }
+
+  .icon-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+
+  .icon-inner :deep(svg) {
+    width: 40px;
+    height: 40px;
+  }
+
+  .card-title {
+    font-size: 2rem;
+  }
+
+  .card-desc {
+    font-size: 17.5px;
+  }
+}
+
+/* ==========================================================================
+   Very small phones: keep things tight at the extreme low end (<= 380px)
+   ========================================================================== */
+@media (max-width: 380px) {
+  .why-webhive-section {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .section-heading {
+    font-size: 1.55rem;
+  }
+
+  .mini-title {
+    font-size: 10px;
+  }
+
+  .card-inner-padding-box {
+    padding: 22px 16px !important;
+  }
+
+  .value-card {
+    min-height: 200px;
+  }
+
+  .icon-wrapper {
+    width: 42px;
+    height: 42px;
+  }
+
+  .icon-inner :deep(svg) {
+    width: 21px;
+    height: 21px;
+  }
+
+  .card-title {
+    font-size: 1.02rem;
+  }
+
+  .card-desc {
+    font-size: 12.5px;
+  }
+}
 </style>

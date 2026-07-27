@@ -5,17 +5,13 @@
     <div class="section-header">
       <span class="section-label">App Development Projects</span>
       <h2 class="section-title">
-        Mobile Experiences That <br/>
+        Mobile Experiences That <br />
         <span class="title-accent">Deliver Results</span>
       </h2>
     </div>
 
     <div class="cards-grid">
-      <div
-        v-for="(project, index) in projects"
-        :key="index"
-        class="project-card"
-      >
+      <div v-for="(project, index) in projects" :key="index" class="project-card">
         <div class="card-image">
           <img :src="project.image" :alt="project.title" class="card-img" />
         </div>
@@ -46,10 +42,10 @@ const isDarkMode = inject('isDarkMode', ref(true));
 defineEmits(['open-modal']);
 
 const projects = [
-  { title: 'Taylor Allergy',     intro: 'Patient appointment tracking, rescheduling, and secure communication.', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=600' },
-  { title: 'My Expense Tracker', intro: 'Comprehensive finance management.',                                     image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600' },
-  { title: 'Book Library',       intro: 'Public library management system.',                                    image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=600' },
-  { title: 'Magento Connector',  intro: 'Admin portal for order management.',                                   image: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=600' },
+  { title: 'Taylor Allergy', intro: 'Patient appointment tracking, rescheduling, and secure communication.', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=600' },
+  { title: 'My Expense Tracker', intro: 'Comprehensive finance management.', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600' },
+  { title: 'Book Library', intro: 'Public library management system.', image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=600' },
+  { title: 'Magento Connector', intro: 'Admin portal for order management.', image: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=600' },
 ];
 
 gsap.registerPlugin(ScrollTrigger);
@@ -60,9 +56,9 @@ onMounted(() => {
 
 <style scoped>
 /* ── Encapsulated Visual Protection Boundaries ── */
-.theme-dark { 
-  background-color: #0b0c10 !important; 
-  color: #ffffff !important; 
+.theme-dark {
+  background-color: #0b0c10 !important;
+  color: #ffffff !important;
   --title-color: #ffffff;
   --card-bg: rgba(255, 255, 255, 0.02);
   --card-border: rgba(255, 255, 255, 0.1);
@@ -71,9 +67,9 @@ onMounted(() => {
   --btn-text: #ffffff;
 }
 
-.theme-light { 
-  background-color: #ffffff !important; 
-  color: #000000 !important; 
+.theme-light {
+  background-color: #ffffff !important;
+  color: #000000 !important;
   --title-color: #000000;
   --card-bg: #ffffff;
   --card-border: #e2e8f0;
@@ -84,10 +80,13 @@ onMounted(() => {
 
 /* ── Section ── */
 .projects-section {
-  padding: 80px 32px;
+  padding: 56px 20px;
   margin: 0 auto;
   width: 100%;
-  max-width: 1280px;
+  /* Fluid width: scales continuously with the viewport instead of jumping
+     between fixed breakpoint values. margin: 0 auto keeps it centered at
+     every screen size, from the smallest phone to the largest TV. */
+  max-width: clamp(320px, 92vw, 1280px);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -97,7 +96,9 @@ onMounted(() => {
 }
 
 @media (min-width: 768px) {
-  .projects-section { padding: 80px 48px; }
+  .projects-section {
+    padding: 80px 48px;
+  }
 }
 
 /* ── Background glow ── */
@@ -113,6 +114,7 @@ onMounted(() => {
   border-radius: 50%;
   pointer-events: none;
 }
+
 /* CHANGED: blurry ambient background fully removed in light theme for a clean solid white surface */
 .theme-light .bg-glow {
   display: none;
@@ -120,8 +122,8 @@ onMounted(() => {
 
 /* ── Header ── */
 .section-header {
-  max-width: 896px;
-  margin: 0 auto 64px;
+  max-width: clamp(280px, 88vw, 896px);
+  margin: 0 auto 40px;
   text-align: center;
   position: relative;
   z-index: 10;
@@ -133,21 +135,22 @@ onMounted(() => {
 .section-label {
   color: #00ffa3 !important;
   font-weight: 800;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  font-size: 0.875rem;
-  margin-bottom: 24px;
+  font-size: 0.75rem;
+  margin-bottom: 18px;
   display: block;
 }
+
 /* CHANGED: light-theme section label now vibrant orange (was hardcoded green for both themes) */
 .theme-light .section-label {
   color: #f97316 !important;
 }
 
 .section-title {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-size: clamp(1.9rem, 7vw, 4.5rem);
   font-weight: 800;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   letter-spacing: -0.02em;
   line-height: 1.1;
   color: var(--title-color) !important;
@@ -161,6 +164,7 @@ onMounted(() => {
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
+
 .theme-light .title-accent {
   background: none !important;
   -webkit-text-fill-color: #000000 !important;
@@ -172,17 +176,22 @@ onMounted(() => {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 32px;
+  gap: 20px;
   position: relative;
   z-index: 10;
   align-items: stretch;
 }
 
 @media (min-width: 768px) {
-  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
+
 @media (min-width: 1024px) {
-  .cards-grid { grid-template-columns: repeat(4, 1fr); }
+  .cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 /* ── Card ── */
@@ -203,12 +212,13 @@ onMounted(() => {
 }
 
 .theme-light .project-card {
-  box-shadow: 0 4px 24px rgba(0,0,0,0.05) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05) !important;
 }
 
 .project-card:hover {
   border-color: rgba(0, 255, 163, 0.5) !important;
 }
+
 /* CHANGED: light-theme card hover border now vibrant orange (was hardcoded green for both themes) */
 .theme-light .project-card:hover {
   border-color: rgba(249, 115, 22, 0.5) !important;
@@ -216,12 +226,13 @@ onMounted(() => {
 
 /* ── Card image ── */
 .card-image {
-  height: 192px;
+  height: 160px;
   overflow: hidden;
   position: relative;
   width: 100%;
   flex-shrink: 0;
 }
+
 .card-img {
   width: 100%;
   height: 100%;
@@ -229,13 +240,14 @@ onMounted(() => {
   transition: transform 2s ease;
   display: block;
 }
+
 .project-card:hover .card-img {
   transform: scale(1.1);
 }
 
 /* ── Card body ── */
 .card-body {
-  padding: 24px 24px 32px;
+  padding: 18px 18px 24px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -245,22 +257,22 @@ onMounted(() => {
 }
 
 .card-title {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   flex-shrink: 0;
   color: var(--title-color) !important;
 }
 
 .card-intro {
-  font-size: 0.875rem;
+  font-size: 0.82rem;
   color: #9ca3af !important;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   min-height: 2.5rem;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 /* ── Button ── */
@@ -278,7 +290,7 @@ onMounted(() => {
   justify-content: center;
   width: 100%;
   padding: 6px 12px;
-  font-size: 1rem;
+  font-size: 0.92rem;
   font-weight: 700;
   border-radius: 8px;
   cursor: pointer;
@@ -293,10 +305,260 @@ onMounted(() => {
   color: #000000 !important;
   border-color: #00ffa3 !important;
 }
+
 /* CHANGED: light-theme button hover now vibrant orange (was hardcoded green for both themes) */
 .theme-light .view-btn:hover {
   background-color: #f97316 !important;
   color: #000000 !important;
   border-color: #f97316 !important;
+}
+
+/* ==========================================================================
+   Mobile Landscape / Small Tablets: 576px — 768px
+   ========================================================================== */
+@media (min-width: 576px) {
+  .cards-grid {
+    gap: 22px;
+  }
+
+  .card-image {
+    height: 170px;
+  }
+
+  .section-label {
+    font-size: 0.8rem;
+  }
+
+  .card-title {
+    font-size: 1.15rem;
+  }
+}
+
+/* ==========================================================================
+   Laptops / Large Tablets: 769px — 1024px
+   (grid switches to 4 columns exactly at 1024px, unchanged from original)
+   ========================================================================== */
+@media (min-width: 769px) {
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .cards-grid {
+    gap: 24px;
+  }
+
+  .card-image {
+    height: 180px;
+  }
+}
+
+@media (min-width: 992px) {
+  .cards-grid {
+    gap: 26px;
+  }
+
+  .card-image {
+    height: 188px;
+  }
+}
+
+/* ==========================================================================
+   Desktops: 1025px — 1200px
+   ========================================================================== */
+@media (min-width: 1025px) {
+  .section-header {
+    margin-bottom: 56px;
+  }
+
+  .cards-grid {
+    gap: 28px;
+  }
+
+  .card-image {
+    height: 192px;
+    /* matches original design's fixed height exactly at this tier */
+  }
+
+  .card-body {
+    padding: 24px 24px 32px;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+
+  .card-intro {
+    font-size: 0.875rem;
+    margin-bottom: 24px;
+  }
+
+  .view-btn {
+    font-size: 1rem;
+  }
+}
+
+/* ==========================================================================
+   Extra Large Screens / Desktops / TVs: 1201px and up
+   ========================================================================== */
+@media (min-width: 1201px) {
+  .cards-grid {
+    gap: 30px;
+  }
+
+  .card-image {
+    height: 200px;
+  }
+}
+
+/* ==========================================================================
+   Ultra-wide / Large TVs: 1536px and up
+   Scale up spacing, imagery, and type so cards don't feel lost on huge
+   displays — the section-title clamp() already grows fluidly, this tops
+   up everything else that was fixed.
+   ========================================================================== */
+@media (min-width: 1536px) {
+  .cards-grid {
+    gap: 34px;
+  }
+
+  .card-image {
+    height: 215px;
+  }
+
+  .card-body {
+    padding: 28px 26px 34px;
+  }
+
+  .card-title {
+    font-size: 1.35rem;
+  }
+
+  .card-intro {
+    font-size: 0.92rem;
+  }
+
+  .view-btn {
+    font-size: 1.05rem;
+    padding: 8px 14px;
+  }
+
+  .section-label {
+    font-size: 0.9rem;
+  }
+}
+
+/* ==========================================================================
+   Very Large Desktops / Big TVs: 1920px and up
+   Keeps scaling instead of plateauing at 1536px, so cards don't shrink
+   relative to a much larger viewport / viewing distance.
+   ========================================================================== */
+@media (min-width: 1920px) {
+  .projects-section {
+    max-width: 1550px;
+  }
+
+  .cards-grid {
+    gap: 38px;
+  }
+
+  .card-image {
+    height: 230px;
+  }
+
+  .card-body {
+    padding: 30px 28px 36px;
+  }
+
+  .card-title {
+    font-size: 1.45rem;
+  }
+
+  .card-intro {
+    font-size: 0.96rem;
+  }
+
+  .view-btn {
+    font-size: 1.1rem;
+    padding: 9px 15px;
+  }
+}
+
+/* ==========================================================================
+   4K / Extra-Extra-Large Monitors: 2560px and up
+   Real 4K displays (or 27"+ high-res laptop panels) render content
+   physically small at 1920px-tier sizing. This tier keeps the container,
+   cards, and imagery growing proportionally instead of looking undersized.
+   ========================================================================== */
+@media (min-width: 2560px) {
+  .projects-section {
+    max-width: 1850px;
+  }
+
+  .cards-grid {
+    gap: 42px;
+  }
+
+  .card-image {
+    height: 250px;
+  }
+
+  .card-body {
+    padding: 34px 30px 40px;
+  }
+
+  .card-title {
+    font-size: 1.6rem;
+  }
+
+  .card-intro {
+    font-size: 1.02rem;
+  }
+
+  .view-btn {
+    font-size: 1.18rem;
+    padding: 10px 16px;
+  }
+
+  .section-label {
+    font-size: 1rem;
+  }
+}
+
+/* ==========================================================================
+   Very small phones: keep things tight at the extreme low end (<= 380px)
+   ========================================================================== */
+@media (max-width: 380px) {
+  .projects-section {
+    padding: 44px 14px;
+  }
+
+  .section-label {
+    font-size: 0.68rem;
+  }
+
+  .cards-grid {
+    gap: 16px;
+  }
+
+  .card-image {
+    height: 145px;
+  }
+
+  .card-body {
+    padding: 16px 16px 20px;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-intro {
+    font-size: 0.78rem;
+  }
+
+  .view-btn {
+    font-size: 0.85rem;
+  }
 }
 </style>

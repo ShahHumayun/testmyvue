@@ -1,24 +1,25 @@
 <template>
     <section :class="[
-        'py-24 px-6 relative z-20 overflow-hidden'
+        'py-16 px-4 sm:py-20 sm:px-6 md:py-24 md:px-8 lg:py-24 lg:px-6 xl:py-28 relative z-20 overflow-hidden'
     ]">
         <canvas ref="trustCanvas" class="trust-network-canvas" aria-hidden="true"></canvas>
 
         <div class="max-w-7xl mx-auto relative z-10">
             <h2 :class="[
-                'text-center text-sm font-bold tracking-widest uppercase mb-16',
+                'text-center text-xs sm:text-sm font-bold tracking-widest uppercase mb-10 sm:mb-12 md:mb-16 xl:mb-20',
                 isDarkMode ? 'text-neutral-500' : 'text-neutral-400'
             ]">
                 Trusted By Startups & Growing Businesses
             </h2>
-            <div ref="counterContainer" class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-                <div v-for="(stat, idx) in stats" :key="idx" class="space-y-2">
+            <div ref="counterContainer"
+                class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 sm:gap-8 md:gap-10 lg:gap-8 xl:gap-12 text-center">
+                <div v-for="(stat, idx) in stats" :key="idx" class="space-y-1 sm:space-y-2">
                     <div
-                        :class="['text-4xl md:text-5xl font-black tracking-tight', isDarkMode ? 'text-white' : 'text-black']">
+                        :class="['text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-black tracking-tight', isDarkMode ? 'text-white' : 'text-black']">
                         <span class="trust-counter" :data-target="stat.value">0</span>{{ stat.suffix }}
                     </div>
                     <p :class="[
-                        'text-xs md:text-sm font-medium tracking-wide uppercase',
+                        'text-xs sm:text-sm md:text-base xl:text-lg font-medium tracking-wide uppercase whitespace-nowrap',
                         isDarkMode ? 'text-neutral-400' : 'text-neutral-500'
                     ]">{{ stat.label }}</p>
                 </div>
@@ -178,5 +179,88 @@ onUnmounted(() => {
     height: 100%;
     pointer-events: none;
     z-index: 0;
+}
+
+/* Outer content container: scales fluidly with viewport width instead of
+   jumping between fixed breakpoint values. Overrides Tailwind's max-w-7xl.
+   !important guarantees this wins even if the project's global Tailwind
+   stylesheet happens to load after this component's scoped styles. */
+.max-w-7xl {
+    max-width: clamp(320px, 94vw, 1600px) !important;
+}
+
+/* ==========================================================================
+   Fine-tuned breakpoints beyond Tailwind's defaults, to exactly match the
+   requested device ranges. These layer on top of the Tailwind classes above.
+   ========================================================================== */
+
+/* Mobile Portrait: 320px — 480px (extra tight spacing on the smallest phones) */
+@media (max-width: 380px) {
+    .trust-network-canvas {
+        opacity: 0.6;
+    }
+}
+
+/* Laptops / Large Tablets: 992px — 1024px
+   Tailwind's md (768px) already flips to 4 columns; nudge gaps a touch
+   wider as we approach the 1024px upper edge of this range. */
+@media (min-width: 992px) and (max-width: 1024px) {
+    .trust-network-canvas {
+        opacity: 0.85;
+    }
+}
+
+/* Extra Large Screens / TVs: 1536px and up — give the whole section more
+   breathing room so the stats don't look small on huge displays. */
+@media (min-width: 1536px) {
+    section.overflow-hidden {
+        padding-top: 7rem;
+        padding-bottom: 7rem;
+    }
+}
+
+/* Very Large Desktops / Big TVs: 1920px and up — keeps scaling instead of
+   plateauing at 1536px, so numbers stay legible relative to a much larger
+   viewport / viewing distance. */
+@media (min-width: 1920px) {
+    section.overflow-hidden {
+        padding-top: 8rem;
+        padding-bottom: 8rem;
+    }
+
+    .xl\:text-7xl {
+        font-size: 4.5rem;
+    }
+
+    .xl\:text-lg {
+        font-size: 1.25rem;
+    }
+}
+
+/* 4K / Extra-Extra-Large Monitors: 2560px and up — real 4K displays (or
+   27"+ high-res laptop panels) render content physically small at
+   1920px-tier sizing. This tier keeps the container, padding, and stat
+   numbers growing proportionally instead of looking undersized. */
+@media (min-width: 2560px) {
+    section.overflow-hidden {
+        padding-top: 9rem;
+        padding-bottom: 9rem;
+    }
+
+    .max-w-7xl {
+        max-width: 2200px !important;
+    }
+
+    .xl\:text-7xl {
+        font-size: 5.25rem;
+    }
+
+    .xl\:text-lg {
+        font-size: 1.4rem;
+    }
+
+    .xl\:gap-12 {
+        gap: 3.5rem;
+    }
 }
 </style>

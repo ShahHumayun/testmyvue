@@ -1,7 +1,7 @@
 <template>
     <section :class="[
         'py-24 px-6 relative z-20',
-        isDarkMode ? 'bg-black' : 'bg-white'
+        isDarkMode ? 'bg-[#1c1c1c]' : 'bg-[#f2f2f2]'
     ]">
         <div class="max-w-7xl mx-auto">
             <div class="services-header">
@@ -142,33 +142,45 @@ const services = [
 </script>
 
 <style scoped>
+/* ==========================================================================
+   Fluid outer container — scales continuously with viewport width instead
+   of jumping between fixed breakpoint values. mx-auto keeps it centered.
+   ========================================================================== */
+.max-w-7xl {
+    max-width: clamp(320px, 94vw, 1600px);
+}
+
+/* ==========================================================================
+   Base (mobile-first foundation — applies from 0px up unless overridden)
+   ========================================================================== */
+
 .services-header {
-    max-width: 640px;
-    margin-bottom: clamp(48px, 8vh, 80px);
+    max-width: clamp(280px, 90vw, 640px);
+    margin-bottom: clamp(32px, 8vh, 80px);
 }
 
 .services-eyebrow {
     display: block;
     font-family: monospace;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.18em;
-    margin-bottom: 14px;
+    letter-spacing: 0.16em;
+    margin-bottom: 10px;
 }
 
 .services-heading {
-    font-size: clamp(1.9rem, 4vw, 2.75rem);
+    font-size: clamp(1.6rem, 7vw, 2.75rem);
     font-weight: 900;
     letter-spacing: -0.02em;
     line-height: 1.15;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .services-paragraph {
-    font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+    font-size: clamp(0.9rem, 3.6vw, 1.1rem);
     line-height: 1.6;
-    max-width: 560px;
+    max-width: clamp(260px, 85vw, 560px);
 }
 
 .accent-dark {
@@ -182,28 +194,16 @@ const services = [
 .services-grid {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 20px;
-}
-
-@media (min-width: 768px) {
-    .services-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (min-width: 1024px) {
-    .services-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
+    gap: 14px;
 }
 
 .service-card {
     display: flex;
     flex-direction: column;
     text-decoration: none;
-    border-radius: 16px;
+    border-radius: 14px;
     border: 1px solid;
-    padding: 32px 28px;
+    padding: 22px 20px;
     height: 100%;
     box-sizing: border-box;
     transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
@@ -234,13 +234,13 @@ const services = [
 }
 
 .service-icon-badge {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 22px;
+    margin-bottom: 16px;
     flex-shrink: 0;
 }
 
@@ -255,15 +255,15 @@ const services = [
 }
 
 .service-title {
-    font-size: 1.15rem;
+    font-size: 1.03rem;
     font-weight: 800;
     letter-spacing: -0.01em;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     line-height: 1.3;
 }
 
 .service-description {
-    font-size: 0.9rem;
+    font-size: 0.86rem;
     line-height: 1.6;
     flex-grow: 1;
 }
@@ -272,9 +272,9 @@ const services = [
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 700;
-    margin-top: 24px;
+    margin-top: 18px;
 }
 
 .service-link-arrow {
@@ -283,5 +283,269 @@ const services = [
 
 .service-card:hover .service-link-arrow {
     transform: translateX(3px);
+}
+
+/* ==========================================================================
+   Mobile Landscape / Small Tablets: 576px — 768px
+   ========================================================================== */
+@media (min-width: 576px) {
+    .services-grid {
+        gap: 16px;
+    }
+
+    .service-card {
+        padding: 24px 22px;
+    }
+
+    .service-icon-badge {
+        width: 44px;
+        height: 44px;
+        margin-bottom: 18px;
+    }
+
+    .service-title {
+        font-size: 1.06rem;
+    }
+}
+
+/* ==========================================================================
+   Laptops / Large Tablets: 768px — 992px
+   ========================================================================== */
+@media (min-width: 768px) {
+    .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .service-card {
+        padding: 26px 24px;
+    }
+
+    .service-icon-badge {
+        width: 46px;
+        height: 46px;
+        margin-bottom: 20px;
+    }
+
+    .service-title {
+        font-size: 1.1rem;
+    }
+
+    .service-description {
+        font-size: 0.88rem;
+    }
+}
+
+/* ==========================================================================
+   Laptops / Large Tablets (upper range): 992px — 1024px
+   ========================================================================== */
+@media (min-width: 992px) {
+    .services-grid {
+        gap: 19px;
+    }
+
+    .service-card {
+        padding: 28px 26px;
+    }
+}
+
+/* ==========================================================================
+   Desktops: 1025px — 1200px
+   Three-column layout begins here (matches original 1024px breakpoint)
+   ========================================================================== */
+@media (min-width: 1025px) {
+    .services-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .service-card {
+        padding: 32px 28px;
+    }
+
+    .service-icon-badge {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 22px;
+    }
+
+    .service-title {
+        font-size: 1.15rem;
+    }
+
+    .service-description {
+        font-size: 0.9rem;
+    }
+
+    .service-link {
+        margin-top: 24px;
+    }
+}
+
+/* ==========================================================================
+   Extra Large Screens / Desktops / TVs: 1201px and up
+   ========================================================================== */
+@media (min-width: 1201px) {
+    .services-grid {
+        gap: 22px;
+    }
+
+    .service-card {
+        padding: 34px 30px;
+    }
+}
+
+/* ==========================================================================
+   Ultra-wide / Large TVs: 1536px and up
+   Scale up spacing and type so content doesn't feel lost on huge displays
+   ========================================================================== */
+@media (min-width: 1536px) {
+    .services-heading {
+        font-size: 3rem;
+    }
+
+    .services-paragraph {
+        font-size: 1.15rem;
+    }
+
+    .services-grid {
+        gap: 26px;
+    }
+
+    .service-card {
+        padding: 38px 34px;
+    }
+
+    .service-icon-badge {
+        width: 54px;
+        height: 54px;
+        margin-bottom: 24px;
+    }
+
+    .service-title {
+        font-size: 1.22rem;
+    }
+
+    .service-description {
+        font-size: 0.94rem;
+    }
+
+    .service-link {
+        font-size: 0.88rem;
+    }
+}
+
+/* ==========================================================================
+   Very Large Desktops / Big TVs: 1920px and up
+   Keeps scaling instead of plateauing at 1536px, so content doesn't shrink
+   relative to a much larger viewport / viewing distance.
+   ========================================================================== */
+@media (min-width: 1920px) {
+    .services-heading {
+        font-size: 3.4rem;
+    }
+
+    .services-paragraph {
+        font-size: 1.25rem;
+    }
+
+    .services-grid {
+        gap: 30px;
+    }
+
+    .service-card {
+        padding: 42px 38px;
+    }
+
+    .service-icon-badge {
+        width: 58px;
+        height: 58px;
+        margin-bottom: 26px;
+    }
+
+    .service-title {
+        font-size: 1.3rem;
+    }
+
+    .service-description {
+        font-size: 0.98rem;
+    }
+}
+
+/* ==========================================================================
+   4K / Extra-Extra-Large Monitors: 2560px and up
+   Real 4K displays (or 27"+ high-res laptop panels) render content
+   physically small at 1920px-tier sizing. This tier keeps the container,
+   cards, and type growing proportionally instead of looking undersized.
+   ========================================================================== */
+@media (min-width: 2560px) {
+    .max-w-7xl {
+        max-width: 2100px;
+    }
+
+    .services-heading {
+        font-size: 4rem;
+    }
+
+    .services-paragraph {
+        font-size: 1.4rem;
+    }
+
+    .services-grid {
+        gap: 36px;
+    }
+
+    .service-card {
+        padding: 48px 44px;
+    }
+
+    .service-icon-badge {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 30px;
+    }
+
+    .service-title {
+        font-size: 1.45rem;
+    }
+
+    .service-description {
+        font-size: 1.05rem;
+    }
+}
+
+/* ==========================================================================
+   Very small phones: keep things tight at the extreme low end (<= 380px)
+   ========================================================================== */
+@media (max-width: 380px) {
+    .services-eyebrow {
+        font-size: 10px;
+    }
+
+    .services-heading {
+        font-size: 1.45rem;
+    }
+
+    .services-paragraph {
+        font-size: 0.85rem;
+    }
+
+    .service-card {
+        padding: 18px 16px;
+    }
+
+    .service-icon-badge {
+        width: 38px;
+        height: 38px;
+        margin-bottom: 14px;
+    }
+
+    .service-title {
+        font-size: 0.98rem;
+    }
+
+    .service-description {
+        font-size: 0.82rem;
+    }
 }
 </style>
