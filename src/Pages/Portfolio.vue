@@ -72,7 +72,7 @@
         </div>
       </section>
 
-      <div ref="workSection">
+      <div ref="workSection" class="full-width-section-group">
         <WebDevelopmentPortfolioSection :isDarkMode="isDarkMode" />
         <AppDevelopmentProjectSection :isDarkMode="isDarkMode" @open-modal="openModal" />
         <EcommerceprojectsSection :isDarkMode="isDarkMode" />
@@ -350,7 +350,6 @@ onUnmounted(() => {
 .hero-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
-  /* Shared vertical rhythm used across the page, matching Home/About/Services */
   --space-sm: clamp(18px, 2.6vw, 36px);
   --space-md: clamp(22px, 3.6vw, 56px);
   --space-lg: clamp(32px, 5.5vw, 96px);
@@ -367,13 +366,11 @@ onUnmounted(() => {
   transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
-/* 3. Updated background to pure deep black */
 .theme-dark {
   background-color: #000000;
   color: #ffffff;
 }
 
-/* CHANGED: light theme now overrides --brand-accent to vibrant orange and keeps a solid white background */
 .theme-light {
   --brand-accent: #f97316;
   background-color: #ffffff;
@@ -407,12 +404,6 @@ onUnmounted(() => {
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
 
-/* =========================================================
-   NAVBAR — full width, flush to the top and side edges, no
-   floating pill margin. Matches the Home.vue / About.vue /
-   Services.vue redesign exactly. Fluid base + explicit
-   per-tier growth/shrink further down.
-   ========================================================= */
 .navbar {
   position: fixed;
   top: 0;
@@ -489,7 +480,6 @@ onUnmounted(() => {
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
 }
 
-/* CHANGED: orange hover glow for light theme */
 .theme-light .consult-btn:hover {
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
@@ -594,7 +584,6 @@ onUnmounted(() => {
   background-color: var(--brand-accent) !important;
 }
 
-/* NAV OVERLAY */
 .nav-overlay {
   position: fixed;
   inset: 0;
@@ -693,7 +682,6 @@ onUnmounted(() => {
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
 
-/* CHANGED: orange hover glow for light theme */
 .theme-light .consult-btn-overlay:hover {
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
@@ -725,33 +713,30 @@ onUnmounted(() => {
   }
 }
 
-/* =========================================================
-   PORTFOLIO CANVAS — fixed calc()-based top padding (tuned for
-   the old floating navbar) replaced with fluid clamp() values,
-   matching the same fix applied to Services.vue.
-   ========================================================= */
 .hero-main {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding-inline: clamp(20px, 5vw, 60px);
+  width: 100vw;
+  max-width: 100vw;
+  padding-inline: 0;
+  margin: 0;
+  box-sizing: border-box;
   gap: clamp(18px, 2.4vw, 24px);
   padding-top: clamp(96px, 15vh, 150px);
   padding-bottom: clamp(48px, 8vh, 90px);
+  overflow-x: hidden;
 }
 
-/* ----------------------------------------- */
-/* PORTFOLIO HERO — same structure/design      */
-/* language as Services.vue's hero, reusing    */
-/* this page's own --brand-accent color scheme */
-/* ----------------------------------------- */
 .portfolio-hero {
-  max-width: 920px;
+  width: 100%;
+  max-width: 100%;
+  padding-inline: clamp(20px, 5vw, 60px);
   margin: clamp(20px, 3vh, 40px) auto clamp(40px, 6vw, 80px);
   text-align: center;
   position: relative;
   z-index: 5;
+  box-sizing: border-box;
 }
 
 .section-tag {
@@ -826,9 +811,6 @@ onUnmounted(() => {
   transform: translateY(-2px);
 }
 
-/* Light theme: keep the same dark outlined look as About.vue/Services.vue's
-   equivalent button rather than inverting to white, for contrast on a
-   light background */
 .theme-light .btn-our-work {
   background-color: #0f172a;
   border-color: rgba(15, 23, 42, 0.15);
@@ -839,19 +821,28 @@ onUnmounted(() => {
   border-color: var(--brand-accent);
 }
 
-/* ----------------------------------------- */
-/* CLOSING CTA SECTION (from Culture.vue)     */
-/* ----------------------------------------- */
+.full-width-section-group {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .culture-cta {
   position: relative;
-  max-width: 1000px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   text-align: center;
   padding: clamp(44px, 6vw, 80px) clamp(24px, 4vw, 40px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   background-color: rgba(255, 255, 255, 0.01);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .theme-light .culture-cta {
@@ -874,7 +865,6 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-/* CHANGED: light-theme CTA glow now uses a soft orange tint */
 .theme-light .cta-glow {
   opacity: 0.15;
   background-color: #fdba74;
@@ -896,7 +886,6 @@ onUnmounted(() => {
   background-clip: text;
 }
 
-/* CHANGED: light-theme gradient endpoint now vibrant orange */
 .theme-light .highlight-text {
   background: linear-gradient(135deg, #0f172a 40%, #f97316 100%);
   -webkit-background-clip: text;
@@ -934,7 +923,6 @@ onUnmounted(() => {
   transition: background-color 0.3s, color 0.3s, transform 0.2s;
 }
 
-/* CHANGED: light-theme button now vibrant orange instead of dark navy */
 .theme-light .btn-start-project {
   background-color: #f97316;
   color: #ffffff;
@@ -946,15 +934,13 @@ onUnmounted(() => {
   transform: translateY(-2px);
 }
 
-/* ----------------------------------------- */
-/* GO BACK BUTTON (matches Start a Project)   */
-/* ----------------------------------------- */
 .back-btn-row {
   position: relative;
   z-index: 10;
   display: flex;
   justify-content: center;
   margin-top: clamp(2rem, 4vw, 3rem);
+  padding-inline: clamp(20px, 5vw, 60px);
 }
 
 .go-back-btn {
@@ -975,7 +961,6 @@ onUnmounted(() => {
   transition: background-color 0.3s, color 0.3s, transform 0.2s;
 }
 
-/* CHANGED: light-theme button now vibrant orange instead of dark navy */
 .theme-light .go-back-btn {
   background-color: #f97316;
   color: #ffffff;
@@ -995,14 +980,10 @@ onUnmounted(() => {
   transform: translateX(-3px);
 }
 
-/* ----------------------------------------- */
-/* SCROLL-IN ANIMATION (matches Culture.vue) */
-/* ----------------------------------------- */
 .animate-scroll-element {
   opacity: 0;
 }
 
-/* FOOTER */
 .footer-group {
   width: 100%;
   position: relative;
@@ -1031,11 +1012,6 @@ onUnmounted(() => {
   border-top-color: rgba(15, 23, 42, 0.06);
 }
 
-/* =============================================
-   ✅ APP PREVIEW MODAL — sizing now scales with
-   viewport instead of one fixed max-width/height,
-   and the close button repositions on mobile.
-   ============================================= */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -1144,7 +1120,6 @@ onUnmounted(() => {
   transform: scale(0.97);
 }
 
-/* ── Floating Chat Widget (new, isolated) ── */
 .chat-fab {
   position: fixed;
   bottom: clamp(16px, 4vw, 28px);
@@ -1164,7 +1139,6 @@ onUnmounted(() => {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* CHANGED: light-theme chat button glow now vibrant orange (background already inherits --brand-accent) */
 .theme-light .chat-fab {
   box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
 }
@@ -1224,14 +1198,6 @@ onUnmounted(() => {
   transform: translateY(16px) scale(0.96);
 }
 
-/* =========================================================================
-   BREAKPOINT TIERS
-   Organized by the exact ranges used across the rest of the site,
-   desktop-first (max-width cascades down). Navbar sizing mirrors the
-   Home.vue / About.vue / Services.vue implementation tier-for-tier.
-   ========================================================================= */
-
-/* ---------- Desktops — 1025px to 1200px ---------- */
 @media (min-width: 1025px) and (max-width: 1200px) {
   .navbar {
     padding: 0.75rem 1.8rem;
@@ -1244,17 +1210,8 @@ onUnmounted(() => {
   .nav-actions {
     gap: 16px;
   }
-
-  .culture-cta {
-    max-width: 900px;
-  }
-
-  .portfolio-hero {
-    max-width: 800px;
-  }
 }
 
-/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
 @media (min-width: 1201px) {
   .navbar {
     padding: 0.85rem 2.2rem;
@@ -1271,14 +1228,6 @@ onUnmounted(() => {
   .consult-btn {
     font-size: 14px;
     padding: 11px 20px;
-  }
-
-  .hero-main {
-    padding-inline: clamp(32px, 5vw, 80px);
-  }
-
-  .portfolio-hero {
-    max-width: 980px;
   }
 
   .portfolio-title {
@@ -1323,14 +1272,6 @@ onUnmounted(() => {
     height: 38px;
   }
 
-  .hero-main {
-    padding-inline: clamp(40px, 6vw, 110px);
-  }
-
-  .portfolio-hero {
-    max-width: 1100px;
-  }
-
   .portfolio-title {
     font-size: clamp(3rem, 4.8vw, 6rem);
   }
@@ -1338,10 +1279,6 @@ onUnmounted(() => {
   .portfolio-subtitle {
     max-width: 860px;
     font-size: 1.2rem;
-  }
-
-  .culture-cta {
-    max-width: 1180px;
   }
 
   .cta-title {
@@ -1358,7 +1295,6 @@ onUnmounted(() => {
   }
 }
 
-/* ---------- 4K / UHD / large TVs — 1921px and up (e.g. 2560px) ---------- */
 @media (min-width: 1921px) {
   .navbar {
     padding: 1.1rem 3.2rem;
@@ -1375,14 +1311,6 @@ onUnmounted(() => {
   .consult-btn {
     font-size: 16px;
     padding: 13px 26px;
-  }
-
-  .hero-main {
-    padding-inline: clamp(60px, 7vw, 160px);
-  }
-
-  .portfolio-hero {
-    max-width: 1360px;
   }
 
   .portfolio-title {
@@ -1402,7 +1330,6 @@ onUnmounted(() => {
   }
 
   .culture-cta {
-    max-width: 1400px;
     padding: 96px 60px;
   }
 
@@ -1426,7 +1353,6 @@ onUnmounted(() => {
   }
 }
 
-/* ---------- Laptops / Large Tablets — 769px to 1024px ---------- */
 @media (min-width: 769px) and (max-width: 1024px) {
   .navbar {
     padding: 0.7rem 1.6rem;
@@ -1450,14 +1376,6 @@ onUnmounted(() => {
     padding-bottom: clamp(40px, 7vh, 72px);
   }
 
-  .culture-cta {
-    max-width: 700px;
-  }
-
-  .portfolio-hero {
-    max-width: 660px;
-  }
-
   .portfolio-title {
     font-size: clamp(2rem, 5.6vw, 3.4rem);
   }
@@ -1467,7 +1385,6 @@ onUnmounted(() => {
   }
 }
 
-/* ---------- Mobile Landscape / Tablets — 481px to 768px ---------- */
 @media (min-width: 481px) and (max-width: 768px) {
   .navbar {
     padding: 0.6rem 1.1rem;
@@ -1492,12 +1409,7 @@ onUnmounted(() => {
   }
 
   .culture-cta {
-    max-width: 92%;
     padding: clamp(36px, 7vw, 56px) clamp(20px, 5vw, 32px);
-  }
-
-  .portfolio-hero {
-    max-width: 540px;
   }
 
   .portfolio-title {
@@ -1513,7 +1425,6 @@ onUnmounted(() => {
   }
 }
 
-/* ---------- Mobile Portrait — 320px to 480px ---------- */
 @media (max-width: 480px) {
   .navbar {
     padding: 0.55rem 0.85rem;
@@ -1555,13 +1466,12 @@ onUnmounted(() => {
   .hero-main {
     padding-top: clamp(74px, 15vh, 96px);
     padding-bottom: clamp(28px, 5vh, 44px);
-    padding-inline: 16px;
     gap: 16px;
   }
 
   .portfolio-hero {
-    max-width: 100%;
     margin-bottom: clamp(32px, 9vw, 48px);
+    padding-inline: 16px;
   }
 
   .portfolio-title {
@@ -1604,6 +1514,7 @@ onUnmounted(() => {
 
   .back-btn-row {
     margin-top: 2rem;
+    padding-inline: 16px;
   }
 
   .go-back-btn {
@@ -1640,10 +1551,6 @@ onUnmounted(() => {
 
   .logo {
     font-size: 1rem;
-  }
-
-  .hero-main {
-    padding-inline: 14px;
   }
 
   .cta-title {

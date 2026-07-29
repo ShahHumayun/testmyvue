@@ -11,14 +11,14 @@
         Trusted By Startups & Growing Businesses
       </h2>
       <div ref="counterContainer"
-        class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 sm:gap-8 md:gap-10 xl:gap-12 2xl:gap-16 text-center">
+        class="stats-grid grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 sm:gap-8 md:gap-10 xl:gap-12 2xl:gap-16 text-center">
         <div v-for="(stat, idx) in stats" :key="idx" class="space-y-1 sm:space-y-2">
           <div
-            :class="['text-3xl sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl font-black tracking-tight', isDarkMode ? 'text-[#00ffa3]' : 'text-black']">
+            :class="['stat-number text-3xl sm:text-4xl md:text-5xl xl:text-6xl 2xl:text-7xl font-black tracking-tight', isDarkMode ? 'text-[#00ffa3]' : 'text-black']">
             <span class="trust-counter" :data-target="stat.value">0</span>{{ stat.suffix }}
           </div>
           <p :class="[
-            'text-xs sm:text-sm md:text-sm xl:text-lg font-medium tracking-wide uppercase whitespace-nowrap',
+            'stat-label text-xs sm:text-sm md:text-sm xl:text-lg font-medium tracking-wide uppercase whitespace-nowrap',
             isDarkMode ? 'text-neutral-400' : 'text-neutral-500'
           ]">{{ stat.label }}</p>
         </div>
@@ -82,11 +82,11 @@ onMounted(() => {
     padding-bottom: 8rem;
   }
 
-  .xl\:text-6xl {
+  .stat-number {
     font-size: 4.5rem;
   }
 
-  .xl\:text-lg {
+  .stat-label {
     font-size: 1.25rem;
   }
 }
@@ -108,16 +108,16 @@ onMounted(() => {
     padding-bottom: 9rem;
   }
 
-  .xl\:text-6xl {
+  .stat-number {
     font-size: 5.25rem;
   }
 
-  .xl\:text-lg {
+  .stat-label {
     font-size: 1.4rem;
   }
 
-  .xl\:gap-12 {
-    gap: 3.5rem;
+  .stats-grid {
+    gap: 4.5rem;
   }
 }
 </style>

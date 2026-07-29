@@ -1,34 +1,54 @@
 <template>
-  <div
-    ref="pageContainer"
-    :class="[
-      'font-sans relative overflow-hidden',
-      isDarkMode
-        ? 'bg-[#000000] text-[#ffffff] theme-dark selection:bg-[#00ffa3] selection:text-[#000000]'
-        : 'bg-white text-[#0f172a] theme-light selection:bg-[#f97316] selection:text-[#000000]'
-    ]"
-  >
+  <div ref="pageContainer" :class="[
+    'font-sans relative overflow-hidden w-full max-w-full',
+    isDarkMode
+      ? 'bg-[#000000] text-[#ffffff] theme-dark selection:bg-[#00ffa3] selection:text-[#000000]'
+      : 'bg-white text-[#0f172a] theme-light selection:bg-[#f97316] selection:text-[#000000]'
+  ]">
 
     <Header />
 
-    <div 
-      ref="mouseGlow" 
+    <div ref="mouseGlow"
       class="pointer-events-none fixed inset-0 z-10 opacity-30 transition-opacity duration-300 will-change-transform"
-      :style="{ background: `radial-gradient(600px circle at ${mouse.x}px ${mouse.y}px, ${glowColor}, transparent 80%)` }"
-    ></div>
+      :style="{ background: `radial-gradient(600px circle at ${mouse.x}px ${mouse.y}px, ${glowColor}, transparent 80%)` }">
+    </div>
 
-    <webappcomponent1 :isDarkMode="isDarkMode" @navigate="navigateToConsultation" />
-    <webappcomponent2 :isDarkMode="isDarkMode" />
-    <webdevelopmentportfoliosection :isDarkMode="isDarkMode" />
-    <webappcomponent3 :isDarkMode="isDarkMode" />
-    <webappcomponent4 :isDarkMode="isDarkMode" />
-    <webappcomponent5 :isDarkMode="isDarkMode" />
-    <webappcomponent6 :isDarkMode="isDarkMode" />
-    <webappcomponent7 :isDarkMode="isDarkMode" />
-    <webappcomponent8 :isDarkMode="isDarkMode" />
-    <webappcomponent9 :isDarkMode="isDarkMode" />
-    <webappcomponent10 :isDarkMode="isDarkMode" @navigate="navigateToConsultation" />
-    <footer-component />
+    <div class="w-full max-w-full">
+      <webappcomponent1 :isDarkMode="isDarkMode" @navigate="navigateToConsultation" />
+    </div>
+    <div class="w-full max-w-full">
+      <webappcomponent2 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <webdevelopmentportfoliosection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <webappcomponent3 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <webappcomponent4 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <webappcomponent5 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <webappcomponent6 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <webappcomponent7 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <webappcomponent8 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <webappcomponent9 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <webappcomponent10 :isDarkMode="isDarkMode" @navigate="navigateToConsultation" />
+    </div>
+    <div class="w-full max-w-full">
+      <footer-component />
+    </div>
 
   </div>
 </template>

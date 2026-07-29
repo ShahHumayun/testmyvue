@@ -57,7 +57,7 @@ onMounted(() => {
 <style scoped>
 /* ── Encapsulated Visual Protection Boundaries ── */
 .theme-dark {
-  background-color: #0b0c10 !important;
+  background-color: #1c1c1c !important;
   color: #ffffff !important;
   --title-color: #ffffff;
   --card-bg: rgba(255, 255, 255, 0.02);
@@ -68,7 +68,7 @@ onMounted(() => {
 }
 
 .theme-light {
-  background-color: #ffffff !important;
+  background-color: #f2f2f2 !important;
   color: #000000 !important;
   --title-color: #000000;
   --card-bg: #ffffff;
@@ -80,24 +80,22 @@ onMounted(() => {
 
 /* ── Section ── */
 .projects-section {
-  padding: 56px 20px;
-  margin: 0 auto;
-  width: 100%;
-  /* Fluid width: scales continuously with the viewport instead of jumping
-     between fixed breakpoint values. margin: 0 auto keeps it centered at
-     every screen size, from the smallest phone to the largest TV. */
-  max-width: clamp(320px, 92vw, 1280px);
+  padding: 72px 24px;
+  margin: 0;
+  width: 100vw;
+  max-width: 100vw;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
   .projects-section {
-    padding: 80px 48px;
+    padding: 100px 48px;
   }
 }
 
@@ -122,8 +120,9 @@ onMounted(() => {
 
 /* ── Header ── */
 .section-header {
-  max-width: clamp(280px, 88vw, 896px);
-  margin: 0 auto 40px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto 50px;
   text-align: center;
   position: relative;
   z-index: 10;
@@ -174,23 +173,27 @@ onMounted(() => {
 /* ── Cards grid ── */
 .cards-grid {
   width: 100%;
+  max-width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 28px;
   position: relative;
   z-index: 10;
   align-items: stretch;
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
   .cards-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
   }
 }
 
 @media (min-width: 1024px) {
   .cards-grid {
     grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
   }
 }
 
@@ -201,7 +204,7 @@ onMounted(() => {
   position: relative;
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -224,9 +227,9 @@ onMounted(() => {
   border-color: rgba(249, 115, 22, 0.5) !important;
 }
 
-/* ── Card image ── */
+/* ── Card image (Increased height for better visual proportion) ── */
 .card-image {
-  height: 160px;
+  height: 210px;
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -247,7 +250,7 @@ onMounted(() => {
 
 /* ── Card body ── */
 .card-body {
-  padding: 18px 18px 24px;
+  padding: 24px 20px 28px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -257,22 +260,23 @@ onMounted(() => {
 }
 
 .card-title {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   flex-shrink: 0;
   color: var(--title-color) !important;
 }
 
 .card-intro {
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   color: #9ca3af !important;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 2.5rem;
-  margin-bottom: 18px;
+  min-height: 3rem;
+  margin-bottom: 22px;
+  line-height: 1.5;
 }
 
 /* ── Button ── */
@@ -281,7 +285,7 @@ onMounted(() => {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .view-btn {
@@ -289,8 +293,8 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 6px 12px;
-  font-size: 0.92rem;
+  padding: 10px 16px;
+  font-size: 0.95rem;
   font-weight: 700;
   border-radius: 8px;
   cursor: pointer;
@@ -318,11 +322,11 @@ onMounted(() => {
    ========================================================================== */
 @media (min-width: 576px) {
   .cards-grid {
-    gap: 22px;
+    gap: 28px;
   }
 
   .card-image {
-    height: 170px;
+    height: 230px;
   }
 
   .section-label {
@@ -330,35 +334,34 @@ onMounted(() => {
   }
 
   .card-title {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
   }
 }
 
 /* ==========================================================================
    Laptops / Large Tablets: 769px — 1024px
-   (grid switches to 4 columns exactly at 1024px, unchanged from original)
    ========================================================================== */
 @media (min-width: 769px) {
   .section-header {
-    margin-bottom: 48px;
+    margin-bottom: 56px;
   }
 
   .cards-grid {
-    gap: 24px;
+    gap: 32px;
   }
 
   .card-image {
-    height: 180px;
+    height: 245px;
   }
 }
 
 @media (min-width: 992px) {
   .cards-grid {
-    gap: 26px;
+    gap: 32px;
   }
 
   .card-image {
-    height: 188px;
+    height: 260px;
   }
 }
 
@@ -367,20 +370,19 @@ onMounted(() => {
    ========================================================================== */
 @media (min-width: 1025px) {
   .section-header {
-    margin-bottom: 56px;
+    margin-bottom: 64px;
   }
 
   .cards-grid {
-    gap: 28px;
+    gap: 30px;
   }
 
   .card-image {
-    height: 192px;
-    /* matches original design's fixed height exactly at this tier */
+    height: 240px;
   }
 
   .card-body {
-    padding: 24px 24px 32px;
+    padding: 28px 22px 34px;
   }
 
   .card-title {
@@ -389,12 +391,13 @@ onMounted(() => {
   }
 
   .card-intro {
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     margin-bottom: 24px;
   }
 
   .view-btn {
     font-size: 1rem;
+    padding: 10px 14px;
   }
 }
 
@@ -403,44 +406,41 @@ onMounted(() => {
    ========================================================================== */
 @media (min-width: 1201px) {
   .cards-grid {
-    gap: 30px;
+    gap: 32px;
   }
 
   .card-image {
-    height: 200px;
+    height: 265px;
   }
 }
 
 /* ==========================================================================
    Ultra-wide / Large TVs: 1536px and up
-   Scale up spacing, imagery, and type so cards don't feel lost on huge
-   displays — the section-title clamp() already grows fluidly, this tops
-   up everything else that was fixed.
    ========================================================================== */
 @media (min-width: 1536px) {
   .cards-grid {
-    gap: 34px;
+    gap: 36px;
   }
 
   .card-image {
-    height: 215px;
+    height: 290px;
   }
 
   .card-body {
-    padding: 28px 26px 34px;
+    padding: 32px 26px 38px;
   }
 
   .card-title {
-    font-size: 1.35rem;
+    font-size: 1.4rem;
   }
 
   .card-intro {
-    font-size: 0.92rem;
+    font-size: 0.96rem;
   }
 
   .view-btn {
     font-size: 1.05rem;
-    padding: 8px 14px;
+    padding: 11px 16px;
   }
 
   .section-label {
@@ -450,65 +450,26 @@ onMounted(() => {
 
 /* ==========================================================================
    Very Large Desktops / Big TVs: 1920px and up
-   Keeps scaling instead of plateauing at 1536px, so cards don't shrink
-   relative to a much larger viewport / viewing distance.
    ========================================================================== */
 @media (min-width: 1920px) {
   .projects-section {
-    max-width: 1550px;
+    max-width: 100vw;
   }
 
   .cards-grid {
-    gap: 38px;
+    gap: 40px;
   }
 
   .card-image {
-    height: 230px;
+    height: 320px;
   }
 
   .card-body {
-    padding: 30px 28px 36px;
+    padding: 36px 30px 42px;
   }
 
   .card-title {
-    font-size: 1.45rem;
-  }
-
-  .card-intro {
-    font-size: 0.96rem;
-  }
-
-  .view-btn {
-    font-size: 1.1rem;
-    padding: 9px 15px;
-  }
-}
-
-/* ==========================================================================
-   4K / Extra-Extra-Large Monitors: 2560px and up
-   Real 4K displays (or 27"+ high-res laptop panels) render content
-   physically small at 1920px-tier sizing. This tier keeps the container,
-   cards, and imagery growing proportionally instead of looking undersized.
-   ========================================================================== */
-@media (min-width: 2560px) {
-  .projects-section {
-    max-width: 1850px;
-  }
-
-  .cards-grid {
-    gap: 42px;
-  }
-
-  .card-image {
-    height: 250px;
-  }
-
-  .card-body {
-    padding: 34px 30px 40px;
-  }
-
-  .card-title {
-    font-size: 1.6rem;
+    font-size: 1.55rem;
   }
 
   .card-intro {
@@ -516,12 +477,46 @@ onMounted(() => {
   }
 
   .view-btn {
-    font-size: 1.18rem;
-    padding: 10px 16px;
+    font-size: 1.12rem;
+    padding: 12px 18px;
+  }
+}
+
+/* ==========================================================================
+   4K / Extra-Extra-Large Monitors: 2560px and up
+   ========================================================================== */
+@media (min-width: 2560px) {
+  .projects-section {
+    max-width: 100vw;
+  }
+
+  .cards-grid {
+    gap: 48px;
+  }
+
+  .card-image {
+    height: 360px;
+  }
+
+  .card-body {
+    padding: 40px 34px 48px;
+  }
+
+  .card-title {
+    font-size: 1.75rem;
+  }
+
+  .card-intro {
+    font-size: 1.1rem;
+  }
+
+  .view-btn {
+    font-size: 1.22rem;
+    padding: 14px 20px;
   }
 
   .section-label {
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
 }
 
@@ -530,7 +525,7 @@ onMounted(() => {
    ========================================================================== */
 @media (max-width: 380px) {
   .projects-section {
-    padding: 44px 14px;
+    padding: 50px 16px;
   }
 
   .section-label {
@@ -538,27 +533,27 @@ onMounted(() => {
   }
 
   .cards-grid {
-    gap: 16px;
+    gap: 20px;
   }
 
   .card-image {
-    height: 145px;
+    height: 180px;
   }
 
   .card-body {
-    padding: 16px 16px 20px;
+    padding: 18px 16px 22px;
   }
 
   .card-title {
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
 
   .card-intro {
-    font-size: 0.78rem;
+    font-size: 0.82rem;
   }
 
   .view-btn {
-    font-size: 0.85rem;
+    font-size: 0.88rem;
   }
 }
 </style>

@@ -217,7 +217,6 @@ const servicesList = ref([
 
 const parallax = reactive({ bgX: 0, bgY: 0 })
 
-// Helper function to update the global HTML class token
 const applyGlobalThemeClass = (isDark) => {
   if (isDark) {
     document.documentElement.classList.add('theme-dark')
@@ -228,7 +227,6 @@ const applyGlobalThemeClass = (isDark) => {
   }
 }
 
-// CHANGED: Saved under the unified webhive-theme key and updates root HTML element classes
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
   const activeTheme = isDarkMode.value ? 'dark' : 'light'
@@ -249,15 +247,13 @@ const handleMouseMove = (e) => {
 const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value }
 
 onMounted(() => {
-  // CHANGED: Check the universal site theme preference. Defaults to dark.
   const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
   } else {
-    isDarkMode.value = true // Keep dark as default when visiting fresh
+    isDarkMode.value = true
   }
 
-  // Keep root context token up-to-date instantly on view mount
   applyGlobalThemeClass(isDarkMode.value)
 
   gsap.set('.showcase-row, .services-cta', { opacity: 1 })
@@ -332,7 +328,6 @@ const onMenuLeave = (el, done) => {
 
 onUnmounted(() => {
   ScrollTrigger.getAll().forEach(t => t.kill())
-  // CHANGED: Removed the item removal function to prevent wiping user preference on route changes
 })
 </script>
 
@@ -375,7 +370,6 @@ onUnmounted(() => {
 .services-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
-  /* Shared vertical rhythm used across the page, matching Home/About/etc. */
   --space-sm: clamp(18px, 2.6vw, 36px);
   --space-md: clamp(22px, 3.6vw, 56px);
   --space-lg: clamp(32px, 5.5vw, 96px);
@@ -394,7 +388,6 @@ onUnmounted(() => {
   color: #ffffff;
 }
 
-/* Light theme overrides --brand-accent to vibrant orange and uses a solid white background */
 .theme-light {
   --brand-accent: #f97316;
   background-color: #ffffff;
@@ -429,12 +422,6 @@ onUnmounted(() => {
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
 
-/* =========================================================
-   NAVBAR — full width, flush to the top and side edges, no
-   floating pill margin. Matches the Home.vue / About.vue
-   redesign exactly. Fluid base + explicit per-tier
-   growth/shrink further down.
-   ========================================================= */
 .navbar {
   position: fixed;
   top: 0;
@@ -459,7 +446,6 @@ onUnmounted(() => {
   box-sizing: border-box;
 }
 
-/* Light theme: solid navbar, no blur */
 .theme-light .navbar {
   background: #ffffff;
   backdrop-filter: none;
@@ -614,9 +600,6 @@ onUnmounted(() => {
   background-color: var(--brand-accent) !important;
 }
 
-/* ----------------------------------------- */
-/* NAVIGATION OVERLAY BLOCK                  */
-/* ----------------------------------------- */
 .nav-overlay {
   position: fixed;
   inset: 0;
@@ -723,18 +706,13 @@ onUnmounted(() => {
   }
 }
 
-/* ----------------------------------------- */
-/* SERVICES CANVAS — fixed calc()-based top   */
-/* padding (tuned for the old floating navbar)*/
-/* replaced with fluid clamp() values so nav   */
-/* clearance scales cleanly at every breakpoint*/
-/* ----------------------------------------- */
 .services-main {
   flex: 1 1 0;
   position: relative;
   z-index: 10;
   width: 100%;
   padding: clamp(96px, 15vh, 150px) clamp(16px, 5vw, 60px) clamp(48px, 8vh, 90px);
+  box-sizing: border-box;
 }
 
 .ambient-glow {
@@ -752,14 +730,16 @@ onUnmounted(() => {
   z-index: 1;
 }
 
-/* Glow removed entirely in light theme (would otherwise look like a blurry orange stain on white) */
 .theme-light .ambient-glow {
   display: none;
 }
 
+/* FULL WIDTH MODIFICATION: removed max-width constraints to make sections span full screen width */
 .services-hero {
-  max-width: 920px;
-  margin: clamp(20px, 3vh, 40px) auto clamp(50px, 8vw, 90px);
+  width: 100%;
+  margin: clamp(20px, 3vh, 40px) 0 clamp(50px, 8vw, 90px);
+  padding: 0 clamp(16px, 4vw, 40px);
+  box-sizing: border-box;
   text-align: center;
   position: relative;
   z-index: 5;
@@ -809,7 +789,7 @@ onUnmounted(() => {
 .services-subtitle {
   font-size: clamp(15px, 2vw, 19px);
   line-height: 1.7;
-  max-width: 760px;
+  max-width: 1000px;
   margin: 0 auto clamp(28px, 4.4vh, 44px);
   color: rgba(255, 255, 255, 0.65);
 }
@@ -850,12 +830,12 @@ onUnmounted(() => {
   transform: translateY(-2px);
 }
 
-/* ----------------------------------------- */
-/* ALTERNATING SHOWCASE GRID                 */
-/* ----------------------------------------- */
+/* FULL WIDTH MODIFICATION: removed max-width constraints */
 .showcase-rows {
-  max-width: 1300px;
-  margin: 0 auto clamp(56px, 9vw, 110px);
+  width: 100%;
+  margin: 0 0 clamp(56px, 9vw, 110px);
+  padding: 0 clamp(16px, 4vw, 40px);
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: clamp(48px, 8vw, 100px);
@@ -868,6 +848,7 @@ onUnmounted(() => {
   grid-template-columns: 1fr 1fr;
   gap: clamp(28px, 5vw, 70px);
   align-items: center;
+  width: 100%;
 }
 
 .row-reverse {
@@ -939,7 +920,6 @@ onUnmounted(() => {
   opacity: 0.25;
 }
 
-/* Removed in light theme — same reasoning as ambient-glow, avoids an orange blur smear on white */
 .theme-light .row-glow-dot {
   display: none;
 }
@@ -947,6 +927,7 @@ onUnmounted(() => {
 .row-content {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .row-tag {
@@ -984,6 +965,8 @@ onUnmounted(() => {
   flex-direction: column;
   gap: 12px;
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .row-points li {
@@ -1006,22 +989,21 @@ onUnmounted(() => {
   box-shadow: 0 0 8px var(--brand-accent);
 }
 
-/* ----------------------------------------- */
-/* CLOSING CTA BLOCK (FIXED HITBOX CONTEXT)   */
-/* ----------------------------------------- */
+/* FULL WIDTH MODIFICATION: removed max-width constraints */
 .services-cta {
   position: relative;
   z-index: 30;
-  /* Elevated above background layouts and blurring elements */
   pointer-events: auto;
-  max-width: 1000px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   text-align: center;
   padding: clamp(44px, 6vw, 80px) clamp(24px, 4vw, 40px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   background-color: rgba(255, 255, 255, 0.01);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .theme-light .services-cta {
@@ -1043,7 +1025,6 @@ onUnmounted(() => {
   z-index: 1;
 }
 
-/* Removed in light theme — no blurry orange background behind the CTA */
 .theme-light .cta-glow {
   display: none;
 }
@@ -1060,7 +1041,7 @@ onUnmounted(() => {
   font-size: clamp(14px, 1.6vw, 17px);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.65);
-  max-width: 560px;
+  max-width: 800px;
   margin: 0 auto 36px;
   position: relative;
   z-index: 5;
@@ -1073,9 +1054,7 @@ onUnmounted(() => {
 .btn-start-project {
   position: relative;
   z-index: 10;
-  /* Placed over internal glow layer */
   pointer-events: auto !important;
-  /* Explicit browser directive to accept click actions */
   text-decoration: none;
   display: inline-block;
   background-color: #ffffff;
@@ -1094,7 +1073,6 @@ onUnmounted(() => {
   transform: translateY(-2px);
 }
 
-/* Light theme: background stays the brand accent orange at all times; text is white normally and flips to black on hover, with the same lift as Portfolio.vue */
 .theme-light .btn-start-project {
   background-color: var(--brand-accent);
   color: #ffffff;
@@ -1107,14 +1085,12 @@ onUnmounted(() => {
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3);
 }
 
-/* ----------------------------------------- */
-/* GO BACK BUTTON (matches Start a Project)   */
-/* ----------------------------------------- */
 .back-btn-row {
   position: relative;
   z-index: 10;
   display: flex;
   justify-content: center;
+  width: 100%;
   margin-top: clamp(2rem, 4vw, 3rem);
 }
 
@@ -1142,7 +1118,6 @@ onUnmounted(() => {
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.3);
 }
 
-/* Light theme: background stays the brand accent orange at all times; text is white normally and flips to black on hover, matching Start a Project */
 .theme-light .go-back-btn {
   background-color: var(--brand-accent);
   color: #ffffff;
@@ -1167,9 +1142,6 @@ onUnmounted(() => {
   opacity: 0;
 }
 
-/* ----------------------------------------- */
-/* FOOTER                                    */
-/* ----------------------------------------- */
 .footer-group {
   width: 100%;
   position: relative;
@@ -1183,6 +1155,7 @@ onUnmounted(() => {
   padding: 30px 20px;
   font-size: 11px;
   border-top: 1px solid;
+  box-sizing: border-box;
 }
 
 .theme-dark .copyright-section {
@@ -1197,7 +1170,6 @@ onUnmounted(() => {
   border-top-color: rgba(15, 23, 42, 0.06);
 }
 
-/* ── Floating Chat Widget (new, isolated) ── */
 .chat-fab {
   position: fixed;
   bottom: clamp(16px, 4vw, 28px);
@@ -1276,14 +1248,6 @@ onUnmounted(() => {
   transform: translateY(16px) scale(0.96);
 }
 
-/* =========================================================================
-   BREAKPOINT TIERS
-   Organized by the exact ranges used across the rest of the site,
-   desktop-first (max-width cascades down). Navbar sizing mirrors the
-   Home.vue / About.vue implementation tier-for-tier.
-   ========================================================================= */
-
-/* ---------- Desktops — 1025px to 1200px ---------- */
 @media (min-width: 1025px) and (max-width: 1200px) {
   .navbar {
     padding: 0.75rem 1.8rem;
@@ -1296,17 +1260,8 @@ onUnmounted(() => {
   .nav-actions {
     gap: 16px;
   }
-
-  .services-hero {
-    max-width: 800px;
-  }
-
-  .showcase-rows {
-    max-width: 1100px;
-  }
 }
 
-/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
 @media (min-width: 1201px) {
   .navbar {
     padding: 0.85rem 2.2rem;
@@ -1323,10 +1278,6 @@ onUnmounted(() => {
   .consult-btn {
     font-size: 14px;
     padding: 11px 20px;
-  }
-
-  .services-hero {
-    max-width: 980px;
   }
 
   .services-title {
@@ -1371,29 +1322,16 @@ onUnmounted(() => {
     height: 38px;
   }
 
-  .services-hero {
-    max-width: 1100px;
-  }
-
   .services-title {
     font-size: clamp(3rem, 4.8vw, 6rem);
   }
 
   .services-subtitle {
-    max-width: 860px;
     font-size: 1.2rem;
-  }
-
-  .showcase-rows {
-    max-width: 1560px;
   }
 
   .row-title {
     font-size: clamp(1.8rem, 2.2vw, 2.6rem);
-  }
-
-  .services-cta {
-    max-width: 1180px;
   }
 
   .cta-title {
@@ -1401,7 +1339,6 @@ onUnmounted(() => {
   }
 }
 
-/* ---------- 4K / UHD / large TVs — 1921px and up (e.g. 2560px) ---------- */
 @media (min-width: 1921px) {
   .navbar {
     padding: 1.1rem 3.2rem;
@@ -1420,23 +1357,14 @@ onUnmounted(() => {
     padding: 13px 26px;
   }
 
-  .services-hero {
-    max-width: 1360px;
-  }
-
   .services-title {
     font-size: clamp(3.6rem, 4.4vw, 7rem);
     margin-bottom: 36px;
   }
 
   .services-subtitle {
-    max-width: 1000px;
     font-size: 1.35rem;
     line-height: 1.75;
-  }
-
-  .showcase-rows {
-    max-width: 1900px;
   }
 
   .row-title {
@@ -1448,7 +1376,6 @@ onUnmounted(() => {
   }
 
   .services-cta {
-    max-width: 1400px;
     padding: 96px 60px;
   }
 
@@ -1457,7 +1384,6 @@ onUnmounted(() => {
   }
 
   .cta-subtitle {
-    max-width: 700px;
     font-size: 1.15rem;
   }
 
@@ -1468,7 +1394,6 @@ onUnmounted(() => {
   }
 }
 
-/* ---------- Laptops / Large Tablets — 769px to 1024px ---------- */
 @media (min-width: 769px) and (max-width: 1024px) {
   .navbar {
     padding: 0.7rem 1.6rem;
@@ -1491,21 +1416,11 @@ onUnmounted(() => {
     padding: clamp(84px, 14vh, 116px) clamp(24px, 6vw, 48px) clamp(40px, 7vh, 72px);
   }
 
-  .services-hero {
-    max-width: 660px;
-  }
-
   .services-title {
     font-size: clamp(2rem, 5.4vw, 3.2rem);
   }
-
-  .showcase-rows {
-    max-width: 100%;
-    gap: clamp(56px, 8vw, 80px);
-  }
 }
 
-/* ---------- Mobile Landscape / Tablets — 481px to 768px ---------- */
 @media (min-width: 481px) and (max-width: 768px) {
   .navbar {
     padding: 0.6rem 1.1rem;
@@ -1528,16 +1443,8 @@ onUnmounted(() => {
     padding: clamp(78px, 15vh, 104px) clamp(20px, 6vw, 40px) clamp(32px, 6vh, 56px);
   }
 
-  .services-hero {
-    max-width: 540px;
-  }
-
   .services-title {
     font-size: clamp(1.9rem, 7vw, 2.7rem);
-  }
-
-  .services-subtitle {
-    max-width: 90%;
   }
 
   .services-cta {
@@ -1545,7 +1452,6 @@ onUnmounted(() => {
   }
 }
 
-/* ---------- Mobile Portrait — 320px to 480px ---------- */
 @media (max-width: 480px) {
   .navbar {
     padding: 0.55rem 0.85rem;
@@ -1585,11 +1491,10 @@ onUnmounted(() => {
   }
 
   .services-main {
-    padding: clamp(74px, 15vh, 96px) 20px clamp(28px, 5vh, 44px);
+    padding: clamp(74px, 15vh, 96px) 16px clamp(28px, 5vh, 44px);
   }
 
   .services-hero {
-    max-width: 100%;
     margin-bottom: clamp(40px, 10vw, 60px);
   }
 
@@ -1604,7 +1509,6 @@ onUnmounted(() => {
 
   .services-subtitle {
     font-size: 0.95rem;
-    max-width: 100%;
   }
 
   .showcase-rows {
@@ -1617,7 +1521,7 @@ onUnmounted(() => {
   }
 
   .services-cta {
-    padding: 32px 20px;
+    padding: 32px 16px;
   }
 
   .cta-title {
@@ -1657,8 +1561,8 @@ onUnmounted(() => {
   }
 
   .services-main {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
   .services-title {

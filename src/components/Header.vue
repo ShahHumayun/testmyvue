@@ -10,24 +10,13 @@
           Home
         </router-link>
 
-        <button 
-          @click="toggleTheme"
-          class="theme-toggle"
-          aria-label="Toggle Theme"
-        >
-          <div 
-            class="toggle-thumb"
-            :class="{ 'toggle-active': isDarkMode }"
-          >
+        <button @click="toggleTheme" class="theme-toggle" aria-label="Toggle Theme">
+          <div class="toggle-thumb" :class="{ 'toggle-active': isDarkMode }">
             <span class="toggle-icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
           </div>
         </button>
 
-        <button 
-          @click="toggleMenu" 
-          class="menu-trigger"
-          :class="{ 'menu-active': isMenuOpen }"
-        >
+        <button @click="toggleMenu" class="menu-trigger" :class="{ 'menu-active': isMenuOpen }">
           <span class="burger-line line-top"></span>
           <span class="burger-line line-mid"></span>
           <span class="burger-line line-bot"></span>
@@ -38,23 +27,14 @@
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
-          <div 
-            v-for="(item, index) in menuItems" 
-            :key="item"
-            class="menu-item-wrap"
-          >
-            
-            <router-link 
-              :to="item === 'Consultation' ? '/consultation' : '/' + item.toLowerCase()" 
-              @click="toggleMenu" 
-              class="menu-link"
-            >
+          <div v-for="(item, index) in menuItems" :key="item" class="menu-item-wrap">
+            <router-link :to="item === 'Consultation' ? '/consultation' : '/' + item.toLowerCase()" @click="toggleMenu"
+              class="menu-link">
               {{ item }}
             </router-link>
           </div>
 
           <div class="menu-item-wrap overlay-btn-item">
-           
             <router-link to="/consultation" class="consult-btn-overlay" @click="toggleMenu">
               Consultation
             </router-link>
@@ -71,22 +51,22 @@ import { gsap } from 'gsap'
 
 // CHANGED: Injected the global reactive theme state and toggle handler from the parent layout
 const isDarkMode = inject('isDarkMode', ref(true))
-const toggleTheme = inject('toggleTheme', () => {})
+const toggleTheme = inject('toggleTheme', () => { })
 
 const isMenuOpen = ref(false)
 
 // CHANGED: Replaced 'Home' with 'Consultation' in the primary menu items list
-const menuItems = [ 'About', 'Services', 'Portfolio', 'Culture','Studio' ,'Policies']
+const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Policies']
 
-const toggleMenu = () => { 
-  isMenuOpen.value = !isMenuOpen.value 
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
 }
 
 // GSAP Stagger Overlays 
 const onMenuEnter = (el, done) => {
   gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })
-  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
-    { yPercent: 100 }, 
+  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'),
+    { yPercent: 100 },
     { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out', delay: 0.1, onComplete: done }
   )
 }
@@ -126,21 +106,22 @@ const onMenuLeave = (el, done) => {
   --link-color: #0f172a;
 }
 
-/* Navbar Base Styles */
+/* Navbar Base Styles - Modified for Full Screen Width Across All Breakpoints */
 .navbar {
   position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  max-width: 1200px;
+  top: 0;
+  left: 0;
+  transform: none;
+  width: 100%;
+  max-width: 100%;
   z-index: 1000;
   background: var(--navbar-bg);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  border: 1px solid var(--navbar-border);
-  border-radius: 20px;
-  padding: 0.8rem 1.5rem;
+  border: none;
+  border-bottom: 1px solid var(--navbar-border);
+  border-radius: 0;
+  padding: 0.8rem clamp(1rem, 3vw, 2.5rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -160,7 +141,10 @@ const onMenuLeave = (el, done) => {
   align-items: center;
   transition: color 0.4s;
 }
-.logo .dot { color: var(--brand-accent); }
+
+.logo .dot {
+  color: var(--brand-accent);
+}
 
 .nav-actions {
   display: flex;
@@ -183,13 +167,18 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   white-space: nowrap;
 }
+
 @media (max-width: 480px) {
-  .consult-btn { display: none; }
+  .consult-btn {
+    display: none;
+  }
 }
+
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
 }
+
 /* CHANGED: orange hover glow for light theme */
 .theme-light .consult-btn:hover {
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
@@ -210,13 +199,20 @@ const onMenuLeave = (el, done) => {
   transition: background-color 0.3s;
   flex-shrink: 0;
 }
+
 @media (max-width: 480px) {
-  .theme-toggle { width: 34px; height: 18px; padding: 2px; }
+  .theme-toggle {
+    width: 34px;
+    height: 18px;
+    padding: 2px;
+  }
 }
+
 .theme-dark .theme-toggle {
   background-color: rgba(0, 255, 163, 0.1);
   border: 1px solid rgba(0, 255, 163, 0.2);
 }
+
 .toggle-thumb {
   width: 16px;
   height: 16px;
@@ -227,16 +223,28 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #fbbf24;
 }
+
 .toggle-active {
   transform: translateX(18px);
   background-color: #111827;
   border: 1px solid var(--brand-accent);
 }
+
 @media (max-width: 480px) {
-  .toggle-thumb { width: 13px; height: 13px; }
-  .toggle-active { transform: translateX(15px); }
+  .toggle-thumb {
+    width: 13px;
+    height: 13px;
+  }
+
+  .toggle-active {
+    transform: translateX(15px);
+  }
 }
-.toggle-icon { font-size: 9px; user-select: none; }
+
+.toggle-icon {
+  font-size: 9px;
+  user-select: none;
+}
 
 /* Menu Triggers */
 .menu-trigger {
@@ -255,9 +263,15 @@ const onMenuLeave = (el, done) => {
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
 }
+
 @media (max-width: 480px) {
-  .menu-trigger { width: 30px; height: 30px; gap: 3px; }
+  .menu-trigger {
+    width: 30px;
+    height: 30px;
+    gap: 3px;
+  }
 }
+
 .burger-line {
   height: 1.5px;
   width: 15px;
@@ -265,9 +279,19 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
 
-.menu-active .line-top { transform: translateY(5px) rotate(45deg); background-color: var(--brand-accent) !important; }
-.menu-active .line-mid { opacity: 0; }
-.menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
+.menu-active .line-top {
+  transform: translateY(5px) rotate(45deg);
+  background-color: var(--brand-accent) !important;
+}
+
+.menu-active .line-mid {
+  opacity: 0;
+}
+
+.menu-active .line-bot {
+  transform: translateY(-5px) rotate(-45deg);
+  background-color: var(--brand-accent) !important;
+}
 
 /* Navigation Overlay Panel */
 .nav-overlay {
@@ -297,8 +321,16 @@ const onMenuLeave = (el, done) => {
   max-width: 800px;
 }
 
-.menu-item-wrap { overflow: hidden; display: flex; align-items: center; }
-.overlay-btn-item { margin-top: clamp(4px, 1vh, 12px); }
+.menu-item-wrap {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.overlay-btn-item {
+  margin-top: clamp(4px, 1vh, 12px);
+}
+
 .menu-index {
   font-family: monospace;
   font-size: clamp(12px, 1.5vw, 14px);
@@ -309,6 +341,7 @@ const onMenuLeave = (el, done) => {
   opacity: 0.7;
   flex-shrink: 0;
 }
+
 .menu-link {
   font-size: clamp(1.1rem, 3vw, 2.2rem);
   font-weight: 900;
@@ -320,7 +353,10 @@ const onMenuLeave = (el, done) => {
   line-height: 1.1;
   word-break: break-word;
 }
-.menu-link:hover { color: var(--brand-accent); }
+
+.menu-link:hover {
+  color: var(--brand-accent);
+}
 
 .consult-btn-overlay {
   text-decoration: none;
@@ -337,10 +373,12 @@ const onMenuLeave = (el, done) => {
   will-change: transform;
   white-space: nowrap;
 }
+
 .consult-btn-overlay:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+
 /* CHANGED: orange hover glow for light theme */
 .theme-light .consult-btn-overlay:hover {
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
@@ -355,9 +393,18 @@ const onMenuLeave = (el, done) => {
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
-  .menu-link { font-size: clamp(1.2rem, 4.5vw, 2rem); }
-  .nav-links-container { gap: clamp(4px, 1.2vh, 10px); }
-  .menu-index { font-size: 11px; }
+  .menu-link {
+    font-size: clamp(1.2rem, 4.5vw, 2rem);
+  }
+
+  .nav-links-container {
+    gap: clamp(4px, 1.2vh, 10px);
+  }
+
+  .menu-index {
+    font-size: 11px;
+  }
+
   .consult-btn-overlay {
     font-size: clamp(0.9rem, 2.5vw, 1.2rem);
     padding: 6px clamp(14px, 2.5vw, 24px);

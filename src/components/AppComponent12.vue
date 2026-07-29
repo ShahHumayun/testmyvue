@@ -62,7 +62,7 @@ onMounted(() => {
 
 <style scoped>
 .theme-dark {
-  background-color: #000000 !important;
+  background-color: #1c1c1c !important;
   border-color: #171717 !important;
   --accent-color: #00ffa3;
   --glow-line-color: rgba(0, 255, 163, 0.02);
@@ -73,7 +73,7 @@ onMounted(() => {
 }
 
 .theme-light {
-  background-color: #ffffff !important;
+  background-color: #f2f2f2 !important;
   border-color: #e2e8f0 !important;
   --accent-color: #f97316;
   --glow-line-color: rgba(249, 115, 22, 0.02);

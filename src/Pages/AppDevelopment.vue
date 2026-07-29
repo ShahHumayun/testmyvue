@@ -1,44 +1,64 @@
 <template>
-  <div
-    ref="pageContainer"
-    :class="[
-      'font-sans relative overflow-hidden',
-      selectionClasses,
-      isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
-    ]"
-  >
+  <div ref="pageContainer" :class="[
+    'font-sans relative overflow-hidden w-full max-w-full',
+    selectionClasses,
+    isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
+  ]">
 
     <Header />
 
-    <div 
-      class="pointer-events-none fixed inset-0 z-10 opacity-25 transition-opacity duration-300 will-change-transform"
-      :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(${glowRGB}, 0.12), transparent 80%)` }"
-    ></div>
+    <div class="pointer-events-none fixed inset-0 z-10 opacity-25 transition-opacity duration-300 will-change-transform"
+      :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(${glowRGB}, 0.12), transparent 80%)` }">
+    </div>
     <br><br>
 
-    <AppComponent1 :phone-rotation="phoneRotation" :isDarkMode="isDarkMode" />
-    <AppComponent2 :isDarkMode="isDarkMode" />
-    <AppDevelopmentProjectSection :isDarkMode="isDarkMode" @open-modal="openModal" />
-    <AppComponent3 :isDarkMode="isDarkMode" />
-    <AppComponent4 :isDarkMode="isDarkMode" />
-    <AppComponent5 :isDarkMode="isDarkMode" />
-    <AppComponent6 :isDarkMode="isDarkMode" />
-    <AppComponent7 :isDarkMode="isDarkMode" />
-    <AppComponent8 :isDarkMode="isDarkMode" />
-    <AppComponent9 :isDarkMode="isDarkMode" />
-    <AppComponent10 :isDarkMode="isDarkMode" />
-    <AppComponent11 :isDarkMode="isDarkMode" />
-    <AppComponent12 :isDarkMode="isDarkMode" />
-    <Footer />
+    <div class="w-full max-w-full">
+      <AppComponent1 :phone-rotation="phoneRotation" :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppComponent2 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppDevelopmentProjectSection :isDarkMode="isDarkMode" @open-modal="openModal" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppComponent3 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppComponent4 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppComponent5 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppComponent6 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppComponent7 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppComponent8 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppComponent9 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppComponent10 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppComponent11 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <AppComponent12 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <Footer />
+    </div>
 
     <!-- ✅ Same modal overlay as Portfolio.vue -->
     <Teleport to="body">
       <Transition name="modal-fade">
-        <div
-          v-if="activeModal"
-          class="modal-backdrop"
-          @click.self="closeModal"
-        >
+        <div v-if="activeModal" class="modal-backdrop" @click.self="closeModal">
           <button @click="closeModal" class="modal-close-btn" aria-label="Close app preview">
             <span class="close-x">✕</span>
             <span class="close-text">Close</span>
@@ -70,17 +90,17 @@ import AppComponent3 from '../components/AppComponent3.vue'
 import AppDevelopmentProjectSection from '../components/AppDevelopmentProjectSection.vue'
 
 // ✅ All four app components for the modal
-import TaylorAllergyApp     from '../components/TaylorAllergyApp.vue'
-import MyExpenseTrackerApp  from '../components/MyExpenseTrackerApp.vue'
-import BookLibraryApp       from '../components/BookLibraryApp.vue'
-import MagentoConnectorApp  from '../components/MagentoConnectorApp.vue'
+import TaylorAllergyApp from '../components/TaylorAllergyApp.vue'
+import MyExpenseTrackerApp from '../components/MyExpenseTrackerApp.vue'
+import BookLibraryApp from '../components/BookLibraryApp.vue'
+import MagentoConnectorApp from '../components/MagentoConnectorApp.vue'
 
-import AppComponent4  from '../components/AppComponent4.vue'
-import AppComponent5  from '../components/AppComponent5.vue'
-import AppComponent6  from '../components/AppComponent6.vue'
-import AppComponent7  from '../components/AppComponent7.vue'
-import AppComponent8  from '../components/AppComponent8.vue'
-import AppComponent9  from '../components/AppComponent9.vue'
+import AppComponent4 from '../components/AppComponent4.vue'
+import AppComponent5 from '../components/AppComponent5.vue'
+import AppComponent6 from '../components/AppComponent6.vue'
+import AppComponent7 from '../components/AppComponent7.vue'
+import AppComponent8 from '../components/AppComponent8.vue'
+import AppComponent9 from '../components/AppComponent9.vue'
 import AppComponent10 from '../components/AppComponent10.vue'
 import AppComponent11 from '../components/AppComponent11.vue'
 import AppComponent12 from '../components/AppComponent12.vue'
@@ -89,7 +109,7 @@ import Footer from '../components/footer.vue'
 gsap.registerPlugin(ScrollTrigger)
 
 const pageContainer = ref(null)
-const mouse         = reactive({ x: 0, y: 0 })
+const mouse = reactive({ x: 0, y: 0 })
 const phoneRotation = reactive({ x: 0, y: 0 })
 let rafId = null
 
@@ -132,14 +152,14 @@ provide('toggleTheme', toggleTheme)
 // ✅ Modal logic — now URL/history-aware instead of a plain ref.
 // activeModal is derived from route.query.app, so browser back/forward
 // naturally restores it after navigating away (e.g. to /consultation).
-const route  = useRoute()
+const route = useRoute()
 const router = useRouter()
 
 const modalMap = {
-  'Taylor Allergy':     TaylorAllergyApp,
+  'Taylor Allergy': TaylorAllergyApp,
   'My Expense Tracker': MyExpenseTrackerApp,
-  'Book Library':       BookLibraryApp,
-  'Magento Connector':  MagentoConnectorApp,
+  'Book Library': BookLibraryApp,
+  'Magento Connector': MagentoConnectorApp,
 }
 
 const activeModal = computed(() => {
@@ -165,7 +185,7 @@ watch(activeModal, (val) => {
 const handleKeydown = (e) => { if (e.key === 'Escape') closeModal() }
 watch(activeModal, (val) => {
   if (val) window.addEventListener('keydown', handleKeydown)
-  else     window.removeEventListener('keydown', handleKeydown)
+  else window.removeEventListener('keydown', handleKeydown)
 })
 
 const handleMouseMove = (e) => {
@@ -175,7 +195,7 @@ const handleMouseMove = (e) => {
       mouse.y = e.clientY
       const halfW = window.innerWidth / 2
       const halfH = window.innerHeight / 2
-      phoneRotation.y =  ((e.clientX - halfW) / halfW) * 15
+      phoneRotation.y = ((e.clientX - halfW) / halfW) * 15
       phoneRotation.x = -((e.clientY - halfH) / halfH) * 15
       rafId = null
     })
@@ -237,6 +257,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
 }
+
 :global(html.theme-light) .modal-card {
   border: 1px solid rgba(249, 115, 22, 0.25);
   box-shadow:
@@ -253,13 +274,27 @@ onUnmounted(() => {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 255, 163, 0.2) transparent;
 }
+
 :global(html.theme-light) .modal-scroll-inner {
   scrollbar-color: rgba(249, 115, 22, 0.2) transparent;
 }
-.modal-scroll-inner::-webkit-scrollbar { width: 4px; }
-.modal-scroll-inner::-webkit-scrollbar-track { background: transparent; }
-.modal-scroll-inner::-webkit-scrollbar-thumb { background: rgba(0, 255, 163, 0.2); border-radius: 4px; }
-:global(html.theme-light) .modal-scroll-inner::-webkit-scrollbar-thumb { background: rgba(249, 115, 22, 0.2); }
+
+.modal-scroll-inner::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modal-scroll-inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-scroll-inner::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 163, 0.2);
+  border-radius: 4px;
+}
+
+:global(html.theme-light) .modal-scroll-inner::-webkit-scrollbar-thumb {
+  background: rgba(249, 115, 22, 0.2);
+}
 
 .modal-close-btn {
   position: fixed;
@@ -281,23 +316,64 @@ onUnmounted(() => {
   box-shadow: 0 4px 24px rgba(0, 255, 163, 0.45);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 :global(html.theme-light) .modal-close-btn {
   background: #f97316;
   box-shadow: 0 4px 24px rgba(249, 115, 22, 0.45);
 }
-.modal-close-btn:hover  { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0, 255, 163, 0.6); }
-:global(html.theme-light) .modal-close-btn:hover { box-shadow: 0 8px 32px rgba(249, 115, 22, 0.6); }
-.modal-close-btn:active { transform: translateY(0); }
-.close-x    { font-size: 11px; font-weight: 900; line-height: 1; }
-.close-text { line-height: 1; }
 
-.modal-fade-enter-active { transition: opacity 0.25s ease, transform 0.25s ease; }
-.modal-fade-leave-active { transition: opacity 0.2s ease,  transform 0.2s ease; }
-.modal-fade-enter-from, .modal-fade-leave-to { opacity: 0; transform: scale(0.97); }
+.modal-close-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 255, 163, 0.6);
+}
+
+:global(html.theme-light) .modal-close-btn:hover {
+  box-shadow: 0 8px 32px rgba(249, 115, 22, 0.6);
+}
+
+.modal-close-btn:active {
+  transform: translateY(0);
+}
+
+.close-x {
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.close-text {
+  line-height: 1;
+}
+
+.modal-fade-enter-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.modal-fade-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.97);
+}
 
 @media (max-width: 600px) {
-  .modal-card { border-radius: 16px; max-height: 92vh; }
-  .modal-backdrop { padding: 12px; }
-  .modal-close-btn { top: 12px; right: 14px; padding: 8px 14px; font-size: 12px; }
+  .modal-card {
+    border-radius: 16px;
+    max-height: 92vh;
+  }
+
+  .modal-backdrop {
+    padding: 12px;
+  }
+
+  .modal-close-btn {
+    top: 12px;
+    right: 14px;
+    padding: 8px 14px;
+    font-size: 12px;
+  }
 }
 </style>

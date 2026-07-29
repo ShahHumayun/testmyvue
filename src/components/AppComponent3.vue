@@ -1,56 +1,46 @@
 <template>
-  <section
-    :class="[
-      'py-32 px-6 border-b relative z-20',
-      isDarkMode ? 'border-neutral-900 bg-black' : 'border-neutral-200 bg-white'
-    ]"
-  >
+  <section :class="[
+    'py-20 px-4 sm:py-24 sm:px-6 md:py-28 md:px-8 lg:py-32 xl:py-36 xl:px-12 2xl:py-40 2xl:px-16 border-b relative z-20',
+    isDarkMode ? 'border-neutral-900 bg-black' : 'border-neutral-200 bg-white'
+  ]">
     <div class="max-w-7xl mx-auto">
-      <h2
-        :class="[
-          'text-3xl md:text-5xl font-bold tracking-tight mb-20 text-center max-w-3xl mx-auto',
-          isDarkMode ? 'text-white' : 'text-black'
-        ]"
-      >
-        Mobile Solutions 
+      <h2 :class="[
+        'section-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold tracking-tight mb-12 sm:mb-16 md:mb-20 xl:mb-24 2xl:mb-28 text-center max-w-3xl mx-auto',
+        isDarkMode ? 'text-white' : 'text-black'
+      ]">
+        Mobile Solutions
         <span :class="isDarkMode ? 'text-[#00ffa3]' : 'text-[#f97316]'">Built For Growth</span>
       </h2>
-      <div ref="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div
-          v-for="(service, idx) in services"
-          :key="idx"
-          :class="[
-            'group relative rounded-2xl p-8 transition-all duration-500 cursor-pointer overflow-hidden border',
-            isDarkMode 
-              ? 'bg-neutral-950 border-neutral-900 hover:border-[#00ffa3]/50 hover:shadow-[0_0_30px_rgba(0,255,163,0.05)]' 
-              : 'bg-neutral-50 border-neutral-200 hover:border-[#f97316]/50 hover:shadow-[0_0_30px_rgba(249,115,22,0.05)]'
-          ]"
-        >
-          <div :class="['absolute -right-16 -top-16 w-32 h-32 rounded-full blur-2xl group-hover:transition-all duration-500', isDarkMode ? 'bg-[#00ffa3]/5 group-hover:bg-[#00ffa3]/10' : 'bg-[#f97316]/5 group-hover:bg-[#f97316]/10']"></div>
-
+      <div ref="servicesGrid"
+        class="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 xl:gap-8 2xl:gap-10">
+        <div v-for="(service, idx) in services" :key="idx" :class="[
+          'service-card group relative rounded-2xl p-5 sm:p-6 md:p-7 lg:p-8 xl:p-9 2xl:p-10 transition-all duration-500 cursor-pointer overflow-hidden border',
+          isDarkMode
+            ? 'bg-neutral-950 border-neutral-900 hover:border-[#00ffa3]/50 hover:shadow-[0_0_30px_rgba(0,255,163,0.05)]'
+            : 'bg-neutral-50 border-neutral-200 hover:border-[#f97316]/50 hover:shadow-[0_0_30px_rgba(249,115,22,0.05)]'
+        ]">
           <div
-            :class="[
-              'w-12 h-12 rounded-xl flex items-center justify-center mb-6 transition-colors duration-300 border',
-              isDarkMode ? 'bg-neutral-900 border-neutral-800 group-hover:border-[#00ffa3]/30' : 'bg-white border-neutral-200 group-hover:border-[#f97316]/30'
-            ]"
-          >
-            <component 
-              :is="service.icon" 
-              :class="['w-6 h-6 transition-transform duration-500 group-hover:rotate-12', isDarkMode ? 'text-[#00ffa3]' : 'text-[#f97316]']" 
-            />
+            :class="['service-glow absolute -right-16 -top-16 w-32 h-32 xl:w-40 xl:h-40 2xl:w-48 2xl:h-48 rounded-full blur-2xl group-hover:transition-all duration-500', isDarkMode ? 'bg-[#00ffa3]/5 group-hover:bg-[#00ffa3]/10' : 'bg-[#f97316]/5 group-hover:bg-[#f97316]/10']">
           </div>
 
-          <h3
-            :class="[
-              'text-xl font-bold mb-3 tracking-tight transition-colors duration-300',
-              isDarkMode 
-                ? 'text-white group-hover:text-[#00ffa3]' 
-                : 'text-black group-hover:text-[#f97316]'
-            ]"
-          >
+          <div :class="[
+            'service-icon-wrap w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 xl:w-14 xl:h-14 2xl:w-16 2xl:h-16 rounded-xl flex items-center justify-center mb-4 sm:mb-5 md:mb-6 xl:mb-7 transition-colors duration-300 border',
+            isDarkMode ? 'bg-neutral-900 border-neutral-800 group-hover:border-[#00ffa3]/30' : 'bg-white border-neutral-200 group-hover:border-[#f97316]/30'
+          ]">
+            <component :is="service.icon"
+              :class="['service-icon w-5 h-5 md:w-6 md:h-6 xl:w-7 xl:h-7 2xl:w-8 2xl:h-8 transition-transform duration-500 group-hover:rotate-12', isDarkMode ? 'text-[#00ffa3]' : 'text-[#f97316]']" />
+          </div>
+
+          <h3 :class="[
+            'service-title text-lg md:text-xl xl:text-2xl 2xl:text-3xl font-bold mb-2 sm:mb-3 tracking-tight transition-colors duration-300',
+            isDarkMode
+              ? 'text-white group-hover:text-[#00ffa3]'
+              : 'text-black group-hover:text-[#f97316]'
+          ]">
             {{ service.title }}
           </h3>
-          <p :class="['leading-relaxed text-sm', isDarkMode ? 'text-neutral-400' : 'text-neutral-600']">
+          <p
+            :class="['service-desc leading-relaxed text-sm xl:text-base 2xl:text-lg', isDarkMode ? 'text-neutral-400' : 'text-neutral-600']">
             {{ service.description }}
           </p>
         </div>
@@ -70,7 +60,7 @@ const isDarkMode = inject('isDarkMode', ref(true))
 const servicesGrid = ref(null)
 
 // Generic icon helper to allow dynamic color styling via parent component class
-const createIcon = (dPaths) => () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': '1.5' }, 
+const createIcon = (dPaths) => () => h('svg', { fill: 'none', viewBox: '0 0 24 24', stroke: 'currentColor', 'stroke-width': '1.5' },
   dPaths.map(d => h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d }))
 )
 
@@ -92,7 +82,7 @@ const services = [
 
 onMounted(() => {
   if (servicesGrid.value) {
-    gsap.fromTo(servicesGrid.value.children, 
+    gsap.fromTo(servicesGrid.value.children,
       { opacity: 0, y: 50 },
       {
         opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out',
@@ -102,3 +92,134 @@ onMounted(() => {
   }
 })
 </script>
+
+<style scoped>
+/* ==========================================================================
+   Outer content container: scales fluidly with viewport width instead of
+   jumping between fixed breakpoint values. !important guarantees this wins
+   even if the project's global Tailwind stylesheet loads after this
+   component's scoped styles.
+   ========================================================================== */
+.max-w-7xl {
+  max-width: clamp(320px, 94vw, 1500px) !important;
+}
+
+/* ==========================================================================
+   Very small phones: keep things tight at the extreme low end (<= 380px)
+   ========================================================================== */
+@media (max-width: 380px) {
+  section.border-b {
+    padding-left: 0.875rem;
+    padding-right: 0.875rem;
+  }
+
+  .service-card {
+    padding: 1.1rem;
+  }
+
+  .service-icon-wrap {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .service-title {
+    font-size: 1.05rem;
+  }
+}
+
+/* ==========================================================================
+   Very Large Desktops / Big TVs: 1920px and up
+   Tailwind's own scale tops out at 2xl (1536px), so everything below is
+   already handled by the responsive classes above. These two tiers keep
+   the heading, cards, icons, and gaps growing further instead of
+   plateauing at 1536px.
+   ========================================================================== */
+@media (min-width: 1920px) {
+  .max-w-7xl {
+    max-width: 1750px !important;
+  }
+
+  .section-heading {
+    font-size: 5rem;
+  }
+
+  .services-grid {
+    gap: 3rem;
+  }
+
+  .service-card {
+    padding: 3rem;
+  }
+
+  .service-glow {
+    width: 13rem;
+    height: 13rem;
+  }
+
+  .service-icon-wrap {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .service-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .service-title {
+    font-size: 2rem;
+  }
+
+  .service-desc {
+    font-size: 1.2rem;
+  }
+}
+
+/* ==========================================================================
+   4K / Extra-Extra-Large Monitors: 2560px and up
+   Real 4K displays (or 27"+ high-res laptop panels) render content
+   physically small at 1920px-tier sizing. This tier keeps the container,
+   cards, icons, and type growing proportionally instead of looking
+   undersized.
+   ========================================================================== */
+@media (min-width: 2560px) {
+  .max-w-7xl {
+    max-width: 2050px !important;
+  }
+
+  .section-heading {
+    font-size: 5.75rem;
+  }
+
+  .services-grid {
+    gap: 3.5rem;
+  }
+
+  .service-card {
+    padding: 3.5rem;
+  }
+
+  .service-glow {
+    width: 14rem;
+    height: 14rem;
+  }
+
+  .service-icon-wrap {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .service-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .service-title {
+    font-size: 2.25rem;
+  }
+
+  .service-desc {
+    font-size: 1.3rem;
+  }
+}
+</style>

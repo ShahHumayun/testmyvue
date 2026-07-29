@@ -1,13 +1,7 @@
 <template>
-  <div 
-    :class="['hero-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']"
-    @mousemove="handleMouseMove"
-  >
+  <div :class="['hero-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']" @mousemove="handleMouseMove">
     <div class="bg-overlay">
-      <div 
-        class="bg-grid-lines"
-        :style="{ transform: `translate(${parallax.bgX}px, ${parallax.bgY}px)` }"
-      ></div>
+      <div class="bg-grid-lines" :style="{ transform: `translate(${parallax.bgX}px, ${parallax.bgY}px)` }"></div>
     </div>
 
     <header class="navbar">
@@ -20,24 +14,13 @@
           Consultation
         </router-link>
 
-        <button 
-          @click="toggleTheme"
-          class="theme-toggle"
-          aria-label="Toggle Theme"
-        >
-          <div 
-            class="toggle-thumb"
-            :class="{ 'toggle-active': isDarkMode }"
-          >
+        <button @click="toggleTheme" class="theme-toggle" aria-label="Toggle Theme">
+          <div class="toggle-thumb" :class="{ 'toggle-active': isDarkMode }">
             <span class="toggle-icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
           </div>
         </button>
 
-        <button 
-          @click="toggleMenu" 
-          class="menu-trigger"
-          :class="{ 'menu-active': isMenuOpen }"
-        >
+        <button @click="toggleMenu" class="menu-trigger" :class="{ 'menu-active': isMenuOpen }">
           <span class="burger-line line-top"></span>
           <span class="burger-line line-mid"></span>
           <span class="burger-line line-bot"></span>
@@ -48,17 +31,9 @@
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
-          <div 
-            v-for="(item, index) in menuItems" 
-            :key="item"
-            class="menu-item-wrap"
-          >
+          <div v-for="(item, index) in menuItems" :key="item" class="menu-item-wrap">
             <span class="menu-index">0{{ index + 1 }}</span>
-            <router-link 
-              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
-              @click="toggleMenu" 
-              class="menu-link"
-            >
+            <router-link :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" @click="toggleMenu" class="menu-link">
               {{ item }}
             </router-link>
           </div>
@@ -78,16 +53,17 @@
 
       <section id="location" class="studio-section">
         <div class="studio-grid">
-          
+
           <div class="info-panel">
             <h2 class="section-title">
               Visit Our <span class="accent-text">Studio</span>
             </h2>
-            
+
             <div class="glass-card">
               <div class="info-row">
                 <div class="icon-wrap">
-                  <svg class="studio-icon" viewBox="0 0 24 24" fill="none" stroke="#00ffa3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg class="studio-icon" viewBox="0 0 24 24" fill="none" stroke="#00ffa3" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
@@ -100,10 +76,11 @@
                   </p>
                 </div>
               </div>
-              
+
               <div class="info-row">
                 <div class="icon-wrap">
-                  <svg class="studio-icon" viewBox="0 0 24 24" fill="none" stroke="#00ffa3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <svg class="studio-icon" viewBox="0 0 24 24" fill="none" stroke="#00ffa3" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
@@ -117,25 +94,19 @@
             </div>
 
             <div class="cta-container">
-              <a 
-                href="https://maps.app.goo.gl/G91jE1zsYYUYa3qa6" 
-                target="_blank" 
-                class="navigation-link"
-              >
+              <a href="https://maps.app.goo.gl/G91jE1zsYYUYa3qa6" target="_blank" class="navigation-link">
                 <span>Direct Navigation Map</span>
-                <svg class="nav-arrow" viewBox="0 0 24 24" fill="none" stroke="#00ffa3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="nav-arrow" viewBox="0 0 24 24" fill="none" stroke="#00ffa3" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                 </svg>
               </a>
 
-              <button 
-                type="button" 
-                class="navigation-link go-back-link" 
-                @click="goBack"
-                aria-label="Go back to previous page"
-              >
-                <svg class="nav-arrow back-arrow" viewBox="0 0 24 24" fill="none" stroke="#00ffa3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <button type="button" class="navigation-link go-back-link" @click="goBack"
+                aria-label="Go back to previous page">
+                <svg class="nav-arrow back-arrow" viewBox="0 0 24 24" fill="none" stroke="#00ffa3" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <line x1="19" y1="12" x2="5" y2="12"></line>
                   <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
@@ -146,16 +117,9 @@
 
           <div class="map-panel">
             <div class="map-wrapper-card">
-              <iframe
-                src="https://maps.google.com/maps?q=33.669397,73.074073&t=&z=17&ie=UTF8&iwloc=&output=embed"
-                width="100%"
-                height="100%"
-                style="border:0;"
-                class="embedded-map"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
+              <iframe src="https://maps.google.com/maps?q=33.669397,73.074073&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                width="100%" height="100%" style="border:0;" class="embedded-map" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
           </div>
 
@@ -163,11 +127,7 @@
       </section>
     </main>
 
-    <footer class="footer-group">
-      <div class="copyright-section">
-        <p>© {{ currentYear }} WebHive Technologies. All rights reserved.</p>
-      </div>
-    </footer>
+    <Footer :darkMode="isDarkMode" />
   </div>
 </template>
 
@@ -175,6 +135,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import gsap from 'gsap'
+import Footer from '../components/footer.vue'
 
 const router = useRouter()
 
@@ -220,7 +181,7 @@ const toggleMenu = () => {
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
   const activeTheme = isDarkMode.value ? 'dark' : 'light'
-  
+
   localStorage.setItem('webhive-theme', activeTheme)
   applyGlobalThemeClass(isDarkMode.value)
 }
@@ -245,8 +206,8 @@ onMounted(() => {
 
 const onMenuEnter = (el, done) => {
   gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' })
-  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
-    { yPercent: 100 }, 
+  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'),
+    { yPercent: 100 },
     { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out', delay: 0.1, onComplete: done }
   )
 }
@@ -262,8 +223,20 @@ const onMenuLeave = (el, done) => {
 :global(body) {
   margin: 0;
   padding: 0;
-  height: 100%;
   width: 100%;
+  height: auto;
+  scroll-behavior: smooth;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:global(html::-webkit-scrollbar),
+:global(body::-webkit-scrollbar) {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 /* ----------------------------------------- */
@@ -274,7 +247,7 @@ const onMenuLeave = (el, done) => {
   --transition-speed: 0.5s;
 
   position: relative;
-  min-height: 100dvh;
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -285,31 +258,28 @@ const onMenuLeave = (el, done) => {
   overflow-x: hidden;
 }
 
-@media (min-width: 1024px) {
-  .hero-wrapper {
-    position: fixed;
-    inset: 0;
-    height: 100dvh;
-    overflow: hidden;
-  }
-  :global(html),
-  :global(body) {
-    overflow: hidden !important;
-  }
-}
-
-.hero-wrapper *,
-.hero-wrapper *::before,
-.hero-wrapper *::after {
+.navbar,
+.navbar *,
+.navbar *::before,
+.navbar *::after,
+.nav-overlay,
+.nav-overlay *,
+.nav-overlay *::before,
+.nav-overlay *::after,
+.hero-main,
+.hero-main *,
+.hero-main *::before,
+.hero-main *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 .theme-dark {
-  background-color: #060606; 
+  background-color: #060606;
   color: #ffffff;
 }
+
 .theme-light {
   --brand-accent: #f97316;
   background-color: #ffffff;
@@ -323,39 +293,48 @@ const onMenuLeave = (el, done) => {
   pointer-events: none;
   overflow: hidden;
 }
+
 .bg-grid-lines {
   position: absolute;
   inset: -40px;
   background-size: 50px 50px;
 }
+
 .theme-dark .bg-grid-lines {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(0, 255, 163, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 255, 163, 0.03) 1px, transparent 1px);
 }
+
 .theme-light .bg-grid-lines {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
 }
 
-/* ----------------------------------------- */
-/* 2. FIXED FLOATING NAVBAR SYSTEM (SERVICES)*/
-/* ----------------------------------------- */
+/* =========================================================
+   NAVBAR — full width, flush to the top and side edges, no
+   floating pill margin. Matches the Home.vue / About.vue /
+   Services.vue / Portfolio.vue / Culture.vue redesign exactly.
+   Fluid base + explicit per-tier growth/shrink further down.
+   ========================================================= */
 .navbar {
   position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  max-width: 1200px;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  will-change: backdrop-filter;
+  width: 100%;
+  max-width: 100%;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 0.8rem 1.5rem;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  padding: clamp(0.55rem, 1.4vw, 0.8rem) clamp(1rem, 2.6vw, 1.5rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -367,12 +346,12 @@ const onMenuLeave = (el, done) => {
   background: #ffffff;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 .logo {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
   font-weight: 800;
   text-decoration: none;
   color: #ffffff;
@@ -382,8 +361,13 @@ const onMenuLeave = (el, done) => {
   align-items: center;
 }
 
-.theme-light .logo { color: #0f172a; }
-.logo .dot { color: var(--brand-accent); }
+.theme-light .logo {
+  color: #0f172a;
+}
+
+.logo .dot {
+  color: var(--brand-accent);
+}
 
 .nav-actions {
   display: flex;
@@ -406,13 +390,12 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   white-space: nowrap;
 }
-@media (max-width: 480px) {
-  .consult-btn { display: none; }
-}
+
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
 }
+
 .theme-light .consult-btn:hover {
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
@@ -431,13 +414,12 @@ const onMenuLeave = (el, done) => {
   transition: background-color 0.3s;
   flex-shrink: 0;
 }
-@media (max-width: 480px) {
-  .theme-toggle { width: 34px; height: 18px; padding: 2px; }
-}
+
 .theme-dark .theme-toggle {
   background-color: rgba(0, 255, 163, 0.1);
   border: 1px solid rgba(0, 255, 163, 0.2);
 }
+
 .toggle-thumb {
   width: 16px;
   height: 16px;
@@ -448,15 +430,17 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #fbbf24;
 }
+
 .toggle-active {
   transform: translateX(18px);
   background-color: #111827;
   border: 1px solid var(--brand-accent);
 }
-@media (max-width: 480px) {
-  .toggle-active { transform: translateX(15px); }
+
+.toggle-icon {
+  font-size: 9px;
+  user-select: none;
 }
-.toggle-icon { font-size: 9px; user-select: none; }
 
 .menu-trigger {
   width: 34px;
@@ -473,25 +457,44 @@ const onMenuLeave = (el, done) => {
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
 }
+
 .theme-dark .menu-trigger {
   background-color: rgba(24, 24, 27, 0.8);
   border: 1px solid #27272a;
 }
+
 .theme-light .menu-trigger {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
 }
+
 .burger-line {
   height: 1.5px;
   width: 15px;
   transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
-.theme-dark .burger-line { background-color: #ffffff; }
-.theme-light .burger-line { background-color: #0f172a; }
 
-.menu-active .line-top { transform: translateY(5px) rotate(45deg); background-color: var(--brand-accent) !important; }
-.menu-active .line-mid { opacity: 0; }
-.menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
+.theme-dark .burger-line {
+  background-color: #ffffff;
+}
+
+.theme-light .burger-line {
+  background-color: #0f172a;
+}
+
+.menu-active .line-top {
+  transform: translateY(5px) rotate(45deg);
+  background-color: var(--brand-accent) !important;
+}
+
+.menu-active .line-mid {
+  opacity: 0;
+}
+
+.menu-active .line-bot {
+  transform: translateY(-5px) rotate(-45deg);
+  background-color: var(--brand-accent) !important;
+}
 
 /* ----------------------------------------- */
 /* 3. NAVIGATION OVERLAY SYSTEM (SERVICES)  */
@@ -510,7 +513,11 @@ const onMenuLeave = (el, done) => {
   overflow: hidden !important;
   padding: clamp(24px, 5vh, 48px) clamp(20px, 6vw, 48px);
 }
-.theme-dark .nav-overlay { background-color: rgba(11, 12, 16, 0.96); }
+
+.theme-dark .nav-overlay {
+  background-color: rgba(11, 12, 16, 0.96);
+}
+
 .theme-light .nav-overlay {
   background-color: #ffffff;
   backdrop-filter: none;
@@ -524,8 +531,17 @@ const onMenuLeave = (el, done) => {
   width: 100%;
   max-width: 800px;
 }
-.menu-item-wrap { overflow: hidden; display: flex; align-items: center; }
-.overlay-btn-item { margin-top: clamp(4px, 1vh, 12px); }
+
+.menu-item-wrap {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.overlay-btn-item {
+  margin-top: clamp(4px, 1vh, 12px);
+}
+
 .menu-index {
   font-family: monospace;
   font-size: clamp(12px, 1.5vw, 14px);
@@ -535,6 +551,7 @@ const onMenuLeave = (el, done) => {
   letter-spacing: 0.15em;
   opacity: 0.7;
 }
+
 .menu-link {
   font-size: clamp(1.1rem, 3vw, 2.2rem);
   font-weight: 900;
@@ -544,9 +561,18 @@ const onMenuLeave = (el, done) => {
   display: inline-block;
   line-height: 1.1;
 }
-.theme-dark .menu-link { color: #ffffff; }
-.theme-light .menu-link { color: #0f172a; }
-.menu-link:hover { color: var(--brand-accent); }
+
+.theme-dark .menu-link {
+  color: #ffffff;
+}
+
+.theme-light .menu-link {
+  color: #0f172a;
+}
+
+.menu-link:hover {
+  color: var(--brand-accent);
+}
 
 .consult-btn-overlay {
   text-decoration: none;
@@ -561,10 +587,12 @@ const onMenuLeave = (el, done) => {
   display: inline-block;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .consult-btn-overlay:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+
 .theme-light .consult-btn-overlay:hover {
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
@@ -579,6 +607,10 @@ const onMenuLeave = (el, done) => {
 
 /* ----------------------------------------- */
 /* 4. HERO MAIN CONTENT CANVAS ENGINE       */
+/* fixed calc()-based top padding (tuned for */
+/* the old floating navbar) replaced with    */
+/* fluid clamp() values, matching the same   */
+/* fix applied to every other page.          */
 /* ----------------------------------------- */
 .hero-main {
   flex: 1 1 0;
@@ -588,8 +620,7 @@ const onMenuLeave = (el, done) => {
   position: relative;
   z-index: 10;
   width: 100%;
-  /* Added exact structural safe padding context offset to match floating navbar height metrics */
-  padding: calc(60px + clamp(10px, 2vw, 22px) + 50px) clamp(20px, 6vw, 80px) clamp(24px, 3vw, 48px);
+  padding: clamp(84px, 12vh, 120px) clamp(20px, 6vw, 80px) clamp(24px, 3vw, 48px);
 }
 
 .ambient-glow {
@@ -602,6 +633,7 @@ const onMenuLeave = (el, done) => {
   transform: translate(-50%, -50%);
   pointer-events: none;
 }
+
 .theme-light .ambient-glow {
   background: radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%);
 }
@@ -636,13 +668,16 @@ const onMenuLeave = (el, done) => {
 }
 
 .section-title {
-  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-size: clamp(1.8rem, 3.5vw, 3.2rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: #ffffff;
   margin-bottom: 20px;
 }
-.theme-light .section-title { color: #0f172a; }
+
+.theme-light .section-title {
+  color: #0f172a;
+}
 
 .accent-text {
   color: var(--brand-accent);
@@ -652,12 +687,13 @@ const onMenuLeave = (el, done) => {
   width: 100%;
   background: rgba(14, 16, 15, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 18px; 
+  border-radius: 18px;
   padding: clamp(20px, 2.5vw, 32px);
   display: flex;
   flex-direction: column;
   gap: clamp(18px, 2vw, 28px);
 }
+
 .theme-light .glass-card {
   background: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.08);
@@ -678,6 +714,7 @@ const onMenuLeave = (el, done) => {
   flex-shrink: 0;
   margin-top: 2px;
 }
+
 .studio-icon {
   width: 22px;
   height: 22px;
@@ -690,20 +727,26 @@ const onMenuLeave = (el, done) => {
 }
 
 .info-heading {
-  font-size: 16px;
+  font-size: clamp(15px, 1.1vw, 16px);
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 6px;
   letter-spacing: -0.01em;
 }
-.theme-light .info-heading { color: #0f172a; }
+
+.theme-light .info-heading {
+  color: #0f172a;
+}
 
 .info-description {
-  font-size: 13.5px;
+  font-size: clamp(13px, 0.95vw, 13.5px);
   line-height: 1.5;
-  color: #9ca3af; 
+  color: #9ca3af;
 }
-.theme-light .info-description { color: #4b5563; }
+
+.theme-light .info-description {
+  color: #4b5563;
+}
 
 .closed-status {
   color: var(--brand-accent);
@@ -728,7 +771,7 @@ const onMenuLeave = (el, done) => {
   gap: 12px;
   color: var(--brand-accent);
   font-weight: 700;
-  font-size: 16px;
+  font-size: clamp(14px, 1.1vw, 16px);
   text-decoration: none;
   transition: opacity 0.2s;
   background: none;
@@ -737,9 +780,11 @@ const onMenuLeave = (el, done) => {
   cursor: pointer;
   font-family: inherit;
 }
+
 .navigation-link:hover {
   opacity: 0.85;
 }
+
 .nav-arrow {
   width: 16px;
   height: 16px;
@@ -750,9 +795,11 @@ const onMenuLeave = (el, done) => {
 .go-back-link {
   order: -1;
 }
+
 .back-arrow {
   transition: transform 0.2s ease;
 }
+
 .go-back-link:hover .back-arrow {
   transform: translateX(-3px);
 }
@@ -764,6 +811,7 @@ const onMenuLeave = (el, done) => {
   width: 100%;
   height: 100%;
 }
+
 .map-wrapper-card {
   width: 100%;
   height: 100%;
@@ -771,12 +819,14 @@ const onMenuLeave = (el, done) => {
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 20px;
   overflow: hidden;
-  padding: 12px; 
+  padding: 12px;
 }
+
 .theme-light .map-wrapper-card {
   background: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.08);
 }
+
 .embedded-map {
   width: 100%;
   height: 100%;
@@ -788,7 +838,9 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 6. FOOTER & COPYRIGHT                     */
+/* 6. FOOTER & COPYRIGHT (preserved styles,  */
+/* now unused since <Footer /> handles this, */
+/* kept for parity with the rest of the site)*/
 /* ----------------------------------------- */
 .footer-group {
   width: 100%;
@@ -804,6 +856,311 @@ const onMenuLeave = (el, done) => {
   font-size: 11px;
   border-top: 1px solid;
 }
-.theme-dark .copyright-section { color: rgba(255, 255, 255, 0.4); background-color: rgba(9, 9, 11, 0.6); border-top-color: rgba(255, 255, 255, 0.05); }
-.theme-light .copyright-section { color: rgba(15, 23, 42, 0.5); background-color: #ffffff; border-top-color: rgba(15, 23, 42, 0.06); }
+
+.theme-dark .copyright-section {
+  color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(9, 9, 11, 0.6);
+  border-top-color: rgba(255, 255, 255, 0.05);
+}
+
+.theme-light .copyright-section {
+  color: rgba(15, 23, 42, 0.5);
+  background-color: #ffffff;
+  border-top-color: rgba(15, 23, 42, 0.06);
+}
+
+/* =========================================================================
+   BREAKPOINT TIERS
+   Organized by the exact ranges used across the rest of the site,
+   desktop-first (max-width cascades down). Navbar sizing mirrors the
+   Home.vue / About.vue / Services.vue / Portfolio.vue / Culture.vue
+   implementation tier-for-tier. The 1023/1024px grid-stack and
+   fixed-viewport breakpoints above are untouched and independent
+   of this navbar/content tiering.
+   ========================================================================= */
+
+/* ---------- Desktops — 1025px to 1200px ---------- */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .navbar {
+    padding: 0.75rem 1.8rem;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
+
+  .nav-actions {
+    gap: 16px;
+  }
+
+  .studio-section {
+    max-width: 1140px;
+  }
+}
+
+/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
+@media (min-width: 1201px) {
+  .navbar {
+    padding: 0.85rem 2.2rem;
+  }
+
+  .logo {
+    font-size: 1.45rem;
+  }
+
+  .nav-actions {
+    gap: 22px;
+  }
+
+  .consult-btn {
+    font-size: 14px;
+    padding: 11px 20px;
+  }
+
+  .studio-section {
+    max-width: 1360px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .navbar {
+    padding: 1rem 2.6rem;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+
+  .nav-actions {
+    gap: 26px;
+  }
+
+  .consult-btn {
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+
+  .theme-toggle {
+    width: 44px;
+    height: 24px;
+  }
+
+  .toggle-thumb {
+    width: 18px;
+    height: 18px;
+  }
+
+  .toggle-active {
+    transform: translateX(20px);
+  }
+
+  .menu-trigger {
+    width: 38px;
+    height: 38px;
+  }
+
+  .hero-main {
+    padding-inline: clamp(40px, 6vw, 110px);
+  }
+
+  .studio-section {
+    max-width: 1560px;
+  }
+
+  .section-title {
+    font-size: clamp(2.4rem, 3.2vw, 3.6rem);
+  }
+}
+
+/* ---------- 4K / UHD / large TVs — 1921px and up (e.g. 2560px) ---------- */
+@media (min-width: 1921px) {
+  .navbar {
+    padding: 1.1rem 3.2rem;
+  }
+
+  .logo {
+    font-size: 1.8rem;
+  }
+
+  .nav-actions {
+    gap: 30px;
+  }
+
+  .consult-btn {
+    font-size: 16px;
+    padding: 13px 26px;
+  }
+
+  .hero-main {
+    padding-inline: clamp(60px, 7vw, 160px);
+  }
+
+  .studio-section {
+    max-width: 1840px;
+  }
+
+  .section-title {
+    font-size: clamp(2.8rem, 2.8vw, 4rem);
+  }
+
+  .info-heading {
+    font-size: 18px;
+  }
+
+  .info-description {
+    font-size: 15px;
+  }
+
+  .navigation-link {
+    font-size: 17px;
+  }
+}
+
+/* ---------- Laptops / Large Tablets — 769px to 1023px ---------- */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .navbar {
+    padding: 0.7rem 1.6rem;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .nav-actions {
+    gap: 14px;
+  }
+
+  .consult-btn {
+    font-size: 12.5px;
+    padding: 9px 16px;
+  }
+
+  .hero-main {
+    padding: clamp(84px, 13vh, 112px) clamp(24px, 6vw, 48px) clamp(32px, 5vh, 56px);
+  }
+
+  .section-title {
+    font-size: clamp(1.9rem, 4.6vw, 2.6rem);
+  }
+}
+
+/* ---------- Mobile Landscape / Tablets — 481px to 768px ---------- */
+@media (min-width: 481px) and (max-width: 768px) {
+  .navbar {
+    padding: 0.6rem 1.1rem;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+  }
+
+  .nav-actions {
+    gap: clamp(8px, 2vw, 14px);
+  }
+
+  .consult-btn {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .hero-main {
+    padding: clamp(78px, 14vh, 100px) clamp(20px, 6vw, 40px) clamp(28px, 5vh, 44px);
+  }
+
+  .section-title {
+    font-size: clamp(1.7rem, 6vw, 2.3rem);
+  }
+
+  .map-panel {
+    height: clamp(260px, 55vw, 380px);
+  }
+}
+
+/* ---------- Mobile Portrait — 320px to 480px ---------- */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.55rem 0.85rem;
+  }
+
+  .logo {
+    font-size: 1.05rem;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .consult-btn {
+    display: none;
+  }
+
+  .theme-toggle {
+    width: 34px;
+    height: 18px;
+    padding: 2px;
+  }
+
+  .toggle-thumb {
+    width: 13px;
+    height: 13px;
+  }
+
+  .toggle-active {
+    transform: translateX(15px);
+  }
+
+  .menu-trigger {
+    width: 30px;
+    height: 30px;
+    gap: 3px;
+  }
+
+  .hero-main {
+    padding: clamp(74px, 14vh, 92px) 16px clamp(24px, 5vh, 36px);
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 8vw, 1.9rem);
+  }
+
+  .glass-card {
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .info-row {
+    gap: 14px;
+  }
+
+  .cta-container {
+    gap: 16px;
+  }
+
+  .map-panel {
+    height: clamp(220px, 60vw, 300px);
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar {
+    padding: 0.5rem 0.7rem;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .hero-main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .section-title {
+    font-size: clamp(1.3rem, 8.5vw, 1.7rem);
+  }
+
+  .info-description {
+    font-size: 12.5px;
+  }
+}
 </style>

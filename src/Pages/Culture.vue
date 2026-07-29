@@ -117,11 +117,7 @@
       </div>
     </main>
 
-    <footer class="footer-group">
-      <div class="copyright-section">
-        <p>&copy; {{ currentYear }} WebHive Technologies. All rights reserved.</p>
-      </div>
-    </footer>
+    <Footer :darkMode="isDarkMode" />
 
     <button class="chat-fab" @click="isChatOpen = !isChatOpen" :aria-label="isChatOpen ? 'Close chat' : 'Open chat'">
       <svg v-if="!isChatOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -150,6 +146,7 @@ import { useRouter } from 'vue-router'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ChatBot from '../components/ChatBot.vue'
+import Footer from '../components/footer.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -164,7 +161,6 @@ const isMenuOpen = ref(false)
 const currentYear = new Date().getFullYear()
 const isChatOpen = ref(false)
 
-// Synchronized to map items array architecture perfectly
 const menuItems = ['Home', 'About', 'Services', 'Portfolio', 'Studio', 'Policies']
 
 const pillars = ref([
@@ -231,7 +227,6 @@ const showcaseRows = ref([
 
 const parallax = reactive({ bgX: 0, bgY: 0 })
 
-// Helper function to update the global HTML class token
 const applyGlobalThemeClass = (isDark) => {
   if (isDark) {
     document.documentElement.classList.add('theme-dark')
@@ -253,7 +248,6 @@ const handleMouseMove = (e) => {
 
 const toggleMenu = () => { isMenuOpen.value = !isMenuOpen.value }
 
-// CHANGED: Saved under the unified webhive-theme key and updates root HTML element classes
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
   const activeTheme = isDarkMode.value ? 'dark' : 'light'
@@ -263,7 +257,6 @@ const toggleTheme = () => {
 }
 
 onMounted(() => {
-  // CHANGED: Check the universal site theme preference. Defaults to dark.
   const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
@@ -271,7 +264,6 @@ onMounted(() => {
     isDarkMode.value = true
   }
 
-  // Keep root context token up-to-date instantly on view mount
   applyGlobalThemeClass(isDarkMode.value)
 
   gsap.set('.showcase-row, .culture-cta', { opacity: 1 })
@@ -366,7 +358,16 @@ onUnmounted(() => {
 :global(html) {
   scroll-behavior: smooth;
   overflow-y: auto !important;
+  overflow-x: hidden !important;
   height: auto !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:global(html::-webkit-scrollbar) {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 :global(body) {
@@ -376,6 +377,14 @@ onUnmounted(() => {
   overflow-y: auto !important;
   height: auto !important;
   width: 100% !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:global(body::-webkit-scrollbar) {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 /* ----------------------------------------- */
@@ -384,6 +393,9 @@ onUnmounted(() => {
 .culture-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
+  --space-sm: clamp(18px, 2.6vw, 36px);
+  --space-md: clamp(22px, 3.6vw, 56px);
+  --space-lg: clamp(32px, 5.5vw, 96px);
   width: 100%;
   min-height: 100vh;
   position: relative;
@@ -399,7 +411,6 @@ onUnmounted(() => {
   color: #ffffff;
 }
 
-/* CHANGED: light theme now overrides --brand-accent to vibrant orange and uses a solid white background */
 .theme-light {
   --brand-accent: #f97316;
   background-color: #ffffff;
@@ -433,23 +444,26 @@ onUnmounted(() => {
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
 
-/* ----------------------------------------- */
-/* EXACT NAVBAR STYLES FROM HOME.VUE         */
-/* ----------------------------------------- */
+/* =========================================================
+   NAVBAR
+   ========================================================= */
 .navbar {
   position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  max-width: 1200px;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  will-change: backdrop-filter;
+  width: 100%;
+  max-width: 100%;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 0.8rem 1.5rem;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  padding: clamp(0.55rem, 1.4vw, 0.8rem) clamp(1rem, 2.6vw, 1.5rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -459,12 +473,12 @@ onUnmounted(() => {
 
 .theme-light .navbar {
   background: rgba(15, 23, 42, 0.03);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 .logo {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
   font-weight: 800;
   text-decoration: none;
   color: #ffffff;
@@ -504,18 +518,11 @@ onUnmounted(() => {
   white-space: nowrap;
 }
 
-@media (max-width: 480px) {
-  .consult-btn {
-    display: none;
-  }
-}
-
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
 }
 
-/* CHANGED: orange hover glow for light theme */
 .theme-light .consult-btn:hover {
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
@@ -537,14 +544,6 @@ onUnmounted(() => {
   background-color: #cbd5e1;
   transition: background-color 0.3s;
   flex-shrink: 0;
-}
-
-@media (max-width: 480px) {
-  .theme-toggle {
-    width: 34px;
-    height: 18px;
-    padding: 2px;
-  }
 }
 
 .theme-dark .theme-toggle {
@@ -569,17 +568,6 @@ onUnmounted(() => {
   border: 1px solid var(--brand-accent);
 }
 
-@media (max-width: 480px) {
-  .toggle-thumb {
-    width: 13px;
-    height: 13px;
-  }
-
-  .toggle-active {
-    transform: translateX(15px);
-  }
-}
-
 .toggle-icon {
   font-size: 9px;
   user-select: none;
@@ -599,14 +587,6 @@ onUnmounted(() => {
   z-index: 55;
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
-}
-
-@media (max-width: 480px) {
-  .menu-trigger {
-    width: 30px;
-    height: 30px;
-    gap: 3px;
-  }
 }
 
 .theme-dark .menu-trigger {
@@ -748,7 +728,6 @@ onUnmounted(() => {
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
 
-/* CHANGED: orange hover glow for light theme */
 .theme-light .consult-btn-overlay:hover {
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
@@ -780,15 +759,17 @@ onUnmounted(() => {
   }
 }
 
-/* ----------------------------------------- */
-/* MAIN CANVAS                               */
-/* ----------------------------------------- */
+/* =========================================================
+   MAIN CANVAS — FULL WIDTH MODIFICATION
+   ========================================================= */
 .culture-main {
   flex: 1 1 0;
   position: relative;
   z-index: 10;
   width: 100%;
-  padding: calc(60px + clamp(10px, 2vw, 22px) + 50px) clamp(16px, 5vw, 60px) 60px;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  padding: clamp(96px, 15vh, 150px) clamp(16px, 5vw, 60px) clamp(48px, 8vh, 90px);
 }
 
 .ambient-glow {
@@ -805,7 +786,6 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-/* CHANGED: light-theme glow now uses a soft orange tint */
 .theme-light .ambient-glow {
   opacity: 0.15;
   background-color: #fdba74;
@@ -815,35 +795,37 @@ onUnmounted(() => {
 /* HERO INTRO SECTION                        */
 /* ----------------------------------------- */
 .culture-hero {
-  max-width: 920px;
-  margin: 40px auto 90px;
+  width: 100%;
+  max-width: 100% !important;
+  margin: clamp(20px, 3vh, 40px) 0 clamp(50px, 8vw, 90px);
+  padding: 0 clamp(1rem, 3vw, 4rem);
+  box-sizing: border-box;
   text-align: center;
   position: relative;
 }
 
 .section-tag {
   font-family: monospace;
-  font-size: 13px;
+  font-size: clamp(11px, 1.2vw, 13px);
   text-transform: uppercase;
   letter-spacing: 0.25em;
   color: var(--brand-accent);
   display: inline-block;
-  margin-bottom: 24px;
+  margin-bottom: clamp(16px, 2.4vh, 24px);
 }
 
-/* CHANGED: light-theme section tag now vibrant orange */
 .theme-light .section-tag {
   color: #f97316;
   font-weight: 600;
 }
 
 .culture-title {
-  font-size: clamp(2.4rem, 6.5vw, 5rem);
+  font-size: clamp(2.1rem, 6.5vw, 5rem);
   font-weight: 950;
   line-height: 1.15;
   text-transform: uppercase;
-  letter-spacing: -0.03em;
-  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+  margin-bottom: clamp(20px, 3vh, 28px);
   color: #ffffff;
 }
 
@@ -858,7 +840,6 @@ onUnmounted(() => {
   background-clip: text;
 }
 
-/* CHANGED: light-theme gradient endpoint now vibrant orange */
 .theme-light .highlight-text {
   background: linear-gradient(135deg, #0f172a 40%, #f97316 100%);
   -webkit-background-clip: text;
@@ -866,9 +847,9 @@ onUnmounted(() => {
 }
 
 .culture-subtitle {
-  font-size: clamp(16px, 2vw, 19px);
+  font-size: clamp(15px, 2vw, 19px);
   line-height: 1.7;
-  max-width: 760px;
+  max-width: 850px;
   margin: 0 auto;
   color: rgba(255, 255, 255, 0.65);
 }
@@ -882,14 +863,17 @@ onUnmounted(() => {
 /* ----------------------------------------- */
 .pillars-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
-  max-width: 1300px;
-  margin: 0 auto 110px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  width: 100%;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  padding: 0 clamp(1rem, 3vw, 4rem);
+  margin: 0 0 clamp(56px, 9vw, 110px);
 }
 
 .pillar-card {
-  padding: 32px 28px;
+  padding: clamp(24px, 3vw, 32px) clamp(20px, 2.6vw, 28px);
   border-radius: 8px;
   background-color: rgba(255, 255, 255, 0.01);
   border: 1px solid rgba(255, 255, 255, 0.04);
@@ -934,11 +918,14 @@ onUnmounted(() => {
 /* ALTERNATING SHOWCASE ROWS                 */
 /* ----------------------------------------- */
 .showcase-rows {
-  max-width: 1300px;
-  margin: 0 auto 110px;
+  width: 100%;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  padding: 0 clamp(1rem, 3vw, 4rem);
+  margin: 0 0 clamp(56px, 9vw, 110px);
   display: flex;
   flex-direction: column;
-  gap: 100px;
+  gap: clamp(48px, 8vw, 100px);
 }
 
 .showcase-row {
@@ -946,6 +933,7 @@ onUnmounted(() => {
   grid-template-columns: 1fr 1fr;
   gap: clamp(28px, 5vw, 70px);
   align-items: center;
+  width: 100%;
 }
 
 .row-reverse {
@@ -1002,7 +990,6 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-/* CHANGED: light-theme image tint now vibrant orange */
 .theme-light .row-img-tint {
   background: linear-gradient(135deg, rgba(249, 115, 22, 0.12), transparent 60%);
 }
@@ -1038,14 +1025,13 @@ onUnmounted(() => {
   margin-bottom: 14px;
 }
 
-/* CHANGED: light-theme row tag now vibrant orange */
 .theme-light .row-tag {
   color: #f97316;
   font-weight: 600;
 }
 
 .row-title {
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
   font-weight: 900;
   letter-spacing: -0.02em;
   margin-bottom: 16px;
@@ -1053,7 +1039,7 @@ onUnmounted(() => {
 }
 
 .row-desc {
-  font-size: 15px;
+  font-size: clamp(14px, 1.1vw, 15px);
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.65);
   margin-bottom: 24px;
@@ -1097,10 +1083,12 @@ onUnmounted(() => {
 /* ----------------------------------------- */
 .culture-cta {
   position: relative;
-  max-width: 1000px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  margin: 0;
   text-align: center;
-  padding: 80px 40px;
+  padding: clamp(44px, 6vw, 80px) clamp(24px, 4vw, 40px);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.06);
   background-color: rgba(255, 255, 255, 0.01);
@@ -1127,16 +1115,15 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-/* CHANGED: light-theme CTA glow now uses a soft orange tint */
 .theme-light .cta-glow {
   opacity: 0.15;
   background-color: #fdba74;
 }
 
 .cta-title {
-  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-size: clamp(1.7rem, 4vw, 3rem);
   font-weight: 900;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin-bottom: 18px;
   position: relative;
   z-index: 1;
@@ -1146,7 +1133,7 @@ onUnmounted(() => {
   font-size: clamp(14px, 1.6vw, 17px);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.65);
-  max-width: 560px;
+  max-width: 650px;
   margin: 0 auto 36px;
   position: relative;
   z-index: 1;
@@ -1164,16 +1151,15 @@ onUnmounted(() => {
   background-color: #ffffff;
   color: #0b0c10;
   border: 1px solid transparent;
-  padding: 18px 38px;
+  padding: clamp(14px, 1.6vw, 18px) clamp(26px, 3vw, 38px);
   font-weight: 700;
-  font-size: 14px;
+  font-size: clamp(12.5px, 1vw, 14px);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   border-radius: 4px;
   transition: background-color 0.3s, color 0.3s, transform 0.2s;
 }
 
-/* CHANGED: light-theme button now vibrant orange instead of dark navy */
 .theme-light .btn-start-project {
   background-color: #f97316;
   color: #ffffff;
@@ -1186,14 +1172,15 @@ onUnmounted(() => {
 }
 
 /* ----------------------------------------- */
-/* GO BACK BUTTON (matches Start a Project)   */
+/* GO BACK BUTTON                            */
 /* ----------------------------------------- */
 .back-btn-row {
   position: relative;
   z-index: 10;
   display: flex;
   justify-content: center;
-  margin-top: 3rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  width: 100%;
 }
 
 .go-back-btn {
@@ -1214,7 +1201,6 @@ onUnmounted(() => {
   transition: background-color 0.3s, color 0.3s, transform 0.2s;
 }
 
-/* CHANGED: light-theme button now vibrant orange instead of dark navy */
 .theme-light .go-back-btn {
   background-color: #f97316;
   color: #ffffff;
@@ -1235,14 +1221,14 @@ onUnmounted(() => {
 }
 
 /* ----------------------------------------- */
-/* SCROLL-IN ANIMATION (matches About.vue)   */
+/* SCROLL-IN ANIMATION                       */
 /* ----------------------------------------- */
 .animate-scroll-element {
   opacity: 0;
 }
 
 /* ----------------------------------------- */
-/* MINIMALIST COPYRIGHT FOOTER               */
+/* COPYRIGHT FOOTER                          */
 /* ----------------------------------------- */
 .footer-group {
   width: 100%;
@@ -1272,29 +1258,7 @@ onUnmounted(() => {
   border-top-color: rgba(15, 23, 42, 0.06);
 }
 
-/* ----------------------------------------- */
-/* RESPONSIVE TWEAKS                         */
-/* ----------------------------------------- */
-@media (max-width: 540px) {
-  .culture-hero {
-    margin-bottom: 60px;
-  }
-
-  .pillars-section {
-    margin-bottom: 70px;
-  }
-
-  .showcase-rows {
-    gap: 60px;
-    margin-bottom: 70px;
-  }
-
-  .culture-cta {
-    padding: 50px 24px;
-  }
-}
-
-/* ── Floating Chat Widget (new, isolated) ── */
+/* ── Floating Chat Widget ── */
 .chat-fab {
   position: fixed;
   bottom: clamp(16px, 4vw, 28px);
@@ -1314,7 +1278,6 @@ onUnmounted(() => {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* CHANGED: light-theme chat button glow now vibrant orange (background already inherits --brand-accent) */
 .theme-light .chat-fab {
   box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
 }
@@ -1374,11 +1337,365 @@ onUnmounted(() => {
   transform: translateY(16px) scale(0.96);
 }
 
+/* =========================================================================
+   BREAKPOINT TIERS
+   ========================================================================= */
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .navbar {
+    padding: 0.75rem 1.8rem;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
+
+  .nav-actions {
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1201px) {
+  .navbar {
+    padding: 0.85rem 2.2rem;
+  }
+
+  .logo {
+    font-size: 1.45rem;
+  }
+
+  .nav-actions {
+    gap: 22px;
+  }
+
+  .consult-btn {
+    font-size: 14px;
+    padding: 11px 20px;
+  }
+
+  .culture-title {
+    font-size: clamp(2.6rem, 5.4vw, 5.4rem);
+  }
+}
+
+@media (min-width: 1536px) {
+  .navbar {
+    padding: 1rem 2.6rem;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+
+  .nav-actions {
+    gap: 26px;
+  }
+
+  .consult-btn {
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+
+  .theme-toggle {
+    width: 44px;
+    height: 24px;
+  }
+
+  .toggle-thumb {
+    width: 18px;
+    height: 18px;
+  }
+
+  .toggle-active {
+    transform: translateX(20px);
+  }
+
+  .menu-trigger {
+    width: 38px;
+    height: 38px;
+  }
+
+  .culture-title {
+    font-size: clamp(3rem, 4.8vw, 6rem);
+  }
+
+  .culture-subtitle {
+    max-width: 950px;
+    font-size: 1.2rem;
+  }
+
+  .row-title {
+    font-size: clamp(1.8rem, 2.2vw, 2.6rem);
+  }
+
+  .cta-title {
+    font-size: clamp(2rem, 3vw, 3.4rem);
+  }
+
+  .cta-subtitle {
+    max-width: 750px;
+    font-size: 1.15rem;
+  }
+}
+
+@media (min-width: 1921px) {
+  .navbar {
+    padding: 1.1rem 3.2rem;
+  }
+
+  .logo {
+    font-size: 1.8rem;
+  }
+
+  .nav-actions {
+    gap: 30px;
+  }
+
+  .consult-btn {
+    font-size: 16px;
+    padding: 13px 26px;
+  }
+
+  .culture-title {
+    font-size: clamp(3.6rem, 4.4vw, 7rem);
+    margin-bottom: 36px;
+  }
+
+  .culture-subtitle {
+    max-width: 1100px;
+    font-size: 1.35rem;
+    line-height: 1.75;
+  }
+
+  .pillar-card {
+    padding: 40px 34px;
+  }
+
+  .row-title {
+    font-size: clamp(2rem, 1.8vw, 3rem);
+  }
+
+  .row-desc {
+    font-size: 16px;
+  }
+
+  .culture-cta {
+    padding: 96px 60px;
+  }
+
+  .cta-title {
+    font-size: clamp(2.4rem, 2.6vw, 3.8rem);
+  }
+
+  .cta-subtitle {
+    max-width: 850px;
+    font-size: 1.25rem;
+  }
+
+  .btn-start-project {
+    font-size: 15px;
+    padding: 20px 44px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar {
+    padding: 0.7rem 1.6rem;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .nav-actions {
+    gap: 14px;
+  }
+
+  .consult-btn {
+    font-size: 12.5px;
+    padding: 9px 16px;
+  }
+
+  .culture-main {
+    padding: clamp(84px, 14vh, 116px) clamp(24px, 6vw, 48px) clamp(40px, 7vh, 72px);
+  }
+
+  .culture-title {
+    font-size: clamp(2rem, 5.6vw, 3.2rem);
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .navbar {
+    padding: 0.6rem 1.1rem;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+  }
+
+  .nav-actions {
+    gap: clamp(8px, 2vw, 14px);
+  }
+
+  .consult-btn {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .culture-main {
+    padding: clamp(78px, 15vh, 104px) clamp(20px, 6vw, 40px) clamp(32px, 6vh, 56px);
+  }
+
+  .culture-hero {
+    margin-bottom: 60px;
+  }
+
+  .culture-title {
+    font-size: clamp(1.9rem, 7vw, 2.7rem);
+  }
+
+  .culture-subtitle {
+    max-width: 100%;
+  }
+
+  .pillars-section {
+    margin-bottom: 70px;
+  }
+
+  .showcase-rows {
+    gap: 60px;
+    margin-bottom: 70px;
+  }
+
+  .culture-cta {
+    padding: clamp(36px, 7vw, 56px) clamp(20px, 5vw, 32px);
+  }
+}
+
 @media (max-width: 480px) {
+  .navbar {
+    padding: 0.55rem 0.85rem;
+  }
+
+  .logo {
+    font-size: 1.05rem;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .consult-btn {
+    display: none;
+  }
+
+  .theme-toggle {
+    width: 34px;
+    height: 18px;
+    padding: 2px;
+  }
+
+  .toggle-thumb {
+    width: 13px;
+    height: 13px;
+  }
+
+  .toggle-active {
+    transform: translateX(15px);
+  }
+
+  .menu-trigger {
+    width: 30px;
+    height: 30px;
+    gap: 3px;
+  }
+
+  .culture-main {
+    padding: clamp(74px, 15vh, 96px) 16px clamp(28px, 5vh, 44px);
+  }
+
+  .culture-hero {
+    margin-bottom: clamp(40px, 10vw, 60px);
+  }
+
+  .section-tag {
+    margin-bottom: 14px;
+  }
+
+  .culture-title {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+    margin-bottom: 16px;
+  }
+
+  .culture-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .pillars-section {
+    gap: 14px;
+    margin-bottom: 48px;
+  }
+
+  .pillar-card {
+    padding: 22px 20px;
+  }
+
+  .showcase-rows {
+    gap: clamp(40px, 12vw, 56px);
+    margin-bottom: 48px;
+  }
+
+  .row-title {
+    font-size: clamp(1.3rem, 6.5vw, 1.7rem);
+  }
+
+  .culture-cta {
+    padding: 32px 16px;
+  }
+
+  .cta-title {
+    font-size: clamp(1.4rem, 7.5vw, 1.9rem);
+  }
+
+  .btn-start-project {
+    width: 100%;
+    text-align: center;
+  }
+
+  .back-btn-row {
+    margin-top: 2rem;
+  }
+
+  .go-back-btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
   .chat-popup {
     left: 16px;
     right: 16px;
     width: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar {
+    padding: 0.5rem 0.7rem;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .culture-main {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .culture-title {
+    font-size: clamp(1.3rem, 8.5vw, 1.75rem);
   }
 }
 </style>

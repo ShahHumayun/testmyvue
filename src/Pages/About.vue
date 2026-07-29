@@ -74,65 +74,71 @@
     </main>
 
     <section class="services-section">
-      <div class="section-header animate-scroll-element">
-        <span class="mini-title">Expertise</span>
-        <h2 class="section-main-heading">What We Do Best</h2>
-      </div>
+      <div class="section-content-width">
+        <div class="section-header animate-scroll-element">
+          <span class="mini-title">Expertise</span>
+          <h2 class="section-main-heading">What We Do Best</h2>
+        </div>
 
-      <div class="services-grid">
-        <div class="service-card animate-scroll-element">
-          <div class="service-icon">🎨</div>
-          <h3>Web Designing</h3>
-          <p>Immersive, responsive, and strategic user experiences designed to maximize engagement and align beautifully
-            with your brand identity.</p>
-        </div>
-        <div class="service-card animate-scroll-element">
-          <div class="service-icon">💻</div>
-          <h3>Web Development</h3>
-          <p>Clean, efficient, and scalable code bases built using cutting-edge frameworks. Fast, reliable, and secure
-            enterprise solutions.</p>
-        </div>
-        <div class="service-card animate-scroll-element">
-          <div class="service-icon">📱</div>
-          <h3>App Development</h3>
-          <p>Native and cross-platform mobile apps built with seamless functionality, fluid gesture animations, and
-            continuous cloud integrations.</p>
+        <div class="services-grid">
+          <div class="service-card animate-scroll-element">
+            <div class="service-icon">🎨</div>
+            <h3>Web Designing</h3>
+            <p>Immersive, responsive, and strategic user experiences designed to maximize engagement and align
+              beautifully
+              with your brand identity.</p>
+          </div>
+          <div class="service-card animate-scroll-element">
+            <div class="service-icon">💻</div>
+            <h3>Web Development</h3>
+            <p>Clean, efficient, and scalable code bases built using cutting-edge frameworks. Fast, reliable, and secure
+              enterprise solutions.</p>
+          </div>
+          <div class="service-card animate-scroll-element">
+            <div class="service-icon">📱</div>
+            <h3>App Development</h3>
+            <p>Native and cross-platform mobile apps built with seamless functionality, fluid gesture animations, and
+              continuous cloud integrations.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="our-work-showcase" ref="workSection" class="work-showcase-section">
-      <div class="section-header">
-        <span class="mini-title">Portfolio</span>
-        <h2 class="showcase-heading">Featured Projects</h2>
-        <p class="showcase-subheading">Take a look at some of our production-ready web and mobile ecosystems.</p>
-      </div>
+    <section id="our-work-showcase" ref="workSection"
+      :class="['work-showcase-section', isDarkMode ? 'showcase-bg-dark' : 'showcase-bg-light']">
+      <div class="section-content-width">
+        <div class="section-header">
+          <span class="mini-title">Portfolio</span>
+          <h2 class="showcase-heading">Featured Projects</h2>
+          <p class="showcase-subheading">Take a look at some of our production-ready web and mobile ecosystems.</p>
+        </div>
 
-      <div class="showcase-grid">
-        <div v-for="(project, idx) in projects" :key="idx" class="project-card">
-          <div class="project-image-wrapper">
-            <img :src="project.image" :alt="project.name" class="project-img" />
-            <div class="image-tint-overlay"></div>
-          </div>
-          <div class="card-inner">
-            <div class="card-meta">
-              <span class="project-type">{{ project.type }}</span>
-              <span class="project-tag-dot"></span>
+        <div class="showcase-grid">
+          <div v-for="(project, idx) in projects" :key="idx" class="project-card">
+            <div class="project-image-wrapper">
+              <img :src="project.image" :alt="project.name" class="project-img" />
+              <div class="image-tint-overlay"></div>
             </div>
-            <h3 class="project-title">{{ project.name }}</h3>
-            <p class="project-desc">{{ project.desc }}</p>
-            <div class="project-tech-stack">
-              <span v-for="tech in project.stack" :key="tech" class="tech-pill">{{ tech }}</span>
+            <div class="card-inner">
+              <div class="card-meta">
+                <span class="project-type">{{ project.type }}</span>
+                <span class="project-tag-dot"></span>
+              </div>
+              <h3 class="project-title">{{ project.name }}</h3>
+              <p class="project-desc">{{ project.desc }}</p>
+              <div class="project-tech-stack">
+                <span v-for="tech in project.stack" :key="tech" class="tech-pill">{{ tech }}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="back-btn-row">
-        <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
-          <span class="go-back-arrow" aria-hidden="true">←</span>
-          Go Back
-        </button>
+        <div class="back-btn-row">
+          <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
+            <span class="go-back-arrow" aria-hidden="true">←</span>
+            Go Back
+          </button>
+        </div>
       </div>
     </section>
 
@@ -188,7 +194,6 @@
         </div>
       </div>
     </section>
-
 
     <Footer :darkMode="isDarkMode" />
 
@@ -427,8 +432,6 @@ const onMenuLeave = (el, done) => {
 .about-page-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
-  /* Shared vertical rhythm used across every section below the hero,
-     matching Home.vue so spacing feels consistent site-wide. */
   --space-sm: clamp(18px, 2.6vw, 36px);
   --space-md: clamp(22px, 3.6vw, 56px);
   --space-lg: clamp(32px, 5.5vw, 96px);
@@ -445,7 +448,6 @@ const onMenuLeave = (el, done) => {
   color: #ffffff;
 }
 
-/* CHANGED: light theme now overrides --brand-accent to vibrant orange and uses a solid white background */
 .theme-light {
   --brand-accent: #f97316;
   background-color: #ffffff;
@@ -479,11 +481,6 @@ const onMenuLeave = (el, done) => {
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
 
-/* =========================================================
-   NAVBAR — full width, flush to the top and side edges, no
-   floating pill margin. Matches the Home.vue redesign exactly.
-   Fluid base + explicit per-tier growth/shrink further down.
-   ========================================================= */
 .navbar {
   position: fixed;
   top: 0;
@@ -564,7 +561,6 @@ const onMenuLeave = (el, done) => {
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
 }
 
-/* CHANGED: orange hover glow for light theme */
 .theme-light .consult-btn:hover {
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
@@ -767,7 +763,6 @@ const onMenuLeave = (el, done) => {
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
 
-/* CHANGED: orange hover glow for light theme */
 .theme-light .consult-btn-overlay:hover {
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
@@ -799,12 +794,6 @@ const onMenuLeave = (el, done) => {
   }
 }
 
-/* =========================================================
-   HERO — fixed top/bottom pixel padding replaced with fluid
-   clamp() values so nav clearance and breathing room scale
-   properly across every breakpoint instead of staying frozen
-   at 140px/80px on all screens.
-   ========================================================= */
 .about-hero {
   min-height: clamp(560px, 92vh, 960px);
   display: flex;
@@ -813,6 +802,8 @@ const onMenuLeave = (el, done) => {
   padding: clamp(96px, 15vh, 150px) clamp(16px, 5vw, 60px) clamp(48px, 8vh, 96px);
   position: relative;
   z-index: 10;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ambient-glow {
@@ -826,7 +817,6 @@ const onMenuLeave = (el, done) => {
   pointer-events: none;
 }
 
-/* CHANGED: light-theme glow now uses a soft orange tint */
 .theme-light .ambient-glow {
   opacity: 0.2;
   background-color: #fdba74;
@@ -869,7 +859,6 @@ const onMenuLeave = (el, done) => {
   background-clip: text;
 }
 
-/* CHANGED: light-theme gradient endpoint now vibrant orange */
 .theme-light .highlight-text {
   background: linear-gradient(135deg, #0f172a 40%, #f97316 100%);
   -webkit-background-clip: text;
@@ -942,17 +931,20 @@ const onMenuLeave = (el, done) => {
   transform: translateY(-2px);
 }
 
-/* =========================================================
-   CONTENT SECTIONS — vertical padding now driven by the
-   shared --space-lg token instead of frozen 80px/100px values,
-   and container widths grow at the large-screen tiers below.
-   ========================================================= */
 .services-section {
-  padding: var(--space-lg) clamp(16px, 5vw, 60px);
-  max-width: 1400px;
-  margin: 0 auto;
+  padding: var(--space-lg) 0;
+  width: 100%;
   position: relative;
   z-index: 10;
+  box-sizing: border-box;
+}
+
+.section-content-width {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 clamp(16px, 5vw, 60px);
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .mini-title {
@@ -965,7 +957,6 @@ const onMenuLeave = (el, done) => {
   margin-bottom: 8px;
 }
 
-/* CHANGED: light-theme mini title now vibrant orange */
 .theme-light .mini-title {
   color: #f97316;
   font-weight: 600;
@@ -982,6 +973,7 @@ const onMenuLeave = (el, done) => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: clamp(18px, 2.4vw, 30px);
+  width: 100%;
 }
 
 .service-card {
@@ -989,6 +981,12 @@ const onMenuLeave = (el, done) => {
   border-radius: 6px;
   background-color: rgba(255, 255, 255, 0.01);
   border: 1px solid rgba(255, 255, 255, 0.04);
+  box-sizing: border-box;
+  /* CHANGED: increased card height so the services grid reads taller */
+  min-height: clamp(260px, 26vw, 320px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .theme-light .service-card {
@@ -1019,11 +1017,24 @@ const onMenuLeave = (el, done) => {
 }
 
 .work-showcase-section {
-  padding: var(--space-lg) clamp(16px, 5vw, 60px) calc(var(--space-lg) * 1.15);
-  max-width: 1400px;
-  margin: 0 auto;
+  padding: var(--space-lg) 0 calc(var(--space-lg) * 1.15);
+  width: 100%;
   position: relative;
   z-index: 10;
+  box-sizing: border-box;
+  /* CHANGED: transition added so the new background swap fades like the rest of the theme */
+  transition: background-color var(--transition-speed);
+}
+
+/* CHANGED: Featured Projects section now gets its own alternate shade per
+   theme, same pattern used across the other page sections — a light
+   gray in the light theme, a slightly-lighter-than-black shade in dark. */
+.showcase-bg-dark {
+  background-color: #1c1c1c;
+}
+
+.showcase-bg-light {
+  background-color: #f2f2f2;
 }
 
 .showcase-heading {
@@ -1049,9 +1060,9 @@ const onMenuLeave = (el, done) => {
   grid-auto-rows: 1fr;
   gap: clamp(20px, 2.8vw, 32px);
   align-items: stretch;
+  width: 100%;
 }
 
-/* CHANGED: stack to a single column only when there isn't room for two even cards, so the two project images stay in line on normal screens */
 @media (max-width: 860px) {
   .showcase-grid {
     grid-template-columns: 1fr;
@@ -1067,6 +1078,9 @@ const onMenuLeave = (el, done) => {
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
   overflow: hidden;
+  box-sizing: border-box;
+  /* CHANGED: increased minimum card height for the featured projects grid */
+  min-height: clamp(480px, 48vw, 640px);
 }
 
 .theme-light .project-card {
@@ -1082,7 +1096,8 @@ const onMenuLeave = (el, done) => {
 .project-image-wrapper {
   position: relative;
   width: 100%;
-  height: clamp(190px, 26vw, 300px);
+  /* CHANGED: taller image area to match the increased card height above */
+  height: clamp(280px, 36vw, 400px);
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.1);
 }
@@ -1127,7 +1142,6 @@ const onMenuLeave = (el, done) => {
   letter-spacing: 0.05em;
 }
 
-/* CHANGED: light-theme project type label now vibrant orange */
 .theme-light .project-type {
   color: #f97316;
   font-weight: 600;
@@ -1230,12 +1244,14 @@ const onMenuLeave = (el, done) => {
   z-index: 10;
   width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .contact-container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .contact-title {
@@ -1253,7 +1269,6 @@ const onMenuLeave = (el, done) => {
   margin-bottom: 28px;
 }
 
-/* CHANGED: light-theme underline now vibrant orange */
 .theme-light .title-underline {
   background-color: #f97316;
 }
@@ -1275,6 +1290,7 @@ const onMenuLeave = (el, done) => {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: clamp(18px, 2.4vw, 30px);
   align-items: center;
+  width: 100%;
 }
 
 .contact-item-card {
@@ -1285,6 +1301,7 @@ const onMenuLeave = (el, done) => {
   align-items: center;
   transition: transform 0.3s ease;
   padding: 16px;
+  box-sizing: border-box;
 }
 
 .contact-item-card:hover {
@@ -1347,6 +1364,7 @@ const onMenuLeave = (el, done) => {
   font-size: 11px;
   letter-spacing: 0.05em;
   border-top: 1px solid;
+  box-sizing: border-box;
 }
 
 .theme-dark .copyright-section {
@@ -1380,7 +1398,6 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* CHANGED: light-theme chat button glow now vibrant orange (background already inherits --brand-accent) */
 .theme-light .chat-fab {
   box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
 }
@@ -1440,14 +1457,6 @@ const onMenuLeave = (el, done) => {
   transform: translateY(16px) scale(0.96);
 }
 
-/* =========================================================================
-   BREAKPOINT TIERS
-   Organized by the exact ranges used across the rest of the site,
-   desktop-first (max-width cascades down). Navbar sizing mirrors the
-   Home.vue implementation tier-for-tier.
-   ========================================================================= */
-
-/* ---------- Desktops — 1025px to 1200px ---------- */
 @media (min-width: 1025px) and (max-width: 1200px) {
   .navbar {
     padding: 0.75rem 1.8rem;
@@ -1464,16 +1473,8 @@ const onMenuLeave = (el, done) => {
   .hero-content-block {
     max-width: 820px;
   }
-
-  .services-section,
-  .work-showcase-section,
-  .contact-screenshot-section,
-  .contact-container {
-    max-width: 1200px;
-  }
 }
 
-/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
 @media (min-width: 1201px) {
   .navbar {
     padding: 0.85rem 2.2rem;
@@ -1550,16 +1551,8 @@ const onMenuLeave = (el, done) => {
     max-width: 780px;
     font-size: 1.25rem;
   }
-
-  .services-section,
-  .work-showcase-section,
-  .contact-screenshot-section,
-  .contact-container {
-    max-width: 1560px;
-  }
 }
 
-/* ---------- 4K / UHD / large TVs — 1921px and up (e.g. 2560px) ---------- */
 @media (min-width: 1921px) {
   .navbar {
     padding: 1.1rem 3.2rem;
@@ -1605,19 +1598,48 @@ const onMenuLeave = (el, done) => {
     font-size: clamp(2.6rem, 3vw, 3.6rem);
   }
 
-  .services-section,
-  .work-showcase-section,
-  .contact-screenshot-section,
-  .contact-container {
-    max-width: 1900px;
+  .project-card {
+    min-height: clamp(500px, 30vw, 600px);
   }
 
   .project-image-wrapper {
-    height: clamp(280px, 20vw, 360px);
+    height: clamp(320px, 24vw, 400px);
   }
 }
 
-/* ---------- Laptops / Large Tablets — 769px to 1024px ---------- */
+/* ==========================================================================
+   4K / Extra-Extra-Large Monitors: 2560px and up
+   CHANGED: this tier didn't exist before — the Featured Projects cards were
+   plateauing at their 1921px sizing on very large/high-res displays. This
+   keeps the card, image, and inner padding growing proportionally instead.
+   ========================================================================== */
+@media (min-width: 2560px) {
+  .project-card {
+    min-height: clamp(620px, 38vw, 740px);
+  }
+
+  .project-image-wrapper {
+    height: clamp(400px, 28vw, 480px);
+  }
+
+  .card-inner {
+    padding: clamp(34px, 3vw, 44px);
+  }
+
+  .project-title {
+    font-size: 1.7rem;
+  }
+
+  .project-desc {
+    font-size: 1.05rem;
+  }
+
+  .tech-pill {
+    font-size: 13px;
+    padding: 5px 12px;
+  }
+}
+
 @media (min-width: 769px) and (max-width: 1024px) {
   .navbar {
     padding: 0.7rem 1.6rem;
@@ -1653,7 +1675,6 @@ const onMenuLeave = (el, done) => {
   }
 }
 
-/* ---------- Mobile Landscape / Tablets — 481px to 768px ---------- */
 @media (min-width: 481px) and (max-width: 768px) {
   .navbar {
     padding: 0.6rem 1.1rem;
@@ -1689,8 +1710,7 @@ const onMenuLeave = (el, done) => {
     max-width: 90%;
   }
 
-  .services-section,
-  .work-showcase-section,
+  .section-content-width,
   .contact-screenshot-section {
     padding-left: clamp(18px, 5vw, 32px);
     padding-right: clamp(18px, 5vw, 32px);
@@ -1701,7 +1721,6 @@ const onMenuLeave = (el, done) => {
   }
 }
 
-/* ---------- Mobile Portrait — 320px to 480px ---------- */
 @media (max-width: 480px) {
   .navbar {
     padding: 0.55rem 0.85rem;
@@ -1775,8 +1794,7 @@ const onMenuLeave = (el, done) => {
     text-align: center;
   }
 
-  .services-section,
-  .work-showcase-section,
+  .section-content-width,
   .contact-screenshot-section {
     padding-left: 16px;
     padding-right: 16px;
@@ -1791,7 +1809,7 @@ const onMenuLeave = (el, done) => {
   }
 
   .project-image-wrapper {
-    height: clamp(160px, 46vw, 220px);
+    height: clamp(190px, 50vw, 250px);
   }
 
   .chat-popup {

@@ -1164,9 +1164,7 @@ const onMenuLeave = (el, done) => {
 }
 
 /* =========================================================
-   HOME SECTIONS — spacing now driven entirely by the tightened
-   --space-sm/md/lg tokens above, so every component gets the
-   reduced top/bottom rhythm automatically and consistently.
+   HOME SECTIONS — Full width configuration across all breakpoints
    ========================================================= */
 .home-trust-layout,
 .home-company-trust-layout,
@@ -1178,28 +1176,31 @@ const onMenuLeave = (el, done) => {
 .home-reviews-layout,
 .home-insights-layout {
   margin-top: var(--space-md);
-  width: 100%;
-  max-width: 1400px;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box;
 }
 
 .home-why-webhive-layout {
   margin-top: var(--space-lg);
   padding-bottom: var(--space-lg);
-  width: 100%;
-  max-width: 1400px;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box;
 }
 
 .home-cta-layout {
   margin-top: var(--space-md);
   padding-bottom: var(--space-lg);
-  width: 100%;
-  max-width: 1400px;
-  padding-left: clamp(16px, 4vw, 40px);
-  padding-right: clamp(16px, 4vw, 40px);
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box;
 }
 
 .copyright-section {
@@ -1420,20 +1421,6 @@ const onMenuLeave = (el, done) => {
     max-width: 760px;
     font-size: clamp(1.2rem, 1.2vw, 1.45rem);
   }
-
-  .home-trust-layout,
-  .home-company-trust-layout,
-  .home-services-layout,
-  .home-why-webhive-layout,
-  .home-services-section-layout,
-  .home-how-we-work-layout,
-  .home-technology-layout,
-  .home-proof-of-work-layout,
-  .home-reviews-layout,
-  .home-insights-layout,
-  .home-cta-layout {
-    max-width: 1560px;
-  }
 }
 
 /* ---------- 4K / UHD / large TVs — 1921px and up (e.g. 2560px) ---------- */
@@ -1489,20 +1476,6 @@ const onMenuLeave = (el, done) => {
   .carousel-side-arrow {
     width: 54px;
     height: 54px;
-  }
-
-  .home-trust-layout,
-  .home-company-trust-layout,
-  .home-services-layout,
-  .home-why-webhive-layout,
-  .home-services-section-layout,
-  .home-how-we-work-layout,
-  .home-technology-layout,
-  .home-proof-of-work-layout,
-  .home-reviews-layout,
-  .home-insights-layout,
-  .home-cta-layout {
-    max-width: 1800px;
   }
 }
 
@@ -1595,21 +1568,6 @@ const onMenuLeave = (el, done) => {
   .carousel-side-arrow {
     display: none;
   }
-
-  .home-trust-layout,
-  .home-company-trust-layout,
-  .home-services-layout,
-  .home-why-webhive-layout,
-  .home-services-section-layout,
-  .home-how-we-work-layout,
-  .home-technology-layout,
-  .home-proof-of-work-layout,
-  .home-reviews-layout,
-  .home-insights-layout,
-  .home-cta-layout {
-    padding-left: clamp(18px, 5vw, 32px);
-    padding-right: clamp(18px, 5vw, 32px);
-  }
 }
 
 /* ---------- Mobile Portrait — 320px to 480px ---------- */
@@ -1689,21 +1647,6 @@ const onMenuLeave = (el, done) => {
 
   .carousel-side-arrow {
     display: none;
-  }
-
-  .home-trust-layout,
-  .home-company-trust-layout,
-  .home-services-layout,
-  .home-why-webhive-layout,
-  .home-services-section-layout,
-  .home-how-we-work-layout,
-  .home-technology-layout,
-  .home-proof-of-work-layout,
-  .home-reviews-layout,
-  .home-insights-layout,
-  .home-cta-layout {
-    padding-left: 16px;
-    padding-right: 16px;
   }
 
   .chat-popup {

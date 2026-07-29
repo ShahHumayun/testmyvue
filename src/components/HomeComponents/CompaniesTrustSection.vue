@@ -5,13 +5,13 @@
     ]">
         <div class="max-w-5xl mx-auto relative z-10 text-center">
             <h2 :class="[
-                'text-xl sm:text-2xl md:text-3xl xl:text-4xl font-black tracking-tight mb-3 sm:mb-4 md:mb-4',
+                'section-heading text-xl sm:text-2xl md:text-3xl xl:text-4xl font-black tracking-tight mb-3 sm:mb-4 md:mb-4',
                 isDarkMode ? 'text-white' : 'text-black'
             ]">
                 Trusted by teams we've shipped for
             </h2>
             <p :class="[
-                'text-sm sm:text-base xl:text-lg max-w-2xl mx-auto mb-10 sm:mb-12 md:mb-14 xl:mb-16 leading-relaxed',
+                'section-paragraph text-sm sm:text-base xl:text-lg max-w-2xl mx-auto mb-10 sm:mb-12 md:mb-14 xl:mb-16 leading-relaxed',
                 isDarkMode ? 'text-neutral-400' : 'text-neutral-500'
             ]">
                 Headless CMS, marketing sites, and e-commerce — delivered for brands across restoration, pharma, ad
@@ -234,11 +234,11 @@ const companies = [
         max-width: 780px !important;
     }
 
-    .xl\:text-4xl {
+    .section-heading {
         font-size: 2.9rem;
     }
 
-    .xl\:text-lg {
+    .section-paragraph {
         font-size: 1.35rem;
     }
 

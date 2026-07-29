@@ -119,11 +119,7 @@
       </section>
     </main>
 
-    <footer class="footer-group">
-      <div class="copyright-section">
-        <p>© {{ currentYear }} WebHive Technologies. All rights reserved.</p>
-      </div>
-    </footer>
+    <Footer :darkMode="isDarkMode" />
   </div>
 </template>
 
@@ -131,6 +127,7 @@
 import { ref, reactive, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import gsap from 'gsap'
+import Footer from '../components/footer.vue'
 
 const router = useRouter()
 
@@ -432,6 +429,17 @@ const onMenuLeave = (el, done) => {
 <style scoped>
 :global(html) {
   scroll-behavior: smooth;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:global(html::-webkit-scrollbar),
+:global(body::-webkit-scrollbar) {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 :global(html),
@@ -440,12 +448,22 @@ const onMenuLeave = (el, done) => {
   padding: 0;
 }
 
+:global(body) {
+  overflow-x: hidden !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
 /* ----------------------------------------- */
 /* 1. CORE SETUP & VARIABLES                 */
 /* ----------------------------------------- */
 .hero-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
+  /* Fluid clearance used for nav-aware offsets below (sticky rail,
+     scroll-margin, hero padding) — grows per breakpoint tier so it
+     always matches the new full-width navbar's actual height. */
+  --nav-clearance: clamp(58px, 9vh, 88px);
 
   min-height: 100vh;
   width: 100%;
@@ -456,11 +474,24 @@ const onMenuLeave = (el, done) => {
   box-sizing: border-box;
   position: relative;
   z-index: 1;
+  overflow-x: hidden;
 }
 
-.hero-wrapper *,
-.hero-wrapper *::before,
-.hero-wrapper *::after {
+/* Scoped to the areas that actually need the reset — deliberately
+   excludes the <Footer> child component so its own internal centering
+   margin isn't zeroed out by this rule (see Studio.vue fix). */
+.navbar,
+.navbar *,
+.navbar *::before,
+.navbar *::after,
+.nav-overlay,
+.nav-overlay *,
+.nav-overlay *::before,
+.nav-overlay *::after,
+.hero-main,
+.hero-main *,
+.hero-main *::before,
+.hero-main *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -508,23 +539,30 @@ const onMenuLeave = (el, done) => {
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
 
-/* ----------------------------------------- */
-/* 3. NAVBAR STYLES                          */
-/* ----------------------------------------- */
+/* =========================================================
+   NAVBAR — full width, flush to the top and side edges, no
+   floating pill margin. Matches the Home.vue / About.vue /
+   Services.vue / Portfolio.vue / Culture.vue / Studio.vue
+   redesign exactly. Fluid base + explicit per-tier
+   growth/shrink further down.
+   ========================================================= */
 .navbar {
   position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  max-width: 1200px;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  will-change: backdrop-filter;
+  width: 100%;
+  max-width: 100%;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 0.8rem 1.5rem;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  padding: clamp(0.55rem, 1.4vw, 0.8rem) clamp(1rem, 2.6vw, 1.5rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -536,12 +574,12 @@ const onMenuLeave = (el, done) => {
   background: #ffffff;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 .logo {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
   font-weight: 800;
   text-decoration: none;
   color: #ffffff;
@@ -605,14 +643,6 @@ const onMenuLeave = (el, done) => {
   flex-shrink: 0;
 }
 
-@media (max-width: 480px) {
-  .theme-toggle {
-    width: 34px;
-    height: 18px;
-    padding: 2px;
-  }
-}
-
 .theme-dark .theme-toggle {
   background-color: rgba(0, 255, 163, 0.1);
   border: 1px solid rgba(0, 255, 163, 0.2);
@@ -635,17 +665,6 @@ const onMenuLeave = (el, done) => {
   border: 1px solid var(--brand-accent);
 }
 
-@media (max-width: 480px) {
-  .toggle-thumb {
-    width: 13px;
-    height: 13px;
-  }
-
-  .toggle-active {
-    transform: translateX(15px);
-  }
-}
-
 .toggle-icon {
   font-size: 9px;
   user-select: none;
@@ -665,14 +684,6 @@ const onMenuLeave = (el, done) => {
   z-index: 55;
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
-}
-
-@media (max-width: 480px) {
-  .menu-trigger {
-    width: 30px;
-    height: 30px;
-    gap: 3px;
-  }
 }
 
 .theme-dark .menu-trigger {
@@ -849,6 +860,9 @@ const onMenuLeave = (el, done) => {
 
 /* ----------------------------------------- */
 /* 5. HERO MAIN / AMBIENT ELEMENTS           */
+/* fixed calc()-based top padding (tuned for  */
+/* the old floating navbar) replaced with     */
+/* --nav-clearance, matching every other page.*/
 /* ----------------------------------------- */
 .hero-main {
   flex: 1 1 0;
@@ -857,7 +871,7 @@ const onMenuLeave = (el, done) => {
   position: relative;
   z-index: 10;
   width: 100%;
-  padding: calc(60px + clamp(10px, 2vw, 22px) + 56px) clamp(20px, 6vw, 80px) 0;
+  padding: calc(var(--nav-clearance) + 16px) clamp(20px, 6vw, 80px) 0;
 }
 
 .ambient-glow {
@@ -906,7 +920,7 @@ const onMenuLeave = (el, done) => {
 }
 
 .hero-title {
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-size: clamp(1.9rem, 4vw, 3.4rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.05;
@@ -982,11 +996,11 @@ const onMenuLeave = (el, done) => {
 
 .index-rail {
   position: sticky;
-  top: calc(60px + clamp(10px, 2vw, 22px) + 24px);
+  top: calc(var(--nav-clearance) + 24px);
   display: flex;
   flex-direction: column;
   gap: 2px;
-  max-height: calc(100vh - 160px);
+  max-height: calc(100vh - var(--nav-clearance) - 100px);
   overflow-y: auto;
   padding-right: 8px;
 }
@@ -1093,7 +1107,7 @@ const onMenuLeave = (el, done) => {
 }
 
 .policy-section {
-  scroll-margin-top: calc(60px + clamp(10px, 2vw, 22px) + 40px);
+  scroll-margin-top: calc(var(--nav-clearance) + 40px);
   padding: clamp(28px, 4vw, 40px) 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
@@ -1122,7 +1136,7 @@ const onMenuLeave = (el, done) => {
 }
 
 .section-title {
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
   font-weight: 800;
   letter-spacing: -0.01em;
 }
@@ -1187,7 +1201,7 @@ const onMenuLeave = (el, done) => {
 
   .index-rail {
     position: sticky;
-    top: calc(60px + clamp(10px, 2vw, 22px) + 8px);
+    top: calc(var(--nav-clearance) + 8px);
     flex-direction: row;
     max-height: none;
     overflow-x: auto;
@@ -1238,7 +1252,9 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 8. FOOTER                                  */
+/* 8. FOOTER (preserved styles, now unused    */
+/* since <Footer /> handles this — kept for   */
+/* parity with the rest of the site)          */
 /* ----------------------------------------- */
 .footer-group {
   width: 100%;
@@ -1265,5 +1281,329 @@ const onMenuLeave = (el, done) => {
   color: rgba(15, 23, 42, 0.5);
   background-color: #ffffff;
   border-top-color: rgba(15, 23, 42, 0.06);
+}
+
+/* =========================================================================
+   BREAKPOINT TIERS
+   Organized by the exact ranges used across the rest of the site,
+   desktop-first (max-width cascades down). Navbar sizing mirrors every
+   other page tier-for-tier; --nav-clearance is bumped alongside it so
+   sticky offsets and scroll-margins always stay in sync with the
+   navbar's actual height at that tier.
+   ========================================================================= */
+
+/* ---------- Desktops — 1025px to 1200px ---------- */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .navbar {
+    padding: 0.75rem 1.8rem;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
+
+  .nav-actions {
+    gap: 16px;
+  }
+
+  .hero-wrapper {
+    --nav-clearance: 68px;
+  }
+
+  .policy-body {
+    max-width: 1000px;
+  }
+}
+
+/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
+@media (min-width: 1201px) {
+  .navbar {
+    padding: 0.85rem 2.2rem;
+  }
+
+  .logo {
+    font-size: 1.45rem;
+  }
+
+  .nav-actions {
+    gap: 22px;
+  }
+
+  .consult-btn {
+    font-size: 14px;
+    padding: 11px 20px;
+  }
+
+  .hero-wrapper {
+    --nav-clearance: 74px;
+  }
+
+  .policy-hero {
+    max-width: 980px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .navbar {
+    padding: 1rem 2.6rem;
+  }
+
+  .logo {
+    font-size: 1.6rem;
+  }
+
+  .nav-actions {
+    gap: 26px;
+  }
+
+  .consult-btn {
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+
+  .theme-toggle {
+    width: 44px;
+    height: 24px;
+  }
+
+  .toggle-thumb {
+    width: 18px;
+    height: 18px;
+  }
+
+  .toggle-active {
+    transform: translateX(20px);
+  }
+
+  .menu-trigger {
+    width: 38px;
+    height: 38px;
+  }
+
+  .hero-wrapper {
+    --nav-clearance: 82px;
+  }
+
+  .hero-main {
+    padding-inline: clamp(40px, 6vw, 110px);
+  }
+
+  .policy-hero {
+    max-width: 1100px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 3.2vw, 4rem);
+  }
+
+  .policy-body {
+    max-width: 1360px;
+  }
+
+  .section-title {
+    font-size: clamp(1.3rem, 1.4vw, 1.7rem);
+  }
+}
+
+/* ---------- 4K / UHD / large TVs — 1921px and up (e.g. 2560px) ---------- */
+@media (min-width: 1921px) {
+  .navbar {
+    padding: 1.1rem 3.2rem;
+  }
+
+  .logo {
+    font-size: 1.8rem;
+  }
+
+  .nav-actions {
+    gap: 30px;
+  }
+
+  .consult-btn {
+    font-size: 16px;
+    padding: 13px 26px;
+  }
+
+  .hero-wrapper {
+    --nav-clearance: 96px;
+  }
+
+  .hero-main {
+    padding-inline: clamp(60px, 7vw, 160px);
+  }
+
+  .policy-hero {
+    max-width: 1300px;
+  }
+
+  .hero-title {
+    font-size: clamp(3.2rem, 2.8vw, 4.6rem);
+  }
+
+  .hero-subtitle {
+    max-width: 680px;
+    font-size: 1.15rem;
+  }
+
+  .policy-body {
+    max-width: 1600px;
+    grid-template-columns: 300px 1fr;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 1.2vw, 1.9rem);
+  }
+
+  .section-text,
+  .section-list {
+    font-size: 15.5px;
+  }
+}
+
+/* ---------- Laptops / Large Tablets — 901px to 1024px ---------- */
+@media (min-width: 901px) and (max-width: 1024px) {
+  .navbar {
+    padding: 0.7rem 1.6rem;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .nav-actions {
+    gap: 14px;
+  }
+
+  .consult-btn {
+    font-size: 12.5px;
+    padding: 9px 16px;
+  }
+
+  .hero-wrapper {
+    --nav-clearance: 62px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.9rem, 4.6vw, 2.8rem);
+  }
+}
+
+/* ---------- Mobile Landscape / Tablets — 481px to 900px ---------- */
+@media (min-width: 481px) and (max-width: 900px) {
+  .navbar {
+    padding: 0.6rem 1.1rem;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+  }
+
+  .nav-actions {
+    gap: clamp(8px, 2vw, 14px);
+  }
+
+  .consult-btn {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .hero-wrapper {
+    --nav-clearance: 58px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.7rem, 6vw, 2.3rem);
+  }
+
+  .hero-subtitle {
+    max-width: 90%;
+  }
+}
+
+/* ---------- Mobile Portrait — 320px to 480px ---------- */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.55rem 0.85rem;
+  }
+
+  .logo {
+    font-size: 1.05rem;
+  }
+
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .consult-btn {
+    display: none;
+  }
+
+  .theme-toggle {
+    width: 34px;
+    height: 18px;
+    padding: 2px;
+  }
+
+  .toggle-thumb {
+    width: 13px;
+    height: 13px;
+  }
+
+  .toggle-active {
+    transform: translateX(15px);
+  }
+
+  .menu-trigger {
+    width: 30px;
+    height: 30px;
+    gap: 3px;
+  }
+
+  .hero-wrapper {
+    --nav-clearance: 54px;
+  }
+
+  .hero-main {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.5rem, 8vw, 1.9rem);
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
+  .doc-tab {
+    padding: 8px 14px;
+    font-size: 12.5px;
+  }
+
+  .section-text,
+  .section-list li {
+    font-size: 13.5px;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar {
+    padding: 0.5rem 0.7rem;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .hero-main {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.3rem, 8.5vw, 1.7rem);
+  }
 }
 </style>

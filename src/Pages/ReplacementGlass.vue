@@ -1,28 +1,32 @@
 <template>
-  <div
-    ref="pageWrapper"
-    :class="[
-      'font-sans relative overflow-hidden',
-      selectionClasses,
-      isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
-    ]"
-  >
+  <div ref="pageWrapper" :class="[
+    'font-sans relative overflow-hidden w-full max-w-full',
+    selectionClasses,
+    isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
+  ]">
 
     <!-- Real-time Enterprise Interactive Network Background Dynamic Mesh -->
-    <div
-      class="pointer-events-none fixed inset-0 z-10 opacity-30 transition-opacity duration-500"
-      :style="{ background: `radial-gradient(800px circle at ${pointer.x}px ${pointer.y}px, rgba(${glowRGB},0.12), transparent 75%)` }"
-    ></div>
-     <Header /><br>
-    <HeroSection :isDarkMode="isDarkMode" />
-    <Overview :isDarkMode="isDarkMode" />
-    <ResultSection :isDarkMode="isDarkMode" />
-    <Footer />
+    <div class="pointer-events-none fixed inset-0 z-10 opacity-30 transition-opacity duration-500"
+      :style="{ background: `radial-gradient(800px circle at ${pointer.x}px ${pointer.y}px, rgba(${glowRGB},0.12), transparent 75%)` }">
+    </div>
+    <Header /><br>
+    <div class="w-full max-w-full">
+      <HeroSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <Overview :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <ResultSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <Footer />
+    </div>
 
 
 
 
-    
+
 
   </div>
 </template>

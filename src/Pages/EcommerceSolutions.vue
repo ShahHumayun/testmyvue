@@ -1,38 +1,70 @@
 <template>
-  <div
-    ref="pageContainer"
-    :class="[
-      'font-sans relative overflow-hidden',
-      selectionClasses,
-      isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
-    ]"
-  >
+  <div ref="pageContainer" :class="[
+    'font-sans relative overflow-hidden w-full max-w-full',
+    selectionClasses,
+    isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
+  ]">
 
     <Header />
 
-    <div 
-      class="pointer-events-none fixed inset-0 z-10 opacity-25 transition-opacity duration-300 will-change-transform"
-      :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(${glowRGB}, 0.12), transparent 80%)` }"
-    ></div>
+    <div class="pointer-events-none fixed inset-0 z-10 opacity-25 transition-opacity duration-300 will-change-transform"
+      :style="{ background: `radial-gradient(700px circle at ${mouse.x}px ${mouse.y}px, rgba(${glowRGB}, 0.12), transparent 80%)` }">
+    </div>
 
-   <ecommercecomponent1 :isDarkMode="isDarkMode" />
-    <ecommercecomponent2 :isDarkMode="isDarkMode" />
-    <EcommerceprojectsSection/>
-     <ecommercecomponent3 :isDarkMode="isDarkMode" />
+    <div class="w-full max-w-full">
+      <ecommercecomponent1 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <ecommercecomponent2 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <EcommerceprojectsSection />
+    </div>
+    <div class="w-full max-w-full">
+      <ecommercecomponent3 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent4 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent5 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent6 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent7 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent8 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent9 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent10 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent11 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent12 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent13 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent14 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent15 :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
       <ecommercecomponent16 :isDarkMode="isDarkMode" />
-      <Footer/>
+    </div>
+    <div class="w-full max-w-full">
+      <Footer />
+    </div>
 
   </div>
 </template>

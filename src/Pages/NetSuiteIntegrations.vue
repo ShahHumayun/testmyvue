@@ -1,41 +1,71 @@
 <template>
-  <div
-    ref="pageWrapper"
-    :class="[
-      'font-sans relative overflow-hidden',
-      selectionClasses,
-      isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
-    ]"
-  >
+  <div ref="pageWrapper" :class="[
+    'font-sans relative overflow-hidden w-full max-w-full',
+    selectionClasses,
+    isDarkMode ? 'bg-[#000000] text-[#FFFFFF] theme-dark' : 'bg-white text-[#0f172a] theme-light'
+  ]">
 
     <!-- Real-time Enterprise Interactive Network Background Dynamic Mesh -->
-    <div
-      class="pointer-events-none fixed inset-0 z-10 opacity-30 transition-opacity duration-500"
-      :style="{ background: `radial-gradient(800px circle at ${pointer.x}px ${pointer.y}px, rgba(${glowRGB},0.12), transparent 75%)` }"
-    ></div>
-     <Header /><br>
-    <NetsuiteHeroSection :isDarkMode="isDarkMode" />
-    <NetsuiteTrustSection :isDarkMode="isDarkMode" />
-    <NetsuiteWhatisSection :isDarkMode="isDarkMode" />
-    <NetsuiteServicesSection :isDarkMode="isDarkMode" />
-    <NetsuitePlaformSection :isDarkMode="isDarkMode" />
-    <NetsuiteWhyChooseSection :isDarkMode="isDarkMode" />
-    <NetsuiteProcessSection :isDarkMode="isDarkMode" />
-    <NetsuiteChallengeSection :isDarkMode="isDarkMode" />
-    <NetsuiteAutomationSection :isDarkMode="isDarkMode" />
-    <NetsuiteIndustriesSection :isDarkMode="isDarkMode" />
-    <NetsuiteMetricsSection :isDarkMode="isDarkMode" />
-    <NetsuiteReviewsSection :isDarkMode="isDarkMode" />
-    <NetsuiteTechStackSection :isDarkMode="isDarkMode" />
-    <NetsuiteFAQSection :isDarkMode="isDarkMode" />
-    <NetsuiteSeoContentSection :isDarkMode="isDarkMode" />
-    <NetsuiteFinalCtaSection :isDarkMode="isDarkMode" />
-    <Footer />
+    <div class="pointer-events-none fixed inset-0 z-10 opacity-30 transition-opacity duration-500"
+      :style="{ background: `radial-gradient(800px circle at ${pointer.x}px ${pointer.y}px, rgba(${glowRGB},0.12), transparent 75%)` }">
+    </div>
+    <Header /><br>
+    <div class="w-full max-w-full">
+      <NetsuiteHeroSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteTrustSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteWhatisSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteServicesSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuitePlaformSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteWhyChooseSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteProcessSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteChallengeSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteAutomationSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteIndustriesSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteMetricsSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteReviewsSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteTechStackSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteFAQSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteSeoContentSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <NetsuiteFinalCtaSection :isDarkMode="isDarkMode" />
+    </div>
+    <div class="w-full max-w-full">
+      <Footer />
+    </div>
 
 
 
 
-    
+
 
   </div>
 </template>
