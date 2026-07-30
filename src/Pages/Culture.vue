@@ -107,14 +107,17 @@
         <router-link to="/consultation" class="btn-start-project">
           Start a Project
         </router-link>
-      </section>
 
-      <div class="back-btn-row">
-        <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
-          <span class="go-back-arrow" aria-hidden="true">←</span>
-          Go Back
-        </button>
-      </div>
+        <!-- CHANGED: Go Back button moved here, directly under Start a Project,
+             now living inside .culture-cta (same pattern as services.vue).
+             goBack() handler and markup are unchanged. -->
+        <div class="back-btn-row">
+          <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
+            <span class="go-back-arrow" aria-hidden="true">←</span>
+            Go Back
+          </button>
+        </div>
+      </section>
     </main>
 
     <Footer :darkMode="isDarkMode" />
@@ -958,6 +961,31 @@ onUnmounted(() => {
   }
 }
 
+/* CHANGED: row 2 ("Enthusiastic Developers, Neat Code") gets the same
+   full-bleed alternating background used on services.vue's showcase rows —
+   light grey (#f2f2f2) on the light theme, a lighter-than-page black
+   (#1c1c1c) on the dark theme. width:100vw + the negative-margin/left
+   offset trick breaks it out of .showcase-rows' horizontal padding so the
+   background spans the full screen width at every breakpoint, while its
+   own padding keeps the image/text aligned with the rest of the page. */
+.showcase-row:nth-child(2) {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: clamp(32px, 6vw, 60px) clamp(16px, 4vw, 40px);
+  box-sizing: border-box;
+  background-color: #1c1c1c;
+  transition: background-color var(--transition-speed);
+}
+
+.theme-light .showcase-row:nth-child(2) {
+  background-color: #f2f2f2;
+}
+
 .row-media {
   position: relative;
   width: 100%;
@@ -1081,24 +1109,38 @@ onUnmounted(() => {
 /* ----------------------------------------- */
 /* CLOSING CTA SECTION                       */
 /* ----------------------------------------- */
+/* CHANGED: full-bleed so this section covers 100% of the screen width at
+   every breakpoint — same technique used on .showcase-row:nth-child(2)
+   above and on services.vue's .services-cta: breaks out of .culture-main's
+   horizontal padding via 100vw + a left:50% offset cancelled by negative
+   margins. Background now uses the same alternating pair (#1c1c1c dark /
+   #f2f2f2 light) instead of the previous near-transparent card fill, and
+   border-radius is dropped to 0 since the section now spans edge to edge. */
 .culture-cta {
   position: relative;
-  width: 100%;
-  max-width: 100% !important;
-  box-sizing: border-box;
-  margin: 0;
+  z-index: 30;
+  left: 50%;
+  right: 50%;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: 0;
+  margin-bottom: 0;
   text-align: center;
   padding: clamp(44px, 6vw, 80px) clamp(24px, 4vw, 40px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background-color: rgba(255, 255, 255, 0.01);
+  border-radius: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: #1c1c1c;
   overflow: hidden;
+  box-sizing: border-box;
+  transition: background-color var(--transition-speed);
 }
 
 .theme-light .culture-cta {
-  background-color: #ffffff;
+  background-color: #f2f2f2;
   border-color: rgba(15, 23, 42, 0.06);
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.02);
 }
 
 .cta-glow {
@@ -1174,13 +1216,15 @@ onUnmounted(() => {
 /* ----------------------------------------- */
 /* GO BACK BUTTON                            */
 /* ----------------------------------------- */
+/* CHANGED: now lives inside .culture-cta, right under Start a Project —
+   just needs spacing beneath the button above it, not its own top-level
+   width/margin anymore (mirrors services.vue's .back-btn-row). */
 .back-btn-row {
   position: relative;
   z-index: 10;
   display: flex;
   justify-content: center;
-  margin-top: clamp(2rem, 4vw, 3rem);
-  width: 100%;
+  margin-top: 18px;
 }
 
 .go-back-btn {

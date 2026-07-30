@@ -5,11 +5,9 @@
     <div class="rg-overview__grid">
       <div class="rg-overview__visual">
         <div class="rg-overview__image-wrap">
-          <img
-            class="rg-overview__image"
+          <img class="rg-overview__image"
             src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
-            alt="Minimal precision-cut structural architectural glass pane setup, reflecting the product focus of Replacement Glass"
-          />
+            alt="Minimal precision-cut structural architectural glass pane setup, reflecting the product focus of Replacement Glass" />
           <div class="rg-overview__image-border"></div>
         </div>
       </div>
@@ -192,19 +190,24 @@ onBeforeUnmount(() => {
   --border-line: rgba(15, 23, 42, 0.08);
   --stat-bg: #f8fafc;
   --stat-border: rgba(15, 23, 42, 0.08);
-  --accent-color: #F97316; /* Orange replacement */
+  --accent-color: #F97316;
+  /* Orange replacement */
   --img-border: rgba(249, 115, 22, 0.3);
   --img-shadow: rgba(249, 115, 22, 0.08);
 }
 
 .rg-overview {
   background: var(--overview-bg);
-  padding: 100px 24px;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 100px clamp(2rem, 5vw, 12rem);
+  box-sizing: border-box;
   transition: background-color 0.4s ease;
 }
 
 .rg-overview__grid {
-  max-width: 1160px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
@@ -215,7 +218,7 @@ onBeforeUnmount(() => {
 .rg-label {
   display: inline-block;
   font-family: 'Inter', sans-serif;
-  font-size: 12.5px;
+  font-size: clamp(0.75rem, 0.9vw, 0.95rem);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent-color);
@@ -225,7 +228,7 @@ onBeforeUnmount(() => {
 .rg-overview__heading {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
   color: var(--text-heading);
   line-height: 1.25;
   margin: 0 0 18px;
@@ -234,7 +237,7 @@ onBeforeUnmount(() => {
 
 .rg-overview__intro {
   font-family: 'Inter', sans-serif;
-  font-size: 0.98rem;
+  font-size: clamp(0.9rem, 1.1vw, 1.15rem);
   line-height: 1.75;
   color: var(--text-body);
   margin: 0;
@@ -259,7 +262,7 @@ onBeforeUnmount(() => {
 
 .rg-role-label {
   font-family: 'Inter', sans-serif;
-  font-size: 11.5px;
+  font-size: clamp(0.7rem, 0.85vw, 0.85rem);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-sub);
@@ -268,9 +271,13 @@ onBeforeUnmount(() => {
 
 .rg-role-value {
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: clamp(0.85rem, 1vw, 1.05rem);
   color: var(--text-heading);
   transition: color 0.4s ease;
+}
+
+.rg-overview__visual {
+  width: 100%;
 }
 
 .rg-overview__image-wrap {
@@ -278,6 +285,7 @@ onBeforeUnmount(() => {
   border-radius: 14px;
   overflow: hidden;
   aspect-ratio: 4 / 3;
+  width: 100%;
 }
 
 .rg-overview__image {
@@ -299,7 +307,8 @@ onBeforeUnmount(() => {
 }
 
 .rg-overview__details {
-  max-width: 820px;
+  width: 100%;
+  max-width: 1200px;
   margin: 56px auto 0;
   padding-top: 44px;
   border-top: 1px solid var(--border-line);
@@ -308,7 +317,7 @@ onBeforeUnmount(() => {
 
 .rg-overview__para {
   font-family: 'Inter', sans-serif;
-  font-size: 0.98rem;
+  font-size: clamp(0.9rem, 1.1vw, 1.15rem);
   line-height: 1.8;
   color: var(--text-body);
   margin: 0 0 36px;
@@ -336,22 +345,129 @@ onBeforeUnmount(() => {
 .rg-stat__number {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
-  font-size: 1.7rem;
+  font-size: clamp(1.4rem, 2.2vw, 2.2rem);
   color: var(--accent-color);
 }
 
 .rg-stat__label {
   font-family: 'Inter', sans-serif;
-  font-size: 11.5px;
+  font-size: clamp(0.7rem, 0.85vw, 0.95rem);
   color: var(--text-label);
   line-height: 1.3;
   transition: color 0.4s ease;
 }
 
-@media (max-width: 900px) {
-  .rg-overview__grid { grid-template-columns: 1fr; gap: 36px; }
+/* =========================================================================
+   BREAKPOINT TIERS
+   ========================================================================= */
+
+/* ---------- Desktops — 1025px to 1200px ---------- */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .rg-overview {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
 }
+
+/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
+@media (min-width: 1201px) {
+  .rg-overview {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .rg-overview {
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+}
+
+/* ---------- 4K / UHD / large TVs (2560px and up) ---------- */
+@media (min-width: 2560px) {
+  .rg-overview {
+    padding-left: 16rem;
+    padding-right: 16rem;
+  }
+}
+
+/* ---------- 4K / UHD Standard Range / 1921px to 2559px ---------- */
+@media (min-width: 1921px) and (max-width: 2559px) {
+  .rg-overview {
+    padding-left: 12rem;
+    padding-right: 12rem;
+  }
+}
+
+/* ---------- Laptops / Large Tablets — 769px to 1024px ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .rg-overview {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* ---------- Mobile Landscape / Tablets — 481px to 768px ---------- */
+@media (min-width: 481px) and (max-width: 768px) {
+  .rg-overview {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+  .rg-overview__grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .rg-overview__image-wrap {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* ---------- Mobile Portrait — 320px to 480px ---------- */
 @media (max-width: 480px) {
-  .rg-stats { grid-template-columns: 1fr; }
+  .rg-overview {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .rg-overview__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .rg-overview__image-wrap {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+  }
+
+  .rg-overview__image-border {
+    border-radius: 12px;
+  }
+
+  .rg-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .rg-overview {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* ---------- Landscape Orientation with Short Viewport Height ---------- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .rg-overview {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
 }
 </style>

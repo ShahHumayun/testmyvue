@@ -107,14 +107,14 @@
         <router-link to="/consultation" class="btn-start-project">
           Start a Project
         </router-link>
-      </section>
 
-      <div class="back-btn-row">
-        <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
-          <span class="go-back-arrow" aria-hidden="true">←</span>
-          Back
-        </button>
-      </div>
+        <div class="back-btn-row">
+          <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
+            <span class="go-back-arrow" aria-hidden="true">←</span>
+            Back
+          </button>
+        </div>
+      </section>
     </main>
 
     <Footer :darkMode="isDarkMode" />
@@ -833,7 +833,13 @@ onUnmounted(() => {
 /* FULL WIDTH MODIFICATION: removed max-width constraints */
 .showcase-rows {
   width: 100%;
-  margin: 0 0 clamp(56px, 9vw, 110px);
+  /* CHANGED: margin-top for the gap below the hero, as requested. A plain
+     margin-top here would get collapsed into services-hero's own
+     margin-bottom (only the larger of the two would apply, silently
+     dropping this value) — the 1px transparent top border below stops
+     that collapse so the margin actually renders. */
+  margin: clamp(20px, 4.5vw, 48px) 0 clamp(56px, 9vw, 110px);
+  border-top: 1px solid transparent;
   padding: 0 clamp(16px, 4vw, 40px);
   box-sizing: border-box;
   display: flex;
@@ -849,6 +855,34 @@ onUnmounted(() => {
   gap: clamp(28px, 5vw, 70px);
   align-items: center;
   width: 100%;
+}
+
+/* CHANGED: rows 1 and 3 ("Web App Development" and "E-commerce Solutions")
+   get a full-bleed background matching the same gray/dark-gray shade used
+   elsewhere on the site. width:100vw + the negative-margin/left offset
+   trick breaks the row out of its padded parent so the background covers
+   the entire screen width, while the row's own padding keeps the image
+   and text aligned with the rest of the page content. Uses clamp() so it
+   scales fluidly at every breakpoint without needing separate media-query
+   overrides. */
+.showcase-row:nth-child(1),
+.showcase-row:nth-child(3) {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: clamp(32px, 6vw, 60px) clamp(16px, 4vw, 40px);
+  box-sizing: border-box;
+  background-color: #1c1c1c;
+  transition: background-color var(--transition-speed);
+}
+
+.theme-light .showcase-row:nth-child(1),
+.theme-light .showcase-row:nth-child(3) {
+  background-color: #f2f2f2;
 }
 
 .row-reverse {
@@ -994,20 +1028,30 @@ onUnmounted(() => {
   position: relative;
   z-index: 30;
   pointer-events: auto;
-  width: 100%;
-  margin: 0;
+  /* CHANGED: full-bleed so this section covers 100% of the screen width at
+     every breakpoint, the same technique used on showcase rows 1 and 3 —
+     breaks out of services-main's horizontal padding via 100vw + a
+     left:50% offset cancelled by negative margins. */
+  left: 50%;
+  right: 50%;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  margin-top: 0;
+  margin-bottom: 0;
   text-align: center;
   padding: clamp(44px, 6vw, 80px) clamp(24px, 4vw, 40px);
   border-radius: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  background-color: rgba(255, 255, 255, 0.01);
+  background-color: #1c1c1c;
   overflow: hidden;
   box-sizing: border-box;
 }
 
 .theme-light .services-cta {
-  background-color: #ffffff;
+  background-color: #f2f2f2;
   border-color: rgba(15, 23, 42, 0.06);
 }
 
@@ -1090,8 +1134,10 @@ onUnmounted(() => {
   z-index: 10;
   display: flex;
   justify-content: center;
-  width: 100%;
-  margin-top: clamp(2rem, 4vw, 3rem);
+  /* CHANGED: now lives inside .services-cta, right under Start a Project —
+     just needs spacing beneath the button above it, not its own width or
+     background anymore */
+  margin-top: 18px;
 }
 
 .go-back-btn {
@@ -1391,6 +1437,42 @@ onUnmounted(() => {
   .btn-start-project {
     font-size: 15px;
     padding: 20px 44px;
+  }
+}
+
+/* ==========================================================================
+   4K / Extra-Extra-Large Monitors: 2560px and up
+   CHANGED: this tier didn't exist before — the hero section was plateauing
+   at its 1921px sizing on very large/high-res displays, which left it
+   looking short and cramped at 4K. This gives services-main and
+   services-hero more vertical room and lets the title/subtitle keep
+   growing instead of maxing out.
+   ========================================================================== */
+@media (min-width: 2560px) {
+  .services-main {
+    padding-top: clamp(150px, 17vh, 190px);
+    padding-bottom: clamp(90px, 10vh, 120px);
+  }
+
+  .services-hero {
+    margin: clamp(40px, 4vh, 60px) 0 clamp(90px, 9vw, 130px);
+  }
+
+  .services-title {
+    font-size: clamp(4.2rem, 4.6vw, 8.2rem);
+    margin-bottom: 44px;
+  }
+
+  .services-subtitle {
+    font-size: 1.5rem;
+    max-width: 1150px;
+    line-height: 1.75;
+  }
+
+  .btn-our-work,
+  .btn-start-project {
+    font-size: 16px;
+    padding: 22px 48px;
   }
 }
 

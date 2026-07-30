@@ -190,11 +190,7 @@
       </section>
     </main>
 
-    <footer class="footer-group">
-      <div class="copyright-section">
-        <p>&copy; {{ new Date().getFullYear() }} WebHive Technologies. All rights reserved.</p>
-      </div>
-    </footer>
+    <Footer :darkMode="isDarkMode" />
   </div>
 </template>
 
@@ -204,6 +200,7 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { createClient } from '@supabase/supabase-js'
 import gsap from 'gsap'
+import Footer from '../components/footer.vue'
 
 const isDarkMode = ref(true)
 const isMenuOpen = ref(false)
@@ -398,6 +395,16 @@ const onMenuLeave = (el, done) => {
   overflow-y: auto !important;
   height: auto !important;
   width: 100% !important;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+:global(html::-webkit-scrollbar),
+:global(body::-webkit-scrollbar) {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 /* ----------------------------------------- */
@@ -419,9 +426,21 @@ const onMenuLeave = (el, done) => {
   z-index: 1;
 }
 
-.hero-wrapper *,
-.hero-wrapper *::before,
-.hero-wrapper *::after {
+/* Scoped to the areas that actually need the reset — deliberately
+   excludes the <Footer> child component so its own internal centering
+   margin isn't zeroed out by this rule (see Studio.vue fix). */
+.navbar,
+.navbar *,
+.navbar *::before,
+.navbar *::after,
+.nav-overlay,
+.nav-overlay *,
+.nav-overlay *::before,
+.nav-overlay *::after,
+.hero-main,
+.hero-main *,
+.hero-main *::before,
+.hero-main *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -465,23 +484,30 @@ const onMenuLeave = (el, done) => {
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
 
-/* ----------------------------------------- */
-/* 3. EXACT NAVBAR STYLES FROM HOME.VUE      */
-/* ----------------------------------------- */
+/* =========================================================
+   NAVBAR — full width, flush to the top and side edges, no
+   floating pill margin. Matches the Home.vue / About.vue /
+   Services.vue / Portfolio.vue / Culture.vue / Studio.vue /
+   Policies.vue redesign exactly. Fluid base + explicit
+   per-tier growth/shrink further down.
+   ========================================================= */
 .navbar {
   position: fixed;
-  top: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92%;
-  max-width: 1200px;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  will-change: backdrop-filter;
+  width: 100%;
+  max-width: 100%;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 0.8rem 1.5rem;
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0;
+  padding: clamp(0.55rem, 1.4vw, 0.8rem) clamp(1rem, 2.6vw, 1.5rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -493,12 +519,12 @@ const onMenuLeave = (el, done) => {
   background: #ffffff;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 .logo {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
   font-weight: 800;
   text-decoration: none;
   color: #ffffff;
@@ -613,9 +639,6 @@ const onMenuLeave = (el, done) => {
   background: rgba(249, 115, 22, 0.1);
   box-shadow: 0 0 15px rgba(249, 115, 22, 0.1);
 }
-@media (max-width: 480px) {
-  .theme-toggle { width: 34px; height: 18px; padding: 2px; }
-}
 .theme-dark .theme-toggle {
   background-color: rgba(0, 255, 163, 0.1);
   border: 1px solid rgba(0, 255, 163, 0.2);
@@ -634,10 +657,6 @@ const onMenuLeave = (el, done) => {
   transform: translateX(18px);
   background-color: #111827;
   border: 1px solid var(--brand-accent);
-}
-@media (max-width: 480px) {
-  .toggle-thumb { width: 13px; height: 13px; }
-  .toggle-active { transform: translateX(15px); }
 }
 .toggle-icon {
   font-size: 9px;
@@ -658,9 +677,6 @@ const onMenuLeave = (el, done) => {
   z-index: 55;
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
-}
-@media (max-width: 480px) {
-  .menu-trigger { width: 30px; height: 30px; gap: 3px; }
 }
 .theme-dark .menu-trigger {
   background-color: rgba(24, 24, 27, 0.8);
@@ -683,7 +699,7 @@ const onMenuLeave = (el, done) => {
 .menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
 
 /* ----------------------------------------- */
-/* 4. EXACT NAVIGATION OVERLAY FROM HOME.VUE */
+/* 4. NAVIGATION OVERLAY                     */
 /* ----------------------------------------- */
 .nav-overlay {
   position: fixed;
@@ -790,7 +806,10 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 5. CONTENT BODY CONFIGURATION             */
+/* 5. CONTENT BODY CONFIGURATION — fixed      */
+/* calc()-based top padding (tuned for the    */
+/* old floating navbar) replaced with fluid   */
+/* clamp() values, matching every other page. */
 /* ----------------------------------------- */
 .hero-main {
   flex-grow: 1;
@@ -804,7 +823,7 @@ const onMenuLeave = (el, done) => {
 }
 .page-scroll-container {
   overflow-y: visible;
-  padding: calc(60px + clamp(10px, 2vw, 22px) + 50px) clamp(16px, 4vw, 40px) 100px;
+  padding: clamp(96px, 15vh, 150px) clamp(16px, 4vw, 40px) clamp(56px, 8vh, 100px);
 }
 
 .ambient-glow {
@@ -874,14 +893,14 @@ const onMenuLeave = (el, done) => {
 
 .contact-header {
   max-width: 56rem;
-  margin: 0 auto 2.5rem;
+  margin: 0 auto clamp(1.75rem, 3.5vw, 2.5rem);
   text-align: center;
   padding: 0 1rem;
 }
 
 .contact-title {
   font-family: 'Inter', sans-serif;
-  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-size: clamp(1.7rem, 5vw, 3rem);
   font-weight: 800;
   margin: 0 0 1rem;
   line-height: 1.1;
@@ -910,7 +929,7 @@ const onMenuLeave = (el, done) => {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  padding: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 1.5rem);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -1051,7 +1070,9 @@ const onMenuLeave = (el, done) => {
 }
 
 /* ----------------------------------------- */
-/* 6. INFINITE MARQUEE FOOTER & COPYRIGHT    */
+/* 6. FOOTER & COPYRIGHT (preserved styles,   */
+/* now unused since <Footer /> handles this,  */
+/* kept for parity with the rest of the site) */
 /* ----------------------------------------- */
 .footer-group {
   width: 100%;
@@ -1078,5 +1099,258 @@ const onMenuLeave = (el, done) => {
   color: rgba(15, 23, 42, 0.5);
   background-color: #ffffff;
   border-top-color: rgba(15, 23, 42, 0.04);
+}
+
+/* =========================================================================
+   BREAKPOINT TIERS
+   Organized by the exact ranges used across the rest of the site,
+   desktop-first (max-width cascades down). Navbar sizing mirrors every
+   other page tier-for-tier.
+   ========================================================================= */
+
+/* ---------- Desktops — 1025px to 1200px ---------- */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .navbar {
+    padding: 0.75rem 1.8rem;
+  }
+  .logo {
+    font-size: 1.3rem;
+  }
+  .nav-actions {
+    gap: 16px;
+  }
+  .contact-section {
+    max-width: 1100px;
+  }
+}
+
+/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
+@media (min-width: 1201px) {
+  .navbar {
+    padding: 0.85rem 2.2rem;
+  }
+  .logo {
+    font-size: 1.45rem;
+  }
+  .nav-actions {
+    gap: 22px;
+  }
+  .consult-btn {
+    font-size: 14px;
+    padding: 11px 20px;
+  }
+  .page-scroll-container {
+    padding-left: clamp(24px, 5vw, 80px);
+    padding-right: clamp(24px, 5vw, 80px);
+  }
+}
+
+@media (min-width: 1536px) {
+  .navbar {
+    padding: 1rem 2.6rem;
+  }
+  .logo {
+    font-size: 1.6rem;
+  }
+  .nav-actions {
+    gap: 26px;
+  }
+  .consult-btn {
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+  .theme-toggle {
+    width: 44px;
+    height: 24px;
+  }
+  .toggle-thumb {
+    width: 18px;
+    height: 18px;
+  }
+  .toggle-active {
+    transform: translateX(20px);
+  }
+  .menu-trigger {
+    width: 38px;
+    height: 38px;
+  }
+  .contact-section {
+    max-width: 1300px;
+  }
+  .contact-title {
+    font-size: clamp(2.4rem, 3vw, 3.4rem);
+  }
+  .contact-form {
+    max-width: 46rem;
+    padding: 3rem;
+  }
+  .form-input {
+    padding: 1rem 1.15rem;
+    font-size: 0.95rem;
+  }
+  .submit-btn {
+    padding: 1.35rem;
+  }
+}
+
+/* ---------- 4K / UHD / large TVs — 1921px and up (e.g. 2560px) ---------- */
+@media (min-width: 1921px) {
+  .navbar {
+    padding: 1.1rem 3.2rem;
+  }
+  .logo {
+    font-size: 1.8rem;
+  }
+  .nav-actions {
+    gap: 30px;
+  }
+  .consult-btn {
+    font-size: 16px;
+    padding: 13px 26px;
+  }
+  .page-scroll-container {
+    padding-left: clamp(60px, 7vw, 160px);
+    padding-right: clamp(60px, 7vw, 160px);
+  }
+  .contact-section {
+    max-width: 1500px;
+  }
+  .contact-title {
+    font-size: clamp(2.8rem, 2.6vw, 4rem);
+  }
+  .contact-subtitle {
+    font-size: 1.1rem;
+  }
+  .contact-form {
+    max-width: 52rem;
+    padding: 3.5rem;
+  }
+  .form-input {
+    padding: 1.1rem 1.25rem;
+    font-size: 1rem;
+  }
+  .pill-btn {
+    padding: 1rem 1.15rem;
+    font-size: 0.95rem;
+  }
+  .submit-btn {
+    padding: 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* ---------- Laptops / Large Tablets — 769px to 1024px ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar {
+    padding: 0.7rem 1.6rem;
+  }
+  .logo {
+    font-size: 1.25rem;
+  }
+  .nav-actions {
+    gap: 14px;
+  }
+  .consult-btn {
+    font-size: 12.5px;
+    padding: 9px 16px;
+  }
+  .page-scroll-container {
+    padding: clamp(84px, 13vh, 112px) clamp(24px, 5vw, 48px) clamp(48px, 7vh, 72px);
+  }
+  .contact-title {
+    font-size: clamp(1.9rem, 4.6vw, 2.6rem);
+  }
+}
+
+/* ---------- Mobile Landscape / Tablets — 481px to 768px ---------- */
+@media (min-width: 481px) and (max-width: 768px) {
+  .navbar {
+    padding: 0.6rem 1.1rem;
+  }
+  .logo {
+    font-size: 1.15rem;
+  }
+  .nav-actions {
+    gap: clamp(8px, 2vw, 14px);
+  }
+  .consult-btn {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+  .page-scroll-container {
+    padding: clamp(78px, 14vh, 100px) clamp(16px, 5vw, 32px) clamp(40px, 6vh, 56px);
+  }
+  .contact-title {
+    font-size: clamp(1.7rem, 6vw, 2.3rem);
+  }
+}
+
+/* ---------- Mobile Portrait — 320px to 480px ---------- */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.55rem 0.85rem;
+  }
+  .logo {
+    font-size: 1.05rem;
+  }
+  .nav-actions {
+    gap: 8px;
+  }
+  .consult-btn {
+    display: none;
+  }
+  .theme-toggle {
+    width: 34px;
+    height: 18px;
+    padding: 2px;
+  }
+  .toggle-thumb {
+    width: 13px;
+    height: 13px;
+  }
+  .toggle-active {
+    transform: translateX(15px);
+  }
+  .menu-trigger {
+    width: 30px;
+    height: 30px;
+    gap: 3px;
+  }
+  .page-scroll-container {
+    padding: clamp(74px, 14vh, 92px) 16px clamp(36px, 5vh, 56px);
+  }
+  .contact-title {
+    font-size: clamp(1.5rem, 8vw, 1.9rem);
+  }
+  .contact-subtitle {
+    font-size: 0.85rem;
+  }
+  .contact-form {
+    padding: 1.1rem;
+    border-radius: 16px;
+  }
+  .pill-btn {
+    font-size: 0.8rem;
+    padding: 0.75rem 0.85rem;
+  }
+  .form-input {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar {
+    padding: 0.5rem 0.7rem;
+  }
+  .logo {
+    font-size: 1rem;
+  }
+  .page-scroll-container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .contact-title {
+    font-size: clamp(1.3rem, 8.5vw, 1.7rem);
+  }
 }
 </style>

@@ -90,14 +90,14 @@
         <router-link to="/consultation" class="btn-start-project">
           Start a Project
         </router-link>
-      </section>
 
-      <div class="back-btn-row">
-        <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
-          <span class="go-back-arrow" aria-hidden="true">←</span>
-          Go Back
-        </button>
-      </div>
+        <div class="back-btn-row">
+          <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
+            <span class="go-back-arrow" aria-hidden="true">←</span>
+            Go Back
+          </button>
+        </div>
+      </section>
     </main>
 
     <Footer :darkMode="isDarkMode" />
@@ -840,13 +840,13 @@ onUnmounted(() => {
   border: none;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  background-color: rgba(255, 255, 255, 0.01);
+  background-color: #1c1c1c;
   overflow: hidden;
   box-sizing: border-box;
 }
 
 .theme-light .culture-cta {
-  background-color: #ffffff;
+  background-color: #f2f2f2;
   border-color: rgba(15, 23, 42, 0.06);
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.02);
 }
@@ -936,11 +936,13 @@ onUnmounted(() => {
 
 .back-btn-row {
   position: relative;
-  z-index: 10;
+  z-index: 1;
   display: flex;
   justify-content: center;
-  margin-top: clamp(2rem, 4vw, 3rem);
-  padding-inline: clamp(20px, 5vw, 60px);
+  /* CHANGED: now lives inside .culture-cta, right under Start a Project —
+     no longer needs its own width/background, just spacing beneath the
+     button above it */
+  margin-top: 18px;
 }
 
 .go-back-btn {
@@ -1513,8 +1515,7 @@ onUnmounted(() => {
   }
 
   .back-btn-row {
-    margin-top: 2rem;
-    padding-inline: 16px;
+    margin-top: 14px;
   }
 
   .go-back-btn {

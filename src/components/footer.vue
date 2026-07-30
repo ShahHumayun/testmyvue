@@ -1,9 +1,9 @@
 <template>
   <footer ref="footerRef" :class="[
-    'py-20 px-6 relative z-20',
+    'site-footer py-10 px-5 sm:py-12 sm:px-6 md:py-16 md:px-8 lg:py-20 lg:px-10 xl:px-12 2xl:py-24 2xl:px-16 relative z-20',
     isDarkMode ? 'bg-black' : 'bg-white'
   ]">
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto footer-container">
       <div class="footer-grid">
         <div class="footer-brand">
           <div class="footer-logo">
@@ -158,14 +158,48 @@ onMounted(() => {
 .footer-grid {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 48px;
-  padding-bottom: 48px;
+  gap: 32px;
+  padding-bottom: 40px;
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .footer-grid {
+    gap: 36px;
+    padding-bottom: 44px;
+  }
 }
 
 @media (min-width: 768px) {
   .footer-grid {
     grid-template-columns: 1.6fr 1fr 1fr;
     gap: 32px;
+    padding-bottom: 48px;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .footer-grid {
+    gap: 40px;
+  }
+}
+
+@media (min-width: 1201px) {
+  .footer-grid {
+    gap: 44px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .footer-grid {
+    gap: 56px;
+    padding-bottom: 56px;
+  }
+}
+
+@media (min-width: 1921px) {
+  .footer-grid {
+    gap: 72px;
+    padding-bottom: 64px;
   }
 }
 
@@ -318,5 +352,205 @@ a.link-light:hover {
   font-size: 0.85rem;
   text-decoration: none;
   transition: color 0.2s ease;
+}
+
+/* =========================================================================
+   BREAKPOINT TIERS
+   Organized by the exact ranges used across the rest of the site.
+   The outer <footer> padding is handled via responsive Tailwind
+   utility classes directly in the template (sm/md/lg/xl/2xl); this
+   block covers everything Tailwind's default scale doesn't reach
+   (the true 4K/2560px tier) plus all typography/spacing fine-tuning.
+   ========================================================================= */
+
+/* ---------- Mobile Portrait — 320px to 480px ---------- */
+@media (max-width: 480px) {
+  .footer-container {
+    max-width: 100%;
+  }
+
+  .footer-logo {
+    font-size: 1.25rem;
+  }
+
+  .footer-logo-sub {
+    font-size: 10px;
+  }
+
+  .footer-description {
+    font-size: 0.875rem;
+    max-width: 100%;
+    margin-top: 16px;
+  }
+
+  .footer-socials {
+    margin-top: 20px;
+  }
+
+  .footer-social-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .footer-heading {
+    font-size: 11px;
+    margin-bottom: 16px;
+  }
+
+  .footer-link {
+    font-size: 0.875rem;
+  }
+
+  .footer-links {
+    gap: 12px;
+  }
+
+  .footer-bottom {
+    padding-top: 24px;
+  }
+
+  .footer-copyright,
+  .footer-bottom-link {
+    font-size: 0.8rem;
+  }
+
+  .footer-bottom-links {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 360px) {
+  .footer-logo {
+    font-size: 1.15rem;
+  }
+
+  .footer-description {
+    font-size: 0.82rem;
+  }
+}
+
+/* ---------- Laptops / Large Tablets — 769px to 1024px ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .footer-description {
+    max-width: 380px;
+  }
+}
+
+/* ---------- Desktops — 1025px to 1200px ---------- */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .footer-container {
+    max-width: 1120px;
+  }
+}
+
+/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
+@media (min-width: 1201px) {
+  .footer-container {
+    max-width: 1280px;
+  }
+
+  .footer-description {
+    max-width: 440px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .footer-container {
+    max-width: 1400px !important;
+  }
+
+  .footer-logo {
+    font-size: 1.65rem;
+  }
+
+  .footer-logo-sub {
+    font-size: 12px;
+  }
+
+  .footer-description {
+    font-size: 1rem;
+    max-width: 480px;
+    margin-top: 24px;
+  }
+
+  .footer-social-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .footer-heading {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .footer-link {
+    font-size: 1rem;
+  }
+
+  .footer-links {
+    gap: 16px;
+  }
+
+  .footer-copyright,
+  .footer-bottom-link {
+    font-size: 0.9rem;
+  }
+}
+
+/* ---------- 4K / UHD / large TVs — 1921px and up (e.g. 2560px) ---------- */
+@media (min-width: 1921px) {
+  .footer-container {
+    max-width: 1700px !important;
+  }
+
+  .footer-logo {
+    font-size: 1.85rem;
+  }
+
+  .footer-logo-sub {
+    font-size: 14px;
+  }
+
+  .footer-description {
+    font-size: 1.1rem;
+    max-width: 540px;
+    margin-top: 28px;
+  }
+
+  .footer-socials {
+    margin-top: 32px;
+    gap: 16px;
+  }
+
+  .footer-social-icon {
+    width: 46px;
+    height: 46px;
+  }
+
+  .footer-heading {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .footer-link {
+    font-size: 1.1rem;
+  }
+
+  .footer-links {
+    gap: 18px;
+  }
+
+  .footer-bottom {
+    padding-top: 40px;
+  }
+
+  .footer-copyright,
+  .footer-bottom-link {
+    font-size: 1rem;
+  }
+
+  .footer-bottom-links {
+    gap: 32px;
+  }
 }
 </style>

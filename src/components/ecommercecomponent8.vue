@@ -1,21 +1,19 @@
 <template>
-  <section :class="['conversion-section py-32 px-6 border-b relative z-20 transition-colors duration-500', isDarkMode ? 'theme-dark' : 'theme-light']">
+  <section
+    :class="['conversion-section py-32 px-6 border-b relative z-20 transition-colors duration-500', isDarkMode ? 'theme-dark' : 'theme-light']">
     <div class="max-w-5xl mx-auto">
       <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-20 text-center section-heading">
         Magento, <span :class="isDarkMode ? 'text-[#00ffa3]' : 'text-[#f97316]'">Engineered To Convert</span>
       </h2>
-      
+
       <div class="space-y-4 relative">
-        <div 
-          v-for="(c, idx) in cards" 
-          :key="idx" 
-          class="sticky-conversion-card p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 sticky top-24 shadow-2xl transition-colors"
-        >
+        <div v-for="(c, idx) in cards" :key="idx"
+          class="sticky-conversion-card p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-8 lg:gap-16 sticky top-24 shadow-2xl transition-colors">
           <div class="space-y-2 sm:w-2/5">
             <span class="text-[10px] font-bold tracking-widest uppercase accent-text">{{ c.tag }}</span>
             <h3 class="text-2xl font-bold card-inner-title">{{ c.title }}</h3>
           </div>
-          <p class="text-sm max-w-md leading-relaxed card-inner-desc">{{ c.desc }}</p>
+          <p class="text-sm sm:w-3/5 max-w-xl leading-relaxed card-inner-desc">{{ c.desc }}</p>
         </div>
       </div>
     </div>
@@ -76,18 +74,257 @@ const cards = [
   --card-desc-color: #000000;
 }
 
-.conversion-section { width: 100% !important; }
-.section-heading { color: var(--section-title-color) !important; transition: color 0.4s ease; }
-.accent-text { color: var(--accent-color) !important; }
+.conversion-section {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-left: clamp(2rem, 5vw, 12rem);
+  padding-right: clamp(2rem, 5vw, 12rem);
+  box-sizing: border-box;
+}
+
+.max-w-5xl {
+  max-width: 100% !important;
+}
+
+.section-heading {
+  color: var(--section-title-color) !important;
+  transition: color 0.4s ease;
+  font-size: clamp(2rem, 3.5vw, 4rem);
+}
+
+.accent-text {
+  color: var(--accent-color) !important;
+  font-size: clamp(0.7rem, 0.95vw, 0.9rem);
+}
 
 .sticky-conversion-card {
   background: var(--card-bg-gradient) !important;
   border: 1px solid var(--card-border-color) !important;
   border-radius: 0.75rem !important;
   transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  padding: clamp(2rem, 3vw, 3.5rem) !important;
 }
 
-.sticky-conversion-card:hover { border-color: var(--card-hover-border) !important; }
-.card-inner-title { color: var(--card-title-color) !important; transition: color 0.4s ease; }
-.card-inner-desc { color: var(--card-desc-color) !important; transition: color 0.4s ease; }
+.sticky-conversion-card:hover {
+  border-color: var(--card-hover-border) !important;
+}
+
+.card-inner-title {
+  color: var(--card-title-color) !important;
+  transition: color 0.4s ease;
+  font-size: clamp(1.35rem, 1.9vw, 2.15rem);
+}
+
+.card-inner-desc {
+  color: var(--card-desc-color) !important;
+  transition: color 0.4s ease;
+  font-size: clamp(0.95rem, 1.3vw, 1.3rem);
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+}
+
+/* =========================================================================
+   BREAKPOINT TIERS
+   ========================================================================= */
+
+/* ---------- Desktops — 1025px to 1200px ---------- */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .conversion-section {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .section-heading {
+    font-size: 2.85rem;
+  }
+
+  .accent-text {
+    font-size: 0.75rem;
+  }
+
+  .card-inner-title {
+    font-size: 1.7rem;
+  }
+
+  .card-inner-desc {
+    font-size: 1.05rem;
+  }
+}
+
+/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
+@media (min-width: 1201px) {
+  .conversion-section {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+
+  .section-heading {
+    font-size: 3.6rem;
+  }
+
+  .accent-text {
+    font-size: 0.8rem;
+  }
+
+  .card-inner-title {
+    font-size: 2rem;
+  }
+
+  .card-inner-desc {
+    font-size: 1.15rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .conversion-section {
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+
+  .section-heading {
+    font-size: 4.25rem;
+  }
+
+  .accent-text {
+    font-size: 0.85rem;
+  }
+
+  .card-inner-title {
+    font-size: 2.35rem;
+  }
+
+  .card-inner-desc {
+    font-size: 1.3rem;
+  }
+}
+
+/* ---------- 4K / UHD / large TVs — 1921px and up ---------- */
+@media (min-width: 1921px) {
+  .conversion-section {
+    padding-left: 12rem;
+    padding-right: 12rem;
+  }
+
+  .section-heading {
+    font-size: 5.25rem;
+  }
+
+  .accent-text {
+    font-size: 1rem;
+  }
+
+  .card-inner-title {
+    font-size: 2.9rem;
+  }
+
+  .card-inner-desc {
+    font-size: 1.55rem;
+  }
+}
+
+/* ---------- Laptops / Large Tablets — 769px to 1024px ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .conversion-section {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .section-heading {
+    font-size: 2.6rem;
+  }
+
+  .accent-text {
+    font-size: 0.72rem;
+  }
+
+  .card-inner-title {
+    font-size: 1.6rem;
+  }
+
+  .card-inner-desc {
+    font-size: 1rem;
+  }
+}
+
+/* ---------- Mobile Landscape / Tablets — 481px to 768px ---------- */
+@media (min-width: 481px) and (max-width: 768px) {
+  .conversion-section {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .section-heading {
+    font-size: 2.3rem;
+  }
+
+  .accent-text {
+    font-size: 0.7rem;
+  }
+
+  .card-inner-title {
+    font-size: 1.45rem;
+  }
+
+  .card-inner-desc {
+    font-size: 0.95rem;
+  }
+}
+
+/* ---------- Mobile Portrait — 320px to 480px ---------- */
+@media (max-width: 480px) {
+  .conversion-section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .section-heading {
+    font-size: 1.9rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .accent-text {
+    font-size: 0.65rem;
+  }
+
+  .card-inner-title {
+    font-size: 1.3rem;
+  }
+
+  .card-inner-desc {
+    font-size: 0.9rem;
+  }
+
+  .sticky-conversion-card {
+    padding: 1.25rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .conversion-section {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .section-heading {
+    font-size: 1.7rem;
+  }
+
+  .card-inner-title {
+    font-size: 1.2rem;
+  }
+
+  .card-inner-desc {
+    font-size: 0.85rem;
+  }
+}
+
+/* ---------- Landscape Orientation with Short Viewport Height ---------- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .conversion-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
 </style>

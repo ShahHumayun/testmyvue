@@ -25,11 +25,9 @@
 
       <div class="rg-result__visual">
         <div class="rg-result__image-wrap">
-          <img
-            class="rg-result__image"
+          <img class="rg-result__image"
             src="https://images.unsplash.com/photo-1497465689543-5940d3cede89?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Finished glass product showcase representing the delivered ReplacementGlass.co outcome"
-          />
+            alt="Finished glass product showcase representing the delivered ReplacementGlass.co outcome" />
           <div class="rg-result__image-border"></div>
         </div>
       </div>
@@ -161,7 +159,7 @@ onBeforeUnmount(() => {
   --cta-border: rgba(255, 255, 255, 0.08);
   --compare-before-bg: rgba(255, 255, 255, 0.02);
   --compare-before-border: rgba(255, 255, 255, 0.08);
-  
+
   --accent-color: #00ffa3;
   --img-border: rgba(0, 255, 163, 0.3);
   --compare-after-bg: rgba(0, 255, 163, 0.04);
@@ -179,7 +177,8 @@ onBeforeUnmount(() => {
   --compare-before-bg: #f8fafc;
   --compare-before-border: rgba(15, 23, 42, 0.08);
 
-  --accent-color: #F97316; /* Orange replacement */
+  --accent-color: #F97316;
+  /* Orange replacement */
   --img-border: rgba(249, 115, 22, 0.2);
   --compare-after-bg: rgba(249, 115, 22, 0.06);
   --compare-after-border: rgba(249, 115, 22, 0.3);
@@ -188,12 +187,16 @@ onBeforeUnmount(() => {
 
 .rg-result {
   background: var(--result-bg);
-  padding: 100px 24px;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 100px clamp(2rem, 5vw, 12rem);
+  box-sizing: border-box;
   transition: background-color 0.4s ease;
 }
 
 .rg-back-wrap {
-  max-width: 1160px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto 32px;
 }
 
@@ -206,7 +209,7 @@ onBeforeUnmount(() => {
   color: var(--text-heading);
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 13.5px;
+  font-size: clamp(0.75rem, 0.9vw, 0.95rem);
   padding: 9px 16px;
   border-radius: 8px;
   cursor: pointer;
@@ -228,7 +231,8 @@ onBeforeUnmount(() => {
 }
 
 .rg-result__grid {
-  max-width: 1160px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -239,7 +243,7 @@ onBeforeUnmount(() => {
 .rg-label {
   display: inline-block;
   font-family: 'Inter', sans-serif;
-  font-size: 12.5px;
+  font-size: clamp(0.75rem, 0.9vw, 0.95rem);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent-color);
@@ -249,7 +253,7 @@ onBeforeUnmount(() => {
 .rg-result__heading {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
   color: var(--text-heading);
   line-height: 1.25;
   margin: 0 0 18px;
@@ -258,11 +262,15 @@ onBeforeUnmount(() => {
 
 .rg-result__intro {
   font-family: 'Inter', sans-serif;
-  font-size: 0.98rem;
+  font-size: clamp(0.9rem, 1.1vw, 1.15rem);
   line-height: 1.75;
   color: var(--text-body);
   margin: 0;
   transition: color 0.4s ease;
+}
+
+.rg-result__visual {
+  width: 100%;
 }
 
 .rg-result__image-wrap {
@@ -270,6 +278,7 @@ onBeforeUnmount(() => {
   border-radius: 14px;
   overflow: hidden;
   aspect-ratio: 4 / 3;
+  width: 100%;
 }
 
 .rg-result__image {
@@ -291,7 +300,8 @@ onBeforeUnmount(() => {
 }
 
 .rg-result__details {
-  max-width: 900px;
+  width: 100%;
+  max-width: 1200px;
   margin: 56px auto 0;
   padding-top: 44px;
   border-top: 1px solid var(--border-line);
@@ -322,7 +332,7 @@ onBeforeUnmount(() => {
   display: inline-block;
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 11.5px;
+  font-size: clamp(0.7rem, 0.85vw, 0.85rem);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-heading);
@@ -345,7 +355,7 @@ onBeforeUnmount(() => {
 
 .rg-compare__list li {
   font-family: 'Inter', sans-serif;
-  font-size: 0.92rem;
+  font-size: clamp(0.85rem, 1vw, 1.05rem);
   line-height: 1.55;
   color: var(--text-body);
   padding-left: 18px;
@@ -372,7 +382,7 @@ onBeforeUnmount(() => {
 
 .rg-result__para {
   font-family: 'Inter', sans-serif;
-  font-size: 0.98rem;
+  font-size: clamp(0.9rem, 1.1vw, 1.15rem);
   line-height: 1.8;
   color: var(--text-body);
   margin: 0 0 26px;
@@ -396,7 +406,7 @@ onBeforeUnmount(() => {
 .rg-result__cta-text {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: clamp(0.95rem, 1.15vw, 1.25rem);
   color: var(--text-heading);
   margin: 0;
   max-width: 420px;
@@ -414,7 +424,7 @@ onBeforeUnmount(() => {
   border-radius: 8px;
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 14px;
+  font-size: clamp(0.85rem, 1vw, 1rem);
   padding: 12px 22px;
   cursor: pointer;
   white-space: nowrap;
@@ -438,14 +448,138 @@ onBeforeUnmount(() => {
   transform: translateX(3px);
 }
 
-@media (max-width: 900px) {
-  .rg-result__grid { grid-template-columns: 1fr; gap: 36px; }
-  .rg-result__grid .rg-result__visual { order: -1; }
-  .rg-compare { grid-template-columns: 1fr; }
+/* =========================================================================
+   BREAKPOINT TIERS
+   ========================================================================= */
+
+/* ---------- Desktops — 1025px to 1200px ---------- */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .rg-result {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
 }
 
-@media (max-width: 560px) {
-  .rg-result__cta { flex-direction: column; align-items: flex-start; }
-  .rg-cta-btn { width: 100%; justify-content: center; }
+/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
+@media (min-width: 1201px) {
+  .rg-result {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .rg-result {
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+}
+
+/* ---------- 4K / UHD / large TVs (2560px and up) ---------- */
+@media (min-width: 2560px) {
+  .rg-result {
+    padding-left: 16rem;
+    padding-right: 16rem;
+  }
+}
+
+/* ---------- 4K / UHD Standard Range / 1921px to 2559px ---------- */
+@media (min-width: 1921px) and (max-width: 2559px) {
+  .rg-result {
+    padding-left: 12rem;
+    padding-right: 12rem;
+  }
+}
+
+/* ---------- Laptops / Large Tablets — 769px to 1024px ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .rg-result {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* ---------- Mobile Landscape / Tablets — 481px to 768px ---------- */
+@media (min-width: 481px) and (max-width: 768px) {
+  .rg-result {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+  .rg-result__grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .rg-result__grid .rg-result__visual {
+    order: -1;
+  }
+
+  .rg-result__image-wrap {
+    aspect-ratio: 16 / 10;
+  }
+
+  .rg-compare {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Mobile Portrait — 320px to 480px ---------- */
+@media (max-width: 480px) {
+  .rg-result {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .rg-result__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .rg-result__grid .rg-result__visual {
+    order: -1;
+  }
+
+  .rg-result__image-wrap {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+  }
+
+  .rg-result__image-border {
+    border-radius: 12px;
+  }
+
+  .rg-compare {
+    grid-template-columns: 1fr;
+  }
+
+  .rg-result__cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rg-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .rg-result {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* ---------- Landscape Orientation with Short Viewport Height ---------- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .rg-result {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
 }
 </style>

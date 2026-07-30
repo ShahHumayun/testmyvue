@@ -25,7 +25,7 @@
       <component v-for="(project, index) in projects" :key="index" :is="project.isInternal ? 'router-link' : 'a'"
         :to="project.isInternal ? project.url : undefined" :href="!project.isInternal ? project.url : undefined"
         :target="project.isInternal ? null : '_blank'"
-        class="project-card opacity-0 w-full max-w-lg group relative rounded-2xl overflow-hidden flex flex-col h-full">
+        class="project-card project-card-width opacity-0 w-full group relative rounded-2xl overflow-hidden flex flex-col h-full">
         <div class="project-card-image overflow-hidden relative w-full shrink-0">
           <img :src="project.image" :alt="project.title"
             class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110">
@@ -302,10 +302,22 @@ onMounted(() => {
   font-size: 0.68rem;
 }
 
+/* Card width — originally a fixed max-w-lg (512px) at every screen size,
+   regardless of how much room the grid column actually had. Widened here
+   and scaled progressively at each tier below so cards make fuller use
+   of their grid column instead of leaving empty space beside them. */
+.project-card-width {
+  max-width: 560px;
+}
+
 /* ==========================================================================
    Mobile Landscape / Small Tablets: 576px — 768px
    ========================================================================== */
 @media (min-width: 576px) {
+  .project-card-width {
+    max-width: 580px;
+  }
+
   .project-card-image {
     height: 260px;
   }
@@ -329,6 +341,10 @@ onMounted(() => {
    Laptops / Large Tablets: 769px — 1024px
    ========================================================================== */
 @media (min-width: 769px) {
+  .project-card-width {
+    max-width: 600px;
+  }
+
   .project-card-image {
     height: 300px;
   }
@@ -352,6 +368,10 @@ onMounted(() => {
    Desktops: 1025px — 1200px
    ========================================================================== */
 @media (min-width: 1025px) {
+  .project-card-width {
+    max-width: 630px;
+  }
+
   .project-card-image {
     height: 352px;
     /* matches original design's fixed height (md:h-88) exactly at this tier */
@@ -382,6 +402,10 @@ onMounted(() => {
    Extra Large Screens / Desktops / TVs: 1201px and up
    ========================================================================== */
 @media (min-width: 1201px) {
+  .project-card-width {
+    max-width: 650px;
+  }
+
   .project-card-image {
     height: 370px;
   }
@@ -396,6 +420,10 @@ onMounted(() => {
    Scale up spacing and type so cards don't feel lost on huge displays
    ========================================================================== */
 @media (min-width: 1536px) {
+  .project-card-width {
+    max-width: 685px;
+  }
+
   .project-card-image {
     height: 400px;
   }
@@ -431,6 +459,10 @@ onMounted(() => {
 
   .projects-container {
     max-width: 1820px;
+  }
+
+  .project-card-width {
+    max-width: 720px;
   }
 
   .project-card-image {
@@ -473,6 +505,10 @@ onMounted(() => {
     max-width: 2350px;
   }
 
+  .project-card-width {
+    max-width: 760px;
+  }
+
   .project-card-image {
     height: 460px;
   }
@@ -502,6 +538,10 @@ onMounted(() => {
 @media (max-width: 380px) {
   .header-container {
     margin-bottom: 2.5rem;
+  }
+
+  .project-card-width {
+    max-width: 340px;
   }
 
   .project-card-image {
