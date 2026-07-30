@@ -1,8 +1,8 @@
 <template>
   <section
-    :class="['cta-section relative py-36 px-6 overflow-hidden text-center z-20 transition-colors duration-400', isDarkMode ? 'theme-dark' : 'theme-light']">
+    :class="['cta-section relative py-36 px-6 overflow-hidden text-center z-20 transition-colors duration-400 w-full', isDarkMode ? 'theme-dark' : 'theme-light']">
 
-    <div class="max-w-3xl mx-auto relative z-10 space-y-6">
+    <div class="max-w-3xl mx-auto relative z-10 space-y-6 cta-container w-full">
       <h2 ref="ctaHeading" class="text-3xl md:text-6xl font-extrabold tracking-tight leading-tight cta-title">
         Ready To Build Your Next <br><span class="accent-text">Web Application?</span>
       </h2>
@@ -92,6 +92,14 @@ onMounted(() => {
 
 .cta-section {
   width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.cta-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .cta-back-wrap {
@@ -157,5 +165,164 @@ onMounted(() => {
 /* Pulsing glow removed per request — button keeps its hover scale but no longer glows */
 .cta-pulse-btn:hover {
   transform: scale(1.03) !important;
+}
+
+/* =========================================================================
+   BREAKPOINT TIERS WITH FULL 100% WIDTH AND RESPONSIVE SIZING
+   ========================================================================= */
+
+@media (max-width: 360px) {
+  .cta-section {
+    width: 100% !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  .cta-title {
+    font-size: 1.5rem !important;
+  }
+
+  .cta-description {
+    font-size: 0.85rem !important;
+  }
+
+  .cta-pulse-btn {
+    padding: 0.75rem 1.25rem !important;
+    font-size: 0.85rem !important;
+  }
+}
+
+@media (min-width: 361px) and (max-width: 480px) {
+  .cta-section {
+    width: 100% !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+  }
+
+  .cta-title {
+    font-size: 1.75rem !important;
+  }
+
+  .cta-pulse-btn {
+    padding: 0.85rem 1.5rem !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .cta-section {
+    width: 100% !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .cta-container {
+    max-width: 100% !important;
+  }
+
+  .cta-title {
+    font-size: 2.25rem !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .cta-section {
+    width: 100% !important;
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+
+  .cta-container {
+    max-width: 100% !important;
+  }
+
+  .cta-title {
+    font-size: 2.75rem !important;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .cta-section {
+    width: 100% !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+
+  .cta-container {
+    max-width: 1000px !important;
+  }
+
+  .cta-title {
+    font-size: 3.25rem !important;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1535px) {
+  .cta-section {
+    width: 100% !important;
+    padding-left: 48px !important;
+    padding-right: 48px !important;
+  }
+
+  .cta-container {
+    max-width: 1200px !important;
+  }
+
+  .cta-title {
+    font-size: 3.75rem !important;
+  }
+}
+
+@media (min-width: 1536px) and (max-width: 1920px) {
+  .cta-section {
+    width: 100% !important;
+    padding-left: 64px !important;
+    padding-right: 64px !important;
+  }
+
+  .cta-container {
+    max-width: 1400px !important;
+  }
+
+  .cta-title {
+    font-size: 4.25rem !important;
+  }
+
+  .cta-description {
+    font-size: 1.2rem !important;
+    max-width: 800px !important;
+  }
+}
+
+@media (min-width: 1921px) {
+  .cta-section {
+    width: 100% !important;
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+    padding-top: 12rem !important;
+    padding-bottom: 12rem !important;
+  }
+
+  .cta-container {
+    max-width: 1650px !important;
+  }
+
+  .cta-title {
+    font-size: 5rem !important;
+  }
+
+  .cta-description {
+    font-size: 1.35rem !important;
+    max-width: 950px !important;
+  }
+
+  .cta-pulse-btn {
+    padding: 1.25rem 2.5rem !important;
+    font-size: 1.2rem !important;
+  }
 }
 </style>
