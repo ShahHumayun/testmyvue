@@ -1,7 +1,7 @@
 <template>
   <section :class="[
     'industry-section py-32 px-6 border-b relative z-20 transition-colors duration-500',
-    isDarkMode ? 'border-neutral-900 theme-dark' : 'border-neutral-200 theme-light'
+    isDarkMode ? 'border-neutral-900 bg-[#1c1c1c] theme-dark' : 'border-neutral-200 bg-[#f2f2f2] theme-light'
   ]">
     <div class="max-w-7xl mx-auto industry-container-wrapper">
       <h2

@@ -9,7 +9,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div v-for="(cat, idx) in stack" :key="idx" class="stack-category-card rounded-xl p-6">
           <h3 class="text-xs font-bold tracking-widest uppercase mb-4 accent-text stack-category-title">{{ cat.category
-            }}</h3>
+          }}</h3>
           <ul class="space-y-2">
             <li v-for="tech in cat.items" :key="tech" class="tech-item flex items-center gap-3 text-sm stack-tech-row">
               <span class="marker-dot w-1.5 h-1.5 rounded-full transition-all"></span>{{ tech }}
@@ -35,8 +35,13 @@ const stack = [
 </script>
 
 <style scoped>
+/* CHANGED: colour-only update — this section now uses the same alternating
+   background pair as the full-bleed sections on services.vue / culture.vue
+   (#1c1c1c on dark, #f2f2f2 on light) instead of pure #000/#fff, so it
+   reads as the same "light grey on white / light black on black" band.
+   Nothing else (stack card colors, accent colors, breakpoints) touched. */
 .theme-dark {
-  background-color: #000000 !important;
+  background-color: #1c1c1c !important;
   border-color: #171717 !important;
   --accent-color: #00ffa3;
   --heading-color: #ffffff;
@@ -47,7 +52,7 @@ const stack = [
 }
 
 .theme-light {
-  background-color: #ffffff !important;
+  background-color: #f2f2f2 !important;
   border-color: #e2e8f0 !important;
   --accent-color: #f97316;
   --heading-color: #0f172a;

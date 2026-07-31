@@ -1,7 +1,7 @@
 <template>
   <section :class="[
     'magento-features-section py-32 px-6 border-b relative z-20 transition-colors duration-500',
-    isDarkMode ? 'border-neutral-900 bg-black theme-dark' : 'border-neutral-200 bg-white theme-light'
+    isDarkMode ? 'border-neutral-900 bg-[#1c1c1c] theme-dark' : 'border-neutral-200 bg-[#f2f2f2] theme-light'
   ]">
     <div class="max-w-5xl mx-auto magento-container-wrapper">
 

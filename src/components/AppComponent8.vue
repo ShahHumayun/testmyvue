@@ -1,10 +1,11 @@
 <template>
   <section :class="[
-    'py-20 px-4 sm:py-24 sm:px-6 md:py-28 md:px-8 lg:py-32 xl:py-36 xl:px-12 2xl:py-40 2xl:px-16 border-b relative z-20',
-    isDarkMode ? 'border-neutral-900' : 'border-neutral-200'
+    'py-20 px-4 sm:py-24 sm:px-6 md:py-28 md:px-8 lg:py-32 xl:py-36 xl:px-12 2xl:py-40 2xl:px-16 border-b relative z-20 transition-colors duration-400',
+    isDarkMode ? 'bg-[#1c1c1c] border-neutral-900' : 'bg-[#f2f2f2] border-neutral-200'
   ]">
     <div class="max-w-7xl mx-auto">
-      <h2 :class="['section-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold tracking-tight mb-12 sm:mb-16 md:mb-20 xl:mb-24 text-center', isDarkMode ? 'text-white' : 'text-black']">
+      <h2
+        :class="['section-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold tracking-tight mb-12 sm:mb-16 md:mb-20 xl:mb-24 text-center', isDarkMode ? 'text-white' : 'text-black']">
         Features That
         <span :class="isDarkMode ? 'text-[#00ffa3]' : 'text-[#f97316]'">Users Expect</span>
       </h2>
@@ -16,7 +17,8 @@
             ? 'bg-neutral-950 border-neutral-900 hover:bg-neutral-950/40 hover:border-neutral-800'
             : 'bg-neutral-50 border-neutral-200 hover:bg-neutral-100 hover:border-orange-200'
         ]">
-          <h3 :class="['feature-title text-sm sm:text-base xl:text-lg 2xl:text-xl font-bold tracking-tight', isDarkMode ? 'text-white' : 'text-black']">
+          <h3
+            :class="['feature-title text-sm sm:text-base xl:text-lg 2xl:text-xl font-bold tracking-tight', isDarkMode ? 'text-white' : 'text-black']">
             {{ feat }}</h3>
         </div>
       </div>

@@ -76,8 +76,13 @@ onMounted(() => {
   --accent-color: #f97316;
 }
 
+/* CHANGED: colour-only update — this section now uses the same alternating
+   background pair as the full-bleed sections on services.vue / culture.vue
+   (#1c1c1c on dark, #f2f2f2 on light) instead of pure #000/#fff, so it
+   reads as the same "light grey on white / light black on black" band.
+   Nothing else (layout, borders, breakpoints, sizing) touched. */
 .theme-dark {
-  background: #000000 !important;
+  background: #1c1c1c !important;
   border-color: #171717 !important;
   --quote-color: #ffffff;
   --divider-color: #171717;
@@ -85,7 +90,7 @@ onMounted(() => {
 }
 
 .theme-light {
-  background: #ffffff !important;
+  background: #f2f2f2 !important;
   border-color: #e2e8f0 !important;
   --quote-color: #0f172a;
   --divider-color: #e2e8f0;

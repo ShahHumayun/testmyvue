@@ -1,7 +1,7 @@
 <template>
   <section :class="[
     'faq-section py-32 px-6 border-b relative z-20 transition-colors duration-500',
-    isDarkMode ? 'border-neutral-800 bg-black theme-dark' : 'border-neutral-200 bg-white theme-light'
+    isDarkMode ? 'border-neutral-800 bg-[#1c1c1c] theme-dark' : 'border-neutral-200 bg-[#f2f2f2] theme-light'
   ]">
     <div class="max-w-4xl mx-auto faq-container-wrapper">
       <h2

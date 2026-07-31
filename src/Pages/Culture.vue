@@ -108,9 +108,6 @@
           Start a Project
         </router-link>
 
-        <!-- CHANGED: Go Back button moved here, directly under Start a Project,
-             now living inside .culture-cta (same pattern as services.vue).
-             goBack() handler and markup are unchanged. -->
         <div class="back-btn-row">
           <button class="go-back-btn" @click="goBack" aria-label="Go back to previous page">
             <span class="go-back-arrow" aria-hidden="true">←</span>
@@ -925,7 +922,12 @@ onUnmounted(() => {
   max-width: 100% !important;
   box-sizing: border-box;
   padding: 0 clamp(1rem, 3vw, 4rem);
-  margin: 0 0 clamp(56px, 9vw, 110px);
+  /* CHANGED: margin-top for breathing room below the pillars section. A
+     plain margin-top would get collapsed into pillars-section's own
+     margin-bottom (only the larger of the two would apply) — the 1px
+     transparent top border stops that collapse so the margin renders. */
+  margin: clamp(20px, 4.5vw, 48px) 0 clamp(56px, 9vw, 110px);
+  border-top: 1px solid transparent;
   display: flex;
   flex-direction: column;
   gap: clamp(48px, 8vw, 100px);
@@ -937,6 +939,32 @@ onUnmounted(() => {
   gap: clamp(28px, 5vw, 70px);
   align-items: center;
   width: 100%;
+}
+
+/* CHANGED: row 2 only ("Enthusiastic Developers, Neat Code") gets a
+   full-bleed background matching the same gray/dark-gray shade used
+   elsewhere on the site. The width:100vw + left:50% + negative-margin
+   trick breaks the row out of showcase-rows' horizontal padding so the
+   background covers the entire screen width, while the row's own padding
+   keeps the image and text aligned with the rest of the page content.
+   Built with clamp() so it scales fluidly at every breakpoint without
+   needing separate media-query overrides. */
+.showcase-row:nth-child(2) {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: clamp(32px, 6vw, 60px) clamp(16px, 4vw, 40px);
+  box-sizing: border-box;
+  background-color: #1c1c1c;
+  transition: background-color var(--transition-speed);
+}
+
+.theme-light .showcase-row:nth-child(2) {
+  background-color: #f2f2f2;
 }
 
 .row-reverse {
@@ -959,31 +987,6 @@ onUnmounted(() => {
   .row-reverse .row-media {
     order: -1;
   }
-}
-
-/* CHANGED: row 2 ("Enthusiastic Developers, Neat Code") gets the same
-   full-bleed alternating background used on services.vue's showcase rows —
-   light grey (#f2f2f2) on the light theme, a lighter-than-page black
-   (#1c1c1c) on the dark theme. width:100vw + the negative-margin/left
-   offset trick breaks it out of .showcase-rows' horizontal padding so the
-   background spans the full screen width at every breakpoint, while its
-   own padding keeps the image/text aligned with the rest of the page. */
-.showcase-row:nth-child(2) {
-  position: relative;
-  left: 50%;
-  right: 50%;
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  padding: clamp(32px, 6vw, 60px) clamp(16px, 4vw, 40px);
-  box-sizing: border-box;
-  background-color: #1c1c1c;
-  transition: background-color var(--transition-speed);
-}
-
-.theme-light .showcase-row:nth-child(2) {
-  background-color: #f2f2f2;
 }
 
 .row-media {
@@ -1109,16 +1112,14 @@ onUnmounted(() => {
 /* ----------------------------------------- */
 /* CLOSING CTA SECTION                       */
 /* ----------------------------------------- */
-/* CHANGED: full-bleed so this section covers 100% of the screen width at
-   every breakpoint — same technique used on .showcase-row:nth-child(2)
-   above and on services.vue's .services-cta: breaks out of .culture-main's
-   horizontal padding via 100vw + a left:50% offset cancelled by negative
-   margins. Background now uses the same alternating pair (#1c1c1c dark /
-   #f2f2f2 light) instead of the previous near-transparent card fill, and
-   border-radius is dropped to 0 since the section now spans edge to edge. */
 .culture-cta {
   position: relative;
-  z-index: 30;
+  /* CHANGED: full-bleed so this section covers 100% of the screen width
+     at every breakpoint, using the same technique as showcase row 2 above
+     — breaks out of culture-main's horizontal padding via 100vw + a
+     left:50% offset cancelled by negative margins. Rounded corners and a
+     border don't make sense on an edge-to-edge section, so those are
+     removed here in favor of top/bottom borders only. */
   left: 50%;
   right: 50%;
   width: 100vw;
@@ -1127,15 +1128,15 @@ onUnmounted(() => {
   margin-right: -50vw;
   margin-top: 0;
   margin-bottom: 0;
+  box-sizing: border-box;
   text-align: center;
   padding: clamp(44px, 6vw, 80px) clamp(24px, 4vw, 40px);
   border-radius: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  /* CHANGED: same background swap used across the other CTA sections */
   background-color: #1c1c1c;
   overflow: hidden;
-  box-sizing: border-box;
-  transition: background-color var(--transition-speed);
 }
 
 .theme-light .culture-cta {
@@ -1216,14 +1217,13 @@ onUnmounted(() => {
 /* ----------------------------------------- */
 /* GO BACK BUTTON                            */
 /* ----------------------------------------- */
-/* CHANGED: now lives inside .culture-cta, right under Start a Project —
-   just needs spacing beneath the button above it, not its own top-level
-   width/margin anymore (mirrors services.vue's .back-btn-row). */
 .back-btn-row {
   position: relative;
   z-index: 10;
   display: flex;
   justify-content: center;
+  /* CHANGED: now lives inside .culture-cta, right under Start a Project —
+     just needs spacing beneath the button above it, not its own width */
   margin-top: 18px;
 }
 
@@ -1705,10 +1705,6 @@ onUnmounted(() => {
   .btn-start-project {
     width: 100%;
     text-align: center;
-  }
-
-  .back-btn-row {
-    margin-top: 2rem;
   }
 
   .go-back-btn {

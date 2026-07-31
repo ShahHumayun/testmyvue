@@ -328,4 +328,3 @@ const toggleFaq = (idx) => {
   }
 }
 </style>
-```[cite: 13]

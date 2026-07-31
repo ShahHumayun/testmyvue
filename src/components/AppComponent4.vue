@@ -1,7 +1,7 @@
 <template>
   <section :class="[
     'py-20 px-4 sm:py-24 sm:px-6 md:py-28 md:px-8 lg:py-32 xl:py-36 xl:px-12 2xl:py-40 2xl:px-16 border-b relative z-20',
-    isDarkMode ? 'border-neutral-900 bg-black' : 'border-neutral-200 bg-white'
+    isDarkMode ? 'border-neutral-900 bg-[#1c1c1c]' : 'border-neutral-200 bg-[#f2f2f2]'
   ]">
     <div
       class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 md:gap-14 lg:gap-16 xl:gap-20 2xl:gap-24 items-center">

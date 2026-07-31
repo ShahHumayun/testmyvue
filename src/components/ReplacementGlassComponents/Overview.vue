@@ -167,8 +167,14 @@ onBeforeUnmount(() => {
 
 <style scoped>
 /* CSS Theme Variable Mapping Matrix */
+/* CHANGED: colour-only update — --overview-bg now uses the same alternating
+   background pair as the full-bleed sections on services.vue / culture.vue
+   (#1c1c1c on dark, #f2f2f2 on light) instead of pure #000000/#ffffff, so
+   this section reads as the same "light grey on white / light black on
+   black" band. Nothing else (text colors, stat card colors, accent colors,
+   breakpoints) touched. */
 .theme-dark {
-  --overview-bg: #000000;
+  --overview-bg: #1c1c1c;
   --text-heading: #ffffff;
   --text-body: rgba(255, 255, 255, 0.65);
   --text-sub: rgba(255, 255, 255, 0.4);
@@ -182,7 +188,7 @@ onBeforeUnmount(() => {
 }
 
 .theme-light {
-  --overview-bg: #ffffff;
+  --overview-bg: #f2f2f2;
   --text-heading: #0f172a;
   --text-body: #475569;
   --text-sub: #64748b;

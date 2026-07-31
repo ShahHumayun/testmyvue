@@ -53,8 +53,15 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* CHANGED: colour-only update — the gradient's base tone now matches the
+   alternating background pair used on services.vue / culture.vue
+   (#1c1c1c on dark, #f2f2f2 on light) instead of pure #000/#fff, so this
+   section reads as the same "light grey on white / light black on black"
+   band. The gradient structure itself (three stops, subtle brighten/
+   darken in the middle) is preserved exactly as before — only the color
+   values changed. Border colors and everything else untouched. */
 .theme-dark {
-  background: linear-gradient(to bottom, #000000, #0a0a0a, #000000) !important;
+  background: linear-gradient(to bottom, #1c1c1c, #262626, #1c1c1c) !important;
   border-color: #171717 !important;
   --quote-color: #ffffff;
   --author-color: #737373;
@@ -63,7 +70,7 @@ onUnmounted(() => {
 }
 
 .theme-light {
-  background: linear-gradient(to bottom, #ffffff, #f8fafc, #ffffff) !important;
+  background: linear-gradient(to bottom, #f2f2f2, #e8e8e8, #f2f2f2) !important;
   border-color: #e2e8f0 !important;
   --quote-color: #0f172a;
   --author-color: #64748b;

@@ -1,7 +1,7 @@
 <template>
   <section :class="[
     'testimonials-section py-32 px-6 border-b relative z-20 transition-colors duration-500',
-    isDarkMode ? 'border-neutral-800 bg-neutral-900 theme-dark' : 'border-neutral-200 bg-neutral-50 theme-light'
+    isDarkMode ? 'border-neutral-800 bg-[#1c1c1c] theme-dark' : 'border-neutral-200 bg-[#f2f2f2] theme-light'
   ]">
     <div class="max-w-5xl mx-auto text-center space-y-12 testimonials-container-wrapper">
 
