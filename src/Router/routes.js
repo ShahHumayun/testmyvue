@@ -13,6 +13,10 @@ import AppDevelopment from '../Pages/AppDevelopment.vue'
 import EcommerceSolutions from '../Pages/EcommerceSolutions.vue'
 import NetSuiteIntegrations from '../Pages/NetSuiteIntegrations.vue'
 import ReplacementGlass from '../Pages/ReplacementGlass.vue'
+import BookLibraryAppPage from '../Pages/BookLibraryAppPage.vue'
+import MagentoConnectorAppPage from '../Pages/MagentoConnectorAppPage.vue'
+import MyExpenseTrackerAppPage from '../Pages/MyExpenseTrackerAppPage.vue'
+import TaylorAllergyAppPage from '../Pages/TaylorAllergyAppPage.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -27,7 +31,11 @@ const routes = [
   { path: '/appdevelopment', component: AppDevelopment },
   { path: '/ecommercesolutions', component: EcommerceSolutions },
   { path: '/netsuiteintegrations', component: NetSuiteIntegrations },
-  { path: '/replacementglass', component: ReplacementGlass }
+  { path: '/replacementglass', component: ReplacementGlass },
+  { path: '/booklibraryapppage', component: BookLibraryAppPage },
+  { path: '/magentoconnectorapppage', component: MagentoConnectorAppPage },
+  { path: '/myexpensetrackerapppage', component: MyExpenseTrackerAppPage },
+  { path: '/taylorallergyapppage', component: TaylorAllergyAppPage }
 ]
 
 const router = createRouter({

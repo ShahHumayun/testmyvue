@@ -21,7 +21,7 @@
           <p class="card-intro">{{ project.intro }}</p>
 
           <div class="btn-wrap">
-            <span class="view-btn" @click="$emit('open-modal', project.title)">
+            <span class="view-btn" @click="router.push(project.route)">
               VIEW APP
             </span>
           </div>
@@ -33,19 +33,20 @@
 
 <script setup>
 import { onMounted, inject, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Inject global theme state context seamlessly
 const isDarkMode = inject('isDarkMode', ref(true));
 
-defineEmits(['open-modal']);
+const router = useRouter();
 
 const projects = [
-  { title: 'Taylor Allergy', intro: 'Patient appointment tracking, rescheduling, and secure communication.', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=600' },
-  { title: 'My Expense Tracker', intro: 'Comprehensive finance management.', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600' },
-  { title: 'Book Library', intro: 'Public library management system.', image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=600' },
-  { title: 'Magento Connector', intro: 'Admin portal for order management.', image: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=600' },
+  { title: 'Taylor Allergy', intro: 'Patient appointment tracking, rescheduling, and secure communication.', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=600', route: '/taylorallergyapppage' },
+  { title: 'My Expense Tracker', intro: 'Comprehensive finance management.', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600', route: '/myexpensetrackerapppage' },
+  { title: 'Book Library', intro: 'Public library management system.', image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=600', route: '/booklibraryapppage' },
+  { title: 'Magento Connector', intro: 'Admin portal for order management.', image: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=600', route: '/magentoconnectorapppage' },
 ];
 
 gsap.registerPlugin(ScrollTrigger);
