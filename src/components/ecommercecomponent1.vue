@@ -30,14 +30,14 @@
           build platforms designed to sell.
         </p>
         <div ref="heroButtons" class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 pt-3 sm:pt-4">
-          <button
-            class="w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 xl:px-9 2xl:px-10 2xl:py-5 text-sm sm:text-base 2xl:text-lg bg-[var(--accent-color)] text-[var(--btn-text-color)] font-bold rounded-lg shadow-[0_0_30px_var(--shadow-color)] hover:shadow-[0_0_40px_var(--shadow-color-hover)] transition-all duration-300 transform hover:scale-[1.02]">
+          <router-link to="/consultation"
+            class="w-full sm:w-auto text-center px-6 py-3.5 sm:px-8 sm:py-4 xl:px-9 2xl:px-10 2xl:py-5 text-sm sm:text-base 2xl:text-lg bg-[var(--accent-color)] text-[var(--btn-text-color)] font-bold rounded-lg shadow-[0_0_30px_var(--shadow-color)] hover:shadow-[0_0_40px_var(--shadow-color-hover)] transition-all duration-300 transform hover:scale-[1.02]">
             Launch Your Store
-          </button>
-          <button
-            class="w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 xl:px-9 2xl:px-10 2xl:py-5 text-sm sm:text-base 2xl:text-lg border font-medium rounded-lg transition-all duration-300 secondary-action-btn">
+          </router-link>
+          <router-link to="/portfolio"
+            class="w-full sm:w-auto text-center px-6 py-3.5 sm:px-8 sm:py-4 xl:px-9 2xl:px-10 2xl:py-5 text-sm sm:text-base 2xl:text-lg border font-medium rounded-lg transition-all duration-300 secondary-action-btn">
             View Ecommerce Projects
-          </button>
+          </router-link>
         </div>
       </div>
 

@@ -47,18 +47,18 @@
             for the future.
           </p>
           <div ref="heroButtons" class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 pt-3 sm:pt-4">
-            <button
-              :class="['w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 xl:px-9 2xl:px-10 2xl:py-5 font-bold rounded-lg shadow-[0_0_30px_rgba(0,0,0,0.1)] transition-all duration-300 transform hover:scale-[1.02] text-sm sm:text-base 2xl:text-lg', isDarkMode ? 'bg-[#00ffa3] text-[#000000] shadow-[0_0_30px_rgba(0,255,163,0.2)]' : 'bg-[#f97316] text-white shadow-[0_0_30px_rgba(249,115,22,0.3)]']">
+            <router-link to="/consultation"
+              :class="['w-full sm:w-auto text-center px-6 py-3.5 sm:px-8 sm:py-4 xl:px-9 2xl:px-10 2xl:py-5 font-bold rounded-lg shadow-[0_0_30px_rgba(0,0,0,0.1)] transition-all duration-300 transform hover:scale-[1.02] text-sm sm:text-base 2xl:text-lg', isDarkMode ? 'bg-[#00ffa3] text-[#000000] shadow-[0_0_30px_rgba(0,255,163,0.2)]' : 'bg-[#f97316] text-white shadow-[0_0_30px_rgba(249,115,22,0.3)]']">
               Start Your App Project
-            </button>
-            <button :class="[
-              'w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 xl:px-9 2xl:px-10 2xl:py-5 font-medium rounded-lg transition-all duration-300 border text-sm sm:text-base 2xl:text-lg',
+            </router-link>
+            <router-link to="/portfolio" :class="[
+              'w-full sm:w-auto text-center px-6 py-3.5 sm:px-8 sm:py-4 xl:px-9 2xl:px-10 2xl:py-5 font-medium rounded-lg transition-all duration-300 border text-sm sm:text-base 2xl:text-lg',
               isDarkMode
                 ? 'bg-neutral-900 border-neutral-800 text-white hover:bg-neutral-800 hover:border-neutral-700'
                 : 'bg-neutral-100 border-neutral-200 text-neutral-900 hover:bg-neutral-200 hover:border-neutral-300'
             ]">
               View Portfolio
-            </button>
+            </router-link>
           </div>
         </div>
 
