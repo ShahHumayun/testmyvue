@@ -180,7 +180,7 @@ import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Header from '../components/Header.vue'
-import Footer from '../components/Footer.vue'
+import Footer from '../components/footer.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 
