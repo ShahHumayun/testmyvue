@@ -17,6 +17,7 @@ import BookLibraryAppPage from '../Pages/BookLibraryAppPage.vue'
 import MagentoConnectorAppPage from '../Pages/MagentoConnectorAppPage.vue'
 import MyExpenseTrackerAppPage from '../Pages/MyExpenseTrackerAppPage.vue'
 import TaylorAllergyAppPage from '../Pages/TaylorAllergyAppPage.vue'
+import ShopifyServicesPage from '../Pages/ShopifyServicesPage.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -35,7 +36,8 @@ const routes = [
   { path: '/booklibraryapppage', component: BookLibraryAppPage },
   { path: '/magentoconnectorapppage', component: MagentoConnectorAppPage },
   { path: '/myexpensetrackerapppage', component: MyExpenseTrackerAppPage },
-  { path: '/taylorallergyapppage', component: TaylorAllergyAppPage }
+  { path: '/taylorallergyapppage', component: TaylorAllergyAppPage },
+  { path:  '/shopifyservicespage', component: ShopifyServicesPage}
 ]
 
 const router = createRouter({

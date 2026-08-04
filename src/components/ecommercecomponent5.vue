@@ -289,4 +289,3 @@ const steps = [
   }
 }
 </style>
-```[cite: 5]

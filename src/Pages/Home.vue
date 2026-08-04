@@ -196,10 +196,7 @@ const parallax = reactive({
 // --- Hero carousel: rotates through core service pitches (top section only) ---
 // Links below match your actual routes.js paths exactly:
 // /consultation, /webappdevelopment, /appdevelopment,
-// /ecommercesolutions, /netsuiteintegrations.
-// Shopify has no route registered yet, so its secondaryLink is left
-// pointing at a path that isn't in routes.js on purpose — wire it up
-// once ShopifyDevelopment.vue exists and is added to routes.js.
+// /ecommercesolutions, /netsuiteintegrations, /shopifyservicespage.
 const slides = [
   {
     eyebrow: ['Magento', 'E-commerce', 'Senior-led'],
@@ -249,7 +246,7 @@ const slides = [
     primaryText: 'Get a Consultation',
     primaryLink: '/consultation',
     secondaryText: 'Shopify Development',
-    secondaryLink: '/shopify-development'
+    secondaryLink: '/shopifyservicespage'
   }
 ]
 

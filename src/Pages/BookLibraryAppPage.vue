@@ -1,7 +1,7 @@
 <template>
     <div :class="[
         isDarkMode ? 'bg-black text-white' : 'bg-slate-50 text-slate-900',
-        'min-h-screen w-full transition-colors duration-500 overflow-x-hidden font-sans'
+        'min-h-screen w-full transition-colors duration-500 overflow-x-hidden font-sans mt-[2%] sm:mt-0'
     ]">
         <!-- Header Component (theme is handled globally via inject/provide) -->
         <Header />
@@ -181,7 +181,7 @@ import { useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Header from '../components/Header.vue'
-import Footer from '../components/footer.vue'
+import Footer from '../components/Footer.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 

@@ -1,124 +1,3 @@
-<!-- <template>
-  <div :class="['services-component-wrapper', props.darkMode ? 'theme-dark' : 'theme-light']">
-    
-    <div class="main-component-container">
-      <main class="services-content-main">
-        
-        <div class="ai-vision-block">
-          <h2 class="ai-vision-heading">Next-Gen Web, App, and NetSuite Engineering</h2><br>
-          <p class="ai-vision-paragraph">
-            Traditional software isolates your business; WebHive unifies it. We combine high-end web and mobile development with deeply synchronized NetSuite ERP environments to build responsive digital products that adapt, scale, and perform.
-          </p>
-        </div><br>
-
-        <section class="services-interactive-section">
-          
-          <div class="services-left-side-text">
-            <div 
-              v-for="service in servicesData" 
-              :key="service.id"
-              class="service-accordion-card"
-              :class="{ 'active-card': selectedService === service.id }"
-              @mouseenter="selectedService = service.id"
-              @click="selectedService = service.id"
-            >
-              <div class="card-text-header">
-                <div class="card-icon-frame">
-                  <svg v-if="service.id === 1" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                  <svg v-if="service.id === 2" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-                  <svg v-if="service.id === 3" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                  <svg v-if="service.id === 4" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                </div>
-
-                <div class="card-heading-block">
-                  <h3 class="service-title-h3">
-                    {{ service.title }}
-                    <span class="dropdown-chevron-indicator">➔</span>
-                  </h3>
-                  <p class="service-description-preview">{{ service.description }}</p>
-                </div>
-              </div>
-
-              <div class="accordion-media-drawer">
-                <div class="card-image-wrapper">
-                  <Transition name="fade-drawer-image" mode="out-in">
-                    <img 
-                      v-if="selectedService === service.id"
-                      :key="service.id" 
-                      :src="service.imgUrl" 
-                      :alt="service.title"
-                      class="card-live-image" 
-                    />
-                  </Transition>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="services-right-side-panel">
-            <div class="desktop-frame-canvas">
-              <Transition name="fade-desktop-image" mode="out-in">
-                <img 
-                  :key="currentServiceImage.id" 
-                  :src="currentServiceImage.imgUrl" 
-                  :alt="currentServiceImage.title"
-                  class="desktop-live-image" 
-                />
-              </Transition>
-            </div>
-          </div>
-
-        </section>
-      </main>
-    </div>
-  </div>
-</template>
-
-<script setup>
-import { ref, computed } from 'vue'
-
-const props = defineProps({
-  darkMode: {
-    type: Boolean,
-    default: true
-  }
-})
-
-const servicesData = [
-  { 
-    id: 1, 
-    title: 'Web App Development', 
-    description: 'Revolutionizing businesses with high-performance web applications tailored for modern scale.',
-    imgUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80' 
-  },
-  { 
-    id: 2, 
-    title: 'App Development', 
-    description: 'Driving client engagement across native platforms via high-fidelity iOS and Android applications.',
-    imgUrl: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1000&q=80' 
-  },
-  { 
-    id: 3, 
-    title: 'eCommerce Solutions', 
-    description: 'Unlocking high-conversion multi-channel storefronts optimized for checkout workflows.',
-    imgUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80' 
-  },
-  { 
-    id: 4, 
-    title: 'NetSuite Integrations', 
-    description: 'Seamlessly binding ERP data pipelines together to streamline critical cloud business operations.',
-    imgUrl: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1000&q=80' 
-  }
-]
-
-const selectedService = ref(1)
-
-const currentServiceImage = computed(() => {
-  return servicesData.find(s => s.id === selectedService.value) || servicesData[0]
-})
-</script> -->
-
-
 <template>
   <div :class="['services-component-wrapper', props.darkMode ? 'theme-dark' : 'theme-light']">
 
@@ -162,6 +41,12 @@ const currentServiceImage = computed(() => {
                   <svg v-if="service.id === 4" width="26" height="26" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2">
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                  </svg>
+                  <svg v-if="service.id === 5" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                    <path d="M3 6h18" />
+                    <path d="M16 10a4 4 0 0 1-8 0" />
                   </svg>
                 </div>
 
@@ -242,6 +127,13 @@ const servicesData = [
     description: 'Seamlessly binding ERP data pipelines together to streamline critical cloud business operations.',
     imgUrl: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=1000&q=80',
     path: '/netsuiteintegrations'
+  },
+  {
+    id: 5,
+    title: 'Shopify Development',
+    description: 'Crafting high-converting, fully customized Shopify storefronts built to scale with your brand.',
+    imgUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80',
+    path: '/shopifyservicespage'
   }
 ]
 
@@ -323,9 +215,6 @@ const handleServiceClick = (service) => {
   align-items: center;
   padding: clamp(48px, 10vw, 120px) clamp(16px, 4vw, 50px);
   width: 100%;
-  /* Fluid width: scales continuously with the viewport instead of jumping
-     between fixed breakpoint values. align-items: center on the parent
-     keeps this perfectly centered at every screen size. */
   max-width: clamp(320px, 94vw, 1600px);
 }
 
@@ -374,7 +263,8 @@ const handleServiceClick = (service) => {
   justify-content: space-between;
   width: 100%;
   gap: clamp(40px, 6vw, 100px);
-  height: clamp(450px, 55vh, 600px);
+  /* CHANGED: taller range to comfortably fit a 5th accordion row */
+  height: clamp(520px, 64vh, 680px);
 }
 
 .services-left-side-text {
@@ -430,7 +320,8 @@ const handleServiceClick = (service) => {
   flex-direction: column;
   justify-content: center;
   flex: 1;
-  padding: 16px 0;
+  /* CHANGED: slightly tighter vertical padding so 5 rows still breathe within the taller panel */
+  padding: 14px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
@@ -451,7 +342,6 @@ const handleServiceClick = (service) => {
 .card-heading-block {
   width: 100%;
   min-width: 0;
-  /* allow text to wrap/shrink instead of pushing layout */
 }
 
 .card-icon-frame {
@@ -637,7 +527,7 @@ const handleServiceClick = (service) => {
   }
 
   .service-accordion-card {
-    padding: 20px 0;
+    padding: 18px 0;
   }
 
   .card-text-header {
@@ -744,7 +634,6 @@ const handleServiceClick = (service) => {
   .active-card .service-description-preview {
     margin-top: 10px;
     max-height: 140px;
-    /* allow more room since text wraps more on narrow screens */
   }
 
   .service-accordion-card {
@@ -832,15 +721,12 @@ const handleServiceClick = (service) => {
   }
 
   .service-accordion-card {
-    padding: 18px 0;
+    padding: 16px 0;
   }
 }
 
 /* ----------------------------------------- */
 /* 14. ULTRA-WIDE / LARGE TVs (1536px+)      */
-/*     Keeps type, icons, and spacing        */
-/*     scaling instead of plateauing at the  */
-/*     clamp() ceilings set above.           */
 /* ----------------------------------------- */
 @media (min-width: 1536px) {
   .ai-vision-heading {
@@ -852,7 +738,7 @@ const handleServiceClick = (service) => {
   }
 
   .services-interactive-section {
-    height: clamp(560px, 55vh, 680px);
+    height: clamp(600px, 64vh, 760px);
     gap: 120px;
   }
 
@@ -887,7 +773,7 @@ const handleServiceClick = (service) => {
   }
 
   .services-interactive-section {
-    height: clamp(600px, 52vh, 740px);
+    height: clamp(640px, 60vh, 820px);
     gap: 140px;
   }
 
