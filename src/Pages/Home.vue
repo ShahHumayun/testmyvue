@@ -194,44 +194,60 @@ const parallax = reactive({
 })
 
 // --- Hero carousel: rotates through core service pitches (top section only) ---
+// Links below match your actual routes.js paths exactly:
+// /consultation, /webappdevelopment, /appdevelopment,
+// /ecommercesolutions, /netsuiteintegrations.
+// Shopify has no route registered yet, so its secondaryLink is left
+// pointing at a path that isn't in routes.js on purpose — wire it up
+// once ShopifyDevelopment.vue exists and is added to routes.js.
 const slides = [
   {
     eyebrow: ['Magento', 'E-commerce', 'Senior-led'],
     titleLine: 'Magento stores built to convert.',
     titleAccent: 'Engineered for scale.',
     subtitle: 'Custom Magento development for merchants who\'ve outgrown templates — from theme builds and performance tuning to full platform migrations that keep checkout fast under real traffic.',
-    primaryText: 'Get a Free Estimate',
-    primaryLink: '/free-estimate',
+    primaryText: 'Get a Consultation',
+    primaryLink: '/consultation',
     secondaryText: 'Magento Development',
-    secondaryLink: '/magento-development'
+    secondaryLink: '/ecommercesolutions'
   },
   {
     eyebrow: ['NetSuite', 'ERP', 'Integrations'],
     titleLine: 'Systems that talk to each other.',
     titleAccent: 'NetSuite, integrated right.',
     subtitle: 'Custom NetSuite integrations and automations that connect your storefront, ERP, and internal tools — no more manual data entry, no more disconnected spreadsheets.',
-    primaryText: 'Get a Free Estimate',
-    primaryLink: '/free-estimate',
-    secondaryText: 'NetSuite Integration',
-    secondaryLink: '/netsuite-integration'
+    primaryText: 'Get a Consultation',
+    primaryLink: '/consultation',
+    secondaryText: 'Netsuite Integration',
+    secondaryLink: '/netsuiteintegrations'
   },
   {
     eyebrow: ['Next.js', 'React', 'Senior-led'],
     titleLine: 'Web apps built on Next.js.',
     titleAccent: 'Fast, scalable, SEO-ready.',
     subtitle: 'Next.js builds for teams that need speed without sacrificing flexibility — server-side rendering, clean architecture, and performance budgets that hold up at scale.',
-    primaryText: 'Get a Free Estimate',
-    primaryLink: '/free-estimate',
-    secondaryText: 'Next.js Development',
-    secondaryLink: '/nextjs-development'
+    primaryText: 'Get a Consultation',
+    primaryLink: '/consultation',
+    secondaryText: 'Web App Development',
+    secondaryLink: '/webappdevelopment'
+  },
+  {
+    eyebrow: ['iOS', 'Android', 'Senior-led'],
+    titleLine: 'Mobile apps built to perform.',
+    titleAccent: 'Native feel, cross-platform reach.',
+    subtitle: 'Custom iOS and Android app development — from product strategy and UI/UX to launch and post-launch support, built by a senior team that ships apps people actually keep.',
+    primaryText: 'Get a Consultation',
+    primaryLink: '/consultation',
+    secondaryText: 'App Development',
+    secondaryLink: '/appdevelopment'
   },
   {
     eyebrow: ['Shopify', 'Shopify Plus', 'Custom Storefronts'],
     titleLine: 'Shopify storefronts that sell.',
     titleAccent: 'Built to grow with you.',
     subtitle: 'Shopify and Shopify Plus storefronts engineered for conversion — custom themes, app integrations, and migrations handled end to end by a senior team.',
-    primaryText: 'Get a Free Estimate',
-    primaryLink: '/free-estimate',
+    primaryText: 'Get a Consultation',
+    primaryLink: '/consultation',
     secondaryText: 'Shopify Development',
     secondaryLink: '/shopify-development'
   }
@@ -918,6 +934,9 @@ const onMenuLeave = (el, done) => {
    HERO / CAROUSEL — top & bottom padding and min-height cut
    down at every tier so the carousel hugs its content instead
    of leaving large empty margins (CEO feedback).
+   Text sizes bumped up across all tiers, with the largest
+   increases from tablet through 4K (1201px–2560px+), per
+   request.
    ========================================================= */
 .hero-intro-viewport {
   width: 100%;
@@ -1036,7 +1055,7 @@ const onMenuLeave = (el, done) => {
   flex-wrap: wrap;
   gap: 8px;
   font-family: monospace;
-  font-size: clamp(13px, 2vw, 16px);
+  font-size: clamp(14px, 2.1vw, 18px);
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-weight: 600;
@@ -1050,7 +1069,7 @@ const onMenuLeave = (el, done) => {
 }
 
 .main-title {
-  font-size: clamp(1.05rem, 5.15vw, 4.9rem);
+  font-size: clamp(1.1rem, 5.3vw, 5.2rem);
   font-weight: 900;
   letter-spacing: 0.01em;
   line-height: 1.15;
@@ -1080,7 +1099,7 @@ const onMenuLeave = (el, done) => {
 
 .hero-subtitle {
   font-family: system-ui, -apple-system, sans-serif;
-  font-size: clamp(0.95rem, 1.6vw, 1.35rem);
+  font-size: clamp(1rem, 1.7vw, 1.45rem);
   line-height: 1.65;
   max-width: 640px;
   margin: 0 auto;
@@ -1112,7 +1131,7 @@ const onMenuLeave = (el, done) => {
   justify-content: center;
   border-radius: 6px;
   font-weight: 700;
-  font-size: clamp(13px, 1.4vw, 15px);
+  font-size: clamp(14px, 1.5vw, 16px);
   padding: clamp(12px, 1.6vw, 15px) clamp(20px, 2.6vw, 28px);
   cursor: pointer;
   white-space: nowrap;
@@ -1318,12 +1337,12 @@ const onMenuLeave = (el, done) => {
   }
 
   .main-title {
-    font-size: clamp(2.1rem, 3vw, 2.6rem);
+    font-size: clamp(2.3rem, 3.2vw, 2.9rem);
   }
 
   .hero-subtitle {
     max-width: 600px;
-    font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+    font-size: clamp(1.1rem, 1.4vw, 1.3rem);
   }
 }
 
@@ -1356,12 +1375,12 @@ const onMenuLeave = (el, done) => {
   }
 
   .main-title {
-    font-size: clamp(2.4rem, 2.8vw, 3rem);
+    font-size: clamp(2.7rem, 3vw, 3.4rem);
   }
 
   .hero-subtitle {
     max-width: 680px;
-    font-size: clamp(1.1rem, 1.2vw, 1.3rem);
+    font-size: clamp(1.15rem, 1.3vw, 1.4rem);
   }
 }
 
@@ -1414,12 +1433,12 @@ const onMenuLeave = (el, done) => {
   }
 
   .main-title {
-    font-size: clamp(2.6rem, 3vw, 3.3rem);
+    font-size: clamp(3rem, 3.3vw, 3.9rem);
   }
 
   .hero-subtitle {
     max-width: 760px;
-    font-size: clamp(1.2rem, 1.2vw, 1.45rem);
+    font-size: clamp(1.3rem, 1.3vw, 1.6rem);
   }
 }
 
@@ -1454,22 +1473,22 @@ const onMenuLeave = (el, done) => {
   }
 
   .hero-eyebrow {
-    font-size: 19px;
+    font-size: 22px;
   }
 
   .main-title {
-    font-size: clamp(3.2rem, 2.6vw, 4.2rem);
+    font-size: clamp(3.6rem, 2.9vw, 5rem);
     margin-bottom: 36px;
   }
 
   .hero-subtitle {
     max-width: 860px;
-    font-size: 1.5rem;
+    font-size: 1.65rem;
     line-height: 1.7;
   }
 
   .hero-btn {
-    font-size: 17px;
+    font-size: 19px;
     padding: 18px 34px;
   }
 
@@ -1509,12 +1528,12 @@ const onMenuLeave = (el, done) => {
   }
 
   .main-title {
-    font-size: clamp(1.65rem, 4vw, 2.1rem);
+    font-size: clamp(1.8rem, 4.2vw, 2.3rem);
   }
 
   .hero-subtitle {
     max-width: 520px;
-    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    font-size: clamp(1.05rem, 1.7vw, 1.25rem);
   }
 
   .carousel-side-arrow {
@@ -1621,16 +1640,17 @@ const onMenuLeave = (el, done) => {
   .hero-eyebrow {
     margin-top: 6px;
     margin-bottom: 12px;
-    font-size: 11px;
+    font-size: 12px;
     gap: 6px;
   }
 
   .main-title {
+    font-size: clamp(1.6rem, 8vw, 2.2rem);
     margin-bottom: 14px;
   }
 
   .hero-subtitle {
-    font-size: 0.95rem;
+    font-size: 1rem;
     max-width: 95%;
   }
 
