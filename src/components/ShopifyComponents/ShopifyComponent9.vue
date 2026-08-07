@@ -3,15 +3,15 @@
         :class="['cta-section py-32 px-6 border-b relative z-20 transition-colors duration-500', isDarkMode ? 'theme-dark' : 'theme-light']">
         <div class="max-w-4xl mx-auto text-center space-y-8">
             <h2 class="text-3xl md:text-6xl font-bold tracking-tight cta-main-title">
-                Ready To Build An <span class="accent-text">Ecommerce Store That Sells?</span>
+                Ready To Build An <span class="accent-text">Shopify Store That Sells?</span>
             </h2>
             <p class="text-lg max-w-2xl mx-auto cta-description-text">
-                Let's create a powerful ecommerce experience that attracts customers, increases conversions, and drives
+                Let's create a powerful shopify experience that attracts customers, increases conversions, and drives
                 long-term growth.
             </p>
             <button
                 class="pulse-glow-btn px-10 py-5 bg-[var(--accent-color)] text-black font-bold rounded-lg transition-all cta-action-button">
-                Start Your Ecommerce Project
+                Start Your Shopify Project
             </button>
 
             <div class="cta-back-wrap">

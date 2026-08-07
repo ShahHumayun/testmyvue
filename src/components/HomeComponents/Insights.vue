@@ -28,7 +28,7 @@
                 </router-link>
             </div>
 
-            <!-- Blog Grid (4 per row on desktop) -->
+            <!-- Blog Grid (horizontally scrollable, all screen sizes) -->
             <div class="blog-grid">
                 <article v-for="post in blogPosts" :key="post.title"
                     :class="['blog-card', isDarkMode ? 'blog-card-dark' : 'blog-card-light']">
@@ -85,28 +85,35 @@ const blogPosts = [
         title: 'Using Magento in Production',
         excerpt: 'Lessons from running high-traffic Magento storefronts: caching strategy, indexing, and keeping deploys boring.',
         image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80&auto=format&fit=crop',
-        link: '/blog/using-magento-in-production'
+        link: '/magentoblogpage'
     },
     {
         tag: 'NetSuite',
         title: 'Using NetSuite in Production',
         excerpt: 'How we structure NetSuite integrations so inventory, orders, and finance stay in sync without breaking.',
         image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80&auto=format&fit=crop',
-        link: '/blog/using-netsuite-in-production'
+        link: '/netsuiteblogpage'
     },
     {
-        tag: 'Next.js',
-        title: 'Using Next.js in Production',
+        tag: 'App Development in NextJs',
+        title: 'Using App Development in NextJs in Production',
         excerpt: 'Rendering strategy, caching, and deployment patterns that keep Next.js apps fast at scale.',
         image: 'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=800&q=80&auto=format&fit=crop',
-        link: '/blog/using-nextjs-in-production'
+        link: '/appdevelopmentblogpage'
     },
     {
         tag: 'Shopify',
         title: 'Using Shopify in Production',
         excerpt: 'Theme architecture, app choices, and checkout customizations that hold up as order volume grows.',
         image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80&auto=format&fit=crop',
-        link: '/blog/using-shopify-in-production'
+        link: '/shopifyblogpage'
+    },
+    {
+        tag: 'Web Development',
+        title: 'Using Web Development in Production',
+        excerpt: 'How we pair Next.js on the front end with Laravel on the back end to ship fast, secure, full-stack websites.',
+        image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80&auto=format&fit=crop',
+        link: '/webdevelopmentblogpage'
     }
 ]
 </script>
@@ -186,19 +193,42 @@ const blogPosts = [
     transition: transform 0.2s ease;
 }
 
-/* Grid layout: single column by default (mobile portrait) */
+/* ==========================================================================
+   Horizontally scrollable card row — replaces the previous CSS grid.
+   Cards keep their exact original styling; only the layout mechanism
+   (grid columns -> horizontal flex scroll) and per-card width changed,
+   so 5 cards fit naturally at every screen size without wrapping.
+   ========================================================================== */
 .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
     gap: 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: 6px;
+}
+
+.blog-grid::-webkit-scrollbar {
+    height: 6px;
+}
+
+.blog-grid::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.35);
+    border-radius: 999px;
 }
 
 .blog-card {
     display: flex;
     flex-direction: column;
+    flex: 0 0 auto;
+    width: 84%;
     border-radius: 14px;
     overflow: hidden;
     border: 1px solid;
+    scroll-snap-align: start;
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
@@ -321,8 +351,11 @@ const blogPosts = [
     }
 
     .blog-grid {
-        grid-template-columns: repeat(2, 1fr);
         gap: 18px;
+    }
+
+    .blog-card {
+        width: 52%;
     }
 
     .blog-title {
@@ -340,6 +373,10 @@ const blogPosts = [
 
     .blog-grid {
         gap: 20px;
+    }
+
+    .blog-card {
+        width: 40%;
     }
 
     .blog-content {
@@ -360,14 +397,18 @@ const blogPosts = [
     }
 
     .blog-grid {
-        grid-template-columns: repeat(3, 1fr);
         gap: 21px;
+    }
+
+    .blog-card {
+        width: 31%;
     }
 }
 
 /* ==========================================================================
    Desktops: 1025px — 1200px
-   Four-column layout begins here (matches original 4-per-row desktop intent)
+   Roughly four cards visible at once, with the fifth peeking at the edge
+   to signal the row scrolls (matches original 4-per-row desktop intent)
    ========================================================================== */
 @media (min-width: 1025px) {
     .blog-header-row {
@@ -375,8 +416,11 @@ const blogPosts = [
     }
 
     .blog-grid {
-        grid-template-columns: repeat(4, 1fr);
         gap: 22px;
+    }
+
+    .blog-card {
+        width: 23.5%;
     }
 
     .blog-title {
@@ -530,6 +574,10 @@ const blogPosts = [
 
     .blog-excerpt {
         font-size: 0.82rem;
+    }
+
+    .blog-card {
+        width: 88%;
     }
 }
 </style>

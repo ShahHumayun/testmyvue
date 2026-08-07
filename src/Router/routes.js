@@ -19,6 +19,13 @@ import MyExpenseTrackerAppPage from '../Pages/MyExpenseTrackerAppPage.vue'
 import TaylorAllergyAppPage from '../Pages/TaylorAllergyAppPage.vue'
 import ShopifyServicesPage from '../Pages/ShopifyServicesPage.vue'
 
+import AppDevelopmentBlogPage from '../Pages/AppDevelopmentBlogPage.vue'
+import WebDevelopmentBlogPage from '../Pages/WebDevelopmentBlogPage.vue'
+import MagentoBlogPage from '../Pages/MagentoBlogPage.vue'
+import NetsuiteBlogPage from '../Pages/NetsuiteBlogPage.vue'
+import ShopifyBlogPage from '../Pages/ShopifyBlogPage.vue'
+
+
 const routes = [
   { path: '/', component: Home },
   { path: '/about', component: About },
@@ -37,7 +44,12 @@ const routes = [
   { path: '/magentoconnectorapppage', component: MagentoConnectorAppPage },
   { path: '/myexpensetrackerapppage', component: MyExpenseTrackerAppPage },
   { path: '/taylorallergyapppage', component: TaylorAllergyAppPage },
-  { path:  '/shopifyservicespage', component: ShopifyServicesPage}
+  { path: '/shopifyservicespage', component: ShopifyServicesPage},
+  { path: '/appdevelopmentblogpage', component: AppDevelopmentBlogPage},
+  { path: '/webdevelopmentblogpage', component: WebDevelopmentBlogPage},
+  { path: '/magentoblogpage', component: MagentoBlogPage},
+  { path:  '/netsuiteblogpage', component: NetsuiteBlogPage},
+  { path:  '/shopifyblogpage', component: ShopifyBlogPage}
 ]
 
 const router = createRouter({
