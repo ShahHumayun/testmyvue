@@ -9,10 +9,10 @@
                 Let's create a powerful shopify experience that attracts customers, increases conversions, and drives
                 long-term growth.
             </p>
-            <button
-                class="pulse-glow-btn px-10 py-5 bg-[var(--accent-color)] text-black font-bold rounded-lg transition-all cta-action-button">
+            <router-link to="/consultation"
+                class="pulse-glow-btn inline-block px-10 py-5 bg-[var(--accent-color)] text-black font-bold rounded-lg transition-all cta-action-button">
                 Start Your Shopify Project
-            </button>
+            </router-link>
 
             <div class="cta-back-wrap">
                 <button class="cta-back-btn" @click="goBack" aria-label="Go back to previous page">
