@@ -1,6 +1,6 @@
 <template>
-      <!-- chatbot -->
-       <section :class="['chatbot-section', variant === 'popup' && 'chatbot-section--popup']">
+  <!-- chatbot -->
+  <section :class="['chatbot-section', variant === 'popup' && 'chatbot-section--popup']">
 
     <!-- Section label -->
     <div class="chatbot-eyebrow">
@@ -27,11 +27,8 @@
 
       <!-- Messages -->
       <div ref="chatEl" class="chatbot-messages">
-        <div
-          v-for="msg in messages"
-          :key="msg.id"
-          :class="['msg-row', msg.sender === 'user' ? 'msg-row--user' : 'msg-row--bot']"
-        >
+        <div v-for="msg in messages" :key="msg.id"
+          :class="['msg-row', msg.sender === 'user' ? 'msg-row--user' : 'msg-row--bot']">
           <div :class="['msg-bubble', msg.sender === 'user' ? 'msg-bubble--user' : 'msg-bubble--bot']">
             <span class="msg-text">{{ msg.text }}</span>
             <span class="msg-time">{{ msg.time }}</span>
@@ -49,27 +46,19 @@
       <div class="chatbot-footer">
 
         <div v-if="stepType === 'buttons' && activeOptions.length" class="options-grid">
-          <button
-            v-for="opt in activeOptions"
-            :key="opt.text"
-            class="option-btn"
-            @click="handleOption(opt)"
-          >
+          <button v-for="opt in activeOptions" :key="opt.text" class="option-btn" @click="handleOption(opt)">
             {{ opt.text }}
           </button>
         </div>
 
         <div v-else-if="stepType === 'text_input'" class="input-row">
-          <input
-            v-model="inputValue"
-            :type="chatTree[currentStep]?.inputField === 'email' ? 'email' : 'text'"
-            :placeholder="chatTree[currentStep]?.placeholder"
-            class="chat-input"
-            @keydown.enter="handleInput"
-          />
+          <input v-model="inputValue" :type="chatTree[currentStep]?.inputField === 'email' ? 'email' : 'text'"
+            :placeholder="chatTree[currentStep]?.placeholder" class="chat-input" @keydown.enter="handleInput" />
           <button class="send-btn" @click="handleInput" aria-label="Send">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+              stroke="currentColor" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
             </svg>
           </button>
         </div>
@@ -182,11 +171,11 @@ const chatTree = {
     message: "Hi! I'm the WebHive assistant. What kind of solution are you looking to build?",
     type: 'buttons',
     options: [
-      { text: '💻 Custom Web App',       value: 'Custom Web Application',  nextStep: 'ask_platform' },
-      { text: '📱 Mobile App',           value: 'Mobile App',              nextStep: 'ask_platform' },
-      { text: '🛒 E-Commerce Platform',  value: 'E-Commerce Platform',     nextStep: 'ask_platform' },
-      { text: '⚡ NetSuite Integration', value: 'NetSuite Integration',    nextStep: 'ask_platform' },
-      { text: '❓ I Have a Question',    value: 'FAQ',                     nextStep: 'faq_categories' },
+      { text: '💻 Custom Web App', value: 'Custom Web Application', nextStep: 'ask_platform' },
+      { text: '📱 Mobile App', value: 'Mobile App', nextStep: 'ask_platform' },
+      { text: '🛒 E-Commerce Platform', value: 'E-Commerce Platform', nextStep: 'ask_platform' },
+      { text: '⚡ NetSuite Integration', value: 'NetSuite Integration', nextStep: 'ask_platform' },
+      { text: '❓ I Have a Question', value: 'FAQ', nextStep: 'faq_categories' },
     ],
   },
   ask_platform: {
@@ -194,10 +183,10 @@ const chatTree = {
     message: 'Great choice! Which platform are you targeting?',
     type: 'buttons',
     options: [
-      { text: '🌐 Web',          value: 'Web',          nextStep: 'ask_budget' },
-      { text: '📱 Mobile',       value: 'Mobile',       nextStep: 'ask_budget' },
-      { text: '🖥️ Both',         value: 'Web & Mobile', nextStep: 'ask_budget' },
-      { text: '🤔 Not sure yet', value: 'Not decided',  nextStep: 'ask_budget' },
+      { text: '🌐 Web', value: 'Web', nextStep: 'ask_budget' },
+      { text: '📱 Mobile', value: 'Mobile', nextStep: 'ask_budget' },
+      { text: '🖥️ Both', value: 'Web & Mobile', nextStep: 'ask_budget' },
+      { text: '🤔 Not sure yet', value: 'Not decided', nextStep: 'ask_budget' },
     ],
   },
   ask_budget: {
@@ -205,10 +194,10 @@ const chatTree = {
     message: 'What is your estimated budget for this project?',
     type: 'buttons',
     options: [
-      { text: 'Under $5K',   value: 'Under $5,000',      nextStep: 'ask_timeline' },
-      { text: '$5K – $15K',  value: '$5,000 – $15,000',  nextStep: 'ask_timeline' },
+      { text: 'Under $5K', value: 'Under $5,000', nextStep: 'ask_timeline' },
+      { text: '$5K – $15K', value: '$5,000 – $15,000', nextStep: 'ask_timeline' },
       { text: '$15K – $50K', value: '$15,000 – $50,000', nextStep: 'ask_timeline' },
-      { text: '$50K+',       value: '$50,000+',           nextStep: 'ask_timeline' },
+      { text: '$50K+', value: '$50,000+', nextStep: 'ask_timeline' },
     ],
   },
   ask_timeline: {
@@ -216,10 +205,10 @@ const chatTree = {
     message: 'What is your expected timeline to launch?',
     type: 'buttons',
     options: [
-      { text: '< 1 month',    value: 'Less than 1 month', nextStep: 'ask_stage' },
-      { text: '1 – 3 months', value: '1–3 months',        nextStep: 'ask_stage' },
-      { text: '3 – 6 months', value: '3–6 months',        nextStep: 'ask_stage' },
-      { text: 'Flexible',     value: 'Flexible',          nextStep: 'ask_stage' },
+      { text: '< 1 month', value: 'Less than 1 month', nextStep: 'ask_stage' },
+      { text: '1 – 3 months', value: '1–3 months', nextStep: 'ask_stage' },
+      { text: '3 – 6 months', value: '3–6 months', nextStep: 'ask_stage' },
+      { text: 'Flexible', value: 'Flexible', nextStep: 'ask_stage' },
     ],
   },
   ask_stage: {
@@ -227,10 +216,10 @@ const chatTree = {
     message: 'Where is your project right now?',
     type: 'buttons',
     options: [
-      { text: '💡 Just an idea',         value: 'Just an idea',                nextStep: 'ask_description' },
-      { text: '📄 Have requirements',    value: 'Have requirements',           nextStep: 'ask_description' },
-      { text: '🔄 Redesigning existing', value: 'Redesigning existing product',nextStep: 'ask_description' },
-      { text: '🚀 Ready to build',       value: 'Ready to build',              nextStep: 'ask_description' },
+      { text: '💡 Just an idea', value: 'Just an idea', nextStep: 'ask_description' },
+      { text: '📄 Have requirements', value: 'Have requirements', nextStep: 'ask_description' },
+      { text: '🔄 Redesigning existing', value: 'Redesigning existing product', nextStep: 'ask_description' },
+      { text: '🚀 Ready to build', value: 'Ready to build', nextStep: 'ask_description' },
     ],
   },
   ask_description: {
@@ -259,10 +248,10 @@ const chatTree = {
   },
 }
 
-const currentStep   = ref('start')
-const isTyping      = ref(false)
-const inputValue    = ref('')
-const chatEl        = ref(null)
+const currentStep = ref('start')
+const isTyping = ref(false)
+const inputValue = ref('')
+const chatEl = ref(null)
 
 const lead = reactive({
   service: '', platform: '', budget: '',
@@ -273,7 +262,7 @@ const lead = reactive({
 const now = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 const messages = ref([{ id: 1, sender: 'bot', text: chatTree.start.message, time: now() }])
 const activeOptions = ref(chatTree.start.options)
-const stepType      = computed(() => chatTree[currentStep.value]?.type ?? 'buttons')
+const stepType = computed(() => chatTree[currentStep.value]?.type ?? 'buttons')
 
 const scroll = async () => {
   await nextTick()
@@ -282,9 +271,9 @@ const scroll = async () => {
 
 const stepFieldMap = {
   ask_platform: 'platform',
-  ask_budget:   'budget',
+  ask_budget: 'budget',
   ask_timeline: 'timeline',
-  ask_stage:    'project_stage',
+  ask_stage: 'project_stage',
 }
 
 // ── FAQ flow helpers ──────────────────────────────────────
@@ -392,14 +381,14 @@ const sendEmail = async () => {
       import.meta.env.VITE_EMAILJS_SERVICE_ID,
       import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
       {
-        from_name:     lead.name,
-        from_email:    lead.email,
-        service:       lead.service,
-        platform:      lead.platform,
-        budget:        lead.budget,
-        timeline:      lead.timeline,
+        from_name: lead.name,
+        from_email: lead.email,
+        service: lead.service,
+        platform: lead.platform,
+        budget: lead.budget,
+        timeline: lead.timeline,
         project_stage: lead.project_stage,
-        description:   lead.description,
+        description: lead.description,
       },
       import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
     )
@@ -439,6 +428,7 @@ const sendEmail = async () => {
   gap: 8px;
   margin-bottom: 20px;
 }
+
 .eyebrow-dot {
   width: 7px;
   height: 7px;
@@ -447,6 +437,7 @@ const sendEmail = async () => {
   box-shadow: 0 0 8px rgba(0, 255, 163, 0.6);
   animation: pulse-green 2s infinite;
 }
+
 .eyebrow-text {
   font-size: 11px;
   font-weight: 600;
@@ -471,6 +462,7 @@ const sendEmail = async () => {
 .theme-light .chatbot-heading {
   color: #0f172a;
 }
+
 .chatbot-subheading {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.45);
@@ -480,6 +472,7 @@ const sendEmail = async () => {
   max-width: 420px;
   transition: color var(--transition-speed);
 }
+
 .theme-light .chatbot-subheading {
   color: #475569;
 }
@@ -506,11 +499,13 @@ const sendEmail = async () => {
   background: #0d0d0d;
   flex-shrink: 0;
 }
+
 .header-left {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .header-dot {
   width: 8px;
   height: 8px;
@@ -520,6 +515,7 @@ const sendEmail = async () => {
   animation: pulse-green 2s infinite;
   flex-shrink: 0;
 }
+
 .header-title {
   font-size: 13.5px;
   font-weight: 600;
@@ -528,6 +524,7 @@ const sendEmail = async () => {
   line-height: 1;
   text-align: center;
 }
+
 .header-sub {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.35);
@@ -549,13 +546,32 @@ const sendEmail = async () => {
   background-image: radial-gradient(rgba(0, 255, 163, 0.025) 1px, transparent 1px);
   background-size: 22px 22px;
 }
-.chatbot-messages::-webkit-scrollbar { width: 3px; }
-.chatbot-messages::-webkit-scrollbar-track { background: transparent; }
-.chatbot-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
 
-.msg-row { display: flex; margin: 4px 0; }
-.msg-row--bot  { justify-content: flex-start; }
-.msg-row--user { justify-content: flex-end; }
+.chatbot-messages::-webkit-scrollbar {
+  width: 3px;
+}
+
+.chatbot-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+.msg-row {
+  display: flex;
+  margin: 4px 0;
+}
+
+.msg-row--bot {
+  justify-content: flex-start;
+}
+
+.msg-row--user {
+  justify-content: flex-end;
+}
 
 .msg-bubble {
   max-width: 88%;
@@ -570,7 +586,12 @@ const sendEmail = async () => {
   position: relative;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
-.msg-text { flex: 1 1 auto; word-break: break-word; }
+
+.msg-text {
+  flex: 1 1 auto;
+  word-break: break-word;
+}
+
 .msg-time {
   font-size: 10px;
   flex-shrink: 0;
@@ -583,14 +604,20 @@ const sendEmail = async () => {
   color: #f0f0f0;
   border-bottom-left-radius: 0;
 }
-.msg-bubble--bot .msg-time { color: rgba(255, 255, 255, 0.35); }
+
+.msg-bubble--bot .msg-time {
+  color: rgba(255, 255, 255, 0.35);
+}
 
 .msg-bubble--user {
   background: #008f5f;
   color: #fff;
   border-bottom-right-radius: 0;
 }
-.msg-bubble--user .msg-time { color: rgba(255, 255, 255, 0.65); }
+
+.msg-bubble--user .msg-time {
+  color: rgba(255, 255, 255, 0.65);
+}
 
 /* ── Typing dots ── */
 .typing-dots {
@@ -601,6 +628,7 @@ const sendEmail = async () => {
   background: #1c1c1e;
   border-bottom-left-radius: 0;
 }
+
 .typing-dots span {
   display: block;
   width: 6px;
@@ -609,8 +637,14 @@ const sendEmail = async () => {
   background: rgba(255, 255, 255, 0.25);
   animation: bounce-dot 1.2s infinite;
 }
-.typing-dots span:nth-child(2) { animation-delay: 0.15s; }
-.typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+.typing-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
 
 /* ── Footer ── */
 .chatbot-footer {
@@ -626,6 +660,7 @@ const sendEmail = async () => {
   grid-template-columns: 1fr 1fr;
   gap: 14px;
 }
+
 .option-btn {
   padding: 16px 14px;
   border-radius: 10px;
@@ -640,12 +675,16 @@ const sendEmail = async () => {
   letter-spacing: 0.01em;
   transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
+
 .option-btn:hover {
   border-color: #00ffa3;
   color: #00ffa3;
   background: rgba(0, 255, 163, 0.04);
 }
-.option-btn:active { transform: scale(0.97); }
+
+.option-btn:active {
+  transform: scale(0.97);
+}
 
 /* ── Input row ── */
 .input-row {
@@ -653,6 +692,7 @@ const sendEmail = async () => {
   gap: 8px;
   align-items: center;
 }
+
 .chat-input {
   flex: 1;
   height: 44px;
@@ -666,8 +706,14 @@ const sendEmail = async () => {
   outline: none;
   transition: border-color 0.15s;
 }
-.chat-input::placeholder { color: rgba(255, 255, 255, 0.2); }
-.chat-input:focus { border-color: #00ffa3; }
+
+.chat-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.chat-input:focus {
+  border-color: #00ffa3;
+}
 
 .send-btn {
   width: 44px;
@@ -683,8 +729,14 @@ const sendEmail = async () => {
   flex-shrink: 0;
   transition: transform 0.15s, background 0.15s;
 }
-.send-btn:hover  { background: #00e691; }
-.send-btn:active { transform: scale(0.94); }
+
+.send-btn:hover {
+  background: #00e691;
+}
+
+.send-btn:active {
+  transform: scale(0.94);
+}
 
 /* ── Completed ── */
 .completed-msg {
@@ -698,12 +750,240 @@ const sendEmail = async () => {
 
 /* ── Keyframes ── */
 @keyframes pulse-green {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(0,255,163,0.7); }
-  50%       { opacity: 0.55; box-shadow: 0 0 4px rgba(0,255,163,0.2); }
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(0, 255, 163, 0.7);
+  }
+
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 4px rgba(0, 255, 163, 0.2);
+  }
 }
+
 @keyframes bounce-dot {
-  0%, 80%, 100% { transform: translateY(0); }
-  40%           { transform: translateY(-5px); }
+
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-5px);
+  }
+}
+
+/* =========================================================================
+   BREAKPOINT TIERS
+   Organized by the exact ranges used across the rest of the site. Every
+   rule here is scoped with :not(.chatbot-section--popup) so the floating
+   popup widget (already governed by its own fixed-size parent container
+   in Home.vue/etc.) never gets resized just because the browser viewport
+   happens to be large — only the inline page "section" variant scales.
+   ========================================================================= */
+
+/* ---------- Mobile Portrait — 320px to 480px ---------- */
+@media (max-width: 480px) {
+  .chatbot-section:not(.chatbot-section--popup) {
+    padding: clamp(64px, 11vh, 100px) 14px clamp(40px, 6vh, 64px);
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-heading {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-subheading {
+    font-size: 13px;
+    margin-bottom: 28px;
+    max-width: 100%;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-card {
+    height: clamp(420px, 68vh, 500px);
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .options-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .option-btn {
+    padding: 13px 14px;
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chat-input,
+  .chatbot-section:not(.chatbot-section--popup) .send-btn {
+    height: 42px;
+  }
+}
+
+@media (max-width: 360px) {
+  .chatbot-section:not(.chatbot-section--popup) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-heading {
+    font-size: 1.35rem;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-footer {
+    padding: 14px;
+  }
+}
+
+/* ---------- Mobile Landscape / Tablets — 481px to 768px ---------- */
+@media (min-width: 481px) and (max-width: 768px) {
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-card {
+    height: clamp(460px, 66vh, 540px);
+  }
+}
+
+/* ---------- Laptops / Large Tablets — 769px to 1024px ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .chatbot-section:not(.chatbot-section--popup) {
+    max-width: 680px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-card {
+    height: 580px;
+  }
+}
+
+/* ---------- Desktops — 1025px to 1200px ---------- */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .chatbot-section:not(.chatbot-section--popup) {
+    max-width: 700px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-card {
+    height: 600px;
+  }
+}
+
+/* ---------- Extra Large Screens / TVs — 1201px and up ---------- */
+@media (min-width: 1201px) {
+  .chatbot-section:not(.chatbot-section--popup) {
+    max-width: 720px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-card {
+    height: 620px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-heading {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .chatbot-section:not(.chatbot-section--popup) {
+    max-width: 760px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-card {
+    height: 640px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-heading {
+    font-size: 2.65rem;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-subheading {
+    font-size: 15px;
+    max-width: 460px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .msg-bubble {
+    font-size: 14.5px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .option-btn {
+    font-size: 12px;
+    padding: 18px 16px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chat-input {
+    height: 48px;
+    font-size: 14.5px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .send-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .header-title {
+    font-size: 14.5px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .header-sub {
+    font-size: 12px;
+  }
+}
+
+/* ---------- 4K / UHD / large TVs — 1921px and up (e.g. 2560px) ---------- */
+@media (min-width: 1921px) {
+  .chatbot-section:not(.chatbot-section--popup) {
+    max-width: 820px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .eyebrow-text {
+    font-size: 12.5px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-heading {
+    font-size: 2.9rem;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-subheading {
+    font-size: 16px;
+    max-width: 500px;
+    margin-bottom: 48px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-card {
+    height: 680px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .header-title {
+    font-size: 15.5px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .header-sub {
+    font-size: 13px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .msg-bubble {
+    font-size: 15px;
+    padding: 12px 18px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .option-btn {
+    font-size: 13px;
+    padding: 20px 18px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chat-input {
+    height: 52px;
+    font-size: 15px;
+    padding: 0 18px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .send-btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  .chatbot-section:not(.chatbot-section--popup) .chatbot-footer {
+    padding: 22px;
+  }
 }
 
 /* ── Popup variant override (used only when embedded as a floating widget) ── */
@@ -712,11 +992,13 @@ const sendEmail = async () => {
   padding: 0;
   height: 100%;
 }
+
 .chatbot-section--popup .chatbot-eyebrow,
 .chatbot-section--popup .chatbot-heading,
 .chatbot-section--popup .chatbot-subheading {
   display: none;
 }
+
 .chatbot-section--popup .chatbot-card {
   height: 100%;
   outline: none;

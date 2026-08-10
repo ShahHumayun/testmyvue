@@ -98,7 +98,7 @@
       <section class="services-cta animate-scroll-element">
         <div class="cta-glow"></div>
         <h2 class="cta-title">
-          Ready to Elevate Your <span class="highlight-text">Digital Stack</span>?
+          Let's work  <span class="highlight-text">together</span>?
         </h2>
         <p class="cta-subtitle">
           Let's align your product vision with production-grade architectural builds. Partner with WebHive to construct

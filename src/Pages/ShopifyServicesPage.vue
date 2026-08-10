@@ -25,6 +25,10 @@
         <div class="w-full max-w-full">
             <ShopifyComponent4 :isDarkMode="isDarkMode" />
         </div>
+       <div class="w-full max-w-full">
+            <NetsuiteInShopify :isDarkMode="isDarkMode" />
+        </div>
+
         <div class="w-full max-w-full">
             <ShopifyComponent5 :isDarkMode="isDarkMode" />
         </div>
@@ -58,6 +62,7 @@ import ShopifyComponent1 from '../components/ShopifyComponents/ShopifyComponent1
 import ShopifyComponent2 from '../components/ShopifyComponents/ShopifyComponent2.vue'
 import ShopifyComponent3 from '../components/ShopifyComponents/ShopifyComponent3.vue'
 import ShopifyComponent4 from '../components/ShopifyComponents/ShopifyComponent4.vue'
+import NetsuiteInShopify from '../components/ShopifyComponents/NetsuiteInShopify.vue'
 import ShopifyComponent5 from '../components/ShopifyComponents/ShopifyComponent5.vue'
 import ShopifyComponent6 from '../components/ShopifyComponents/ShopifyComponent6.vue'
 import ShopifyComponent7 from '../components/ShopifyComponents/ShopifyComponent7.vue'

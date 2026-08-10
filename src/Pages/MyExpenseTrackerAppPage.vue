@@ -1,7 +1,7 @@
 <template>
     <div :class="[
         isDarkMode ? 'bg-black text-white' : 'bg-slate-50 text-slate-900',
-        'min-h-screen w-full transition-colors duration-500 overflow-x-hidden font-sans mt-[2%] sm:mt-0'
+        'min-h-screen w-full transition-colors duration-500 overflow-x-hidden font-sans mt-[4%] sm:mt-0'
     ]">
         <!-- Header Component (theme is handled globally via inject/provide) -->
         <Header />
