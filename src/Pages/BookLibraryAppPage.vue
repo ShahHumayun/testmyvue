@@ -1,7 +1,7 @@
 <template>
     <div :class="[
         isDarkMode ? 'bg-black text-white' : 'bg-slate-50 text-slate-900',
-        'min-h-screen w-full transition-colors duration-500 overflow-x-hidden font-sans mt-[4%] sm:mt-0'
+        'min-h-screen w-full transition-colors duration-500 overflow-x-hidden font-sans'
     ]">
         <!-- Header Component (theme is handled globally via inject/provide) -->
         <Header />
@@ -9,7 +9,7 @@
         <main class="w-full">
             <!-- Hero Showcase Section -->
             <section
-                class="hero-shell w-full py-12 sm:py-16 lg:py-20 px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16 2xl:px-24 flex items-center relative z-20">
+                class="hero-shell w-full py-12 sm:py-16 lg:py-20 px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16 2xl:px-24 flex items-center relative z-20 mt-[4%] sm:mt-0">
                 <div
                     class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 md:gap-14 lg:gap-16 xl:gap-20 2xl:gap-24 items-center w-full">
                     <!-- Phone Frame & Carousel -->

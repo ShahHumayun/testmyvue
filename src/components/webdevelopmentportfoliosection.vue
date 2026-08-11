@@ -65,10 +65,10 @@ const isDarkMode = inject('isDarkMode', ref(true));
 
 const projects = [
   {
-    title: 'Wine Openers Canada',
-    intro: 'A premium ecommerce experience designed for wine enthusiasts with intuitive navigation.',
-    url: 'https://wineopeners.ca/',
-    isInternal: false,
+    title: 'The Explorer',
+    intro: 'A premium tourist website which provides its premium services.',
+    url: '/webproject1',
+    isInternal: true,
     image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&q=80&w=800'
   },
   {

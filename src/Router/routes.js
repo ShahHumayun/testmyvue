@@ -25,6 +25,8 @@ import MagentoBlogPage from '../Pages/MagentoBlogPage.vue'
 import NetsuiteBlogPage from '../Pages/NetsuiteBlogPage.vue'
 import ShopifyBlogPage from '../Pages/ShopifyBlogPage.vue'
 
+import WebProject1 from '../Pages/WebProject1.vue'
+
 
 const routes = [
   { path: '/', component: Home },
@@ -49,7 +51,8 @@ const routes = [
   { path: '/webdevelopmentblogpage', component: WebDevelopmentBlogPage},
   { path: '/magentoblogpage', component: MagentoBlogPage},
   { path:  '/netsuiteblogpage', component: NetsuiteBlogPage},
-  { path:  '/shopifyblogpage', component: ShopifyBlogPage}
+  { path:  '/shopifyblogpage', component: ShopifyBlogPage},
+  { path:  '/webproject1'    , component: WebProject1 }
 ]
 
 const router = createRouter({
