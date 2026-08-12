@@ -115,8 +115,6 @@
 
       <WhyWebhive class="home-why-webhive-layout" :darkMode="isDarkMode" />
 
-      <HomeServicesSection class="home-services-section-layout" :darkMode="isDarkMode" />
-
       <HowWeWork class="home-how-we-work-layout" :darkMode="isDarkMode" />
 
       <TechnologySection class="home-technology-layout" :darkMode="isDarkMode" />
@@ -162,7 +160,6 @@ import TrustSection from '../components/HomeComponents/TrustSection.vue'
 import CompaniesTrustSection from '../components/HomeComponents/CompaniesTrustSection.vue'
 import HomeComponent1 from '../components/HomeComponent1.vue'
 import WhyWebhive from '../components/WhyWebhive.vue'
-import HomeServicesSection from '../components/HomeComponents/HomeServicesSection.vue'
 import HowWeWork from '../components/HomeComponents/HowWeWork.vue'
 import TechnologySection from '../components/HomeComponents/TechnologySection.vue'
 import ProofOfWork from '../components/HomeComponents/ProofOfWork.vue'
