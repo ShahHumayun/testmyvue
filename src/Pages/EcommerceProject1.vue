@@ -12,10 +12,8 @@
                 isDarkMode ? 'border-neutral-900' : 'border-neutral-200',
                 'hero-shell relative w-full flex items-center overflow-hidden border-b z-20 px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16 2xl:px-24 pt-20 sm:pt-20 md:pt-20 lg:pt-20 xl:pt-24 2xl:pt-28 pb-8 sm:pb-10 lg:pb-14'
             ]">
-                <!-- Full hero background photo (edit `heroBackgroundImage` in the script to swap it) -->
-                <div class="absolute inset-0 hero-bg-image" :style="{ backgroundImage: `url(${heroBackgroundImage})` }">
-                </div>
-                <div :class="[isDarkMode ? 'hero-bg-overlay-dark' : 'hero-bg-overlay-light']" class="absolute inset-0">
+                <!-- Solid hero background: white on light theme, black on dark theme -->
+                <div :class="[isDarkMode ? 'hero-bg-solid-dark' : 'hero-bg-solid-light']" class="absolute inset-0">
                 </div>
                 <div
                     class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--accent-gradient-fade),transparent_70%)]">
@@ -31,10 +29,15 @@
                         </span>
 
                         <h1 :class="isDarkMode ? 'text-white' : 'text-slate-900'"
+                            class="brand-hero-title text-5xl sm:text-6xl xl:text-7xl 2xl:text-8xl font-black tracking-tight leading-[0.9]">
+                            Replacement <span class="brand-hero-accent">Glass</span>
+                        </h1>
+
+                        <h2 :class="isDarkMode ? 'text-white' : 'text-slate-900'"
                             class="text-3xl sm:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold tracking-tight leading-[1.05]">
                             A storefront built to
                             <span :style="{ color: 'var(--accent-color)' }">convert</span>
-                        </h1>
+                        </h2>
 
                         <!-- Benefits list -->
                         <ul ref="heroSubtitle"
@@ -67,9 +70,6 @@
                     <div class="lg:col-span-6 flex justify-center">
                         <div ref="spotlight" :class="[isDarkMode ? 'browser-mock-dark' : 'browser-mock-light']"
                             class="browser-mockup">
-
-                            <!-- floating rating badge -->
-                            
 
                             <!-- browser chrome -->
                             <div class="browser-chrome">
@@ -106,28 +106,6 @@
                                             <span class="store-card-price">{{ product.price }}</span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <!-- floating order notification -->
-                            <div class="float-card float-order-toast">
-                                <div class="order-toast-icon">✓</div>
-                                <div>
-                                    <div class="order-toast-title">New order received</div>
-                                    <div class="order-toast-sub">{{ latestOrder.customer }} · {{ latestOrder.amount }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- floating revenue card -->
-                            <div class="float-card float-revenue-card">
-                                <div class="revenue-card-header">
-                                    <span>Revenue today</span>
-                                    <span class="revenue-card-value">{{ revenueToday }}</span>
-                                </div>
-                                <div class="revenue-bars">
-                                    <span v-for="(bar, idx) in revenueBars" :key="idx" class="revenue-bar"
-                                        :style="{ height: bar + '%' }"></span>
                                 </div>
                             </div>
 
@@ -390,13 +368,6 @@ const mockupProducts = ref([
     { id: 3, name: 'Insulated Glass Unit', price: '$142', image: 'https://images.unsplash.com/photo-1534185559297-e4f1dde00c75?auto=format&fit=crop&w=400&q=70' },
     { id: 4, name: 'Custom Facade Glass', price: '$189', image: 'https://images.unsplash.com/photo-1758951995614-1a223f1512e4?auto=format&fit=crop&w=400&q=70' }
 ])
-const latestOrder = ref({ customer: 'Sarah M.', amount: '$128.00' })
-const revenueToday = ref('$4,286')
-const revenueBars = ref([35, 55, 40, 70, 50, 85, 60]) // relative bar heights (%) for the mini chart
-
-// Full-bleed hero background photo — edit this URL to swap the photo later.
-// Source: "Glass facade of a modern office building" by Fabian Kleiser on Unsplash.
-const heroBackgroundImage = 'https://images.unsplash.com/photo-1745015446589-7ee6f702d8c1?auto=format&fit=crop&w=1800&q=70'
 
 // ---- Carousel images ----
 // Swap these for the real project screenshots, e.g. ../assets/EcommerceProject1/img1.jpg
@@ -542,19 +513,24 @@ onUnmounted(() => {
     max-width: clamp(320px, 94vw, 1500px) !important;
 }
 
-/* Full hero background photo + readability overlay. Swap the photo via
-   `heroBackgroundImage` in the script — no CSS changes needed. */
-.hero-bg-image {
-    background-size: cover;
-    background-position: center;
+/* Brand title — "Replacement" in the page's base text color, "Glass" in the
+   accent color with a soft glow to match the badge/button treatment above it. */
+.brand-hero-title {
+    letter-spacing: -0.02em;
 }
 
-.hero-bg-overlay-dark {
-    background: linear-gradient(100deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.82) 40%, rgba(0, 0, 0, 0.55) 100%);
+.brand-hero-accent {
+    color: var(--accent-color);
+    text-shadow: 0 0 28px var(--accent-shadow-hover);
 }
 
-.hero-bg-overlay-light {
-    background: linear-gradient(100deg, rgba(248, 250, 252, 0.95) 0%, rgba(248, 250, 252, 0.88) 40%, rgba(248, 250, 252, 0.6) 100%);
+/* Solid hero background — matches the site's theme exactly. */
+.hero-bg-solid-dark {
+    background-color: #000000;
+}
+
+.hero-bg-solid-light {
+    background-color: #ffffff;
 }
 
 @media (min-width: 1920px) {
@@ -703,7 +679,7 @@ onUnmounted(() => {
 }
 
 .store-banner-title {
-    font-size: 1.05rem;
+    font-size: 0.9rem;
     font-weight: 800;
     letter-spacing: -0.01em;
 }
@@ -711,7 +687,7 @@ onUnmounted(() => {
 .store-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 8px;
 }
 
 .store-card {
@@ -729,7 +705,15 @@ onUnmounted(() => {
 .store-card-thumb {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 0.85;
+    aspect-ratio: 1 / 0.62;
+    background-size: cover;
+    background-position: center;
+}
+
+.store-card-thumb-shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.4) 100%);
 }
 
 .store-card-add {
@@ -783,149 +767,6 @@ onUnmounted(() => {
     flex-shrink: 0;
 }
 
-/* -- floating badge / cards -- */
-.float-badge {
-    position: absolute;
-    top: -14px;
-    left: 18px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 6px 11px;
-    border-radius: 999px;
-    background: var(--accent-color);
-    color: #000;
-    box-shadow: 0 10px 24px var(--accent-shadow-hover);
-    z-index: 3;
-    animation: float-bob 4.5s ease-in-out infinite;
-}
-
-.rating-star {
-    width: 12px;
-    height: 12px;
-}
-
-.float-card {
-    position: absolute;
-    z-index: 3;
-    border-radius: 12px;
-    padding: 10px 12px;
-    backdrop-filter: blur(8px);
-}
-
-.browser-mock-dark .float-card {
-    background: rgba(20, 20, 20, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-.browser-mock-light .float-card {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
-}
-
-.float-order-toast {
-    top: 14%;
-    right: -12%;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    max-width: 170px;
-    animation: float-bob 5.5s ease-in-out infinite;
-    animation-delay: 0.3s;
-}
-
-.order-toast-icon {
-    flex-shrink: 0;
-    width: 22px;
-    height: 22px;
-    border-radius: 999px;
-    background: var(--accent-color);
-    color: #000;
-    font-size: 0.7rem;
-    font-weight: 900;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.order-toast-title {
-    font-size: 0.68rem;
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-.order-toast-sub {
-    font-size: 0.62rem;
-    opacity: 0.6;
-    margin-top: 2px;
-}
-
-.float-revenue-card {
-    bottom: -8%;
-    left: -14%;
-    width: 148px;
-    animation: float-bob 5s ease-in-out infinite;
-    animation-delay: 0.6s;
-}
-
-.revenue-card-header {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    margin-bottom: 8px;
-}
-
-.revenue-card-header span:first-child {
-    font-size: 0.62rem;
-    opacity: 0.55;
-    font-weight: 600;
-}
-
-.revenue-card-value {
-    font-size: 1rem;
-    font-weight: 800;
-    color: var(--accent-color);
-}
-
-.revenue-bars {
-    display: flex;
-    align-items: flex-end;
-    gap: 4px;
-    height: 30px;
-}
-
-.revenue-bar {
-    flex: 1;
-    border-radius: 3px;
-    background: var(--accent-color);
-    opacity: 0.85;
-}
-
-@keyframes float-bob {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    .float-badge,
-    .float-order-toast,
-    .float-revenue-card {
-        animation: none;
-    }
-}
-
 /* -- cart fab (unchanged mechanic, restyled position) -- */
 .cart-fab {
     position: absolute;
@@ -974,18 +815,6 @@ onUnmounted(() => {
 
 .theme-light .cart-count {
     background: #fff;
-}
-
-@media (max-width: 420px) {
-    .float-order-toast {
-        right: -4%;
-        max-width: 150px;
-    }
-
-    .float-revenue-card {
-        left: -6%;
-        width: 132px;
-    }
 }
 
 /* ==========================================================================
