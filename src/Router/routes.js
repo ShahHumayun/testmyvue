@@ -12,7 +12,7 @@ import WebAppDevelopment from '../Pages/WebAppDevelopment.vue'
 import AppDevelopment from '../Pages/AppDevelopment.vue'
 import EcommerceSolutions from '../Pages/EcommerceSolutions.vue'
 import NetSuiteIntegrations from '../Pages/NetSuiteIntegrations.vue'
-import ReplacementGlass from '../Pages/ReplacementGlass.vue'
+import EcommerceProject1 from '../Pages/EcommerceProject1.vue'
 import BookLibraryAppPage from '../Pages/BookLibraryAppPage.vue'
 import MagentoConnectorAppPage from '../Pages/MagentoConnectorAppPage.vue'
 import MyExpenseTrackerAppPage from '../Pages/MyExpenseTrackerAppPage.vue'
@@ -26,6 +26,8 @@ import NetsuiteBlogPage from '../Pages/NetsuiteBlogPage.vue'
 import ShopifyBlogPage from '../Pages/ShopifyBlogPage.vue'
 
 import WebProject1 from '../Pages/WebProject1.vue'
+import WebProject2 from '../Pages/WebProject2.vue'
+import WebProject3 from '../Pages/WebProject3.vue'
 
 
 const routes = [
@@ -41,7 +43,7 @@ const routes = [
   { path: '/appdevelopment', component: AppDevelopment },
   { path: '/ecommercesolutions', component: EcommerceSolutions },
   { path: '/netsuiteintegrations', component: NetSuiteIntegrations },
-  { path: '/replacementglass', component: ReplacementGlass },
+  { path: '/ecommerceproject1', component: EcommerceProject1 },
   { path: '/booklibraryapppage', component: BookLibraryAppPage },
   { path: '/magentoconnectorapppage', component: MagentoConnectorAppPage },
   { path: '/myexpensetrackerapppage', component: MyExpenseTrackerAppPage },
@@ -52,7 +54,10 @@ const routes = [
   { path: '/magentoblogpage', component: MagentoBlogPage},
   { path:  '/netsuiteblogpage', component: NetsuiteBlogPage},
   { path:  '/shopifyblogpage', component: ShopifyBlogPage},
-  { path:  '/webproject1'    , component: WebProject1 }
+  { path:  '/webproject1'    , component: WebProject1 },
+  { path:  '/webproject2'    , component: WebProject2 },
+  { path:  '/webproject3'    , component: WebProject3 }
+  
 ]
 
 const router = createRouter({

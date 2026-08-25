@@ -74,7 +74,7 @@ const projects = [
   {
     title: 'Replacement Glass',
     intro: 'Specialized platform built to simplify product discovery, focusing on speed and clarity.',
-    url: '/replacementglass',
+    url: '/ecommerceproject1',
     isInternal: true,
     image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800'
   },

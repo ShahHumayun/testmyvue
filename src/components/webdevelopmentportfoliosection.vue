@@ -72,17 +72,17 @@ const projects = [
     image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&q=80&w=800'
   },
   {
-    title: 'Replacement Glass',
+    title: 'Lipton Tea',
     intro: 'Specialized platform built to simplify product discovery, focusing on speed and clarity.',
-    url: '/replacementglass',
+    url: '/webproject2',
     isInternal: true,
     image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800'
   },
   {
     title: 'Blazing Glass',
     intro: 'Professional digital presence created to showcase services and build credibility.',
-    url: 'http://blazingglass.com/',
-    isInternal: false,
+    url: '/webproject3',
+    isInternal: true,
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800'
   }
 ];
