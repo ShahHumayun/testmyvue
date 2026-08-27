@@ -13,6 +13,8 @@ import AppDevelopment from '../Pages/AppDevelopment.vue'
 import EcommerceSolutions from '../Pages/EcommerceSolutions.vue'
 import NetSuiteIntegrations from '../Pages/NetSuiteIntegrations.vue'
 import EcommerceProject1 from '../Pages/EcommerceProject1.vue'
+import EcommerceProject2 from '../Pages/EcommerceProject2.vue'
+import EcommerceProject3 from '../Pages/EcommerceProject3.vue'
 import BookLibraryAppPage from '../Pages/BookLibraryAppPage.vue'
 import MagentoConnectorAppPage from '../Pages/MagentoConnectorAppPage.vue'
 import MyExpenseTrackerAppPage from '../Pages/MyExpenseTrackerAppPage.vue'
@@ -44,6 +46,8 @@ const routes = [
   { path: '/ecommercesolutions', component: EcommerceSolutions },
   { path: '/netsuiteintegrations', component: NetSuiteIntegrations },
   { path: '/ecommerceproject1', component: EcommerceProject1 },
+  { path: '/ecommerceproject2', component: EcommerceProject2 },
+  { path: '/ecommerceproject3', component: EcommerceProject3 },
   { path: '/booklibraryapppage', component: BookLibraryAppPage },
   { path: '/magentoconnectorapppage', component: MagentoConnectorAppPage },
   { path: '/myexpensetrackerapppage', component: MyExpenseTrackerAppPage },

@@ -1062,10 +1062,15 @@ const onMenuLeave = (el, done) => {
   opacity: 0.5;
 }
 
+/* CHANGED: heading sizing reworked so it never escapes the viewport on
+   small screens (the fixed nowrap + vw-heavy sizing used to push long
+   headlines past the screen edge on phones). Base clamp lowered slightly
+   and word-wrap allowed as a safety net; large-screen tiers below push the
+   max size up further with a touch more weight/tightness for presence. */
 .main-title {
-  font-size: clamp(1.1rem, 5.3vw, 5.2rem);
+  font-size: clamp(1.05rem, 5vw, 5.2rem);
   font-weight: 900;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
   line-height: 1.15;
   text-transform: none;
   margin-bottom: clamp(16px, 2.4vh, 28px);
@@ -1083,7 +1088,15 @@ const onMenuLeave = (el, done) => {
 .title-line,
 .title-accent {
   display: block;
-  white-space: nowrap;
+  /* CHANGED: was `white-space: nowrap`, which forced each headline onto a
+     single unbreakable line and caused horizontal overflow on narrow
+     screens once the vw-based font-size no longer fit the full phrase.
+     Wrapping is now allowed (kicks in only when a line genuinely doesn't
+     fit) with safe word-breaking, so nothing spills outside the viewport. */
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  text-wrap: balance;
   text-align: center;
 }
 
@@ -1330,8 +1343,11 @@ const onMenuLeave = (el, done) => {
     margin-top: clamp(18px, 2.2vh, 32px);
   }
 
+  /* CHANGED: bumped up slightly + heavier letter-spacing for more presence */
   .main-title {
-    font-size: clamp(2.3rem, 3.2vw, 2.9rem);
+    font-size: clamp(2.4rem, 3.3vw, 3.05rem);
+    font-weight: 900;
+    letter-spacing: -0.015em;
   }
 
   .hero-subtitle {
@@ -1368,8 +1384,11 @@ const onMenuLeave = (el, done) => {
     margin-top: clamp(22px, 2.6vh, 36px);
   }
 
+  /* CHANGED: increased size and weight/tightness for more impact on larger screens */
   .main-title {
-    font-size: clamp(2.7rem, 3vw, 3.4rem);
+    font-size: clamp(2.9rem, 3.2vw, 3.7rem);
+    font-weight: 900;
+    letter-spacing: -0.015em;
   }
 
   .hero-subtitle {
@@ -1426,8 +1445,11 @@ const onMenuLeave = (el, done) => {
     margin-top: clamp(20px, 2.6vh, 40px);
   }
 
+  /* CHANGED: pushed further up for large-laptop / desktop-monitor tier */
   .main-title {
-    font-size: clamp(3rem, 3.3vw, 3.9rem);
+    font-size: clamp(3.3rem, 3.5vw, 4.35rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
   }
 
   .hero-subtitle {
@@ -1470,8 +1492,11 @@ const onMenuLeave = (el, done) => {
     font-size: 22px;
   }
 
+  /* CHANGED: biggest, heaviest tier — sized for TV / 4K viewing distance */
   .main-title {
-    font-size: clamp(3.6rem, 2.9vw, 5rem);
+    font-size: clamp(4rem, 3.1vw, 5.6rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
     margin-bottom: 36px;
   }
 
@@ -1521,8 +1546,10 @@ const onMenuLeave = (el, done) => {
     max-width: 640px;
   }
 
+  /* CHANGED: slightly reined in and given room to wrap so long headlines
+     can't push past the container edge on tablets */
   .main-title {
-    font-size: clamp(1.8rem, 4.2vw, 2.3rem);
+    font-size: clamp(1.7rem, 3.6vw, 2.15rem);
   }
 
   .hero-subtitle {
@@ -1568,6 +1595,12 @@ const onMenuLeave = (el, done) => {
   .hero-content-left {
     min-height: clamp(190px, 30vh, 280px);
     max-width: 90%;
+  }
+
+  /* CHANGED: explicit clamp here (previously fell through to the base
+     5vw-heavy value) so long headlines can't outgrow this width tier */
+  .main-title {
+    font-size: clamp(1.5rem, 5.2vw, 2rem);
   }
 
   .hero-subtitle {
@@ -1638,8 +1671,12 @@ const onMenuLeave = (el, done) => {
     gap: 6px;
   }
 
+  /* CHANGED: this was the main overflow culprit — 8vw preferred size
+     combined with forced nowrap pushed long headlines off-screen.
+     Sized down and now allowed to wrap (see .title-line/.title-accent)
+     so it always stays within the viewport. */
   .main-title {
-    font-size: clamp(1.6rem, 8vw, 2.2rem);
+    font-size: clamp(1.3rem, 6.6vw, 1.85rem);
     margin-bottom: 14px;
   }
 
@@ -1670,6 +1707,60 @@ const onMenuLeave = (el, done) => {
   }
 }
 
+/* ---------- Mobile M — 375px to 424px ----------
+   Sits inside the 480px tier above but tuned on its own: at this width the
+   previous clamp() leaned too small/cramped relative to the screen, and the
+   tight letter-spacing read awkwardly at this size. Bumped the size up a
+   step, loosened letter-spacing back toward normal, and opened the
+   line-height slightly so a two-line wrap breathes instead of feeling
+   squeezed. */
+@media (min-width: 375px) and (max-width: 424px) {
+  .hero-content-left {
+    min-height: clamp(190px, 32vh, 250px);
+  }
+
+  .hero-eyebrow {
+    font-size: 12.5px;
+  }
+
+  .main-title {
+    font-size: clamp(1.55rem, 7vw, 1.75rem);
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    margin-bottom: 16px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.02rem;
+    line-height: 1.6;
+  }
+}
+
+/* ---------- Mobile L — 425px to 480px ----------
+   Slightly more breathing room than Mobile M, so the heading can sit a
+   touch larger and more confident without crowding the subtitle/CTAs. */
+@media (min-width: 425px) and (max-width: 480px) {
+  .hero-content-left {
+    min-height: clamp(200px, 32vh, 260px);
+  }
+
+  .hero-eyebrow {
+    font-size: 13px;
+  }
+
+  .main-title {
+    font-size: clamp(1.7rem, 6.6vw, 1.95rem);
+    line-height: 1.22;
+    letter-spacing: -0.008em;
+    margin-bottom: 16px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.62;
+  }
+}
+
 @media (max-width: 360px) {
   .navbar {
     padding: 0.5rem 0.7rem;
@@ -1682,6 +1773,13 @@ const onMenuLeave = (el, done) => {
   .hero-intro-viewport {
     padding-left: 16px;
     padding-right: 16px;
+  }
+
+  /* CHANGED: one more notch down for the smallest phones so the two
+     longest headlines ("Magento stores built to convert.",
+     "Custom iOS and Android...") never need more than a two-line wrap */
+  .main-title {
+    font-size: clamp(1.15rem, 6.2vw, 1.6rem);
   }
 }
 </style>

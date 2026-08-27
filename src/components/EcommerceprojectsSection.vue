@@ -9,12 +9,12 @@
     <div
       class="header-container mx-auto text-center mb-12 sm:mb-14 md:mb-16 lg:mb-20 relative z-10 flex flex-col items-center">
       <span
-        class="section-tag font-extrabold tracking-[0.25em] uppercase text-xs sm:text-sm xl:text-base mb-4 sm:mb-6 block">Web
-        App Development</span>
+        class="section-tag font-extrabold tracking-[0.25em] uppercase text-xs sm:text-sm xl:text-base mb-4 sm:mb-6 block">Ecommerce
+        Store Development</span>
       <h2
         class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-extrabold mb-4 sm:mb-6 tracking-tight section-title">
-        Digital Experiences That <br />
-        <span class="gradient-text-span">Deliver Results</span>
+        Online Stores Built To <br />
+        <span class="gradient-text-span">Convert Shoppers</span>
       </h2>
       <div class="theme-divider h-1.5 mx-auto rounded-full"></div>
     </div>
@@ -33,17 +33,17 @@
         </div>
 
         <div class="project-card-body flex flex-col flex-grow text-center transition-colors duration-300 card-body-bg">
-          <h3 class="project-title-text font-bold mb-3 sm:mb-4 tracking-tight project-card-title">
+          <h3 class="project-title-text font-bold mb-2 sm:mb-3 tracking-tight project-card-title">
             {{ project.title }}
           </h3>
-          <p class="project-desc-text mb-8 sm:mb-10 leading-relaxed font-medium flex-grow project-card-description">
+          <p class="project-desc-text mb-5 sm:mb-6 leading-relaxed font-medium flex-grow project-card-description">
             {{ project.intro }}
           </p>
 
           <div class="mt-auto w-full flex justify-center">
             <span
               class="project-card-btn-inner inline-flex items-center justify-center font-bold tracking-wider transition-all duration-300 rounded-lg cursor-pointer project-card-btn">
-              VISIT PROJECT
+              VISIT STORE
             </span>
           </div>
         </div>
@@ -65,24 +65,24 @@ const isDarkMode = inject('isDarkMode', ref(true));
 
 const projects = [
   {
-    title: 'Wine Openers Canada',
+    title: 'Mobile Store',
     intro: 'A premium ecommerce experience designed for wine enthusiasts with intuitive navigation.',
-    url: 'https://wineopeners.ca/',
-    isInternal: false,
+    url: '/ecommerceproject1',
+    isInternal: true,
     image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&q=80&w=800'
   },
   {
     title: 'Replacement Glass',
     intro: 'Specialized platform built to simplify product discovery, focusing on speed and clarity.',
-    url: '/ecommerceproject1',
+    url: '/ecommerceproject2',
     isInternal: true,
     image: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&q=80&w=800'
   },
   {
-    title: 'Blazing Glass',
+    title: 'Cloth Shop',
     intro: 'Professional digital presence created to showcase services and build credibility.',
-    url: 'http://blazingglass.com/',
-    isInternal: false,
+    url: 'ecommerceproject3',
+    isInternal: true,
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800'
   }
 ];
@@ -111,7 +111,7 @@ onMounted(() => {
   background-color: #000000 !important;
   --tag-text-color: #00ffa3;
   --title-text-color: #ffffff;
-  --gradient-span-bg: linear-gradient(to right, #00ffa3, #ffffff);
+  --gradient-span-bg: linear-gradient(to right, #00ffa3, #ffffff, #00ffa3);
   --divider-display: block;
   --divider-bg: #00ffa3;
   --divider-shadow: 0 0 15px #00ffa3;
@@ -190,6 +190,29 @@ onMounted(() => {
 
 .theme-dark .gradient-text-span {
   color: transparent !important;
+  /* Slow shimmering gradient sweep across the highlighted heading text */
+  background-size: 200% auto;
+  animation: gradient-sweep 4s ease-in-out infinite;
+}
+
+@keyframes gradient-sweep {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-dark .gradient-text-span {
+    animation: none;
+  }
 }
 
 .theme-divider {
@@ -274,32 +297,30 @@ onMounted(() => {
   max-width: clamp(320px, 94vw, 1700px);
 }
 
-/* Card image — originally a fixed h-80 md:h-88 (320px / 352px). Scales
-   progressively at every tier below instead of jumping straight from
-   mobile to md with nothing beyond that. */
+/* Card image — trimmed down across every tier so cards read as compact
+   product previews rather than tall banner cards. */
 .project-card-image {
-  height: 220px;
+  height: 160px;
 }
 
-/* Card body padding — originally a fixed p-10 (40px) at every screen size. */
+/* Card body padding — reduced from the original fixed value at every tier. */
 .project-card-body {
-  padding: 1.75rem;
+  padding: 1.25rem;
 }
 
 .project-title-text {
-  font-size: 1.35rem;
+  font-size: 1.2rem;
 }
 
 .project-desc-text {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 
-/* "VISIT PROJECT" button — originally a fixed min-w-[220px] px-12 py-4
-   text-xs at every screen size. */
+/* "VISIT PROJECT" button — reduced from the original fixed size at every tier. */
 .project-card-btn-inner {
-  min-width: 180px;
-  padding: 0.85rem 2rem;
-  font-size: 0.68rem;
+  min-width: 160px;
+  padding: 0.7rem 1.75rem;
+  font-size: 0.65rem;
 }
 
 /* Card width — originally a fixed max-w-lg (512px) at every screen size,
@@ -319,21 +340,21 @@ onMounted(() => {
   }
 
   .project-card-image {
-    height: 260px;
+    height: 190px;
   }
 
   .project-card-body {
-    padding: 2rem;
+    padding: 1.5rem;
   }
 
   .project-title-text {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   .project-card-btn-inner {
-    min-width: 200px;
-    padding: 0.9rem 2.25rem;
-    font-size: 0.7rem;
+    min-width: 180px;
+    padding: 0.75rem 2rem;
+    font-size: 0.68rem;
   }
 }
 
@@ -346,21 +367,21 @@ onMounted(() => {
   }
 
   .project-card-image {
-    height: 300px;
+    height: 220px;
   }
 
   .project-card-body {
-    padding: 2.25rem;
+    padding: 1.6rem;
   }
 
   .project-desc-text {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 }
 
 @media (min-width: 992px) {
   .project-card-image {
-    height: 330px;
+    height: 240px;
   }
 }
 
@@ -373,28 +394,25 @@ onMounted(() => {
   }
 
   .project-card-image {
-    height: 352px;
-    /* matches original design's fixed height (md:h-88) exactly at this tier */
+    height: 260px;
   }
 
   .project-card-body {
-    padding: 2.5rem;
-    /* matches original design's fixed padding (p-10) exactly at this tier */
+    padding: 1.75rem;
   }
 
   .project-title-text {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
   }
 
   .project-desc-text {
-    font-size: 1rem;
+    font-size: 0.92rem;
   }
 
   .project-card-btn-inner {
-    min-width: 220px;
-    padding: 1rem 3rem;
-    font-size: 0.75rem;
-    /* matches original design exactly at this tier */
+    min-width: 200px;
+    padding: 0.85rem 2.5rem;
+    font-size: 0.7rem;
   }
 }
 
@@ -407,11 +425,11 @@ onMounted(() => {
   }
 
   .project-card-image {
-    height: 370px;
+    height: 270px;
   }
 
   .project-title-text {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
 }
 
@@ -425,25 +443,25 @@ onMounted(() => {
   }
 
   .project-card-image {
-    height: 400px;
+    height: 290px;
   }
 
   .project-card-body {
-    padding: 2.75rem;
+    padding: 1.9rem;
   }
 
   .project-title-text {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
   }
 
   .project-desc-text {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
   }
 
   .project-card-btn-inner {
-    min-width: 235px;
-    padding: 1.05rem 3.25rem;
-    font-size: 0.8rem;
+    min-width: 215px;
+    padding: 0.9rem 2.75rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -466,25 +484,25 @@ onMounted(() => {
   }
 
   .project-card-image {
-    height: 430px;
+    height: 310px;
   }
 
   .project-card-body {
-    padding: 3rem;
+    padding: 2rem;
   }
 
   .project-title-text {
-    font-size: 1.9rem;
+    font-size: 1.6rem;
   }
 
   .project-desc-text {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .project-card-btn-inner {
-    min-width: 250px;
-    padding: 1.1rem 3.5rem;
-    font-size: 0.85rem;
+    min-width: 230px;
+    padding: 0.95rem 3rem;
+    font-size: 0.78rem;
   }
 }
 
@@ -510,25 +528,25 @@ onMounted(() => {
   }
 
   .project-card-image {
-    height: 460px;
+    height: 330px;
   }
 
   .project-card-body {
-    padding: 3.4rem;
+    padding: 2.2rem;
   }
 
   .project-title-text {
-    font-size: 2.05rem;
+    font-size: 1.75rem;
   }
 
   .project-desc-text {
-    font-size: 1.18rem;
+    font-size: 1.05rem;
   }
 
   .project-card-btn-inner {
-    min-width: 265px;
-    padding: 1.2rem 3.75rem;
-    font-size: 0.92rem;
+    min-width: 245px;
+    padding: 1rem 3.25rem;
+    font-size: 0.85rem;
   }
 }
 
@@ -545,25 +563,25 @@ onMounted(() => {
   }
 
   .project-card-image {
-    height: 190px;
+    height: 150px;
   }
 
   .project-card-body {
-    padding: 1.4rem;
+    padding: 1.1rem;
   }
 
   .project-title-text {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .project-desc-text {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
   .project-card-btn-inner {
-    min-width: 160px;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.65rem;
+    min-width: 150px;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.62rem;
   }
 }
 </style>
