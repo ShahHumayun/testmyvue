@@ -1,13 +1,7 @@
 <template>
-  <div 
-    :class="['hero-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']"
-    @mousemove="handleMouseMove"
-  >
+  <div :class="['hero-wrapper', isDarkMode ? 'theme-dark' : 'theme-light']" @mousemove="handleMouseMove">
     <div class="bg-overlay">
-      <div 
-        class="bg-grid-lines"
-        :style="{ transform: `translate(${parallax.bgX}px, ${parallax.bgY}px)` }"
-      ></div>
+      <div class="bg-grid-lines" :style="{ transform: `translate(${parallax.bgX}px, ${parallax.bgY}px)` }"></div>
     </div>
 
     <header class="navbar">
@@ -21,24 +15,13 @@
           Home
         </router-link>
 
-        <button 
-          @click="toggleTheme"
-          class="theme-toggle"
-          aria-label="Toggle Theme"
-        >
-          <div 
-            class="toggle-thumb"
-            :class="{ 'toggle-active': isDarkMode }"
-          >
+        <button @click="toggleTheme" class="theme-toggle" aria-label="Toggle Theme">
+          <div class="toggle-thumb" :class="{ 'toggle-active': isDarkMode }">
             <span class="toggle-icon">{{ isDarkMode ? '🌙' : '☀️' }}</span>
           </div>
         </button>
 
-        <button 
-          @click="toggleMenu" 
-          class="menu-trigger"
-          :class="{ 'menu-active': isMenuOpen }"
-        >
+        <button @click="toggleMenu" class="menu-trigger" :class="{ 'menu-active': isMenuOpen }">
           <span class="burger-line line-top"></span>
           <span class="burger-line line-mid"></span>
           <span class="burger-line line-bot"></span>
@@ -49,17 +32,9 @@
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
-          <div 
-            v-for="(item, index) in menuItems" 
-            :key="item"
-            class="menu-item-wrap"
-          >
+          <div v-for="(item, index) in menuItems" :key="item" class="menu-item-wrap">
             <span class="menu-index">0{{ index + 1 }}</span>
-            <router-link 
-              :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" 
-              @click="toggleMenu" 
-              class="menu-link"
-            >
+            <router-link :to="item === 'Home' ? '/' : '/' + item.toLowerCase()" @click="toggleMenu" class="menu-link">
               {{ item }}
             </router-link>
           </div>
@@ -76,10 +51,8 @@
     </Transition>
 
     <main class="hero-main page-scroll-container">
-      <div 
-        class="ambient-glow"
-        :style="{ transform: `translate(${parallax.bgX * -0.5}px, ${parallax.bgY * -0.5}px)` }"
-      ></div>
+      <div class="ambient-glow" :style="{ transform: `translate(${parallax.bgX * -0.5}px, ${parallax.bgY * -0.5}px)` }">
+      </div>
 
       <section id="contact" class="contact-section">
         <div class="contact-header">
@@ -94,52 +67,33 @@
         <form class="contact-form" @submit.prevent="handleSubmit">
           <div class="form-row">
             <div class="input-container">
-              <input
-                v-model="form.name"
-                type="text"
-                placeholder="Your Name"
-                class="form-input"
-                :class="{ 'input-validation-failed': fieldErrors.name }"
-                @input="fieldErrors.name = ''"
-              />
+              <input v-model="form.name" type="text" placeholder="Your Name" class="form-input"
+                :class="{ 'input-validation-failed': fieldErrors.name }" @input="fieldErrors.name = ''"
+                maxlength="100" />
               <span v-if="fieldErrors.name" class="validation-message">{{ fieldErrors.name }}</span>
             </div>
 
             <div class="input-container">
-              <input
-                v-model="form.email"
-                type="email"
-                placeholder="Email Address"
-                class="form-input"
-                :class="{ 'input-validation-failed': fieldErrors.email }"
-                @input="fieldErrors.email = ''"
-              />
+              <input v-model="form.email" type="email" placeholder="Email Address" class="form-input"
+                :class="{ 'input-validation-failed': fieldErrors.email }" @input="fieldErrors.email = ''"
+                maxlength="150" />
               <span v-if="fieldErrors.email" class="validation-message">{{ fieldErrors.email }}</span>
             </div>
           </div>
-          
+
           <div class="input-container field-group">
             <label class="input-label">What type of solution do you need?</label>
             <div class="pill-grid">
-              <button 
-                type="button" 
-                :class="['pill-btn', form.projectType === 'web' ? 'active' : '']"
-                @click="form.projectType = 'web'"
-              >
+              <button type="button" :class="['pill-btn', form.projectType === 'web' ? 'active' : '']"
+                @click="form.projectType = 'web'">
                 🌐 Web-Based Solution
               </button>
-              <button 
-                type="button" 
-                :class="['pill-btn', form.projectType === 'app' ? 'active' : '']"
-                @click="form.projectType = 'app'"
-              >
+              <button type="button" :class="['pill-btn', form.projectType === 'app' ? 'active' : '']"
+                @click="form.projectType = 'app'">
                 📱 App-Based Solution
               </button>
-              <button 
-                type="button" 
-                :class="['pill-btn', form.projectType === 'both' ? 'active' : '']"
-                @click="form.projectType = 'both'"
-              >
+              <button type="button" :class="['pill-btn', form.projectType === 'both' ? 'active' : '']"
+                @click="form.projectType = 'both'">
                 🚀 Both / Hybrid
               </button>
             </div>
@@ -148,28 +102,26 @@
           <div class="input-container field-group">
             <label class="input-label">Estimated Budget (USD)</label>
             <div class="pill-grid budgets">
-              <button 
-                type="button" 
-                v-for="tier in ['<$1k', '$1k - $5k', '$5k - $10k', '$10k+']" 
-                :key="tier"
-                :class="['pill-btn tier', form.budget === tier ? 'active' : '']"
-                @click="form.budget = tier"
-              >
+              <button type="button" v-for="tier in ['<$1k', '$1k - $5k', '$5k - $10k', '$10k+']" :key="tier"
+                :class="['pill-btn tier', form.budget === tier ? 'active' : '']" @click="form.budget = tier">
                 {{ tier }}
               </button>
             </div>
           </div>
 
           <div class="input-container">
-            <textarea
-              v-model="form.message"
-              placeholder="Tell us about your goals"
-              rows="5"
-              class="form-input form-textarea"
-              :class="{ 'input-validation-failed': fieldErrors.message }"
-              @input="fieldErrors.message = ''"
-            ></textarea>
+            <textarea v-model="form.message" placeholder="Tell us about your goals" rows="5"
+              class="form-input form-textarea" :class="{ 'input-validation-failed': fieldErrors.message }"
+              @input="fieldErrors.message = ''" maxlength="2000"></textarea>
             <span v-if="fieldErrors.message" class="validation-message">{{ fieldErrors.message }}</span>
+          </div>
+
+          <!-- SECURITY: honeypot field — invisible to real users, bots that
+               auto-fill every input will populate this and get silently
+               rejected in handleSubmit(). Does not affect layout. -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" v-model="honeypot" type="text" name="website" tabindex="-1" autocomplete="off" />
           </div>
 
           <div v-if="apiResponse.message" :class="['api-status-banner', apiResponse.status]">
@@ -222,8 +174,8 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 const form = reactive({
   name: '',
   email: '',
-  projectType: 'web', 
-  budget: '$1k - $5k', 
+  projectType: 'web',
+  budget: '$1k - $5k',
   message: ''
 })
 
@@ -243,6 +195,15 @@ const parallax = reactive({
   bgY: 0
 })
 
+// SECURITY: honeypot model — must stay empty. Bots that blindly fill
+// every field in the DOM will populate this; real users never see it.
+const honeypot = ref('')
+
+// SECURITY: minimum gap (ms) enforced between two successful submissions
+// from this browser session, to slow down rapid-fire spam/bot abuse.
+const SUBMIT_COOLDOWN_MS = 15000
+const lastSubmitAt = ref(0)
+
 // Helper function to update the global HTML class token
 const applyGlobalThemeClass = (isDark) => {
   if (isDark) {
@@ -258,7 +219,7 @@ const applyGlobalThemeClass = (isDark) => {
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
   const activeTheme = isDarkMode.value ? 'dark' : 'light'
-  
+
   localStorage.setItem('webhive-theme', activeTheme)
   applyGlobalThemeClass(isDarkMode.value)
 }
@@ -312,6 +273,27 @@ const evaluateClientForm = () => {
 
 const handleSubmit = async () => {
   apiResponse.message = ''
+
+  // SECURITY: honeypot check — if this hidden field has any value,
+  // it was filled by a bot. Fail silently (looks like success) so
+  // the bot doesn't learn to avoid the trap, but never hits Supabase.
+  if (honeypot.value) {
+    apiResponse.message = 'Inquiry transmitted successfully to cloud architecture!'
+    apiResponse.status = 'success'
+    form.name = ''
+    form.email = ''
+    form.message = ''
+    return
+  }
+
+  // SECURITY: submit cooldown — blocks rapid repeated submissions
+  const now = Date.now()
+  if (now - lastSubmitAt.value < SUBMIT_COOLDOWN_MS) {
+    apiResponse.message = 'Please wait a few seconds before sending another message.'
+    apiResponse.status = 'error'
+    return
+  }
+
   if (!evaluateClientForm()) return
 
   submissionPending.value = true
@@ -321,23 +303,24 @@ const handleSubmit = async () => {
       .from('consultations')
       .insert([
         {
-          name: form.name,
-          email: form.email,
-          project_type: form.projectType, 
+          name: form.name.trim(),
+          email: form.email.trim(),
+          project_type: form.projectType,
           budget: form.budget,
-          message: form.message
+          message: form.message.trim()
         }
       ])
 
     if (error) throw error
 
+    lastSubmitAt.value = now
     apiResponse.message = 'Inquiry transmitted successfully to cloud architecture!'
     apiResponse.status = 'success'
-    
+
     form.name = ''
     form.email = ''
     form.message = ''
-    
+
   } catch (error) {
     apiResponse.message = 'Transit pipeline broken: Unable to write data stream.'
     apiResponse.status = 'error'
@@ -349,7 +332,7 @@ const handleSubmit = async () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
-  
+
   // CHANGED: Check the universal site theme preference. Defaults to dark.
   const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
@@ -367,21 +350,21 @@ onUnmounted(() => {
 })
 
 const onMenuEnter = (el, done) => {
-  gsap.fromTo(el, 
-    { opacity: 0 }, 
+  gsap.fromTo(el,
+    { opacity: 0 },
     { opacity: 1, duration: 0.4, ease: 'power2.out' }
   )
-  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
-    { yPercent: 100 }, 
+  gsap.fromTo(el.querySelectorAll('.menu-link, .consult-btn-overlay'),
+    { yPercent: 100 },
     { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out', delay: 0.1, onComplete: done }
   )
 }
 
 const onMenuLeave = (el, done) => {
-  gsap.to(el.querySelectorAll('.menu-link, .consult-btn-overlay'), 
+  gsap.to(el.querySelectorAll('.menu-link, .consult-btn-overlay'),
     { yPercent: -100, duration: 0.4, stagger: 0.03, ease: 'power3.in' }
   )
-  gsap.to(el, 
+  gsap.to(el,
     { opacity: 0, duration: 0.4, ease: 'power2.in', delay: 0.15, onComplete: done }
   )
 }
@@ -413,7 +396,7 @@ const onMenuLeave = (el, done) => {
 .hero-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
-  
+
   min-height: 100vh;
   width: 100vw;
   display: flex;
@@ -450,6 +433,7 @@ const onMenuLeave = (el, done) => {
   background-color: #0b0c10;
   color: #ffffff;
 }
+
 .theme-light {
   --brand-accent: #f97316;
   background-color: #ffffff;
@@ -467,19 +451,22 @@ const onMenuLeave = (el, done) => {
   overflow: hidden;
   z-index: 0;
 }
+
 .bg-grid-lines {
   position: absolute;
   inset: -40px;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   background-size: 40px 40px;
 }
+
 .theme-dark .bg-grid-lines {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(0, 255, 163, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 255, 163, 0.04) 1px, transparent 1px);
 }
+
 .theme-light .bg-grid-lines {
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(15, 23, 42, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
 }
@@ -563,14 +550,19 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   white-space: nowrap;
 }
+
 .consult-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 255, 163, 0.3);
 }
+
 .theme-light .consult-btn:hover {
   box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
-.consult-btn:active { transform: translateY(0); }
+
+.consult-btn:active {
+  transform: translateY(0);
+}
 
 .theme-toggle {
   width: 40px;
@@ -590,6 +582,7 @@ const onMenuLeave = (el, done) => {
 .field-group {
   margin-bottom: 0.5rem;
 }
+
 .input-label {
   font-size: 0.85rem;
   font-weight: 600;
@@ -599,7 +592,10 @@ const onMenuLeave = (el, done) => {
   color: #6b7280;
   text-align: left;
 }
-.theme-dark .input-label { color: rgba(255, 255, 255, 0.6); }
+
+.theme-dark .input-label {
+  color: rgba(255, 255, 255, 0.6);
+}
 
 .pill-grid {
   display: grid;
@@ -607,6 +603,7 @@ const onMenuLeave = (el, done) => {
   gap: 0.5rem;
   width: 100%;
 }
+
 .pill-btn {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -619,30 +616,37 @@ const onMenuLeave = (el, done) => {
   transition: all 0.3s ease;
   text-align: center;
 }
+
 .theme-light .pill-btn {
   background: rgba(15, 23, 42, 0.05);
   border: 1px solid rgba(15, 23, 42, 0.1);
 }
+
 .pill-btn:hover {
   border-color: rgba(0, 255, 163, 0.4);
 }
+
 .theme-light .pill-btn:hover {
   border-color: rgba(249, 115, 22, 0.4);
 }
+
 .pill-btn.active {
   background: rgba(0, 255, 163, 0.1);
   border-color: var(--brand-accent);
   color: var(--brand-accent);
   box-shadow: 0 0 15px rgba(0, 255, 163, 0.1);
 }
+
 .theme-light .pill-btn.active {
   background: rgba(249, 115, 22, 0.1);
   box-shadow: 0 0 15px rgba(249, 115, 22, 0.1);
 }
+
 .theme-dark .theme-toggle {
   background-color: rgba(0, 255, 163, 0.1);
   border: 1px solid rgba(0, 255, 163, 0.2);
 }
+
 .toggle-thumb {
   width: 16px;
   height: 16px;
@@ -653,11 +657,13 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #fbbf24;
 }
+
 .toggle-active {
   transform: translateX(18px);
   background-color: #111827;
   border: 1px solid var(--brand-accent);
 }
+
 .toggle-icon {
   font-size: 9px;
   user-select: none;
@@ -678,25 +684,44 @@ const onMenuLeave = (el, done) => {
   transition: background-color 0.3s, border-color 0.3s;
   flex-shrink: 0;
 }
+
 .theme-dark .menu-trigger {
   background-color: rgba(24, 24, 27, 0.8);
   border: 1px solid #27272a;
 }
+
 .theme-light .menu-trigger {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
 }
+
 .burger-line {
   height: 1.5px;
   width: 15px;
   transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
-.theme-dark .burger-line { background-color: #ffffff; }
-.theme-light .burger-line { background-color: #0f172a; }
 
-.menu-active .line-top { transform: translateY(5px) rotate(45deg); background-color: var(--brand-accent) !important; }
-.menu-active .line-mid { opacity: 0; }
-.menu-active .line-bot { transform: translateY(-5px) rotate(-45deg); background-color: var(--brand-accent) !important; }
+.theme-dark .burger-line {
+  background-color: #ffffff;
+}
+
+.theme-light .burger-line {
+  background-color: #0f172a;
+}
+
+.menu-active .line-top {
+  transform: translateY(5px) rotate(45deg);
+  background-color: var(--brand-accent) !important;
+}
+
+.menu-active .line-mid {
+  opacity: 0;
+}
+
+.menu-active .line-bot {
+  transform: translateY(-5px) rotate(-45deg);
+  background-color: var(--brand-accent) !important;
+}
 
 /* ----------------------------------------- */
 /* 4. NAVIGATION OVERLAY                     */
@@ -717,7 +742,11 @@ const onMenuLeave = (el, done) => {
   padding-top: max(clamp(24px, 5vh, 48px), env(safe-area-inset-top));
   padding-bottom: max(clamp(24px, 5vh, 48px), env(safe-area-inset-bottom));
 }
-.theme-dark .nav-overlay { background-color: rgba(11, 12, 16, 0.96); }
+
+.theme-dark .nav-overlay {
+  background-color: rgba(11, 12, 16, 0.96);
+}
+
 .theme-light .nav-overlay {
   background-color: #ffffff;
   backdrop-filter: none;
@@ -737,9 +766,11 @@ const onMenuLeave = (el, done) => {
   display: flex;
   align-items: center;
 }
+
 .overlay-btn-item {
   margin-top: clamp(4px, 1vh, 12px);
 }
+
 .menu-index {
   font-family: monospace;
   font-size: clamp(12px, 1.5vw, 14px);
@@ -750,6 +781,7 @@ const onMenuLeave = (el, done) => {
   opacity: 0.7;
   flex-shrink: 0;
 }
+
 .menu-link {
   font-size: clamp(1.1rem, 3vw, 2.2rem);
   font-weight: 900;
@@ -760,9 +792,18 @@ const onMenuLeave = (el, done) => {
   line-height: 1.1;
   word-break: break-word;
 }
-.theme-dark .menu-link { color: #ffffff; }
-.theme-light .menu-link { color: #0f172a; }
-.menu-link:hover { color: var(--brand-accent); }
+
+.theme-dark .menu-link {
+  color: #ffffff;
+}
+
+.theme-light .menu-link {
+  color: #0f172a;
+}
+
+.menu-link:hover {
+  color: var(--brand-accent);
+}
 
 .consult-btn-overlay {
   text-decoration: none;
@@ -779,10 +820,12 @@ const onMenuLeave = (el, done) => {
   will-change: transform;
   white-space: nowrap;
 }
+
 .consult-btn-overlay:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 163, 0.4);
 }
+
 .theme-light .consult-btn-overlay:hover {
   box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
@@ -796,9 +839,18 @@ const onMenuLeave = (el, done) => {
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
-  .menu-link { font-size: clamp(1.2rem, 4.5vw, 2rem); }
-  .nav-links-container { gap: clamp(4px, 1.2vh, 10px); }
-  .menu-index { font-size: 11px; }
+  .menu-link {
+    font-size: clamp(1.2rem, 4.5vw, 2rem);
+  }
+
+  .nav-links-container {
+    gap: clamp(4px, 1.2vh, 10px);
+  }
+
+  .menu-index {
+    font-size: 11px;
+  }
+
   .consult-btn-overlay {
     font-size: clamp(0.9rem, 2.5vw, 1.2rem);
     padding: 6px clamp(14px, 2.5vw, 24px);
@@ -821,6 +873,7 @@ const onMenuLeave = (el, done) => {
   z-index: 10;
   width: 100%;
 }
+
 .page-scroll-container {
   overflow-y: visible;
   padding: clamp(96px, 15vh, 150px) clamp(16px, 4vw, 40px) clamp(56px, 8vh, 100px);
@@ -839,8 +892,16 @@ const onMenuLeave = (el, done) => {
   top: 10%;
   z-index: -1;
 }
-.theme-dark .ambient-glow { background-color: var(--brand-accent); }
-.theme-light .ambient-glow { background-color: #fdba74; mix-blend-mode: multiply; opacity: 0.25; }
+
+.theme-dark .ambient-glow {
+  background-color: var(--brand-accent);
+}
+
+.theme-light .ambient-glow {
+  background-color: #fdba74;
+  mix-blend-mode: multiply;
+  opacity: 0.25;
+}
 
 /* ----------------------------------------- */
 /* CONTACT SECTION                           */
@@ -880,6 +941,7 @@ const onMenuLeave = (el, done) => {
   transform: translateY(-1px);
   box-shadow: 0 4px 16px rgba(0, 255, 163, 0.3);
 }
+
 .theme-light .go-back-btn:hover {
   box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);
 }
@@ -887,6 +949,7 @@ const onMenuLeave = (el, done) => {
 .go-back-arrow {
   transition: transform 0.2s ease;
 }
+
 .go-back-btn:hover .go-back-arrow {
   transform: translateX(-3px);
 }
@@ -906,8 +969,14 @@ const onMenuLeave = (el, done) => {
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
-.theme-dark .contact-title { color: #ffffff; }
-.theme-light .contact-title { color: #0f172a; }
+
+.theme-dark .contact-title {
+  color: #ffffff;
+}
+
+.theme-light .contact-title {
+  color: #0f172a;
+}
 
 .accent {
   color: var(--brand-accent);
@@ -934,24 +1003,28 @@ const onMenuLeave = (el, done) => {
   flex-direction: column;
   gap: 1.25rem;
   transition: border-color 0.5s cubic-bezier(0.23, 1, 0.32, 1),
-              box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
+
 .theme-light .contact-form {
   background: #ffffff;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border: 1px solid rgba(15, 23, 42, 0.1);
 }
+
 @media (min-width: 640px) {
   .contact-form {
     padding: 2.5rem;
     gap: 1.5rem;
   }
 }
+
 .contact-form:hover {
   border-color: var(--brand-accent);
   box-shadow: 0 0 30px rgba(0, 255, 163, 0.15);
 }
+
 .theme-light .contact-form:hover {
   box-shadow: 0 0 30px rgba(249, 115, 22, 0.15);
 }
@@ -961,6 +1034,7 @@ const onMenuLeave = (el, done) => {
   grid-template-columns: 1fr;
   gap: 1.25rem;
 }
+
 @media (min-width: 640px) {
   .form-row {
     grid-template-columns: 1fr 1fr;
@@ -986,18 +1060,29 @@ const onMenuLeave = (el, done) => {
   transition: border-color 0.3s, color 0.3s, background-color 0.3s;
   box-sizing: border-box;
 }
-.theme-dark .form-input { color: #ffffff; }
+
+.theme-dark .form-input {
+  color: #ffffff;
+}
+
 .theme-light .form-input {
   background: rgba(15, 23, 42, 0.05);
   border: 1px solid rgba(15, 23, 42, 0.1);
   color: #0f172a;
 }
-.form-input::placeholder { color: #6b7280; }
-.form-input:focus { border-color: var(--brand-accent); }
+
+.form-input::placeholder {
+  color: #6b7280;
+}
+
+.form-input:focus {
+  border-color: var(--brand-accent);
+}
 
 .form-input.input-validation-failed {
   border-color: #ef4444 !important;
 }
+
 .validation-message {
   color: #ef4444;
   font-size: 0.75rem;
@@ -1011,21 +1096,37 @@ const onMenuLeave = (el, done) => {
   min-height: 130px;
 }
 
+/* SECURITY: honeypot — visually and functionally hidden from real users,
+   positioned off-screen rather than display:none so basic bots that skip
+   display:none fields still get caught. Purely additive, touches nothing
+   else in the layout. */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .api-status-banner {
   padding: 0.75rem 1rem;
   border-radius: 6px;
   font-size: 0.85rem;
   text-align: center;
 }
+
 .api-status-banner.success {
   background: rgba(0, 255, 163, 0.1);
   color: var(--brand-accent);
   border: 1px solid rgba(0, 255, 163, 0.2);
 }
+
 .theme-light .api-status-banner.success {
   background: rgba(249, 115, 22, 0.1);
   border: 1px solid rgba(249, 115, 22, 0.2);
 }
+
 .api-status-banner.error {
   background: rgba(239, 68, 68, 0.1);
   color: #ef4444;
@@ -1048,23 +1149,31 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2;
   box-shadow: 0 4px 20px rgba(0, 255, 163, 0.2);
 }
+
 .theme-light .submit-btn {
   box-shadow: 0 4px 20px rgba(249, 115, 22, 0.2);
 }
+
 .submit-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 @media (min-width: 640px) {
-  .submit-btn { padding: 1.25rem; }
+  .submit-btn {
+    padding: 1.25rem;
+  }
 }
+
 .submit-btn:not(:disabled):hover {
   transform: scale(1.02);
   box-shadow: 0 6px 24px rgba(0, 255, 163, 0.3);
 }
+
 .theme-light .submit-btn:not(:disabled):hover {
   box-shadow: 0 6px 24px rgba(249, 115, 22, 0.3);
 }
+
 .submit-btn:not(:disabled):active {
   transform: scale(0.99);
 }
@@ -1090,11 +1199,13 @@ const onMenuLeave = (el, done) => {
   border-top: 1px solid transparent;
   transition: color var(--transition-speed);
 }
+
 .theme-dark .copyright-section {
   color: rgba(255, 255, 255, 0.4);
   background-color: rgba(9, 9, 11, 0.6);
   border-top-color: rgba(255, 255, 255, 0.03);
 }
+
 .theme-light .copyright-section {
   color: rgba(15, 23, 42, 0.5);
   background-color: #ffffff;
@@ -1113,12 +1224,15 @@ const onMenuLeave = (el, done) => {
   .navbar {
     padding: 0.75rem 1.8rem;
   }
+
   .logo {
     font-size: 1.3rem;
   }
+
   .nav-actions {
     gap: 16px;
   }
+
   .contact-section {
     max-width: 1100px;
   }
@@ -1129,16 +1243,20 @@ const onMenuLeave = (el, done) => {
   .navbar {
     padding: 0.85rem 2.2rem;
   }
+
   .logo {
     font-size: 1.45rem;
   }
+
   .nav-actions {
     gap: 22px;
   }
+
   .consult-btn {
     font-size: 14px;
     padding: 11px 20px;
   }
+
   .page-scroll-container {
     padding-left: clamp(24px, 5vw, 80px);
     padding-right: clamp(24px, 5vw, 80px);
@@ -1149,45 +1267,57 @@ const onMenuLeave = (el, done) => {
   .navbar {
     padding: 1rem 2.6rem;
   }
+
   .logo {
     font-size: 1.6rem;
   }
+
   .nav-actions {
     gap: 26px;
   }
+
   .consult-btn {
     font-size: 15px;
     padding: 12px 24px;
   }
+
   .theme-toggle {
     width: 44px;
     height: 24px;
   }
+
   .toggle-thumb {
     width: 18px;
     height: 18px;
   }
+
   .toggle-active {
     transform: translateX(20px);
   }
+
   .menu-trigger {
     width: 38px;
     height: 38px;
   }
+
   .contact-section {
     max-width: 1300px;
   }
+
   .contact-title {
     font-size: clamp(2.4rem, 3vw, 3.4rem);
   }
+
   .contact-form {
     max-width: 46rem;
     padding: 3rem;
   }
+
   .form-input {
     padding: 1rem 1.15rem;
     font-size: 0.95rem;
   }
+
   .submit-btn {
     padding: 1.35rem;
   }
@@ -1198,41 +1328,52 @@ const onMenuLeave = (el, done) => {
   .navbar {
     padding: 1.1rem 3.2rem;
   }
+
   .logo {
     font-size: 1.8rem;
   }
+
   .nav-actions {
     gap: 30px;
   }
+
   .consult-btn {
     font-size: 16px;
     padding: 13px 26px;
   }
+
   .page-scroll-container {
     padding-left: clamp(60px, 7vw, 160px);
     padding-right: clamp(60px, 7vw, 160px);
   }
+
   .contact-section {
     max-width: 1500px;
   }
+
   .contact-title {
     font-size: clamp(2.8rem, 2.6vw, 4rem);
   }
+
   .contact-subtitle {
     font-size: 1.1rem;
   }
+
   .contact-form {
     max-width: 52rem;
     padding: 3.5rem;
   }
+
   .form-input {
     padding: 1.1rem 1.25rem;
     font-size: 1rem;
   }
+
   .pill-btn {
     padding: 1rem 1.15rem;
     font-size: 0.95rem;
   }
+
   .submit-btn {
     padding: 1.5rem;
     font-size: 1rem;
@@ -1244,19 +1385,24 @@ const onMenuLeave = (el, done) => {
   .navbar {
     padding: 0.7rem 1.6rem;
   }
+
   .logo {
     font-size: 1.25rem;
   }
+
   .nav-actions {
     gap: 14px;
   }
+
   .consult-btn {
     font-size: 12.5px;
     padding: 9px 16px;
   }
+
   .page-scroll-container {
     padding: clamp(84px, 13vh, 112px) clamp(24px, 5vw, 48px) clamp(48px, 7vh, 72px);
   }
+
   .contact-title {
     font-size: clamp(1.9rem, 4.6vw, 2.6rem);
   }
@@ -1267,19 +1413,24 @@ const onMenuLeave = (el, done) => {
   .navbar {
     padding: 0.6rem 1.1rem;
   }
+
   .logo {
     font-size: 1.15rem;
   }
+
   .nav-actions {
     gap: clamp(8px, 2vw, 14px);
   }
+
   .consult-btn {
     font-size: 12px;
     padding: 8px 14px;
   }
+
   .page-scroll-container {
     padding: clamp(78px, 14vh, 100px) clamp(16px, 5vw, 32px) clamp(40px, 6vh, 56px);
   }
+
   .contact-title {
     font-size: clamp(1.7rem, 6vw, 2.3rem);
   }
@@ -1290,49 +1441,62 @@ const onMenuLeave = (el, done) => {
   .navbar {
     padding: 0.55rem 0.85rem;
   }
+
   .logo {
     font-size: 1.05rem;
   }
+
   .nav-actions {
     gap: 8px;
   }
+
   .consult-btn {
     display: none;
   }
+
   .theme-toggle {
     width: 34px;
     height: 18px;
     padding: 2px;
   }
+
   .toggle-thumb {
     width: 13px;
     height: 13px;
   }
+
   .toggle-active {
     transform: translateX(15px);
   }
+
   .menu-trigger {
     width: 30px;
     height: 30px;
     gap: 3px;
   }
+
   .page-scroll-container {
     padding: clamp(74px, 14vh, 92px) 16px clamp(36px, 5vh, 56px);
   }
+
   .contact-title {
     font-size: clamp(1.5rem, 8vw, 1.9rem);
   }
+
   .contact-subtitle {
     font-size: 0.85rem;
   }
+
   .contact-form {
     padding: 1.1rem;
     border-radius: 16px;
   }
+
   .pill-btn {
     font-size: 0.8rem;
     padding: 0.75rem 0.85rem;
   }
+
   .form-input {
     font-size: 0.85rem;
   }
@@ -1342,13 +1506,16 @@ const onMenuLeave = (el, done) => {
   .navbar {
     padding: 0.5rem 0.7rem;
   }
+
   .logo {
     font-size: 1rem;
   }
+
   .page-scroll-container {
     padding-left: 14px;
     padding-right: 14px;
   }
+
   .contact-title {
     font-size: clamp(1.3rem, 8.5vw, 1.7rem);
   }

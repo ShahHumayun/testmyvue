@@ -42,8 +42,8 @@
 
           <div class="menu-item-wrap overlay-btn-item">
             <span class="menu-index">0{{ menuItems.length + 1 }}</span>
-            <router-link to="/" @click="toggleMenu" class="consult-btn-overlay">
-              Home
+            <router-link to="/consultation" @click="toggleMenu" class="consult-btn-overlay">
+              Consultation
             </router-link>
           </div>
         </nav>
@@ -142,9 +142,9 @@
 </template>
 
 <script setup>
-import WebDevelopmentPortfolioSection from '../components/webdevelopmentportfoliosection.vue'
-import AppDevelopmentProjectSection from '../components/AppDevelopmentProjectSection.vue'
-import EcommerceprojectsSection from '../components/EcommerceprojectsSection.vue'
+import webdevelopmentportfoliosection from '../components/WebSolutionPageComponents/webdevelopmentportfoliosection.vue'
+import AppDevelopmentProjectSection from '../components/AppSolutionPageComponents/AppDevelopmentProjectSection.vue'
+import EcommerceprojectsSection from '../components/EcommerceSolutionPageComponents/EcommerceprojectsSection.vue'
 import ChatBot from '../components/ChatBot.vue'
 import Footer from '../components/footer.vue'
 

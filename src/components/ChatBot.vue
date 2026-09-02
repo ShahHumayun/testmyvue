@@ -53,7 +53,8 @@
 
         <div v-else-if="stepType === 'text_input'" class="input-row">
           <input v-model="inputValue" :type="chatTree[currentStep]?.inputField === 'email' ? 'email' : 'text'"
-            :placeholder="chatTree[currentStep]?.placeholder" class="chat-input" @keydown.enter="handleInput" />
+            :placeholder="chatTree[currentStep]?.placeholder" :maxlength="chatTree[currentStep]?.maxLength || 300"
+            class="chat-input" @keydown.enter="handleInput" />
           <button class="send-btn" @click="handleInput" aria-label="Send">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
               stroke="currentColor" width="18" height="18">
@@ -164,7 +165,9 @@ const faqFollowUpOptions = [
   { text: '📝 Get a Quote', value: 'start' },
 ]
 
-// ── Lead-capture chat tree (unchanged) ───────────────────
+// ── Lead-capture chat tree (flow/copy unchanged; maxLength is the only
+// new property added per text_input step — used purely as an input cap,
+// does not alter placeholders, messages, or step order) ──
 const chatTree = {
   start: {
     sender: 'bot',
@@ -229,6 +232,7 @@ const chatTree = {
     inputField: 'description',
     placeholder: 'e.g. An app that helps restaurants manage reservations…',
     nextStep: 'ask_name',
+    maxLength: 600,
   },
   ask_name: {
     sender: 'bot',
@@ -237,6 +241,7 @@ const chatTree = {
     inputField: 'name',
     placeholder: 'Your full name',
     nextStep: 'ask_email',
+    maxLength: 100,
   },
   ask_email: {
     sender: 'bot',
@@ -245,6 +250,7 @@ const chatTree = {
     inputField: 'email',
     placeholder: 'name@company.com',
     nextStep: 'submit_lead',
+    maxLength: 150,
   },
 }
 
@@ -252,6 +258,16 @@ const currentStep = ref('start')
 const isTyping = ref(false)
 const inputValue = ref('')
 const chatEl = ref(null)
+
+// SECURITY: guards duplicate/overlapping submissions of the same lead
+// (e.g. rapid double-click on send, or a script calling sendEmail() twice)
+const isSubmittingLead = ref(false)
+
+// SECURITY: minimum gap enforced between two completed lead submissions
+// from this browser, to slow down abuse of the EmailJS send quota.
+// Persisted in localStorage so it survives a page refresh mid-abuse.
+const LEAD_COOLDOWN_MS = 30000
+const LEAD_COOLDOWN_STORAGE_KEY = 'webhive-chat-last-submit'
 
 const lead = reactive({
   service: '', platform: '', budget: '',
@@ -317,6 +333,10 @@ const showFaqAnswer = (refValue) => {
 }
 
 const handleOption = (option) => {
+  // SECURITY: ignore clicks while a bot reply is already in-flight —
+  // prevents rapid-fire clicking (or a script) from racing the flow
+  if (isTyping.value) return
+
   messages.value.push({ id: Date.now(), sender: 'user', text: option.text, time: now() })
   activeOptions.value = []
 
@@ -347,10 +367,47 @@ const handleOption = (option) => {
   advance(option.nextStep)
 }
 
+// SECURITY: shows a bot-style inline correction message without advancing
+// the step or consuming the field — used for length/email validation below.
+const showInlineCorrection = (userText, botText) => {
+  messages.value.push({ id: Date.now(), sender: 'user', text: userText, time: now() })
+  inputValue.value = ''
+  isTyping.value = true
+  scroll()
+  setTimeout(() => {
+    isTyping.value = false
+    messages.value.push({ id: Date.now(), sender: 'bot', text: botText, time: now() })
+    scroll()
+  }, 600)
+}
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 const handleInput = () => {
+  // SECURITY: ignore submits while a bot reply is already in-flight
+  if (isTyping.value) return
+
   const val = inputValue.value.trim()
   if (!val) return
+
   const step = chatTree[currentStep.value]
+
+  // SECURITY: enforce the per-step length cap server-side-equivalent (the
+  // maxlength attribute already stops typing past this, but this also
+  // catches pasted text) before it's accepted into the lead record
+  const maxLen = step.maxLength || 300
+  if (val.length > maxLen) {
+    showInlineCorrection(val, `That's a bit long — could you keep it under ${maxLen} characters?`)
+    return
+  }
+
+  // SECURITY: basic email format check before it's accepted and emailed
+  // to the team — previously any string was accepted as the email field
+  if (step.inputField === 'email' && !EMAIL_PATTERN.test(val)) {
+    showInlineCorrection(val, "That doesn't look like a valid email — mind double-checking it?")
+    return
+  }
+
   lead[step.inputField] = val
   messages.value.push({ id: Date.now(), sender: 'user', text: val, time: now() })
   inputValue.value = ''
@@ -374,6 +431,25 @@ const advance = (key) => {
 }
 
 const sendEmail = async () => {
+  // SECURITY: block duplicate/overlapping submissions of the same lead
+  if (isSubmittingLead.value) return
+
+  // SECURITY: per-browser cooldown between completed submissions, to
+  // limit EmailJS quota abuse from repeated flow restarts
+  const lastSubmitAt = Number(localStorage.getItem(LEAD_COOLDOWN_STORAGE_KEY) || 0)
+  const nowMs = Date.now()
+  if (nowMs - lastSubmitAt < LEAD_COOLDOWN_MS) {
+    isTyping.value = true
+    scroll()
+    setTimeout(() => {
+      isTyping.value = false
+      messages.value.push({ id: Date.now(), sender: 'bot', text: 'Please wait a few seconds before sending another request.', time: now() })
+      scroll()
+    }, 400)
+    return
+  }
+
+  isSubmittingLead.value = true
   isTyping.value = true
   scroll()
   try {
@@ -394,6 +470,7 @@ const sendEmail = async () => {
     )
     isTyping.value = false
     if (res.status === 200) {
+      localStorage.setItem(LEAD_COOLDOWN_STORAGE_KEY, String(nowMs))
       messages.value.push({ id: Date.now(), sender: 'bot', text: `✅ All done, ${lead.name}! Your details have been sent to our team. We'll get back to you within 24 hours.`, time: now() })
       currentStep.value = 'completed'
     }
@@ -402,6 +479,7 @@ const sendEmail = async () => {
     isTyping.value = false
     messages.value.push({ id: Date.now(), sender: 'bot', text: '⚠️ Something went wrong. Please try again or email us directly.', time: now() })
   } finally {
+    isSubmittingLead.value = false
     scroll()
   }
 }

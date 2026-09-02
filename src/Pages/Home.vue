@@ -158,8 +158,8 @@ import { ref, reactive, onMounted, onUnmounted, provide } from 'vue'
 import gsap from 'gsap'
 import TrustSection from '../components/HomeComponents/TrustSection.vue'
 import CompaniesTrustSection from '../components/HomeComponents/CompaniesTrustSection.vue'
-import HomeComponent1 from '../components/HomeComponent1.vue'
-import WhyWebhive from '../components/WhyWebhive.vue'
+import HomeComponent1 from '../components/HomeComponents/HomeComponent1.vue'
+import WhyWebhive from '../components/HomeComponents/WhyWebhive.vue'
 import HowWeWork from '../components/HomeComponents/HowWeWork.vue'
 import TechnologySection from '../components/HomeComponents/TechnologySection.vue'
 import ProofOfWork from '../components/HomeComponents/ProofOfWork.vue'
@@ -1343,9 +1343,11 @@ const onMenuLeave = (el, done) => {
     margin-top: clamp(18px, 2.2vh, 32px);
   }
 
-  /* CHANGED: bumped up slightly + heavier letter-spacing for more presence */
+  /* CHANGED: increased further per request — centered, with word-wrap
+     kept plain (no justify) so a wrapped line never gets stretched
+     word-spacing or a leading gap before the first word */
   .main-title {
-    font-size: clamp(2.4rem, 3.3vw, 3.05rem);
+    font-size: clamp(2.85rem, 3.9vw, 3.7rem);
     font-weight: 900;
     letter-spacing: -0.015em;
   }
@@ -1384,9 +1386,9 @@ const onMenuLeave = (el, done) => {
     margin-top: clamp(22px, 2.6vh, 36px);
   }
 
-  /* CHANGED: increased size and weight/tightness for more impact on larger screens */
+  /* CHANGED: increased further, still centered */
   .main-title {
-    font-size: clamp(2.9rem, 3.2vw, 3.7rem);
+    font-size: clamp(3.5rem, 3.8vw, 4.45rem);
     font-weight: 900;
     letter-spacing: -0.015em;
   }
@@ -1445,9 +1447,9 @@ const onMenuLeave = (el, done) => {
     margin-top: clamp(20px, 2.6vh, 40px);
   }
 
-  /* CHANGED: pushed further up for large-laptop / desktop-monitor tier */
+  /* CHANGED: pushed further up again for large-laptop / desktop-monitor tier */
   .main-title {
-    font-size: clamp(3.3rem, 3.5vw, 4.35rem);
+    font-size: clamp(3.95rem, 4.1vw, 5.2rem);
     font-weight: 900;
     letter-spacing: -0.02em;
   }
@@ -1494,7 +1496,7 @@ const onMenuLeave = (el, done) => {
 
   /* CHANGED: biggest, heaviest tier — sized for TV / 4K viewing distance */
   .main-title {
-    font-size: clamp(4rem, 3.1vw, 5.6rem);
+    font-size: clamp(4.7rem, 3.7vw, 6.6rem);
     font-weight: 900;
     letter-spacing: -0.02em;
     margin-bottom: 36px;
