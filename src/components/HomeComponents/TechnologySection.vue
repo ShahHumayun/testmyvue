@@ -284,7 +284,7 @@ const techStack = [
    ========================================================================== */
 @media (min-width: 1536px) {
     .tech-grid {
-        
+
         gap: 26px;
     }
 
@@ -318,7 +318,7 @@ const techStack = [
    ========================================================================== */
 @media (min-width: 1920px) {
     .tech-grid {
-        
+
         gap: 30px;
     }
 
@@ -354,6 +354,9 @@ const techStack = [
    Real 4K displays (or 27"+ high-res laptop panels) render content
    physically small at 1920px-tier sizing. This tier keeps the grid, type,
    and card sizing growing proportionally instead of looking undersized.
+
+   NOTE: text sizes bumped up further here so heading, paragraph, and tech
+   name labels read clearly big on 4K/large-TV displays.
    ========================================================================== */
 @media (min-width: 2560px) {
     .max-w-7xl {
@@ -365,15 +368,15 @@ const techStack = [
     }
 
     .tech-eyebrow {
-        font-size: 1.1rem;
+        font-size: 1.4rem;
     }
 
     .tech-heading {
-        font-size: 4rem;
+        font-size: 5rem;
     }
 
     .tech-paragraph {
-        font-size: 1.4rem;
+        font-size: 1.75rem;
         max-width: 760px;
     }
 
@@ -387,7 +390,7 @@ const techStack = [
     }
 
     .tech-name {
-        font-size: 1.28rem;
+        font-size: 1.6rem;
     }
 }
 

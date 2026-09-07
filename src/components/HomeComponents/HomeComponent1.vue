@@ -794,4 +794,75 @@ const handleServiceClick = (service) => {
     padding: 22px 0;
   }
 }
+
+/* ----------------------------------------- */
+/* 16. 4K / EXTRA-EXTRA-LARGE MONITORS (2560px+) */
+/* Widens the whole component's max-width so it doesn't look like it's   */
+/* floating in a sea of empty space on true 4K panels, and scales all    */
+/* text/icon sizes up proportionally so nothing looks undersized.        */
+/* ----------------------------------------- */
+@media (min-width: 2560px) {
+  .services-content-main {
+    max-width: 2000px;
+  }
+
+  .ai-vision-block {
+    max-width: 1100px;
+  }
+
+  .ai-vision-heading {
+    font-size: 5.6rem;
+  }
+
+  .ai-vision-paragraph {
+    font-size: 26px;
+    line-height: 1.75;
+  }
+
+  .services-interactive-section {
+    height: clamp(720px, 58vh, 960px);
+    gap: 170px;
+  }
+
+  .services-left-side-text {
+    max-width: 640px;
+    min-width: 400px;
+  }
+
+  .card-text-header {
+    gap: 40px;
+  }
+
+  .service-title-h3 {
+    font-size: 2.7rem;
+    gap: 16px;
+  }
+
+  .dropdown-chevron-indicator {
+    font-size: 1.5rem;
+    padding-left: 20px;
+  }
+
+  .service-description-preview {
+    font-size: 21px;
+    line-height: 1.6;
+  }
+
+  .active-card .service-description-preview {
+    max-height: 110px;
+  }
+
+  .card-icon-frame svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .service-accordion-card {
+    padding: 28px 0;
+  }
+
+  .desktop-frame-canvas {
+    border-radius: 28px;
+  }
+}
 </style>

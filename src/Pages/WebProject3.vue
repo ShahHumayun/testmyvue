@@ -276,7 +276,7 @@ const heroBullets = [
 ]
 
 const getWebProject1Image = (fileName) => {
-    return new URL(`../assets/WebProject1/${fileName}`, import.meta.url).href
+    return new URL(`../assets/WebProject3/${fileName}`, import.meta.url).href
 }
 
 const webProject1Slides = ref([

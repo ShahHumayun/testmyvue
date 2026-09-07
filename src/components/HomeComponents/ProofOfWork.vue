@@ -172,6 +172,9 @@ const projects = [
     letter-spacing: -0.02em;
     line-height: 1.15;
     margin-bottom: 14px;
+    /* Keep the heading on one line at every screen size instead of wrapping
+       when it runs out of the .tech-header's 720px width. */
+    white-space: nowrap;
 }
 
 .tech-paragraph {
@@ -189,6 +192,11 @@ const projects = [
 }
 
 .blog-header {
+    /* The heading now controls its own line width via white-space: nowrap,
+       so the header block should size to its content rather than being
+       capped at 720px (which is what caused the wrap). */
+    max-width: none;
+    width: 100%;
     margin-bottom: 0;
 }
 
@@ -550,16 +558,16 @@ const projects = [
     }
 
     .tech-heading {
-        font-size: 4rem;
+        font-size: 5rem;
     }
 
     .tech-paragraph {
-        font-size: 1.4rem;
+        font-size: 1.75rem;
         max-width: 760px;
     }
 
     .tech-eyebrow {
-        font-size: 1.1rem;
+        font-size: 1.4rem;
     }
 
     .work-scroll-track {
@@ -571,11 +579,11 @@ const projects = [
     }
 
     .blog-title {
-        font-size: 1.3rem;
+        font-size: 1.7rem;
     }
 
     .blog-excerpt {
-        font-size: 1.02rem;
+        font-size: 1.3rem;
     }
 
     .blog-content {
@@ -583,7 +591,7 @@ const projects = [
     }
 
     .blog-tag {
-        font-size: 0.75rem;
+        font-size: 0.95rem;
         padding: 6px 12px;
     }
 }

@@ -224,6 +224,9 @@ const companies = [
    physically small at 1920px-tier sizing. This tier keeps the container,
    heading, paragraph, and badges growing proportionally instead of
    looking undersized.
+
+   NOTE: font sizes bumped up further here so text reads clearly big on
+   4K/large-TV displays instead of just "slightly bigger than 1920px".
    ========================================================================== */
 @media (min-width: 2560px) {
     .max-w-5xl {
@@ -235,21 +238,21 @@ const companies = [
     }
 
     .section-heading {
-        font-size: 2.9rem;
+        font-size: 4.6rem;
     }
 
     .section-paragraph {
-        font-size: 1.35rem;
+        font-size: 2rem;
     }
 
     .company-badge {
-        font-size: 20px;
-        gap: 13px;
+        font-size: 32px;
+        gap: 20px;
     }
 
     .company-badge svg {
-        width: 26px;
-        height: 26px;
+        width: 40px;
+        height: 40px;
     }
 }
 

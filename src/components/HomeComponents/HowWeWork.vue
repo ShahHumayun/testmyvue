@@ -314,6 +314,9 @@ const processSteps = [
    physical pixel real estate at the same viewing distance. This tier keeps
    the grid, type, and spacing growing proportionally instead of leaving
    everything looking undersized and lost in a sea of empty margin.
+
+   NOTE: text sizes bumped up further here so headings, titles, and body
+   copy read clearly big on 4K/large-TV displays.
    ========================================================================== */
 @media (min-width: 2560px) {
     .max-w-7xl {
@@ -325,24 +328,24 @@ const processSteps = [
     }
 
     .tech-eyebrow {
-        font-size: 1.1rem;
+        font-size: 1.4rem;
     }
 
     .tech-heading {
-        font-size: 4rem;
+        font-size: 5rem;
     }
 
     .tech-paragraph {
-        font-size: 1.4rem;
+        font-size: 1.75rem;
         max-width: 760px;
     }
 
     .step-title {
-        font-size: 1.5rem;
+        font-size: 1.9rem;
     }
 
     .step-description {
-        font-size: 1.15rem;
+        font-size: 1.4rem;
     }
 
     .tech-card {
