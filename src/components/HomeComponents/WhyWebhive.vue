@@ -540,6 +540,9 @@ const pillars = ref([
    Real 4K displays (or 27"+ high-res laptop panels) render content
    physically small at 1920px-tier sizing. This tier keeps the container,
    cards, and icons growing proportionally instead of looking undersized.
+
+   NOTE: text sizes bumped up further here so headings, titles, and
+   descriptions read clearly big on 4K/large-TV displays.
    ========================================================================== */
 @media (min-width: 2560px) {
   .section-container {
@@ -551,8 +554,12 @@ const pillars = ref([
     gap: 46px;
   }
 
+  .mini-title {
+    font-size: 14px;
+  }
+
   .section-heading {
-    font-size: 4.4rem;
+    font-size: 5.4rem;
   }
 
   .value-card {
@@ -574,11 +581,11 @@ const pillars = ref([
   }
 
   .card-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .card-desc {
-    font-size: 17.5px;
+    font-size: 21px;
   }
 }
 

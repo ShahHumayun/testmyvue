@@ -240,7 +240,10 @@ onUnmounted(() => {
 /* 4K / Extra-Extra-Large Monitors: 2560px and up — real 4K displays (or
    27"+ high-res laptop panels) render content physically small at
    1920px-tier sizing. This tier keeps the container, padding, and stat
-   numbers growing proportionally instead of looking undersized. */
+   numbers growing proportionally instead of looking undersized.
+
+   NOTE: text sizes bumped up further here so the stat numbers and labels
+   read clearly big on 4K/large-TV displays. */
 @media (min-width: 2560px) {
     section.overflow-hidden {
         padding-top: 9rem;
@@ -252,11 +255,11 @@ onUnmounted(() => {
     }
 
     .stat-number {
-        font-size: 5.25rem;
+        font-size: 6.75rem;
     }
 
     .stat-label {
-        font-size: 1.4rem;
+        font-size: 1.75rem;
     }
 
     .stats-grid {

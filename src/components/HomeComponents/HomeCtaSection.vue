@@ -280,6 +280,9 @@ const isDarkMode = computed(() =>
    Real 4K displays (or 27"+ high-res laptop panels) render content
    physically small at 1920px-tier sizing. This tier keeps the container,
    heading, and buttons growing proportionally instead of looking undersized.
+
+   NOTE: text sizes bumped up further here so heading, paragraph, and button
+   labels read clearly big on 4K/large-TV displays.
    ========================================================================== */
 @media (min-width: 2560px) {
     .max-w-7xl {
@@ -291,12 +294,12 @@ const isDarkMode = computed(() =>
     }
 
     .cta-heading {
-        font-size: 4rem;
+        font-size: 5rem;
         margin-bottom: 24px;
     }
 
     .cta-paragraph {
-        font-size: 1.4rem;
+        font-size: 1.75rem;
         max-width: 680px;
     }
 
@@ -306,7 +309,7 @@ const isDarkMode = computed(() =>
     }
 
     .cta-button {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         padding: 20px 40px;
     }
 }

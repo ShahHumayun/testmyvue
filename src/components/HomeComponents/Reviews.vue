@@ -382,6 +382,9 @@ const reviews = [
    physically small at 1920px-tier sizing. This tier keeps the container,
    cards, and review text growing proportionally instead of looking
    undersized.
+
+   NOTE: text sizes bumped up further here so the heading, paragraph, and
+   review copy read clearly big on 4K/large-TV displays.
    ========================================================================== */
 @media (min-width: 2560px) {
     .max-w-7xl {
@@ -389,11 +392,11 @@ const reviews = [
     }
 
     .services-heading {
-        font-size: 4rem;
+        font-size: 5rem;
     }
 
     .services-paragraph {
-        font-size: 1.4rem;
+        font-size: 1.75rem;
     }
 
     .services-grid {
@@ -405,11 +408,11 @@ const reviews = [
     }
 
     .service-description {
-        font-size: 1.05rem;
+        font-size: 1.35rem;
     }
 
     .review-name {
-        font-size: 1.15rem;
+        font-size: 1.45rem;
     }
 
     .review-stars svg {
