@@ -1412,7 +1412,7 @@ const onMenuLeave = (el, done) => {
   }
 
   .logo {
-    font-size: 1.8rem;
+    font-size: 2.1rem;
   }
 
   .nav-actions {
@@ -1420,7 +1420,7 @@ const onMenuLeave = (el, done) => {
   }
 
   .consult-btn {
-    font-size: 16px;
+    font-size: 19px;
     padding: 13px 26px;
   }
 
@@ -1437,12 +1437,12 @@ const onMenuLeave = (el, done) => {
   }
 
   .hero-title {
-    font-size: clamp(3.2rem, 2.8vw, 4.6rem);
+    font-size: clamp(4rem, 3.2vw, 5.6rem);
   }
 
   .hero-subtitle {
     max-width: 680px;
-    font-size: 1.15rem;
+    font-size: 1.4rem;
   }
 
   .policy-body {
@@ -1451,12 +1451,12 @@ const onMenuLeave = (el, done) => {
   }
 
   .section-title {
-    font-size: clamp(1.5rem, 1.2vw, 1.9rem);
+    font-size: clamp(1.9rem, 1.4vw, 2.4rem);
   }
 
   .section-text,
   .section-list {
-    font-size: 15.5px;
+    font-size: 19px;
   }
 }
 
