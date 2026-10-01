@@ -142,7 +142,7 @@
 </template>
 
 <script setup>
-import webdevelopmentportfoliosection from '../components/WebSolutionPageComponents/webdevelopmentportfoliosection.vue'
+import WebDevelopmentPortfolioSection from '../components/WebSolutionPageComponents/webdevelopmentportfoliosection.vue'
 import AppDevelopmentProjectSection from '../components/AppSolutionPageComponents/AppDevelopmentProjectSection.vue'
 import EcommerceprojectsSection from '../components/EcommerceSolutionPageComponents/EcommerceprojectsSection.vue'
 import ChatBot from '../components/ChatBot.vue'
