@@ -169,7 +169,31 @@
                 </div>
             </section>
 
-            <!-- ================= 3. TECH STACK ================= -->
+            <!-- ================= 3. DESCRIPTION (right after carousel) ================= -->
+            <section class="w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16 2xl:px-24">
+                <div class="max-w-7xl mx-auto space-y-10">
+                    <!-- Section Title -->
+                    <div class="max-w-3xl space-y-4 text-left lg:max-w-none lg:mx-auto lg:text-center">
+                        <h2
+                            class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-extrabold tracking-tight transition-colors duration-500 lg:whitespace-nowrap">
+                            Built for the <br class="lg:hidden" />
+                            <span :style="{ color: 'var(--accent-color)' }" class="transition-colors duration-500">
+                                whole shopping journey
+                            </span>
+                        </h2>
+                        <div :style="{ backgroundColor: 'var(--accent-color)' }"
+                            class="h-1.5 w-24 rounded-full transition-colors duration-500 lg:mx-auto"></div>
+                    </div>
+
+                    <!-- CEO-editable project description paragraphs -->
+                    <div ref="descriptionCopy" :class="isDarkMode ? 'text-neutral-300' : 'text-slate-700'"
+                        class="desc-copy max-w-4xl space-y-6 text-lg sm:text-xl xl:text-2xl leading-relaxed transition-colors duration-500 lg:mx-auto lg:text-center">
+                        <p v-for="(para, idx) in projectDescription" :key="idx">{{ para }}</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= 4. TECH STACK ================= -->
             <section :class="[
                 'py-24 px-6 relative z-20',
                 isDarkMode ? 'bg-black' : 'bg-white'
@@ -206,30 +230,6 @@
                                 {{ tech.name }}
                             </span>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ================= 4. DESCRIPTION ================= -->
-            <section class="w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16 2xl:px-24">
-                <div class="max-w-7xl mx-auto space-y-10">
-                    <!-- Section Title -->
-                    <div class="max-w-3xl space-y-4 text-left lg:max-w-none lg:mx-auto lg:text-center">
-                        <h2
-                            class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-extrabold tracking-tight transition-colors duration-500 lg:whitespace-nowrap">
-                            Built for the <br class="lg:hidden" />
-                            <span :style="{ color: 'var(--accent-color)' }" class="transition-colors duration-500">
-                                whole shopping journey
-                            </span>
-                        </h2>
-                        <div :style="{ backgroundColor: 'var(--accent-color)' }"
-                            class="h-1.5 w-24 rounded-full transition-colors duration-500 lg:mx-auto"></div>
-                    </div>
-
-                    <!-- CEO-editable project description paragraphs -->
-                    <div ref="descriptionCopy" :class="isDarkMode ? 'text-neutral-300' : 'text-slate-700'"
-                        class="desc-copy max-w-4xl space-y-6 text-lg sm:text-xl xl:text-2xl leading-relaxed transition-colors duration-500 lg:mx-auto lg:text-center">
-                        <p v-for="(para, idx) in projectDescription" :key="idx">{{ para }}</p>
                     </div>
                 </div>
             </section>
