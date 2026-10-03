@@ -52,17 +52,19 @@
       <div class="ambient-glow"></div>
 
       <div class="hero-content-block">
-        <span class="section-tag animate-fade-in">Innovative Digital Agency</span>
-        <h1 class="about-title animate-title">
+        <!-- CHANGED: tag + title now slide in from the RIGHT -->
+        <span class="section-tag hero-from-right">Innovative Digital Agency</span>
+        <h1 class="about-title hero-from-right">
           We Design The <br><span class="highlight-text">Digital Future.</span>
         </h1>
 
-        <p class="about-subtitle animate-fade-in">
+        <!-- CHANGED: subtitle + buttons now slide in from the LEFT -->
+        <p class="about-subtitle hero-from-left">
           From concept to deployment, we combine stunning UI/UX design with high-performance engineering to build web
           platforms and mobile applications that grow businesses.
         </p>
 
-        <div class="cta-button-group animate-fade-in">
+        <div class="cta-button-group hero-from-left">
           <button @click="scrollToWork" class="btn-our-work">
             Our Work
           </button>
@@ -279,7 +281,7 @@ const applyGlobalThemeClass = (isDark) => {
   }
 }
 
-// CHANGED: Saved under the unified webhive-theme key and updates root HTML element classes
+// Saved under the unified webhive-theme key and updates root HTML element classes
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
   const activeTheme = isDarkMode.value ? 'dark' : 'light'
@@ -317,7 +319,7 @@ const scrollToWork = () => {
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
 
-  // CHANGED: Check the universal site theme preference. Defaults to dark.
+  // Check the universal site theme preference. Defaults to dark.
   const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
@@ -328,14 +330,16 @@ onMounted(() => {
   // Keep root context token up-to-date instantly on view mount
   applyGlobalThemeClass(isDarkMode.value)
 
-  gsap.fromTo('.animate-title',
-    { y: 50, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.2 }
+  // CHANGED: Hero entrance — tag + title come in from the RIGHT
+  gsap.fromTo('.hero-from-right',
+    { x: 140, opacity: 0 },
+    { x: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power4.out', delay: 0.2 }
   )
 
-  gsap.fromTo('.animate-fade-in',
-    { opacity: 0, y: 25 },
-    { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.4 }
+  // CHANGED: Hero entrance — subtitle + buttons come in from the LEFT
+  gsap.fromTo('.hero-from-left',
+    { x: -140, opacity: 0 },
+    { x: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power4.out', delay: 0.5 }
   )
 
   gsap.from('.services-grid .service-card', {
@@ -429,6 +433,12 @@ const onMenuLeave = (el, done) => {
   height: 0;
 }
 
+/* CHANGED: in the light theme the whole page (html + body) is pure white */
+:global(html.theme-light),
+:global(html.theme-light body) {
+  background-color: #ffffff;
+}
+
 .about-page-wrapper {
   --brand-accent: #00ffa3;
   --transition-speed: 0.5s;
@@ -491,7 +501,7 @@ const onMenuLeave = (el, done) => {
   width: 100%;
   max-width: 100%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.03);
+  background: #000000;
   backdrop-filter: blur(15px) saturate(180%);
   -webkit-backdrop-filter: blur(15px) saturate(180%);
   border: none;
@@ -506,7 +516,7 @@ const onMenuLeave = (el, done) => {
 }
 
 .theme-light .navbar {
-  background: rgba(15, 23, 42, 0.03);
+  background: #ffffff;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
@@ -794,8 +804,13 @@ const onMenuLeave = (el, done) => {
   }
 }
 
+/* CHANGED: hero now fills the full screen on every device.
+   100vh is the fallback; 100svh keeps it exactly one screen tall on mobile
+   browsers even while the address bar is visible. The old per-breakpoint
+   min-height overrides were removed so nothing shrinks it. */
 .about-hero {
-  min-height: clamp(560px, 92vh, 960px);
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -817,9 +832,9 @@ const onMenuLeave = (el, done) => {
   pointer-events: none;
 }
 
+/* CHANGED: orange glow removed from the hero on the light theme */
 .theme-light .ambient-glow {
-  opacity: 0.2;
-  background-color: #fdba74;
+  display: none;
 }
 
 .hero-content-block {
@@ -982,7 +997,7 @@ const onMenuLeave = (el, done) => {
   background-color: rgba(255, 255, 255, 0.01);
   border: 1px solid rgba(255, 255, 255, 0.04);
   box-sizing: border-box;
-  /* CHANGED: increased card height so the services grid reads taller */
+  /* increased card height so the services grid reads taller */
   min-height: clamp(260px, 26vw, 320px);
   display: flex;
   flex-direction: column;
@@ -1022,19 +1037,18 @@ const onMenuLeave = (el, done) => {
   position: relative;
   z-index: 10;
   box-sizing: border-box;
-  /* CHANGED: transition added so the new background swap fades like the rest of the theme */
+  /* transition added so the background swap fades like the rest of the theme */
   transition: background-color var(--transition-speed);
 }
 
-/* CHANGED: Featured Projects section now gets its own alternate shade per
-   theme, same pattern used across the other page sections — a light
-   gray in the light theme, a slightly-lighter-than-black shade in dark. */
+/* Featured Projects section has its own shade per theme.
+   CHANGED: light theme is now pure white (#ffffff) like the rest of the page. */
 .showcase-bg-dark {
   background-color: #1c1c1c;
 }
 
 .showcase-bg-light {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
 }
 
 .showcase-heading {
@@ -1079,7 +1093,7 @@ const onMenuLeave = (el, done) => {
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
   overflow: hidden;
   box-sizing: border-box;
-  /* CHANGED: increased minimum card height for the featured projects grid */
+  /* increased minimum card height for the featured projects grid */
   min-height: clamp(480px, 48vw, 640px);
 }
 
@@ -1096,7 +1110,7 @@ const onMenuLeave = (el, done) => {
 .project-image-wrapper {
   position: relative;
   width: 100%;
-  /* CHANGED: taller image area to match the increased card height above */
+  /* taller image area to match the increased card height above */
   height: clamp(280px, 36vw, 400px);
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.1);
@@ -1609,9 +1623,9 @@ const onMenuLeave = (el, done) => {
 
 /* ==========================================================================
    4K / Extra-Extra-Large Monitors: 2560px and up
-   CHANGED: this tier didn't exist before — the Featured Projects cards were
-   plateauing at their 1921px sizing on very large/high-res displays. This
-   keeps the card, image, and inner padding growing proportionally instead.
+   Featured Projects cards keep growing proportionally on very large displays.
+   CHANGED: hero text/buttons also scale up here so the full-screen hero
+   looks balanced at 4K instead of small and lost in the middle.
    ========================================================================== */
 @media (min-width: 2560px) {
   .project-card {
@@ -1637,6 +1651,45 @@ const onMenuLeave = (el, done) => {
   .tech-pill {
     font-size: 13px;
     padding: 5px 12px;
+  }
+
+  .about-hero {
+    padding: 200px 120px 120px;
+  }
+
+  .hero-content-block {
+    max-width: 1700px;
+  }
+
+  .section-tag {
+    font-size: 18px;
+    margin-bottom: 32px;
+  }
+
+  .about-title {
+    font-size: clamp(6rem, 5.4vw, 10rem);
+    margin-bottom: 44px;
+  }
+
+  .about-subtitle {
+    max-width: 1100px;
+    font-size: 1.75rem;
+    margin-bottom: 64px;
+  }
+
+  .btn-our-work,
+  .btn-start-project {
+    font-size: 18px;
+    padding: 26px 56px;
+  }
+
+  .cta-button-group {
+    gap: 28px;
+  }
+
+  .ambient-glow {
+    width: 900px;
+    height: 900px;
   }
 }
 
@@ -1693,9 +1746,9 @@ const onMenuLeave = (el, done) => {
     padding: 8px 14px;
   }
 
+  /* CHANGED: min-height override removed so the hero stays full-screen */
   .about-hero {
     padding: clamp(78px, 15vh, 104px) clamp(20px, 6vw, 40px) clamp(32px, 6vh, 56px);
-    min-height: clamp(480px, 80svh, 720px);
   }
 
   .hero-content-block {
@@ -1759,8 +1812,8 @@ const onMenuLeave = (el, done) => {
     gap: 3px;
   }
 
+  /* CHANGED: min-height override removed so the hero stays full-screen */
   .about-hero {
-    min-height: clamp(440px, 82svh, 620px);
     padding: clamp(74px, 15vh, 96px) 20px clamp(28px, 5vh, 44px);
   }
 

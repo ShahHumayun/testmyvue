@@ -52,12 +52,14 @@
       <div class="ambient-glow"></div>
 
       <section class="culture-hero">
-        <span class="section-tag animate-fade-in">Life at WebHive</span>
-        <h1 class="culture-title animate-title">
+        <!-- CHANGED: tag + title slide in from the RIGHT -->
+        <span class="section-tag hero-from-right">Life at WebHive</span>
+        <h1 class="culture-title hero-from-right">
           Where Leads Feel Like <br>
           <span class="highlight-text">Friends, Not Bosses.</span>
         </h1>
-        <p class="culture-subtitle animate-fade-in">
+        <!-- CHANGED: subtitle slides in from the LEFT -->
+        <p class="culture-subtitle hero-from-left">
           We believe great products come from happy teams. At WebHive, every developer
           works in an environment built on trust, curiosity, and genuine friendship —
           where ideas are shared freely and growth happens together.
@@ -268,14 +270,16 @@ onMounted(() => {
 
   gsap.set('.showcase-row, .culture-cta', { opacity: 1 })
 
-  gsap.fromTo('.animate-title',
-    { y: 50, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.2 }
+  // CHANGED: Hero entrance — tag + title come in from the RIGHT
+  gsap.fromTo('.hero-from-right',
+    { x: 140, opacity: 0 },
+    { x: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power4.out', delay: 0.2 }
   )
 
-  gsap.fromTo('.animate-fade-in',
-    { opacity: 0, y: 25 },
-    { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.4 }
+  // CHANGED: Hero entrance — subtitle comes in from the LEFT
+  gsap.fromTo('.hero-from-left',
+    { x: -140, opacity: 0 },
+    { x: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power4.out', delay: 0.5 }
   )
 
   gsap.from('.pillars-section .pillar-card', {
@@ -387,6 +391,12 @@ onUnmounted(() => {
   height: 0;
 }
 
+/* CHANGED: in the light theme the whole page (html + body) is pure white */
+:global(html.theme-light),
+:global(html.theme-light body) {
+  background-color: #ffffff;
+}
+
 /* ----------------------------------------- */
 /* CORE WRAPPER & BACKGROUND                 */
 /* ----------------------------------------- */
@@ -457,7 +467,7 @@ onUnmounted(() => {
   width: 100%;
   max-width: 100%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.03);
+  background: #000000;
   backdrop-filter: blur(15px) saturate(180%);
   -webkit-backdrop-filter: blur(15px) saturate(180%);
   border: none;
@@ -472,7 +482,7 @@ onUnmounted(() => {
 }
 
 .theme-light .navbar {
-  background: rgba(15, 23, 42, 0.03);
+  background: #ffffff;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
@@ -762,6 +772,8 @@ onUnmounted(() => {
 /* =========================================================
    MAIN CANVAS — FULL WIDTH MODIFICATION
    ========================================================= */
+/* CHANGED: top padding removed here — the hero below now owns the navbar
+   clearance and fills the full screen height itself. */
 .culture-main {
   flex: 1 1 0;
   position: relative;
@@ -769,7 +781,7 @@ onUnmounted(() => {
   width: 100%;
   max-width: 100% !important;
   box-sizing: border-box;
-  padding: clamp(96px, 15vh, 150px) clamp(16px, 5vw, 60px) clamp(48px, 8vh, 90px);
+  padding: 0 clamp(16px, 5vw, 60px) clamp(48px, 8vh, 90px);
 }
 
 .ambient-glow {
@@ -786,20 +798,29 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
+/* CHANGED: orange glow removed from the hero on the light theme */
 .theme-light .ambient-glow {
-  opacity: 0.15;
-  background-color: #fdba74;
+  display: none;
 }
 
 /* ----------------------------------------- */
 /* HERO INTRO SECTION                        */
 /* ----------------------------------------- */
+/* CHANGED: hero now fills the full screen on every device.
+   100vh is the fallback; 100svh keeps it exactly one screen tall on mobile
+   browsers even while the address bar is visible. Content is centered
+   vertically and the top padding clears the fixed navbar. */
 .culture-hero {
   width: 100%;
   max-width: 100% !important;
-  margin: clamp(20px, 3vh, 40px) 0 clamp(50px, 8vw, 90px);
-  padding: 0 clamp(1rem, 3vw, 4rem);
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0 0 clamp(50px, 8vw, 90px);
+  padding: clamp(96px, 15vh, 150px) clamp(1rem, 3vw, 4rem) clamp(48px, 8vh, 96px);
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
   position: relative;
 }
@@ -922,10 +943,10 @@ onUnmounted(() => {
   max-width: 100% !important;
   box-sizing: border-box;
   padding: 0 clamp(1rem, 3vw, 4rem);
-  /* CHANGED: margin-top for breathing room below the pillars section. A
-     plain margin-top would get collapsed into pillars-section's own
-     margin-bottom (only the larger of the two would apply) — the 1px
-     transparent top border stops that collapse so the margin renders. */
+  /* margin-top for breathing room below the pillars section. A plain
+     margin-top would get collapsed into pillars-section's own
+     margin-bottom — the 1px transparent top border stops that collapse
+     so the margin renders. */
   margin: clamp(20px, 4.5vw, 48px) 0 clamp(56px, 9vw, 110px);
   border-top: 1px solid transparent;
   display: flex;
@@ -941,14 +962,10 @@ onUnmounted(() => {
   width: 100%;
 }
 
-/* CHANGED: row 2 only ("Enthusiastic Developers, Neat Code") gets a
-   full-bleed background matching the same gray/dark-gray shade used
-   elsewhere on the site. The width:100vw + left:50% + negative-margin
-   trick breaks the row out of showcase-rows' horizontal padding so the
-   background covers the entire screen width, while the row's own padding
-   keeps the image and text aligned with the rest of the page content.
-   Built with clamp() so it scales fluidly at every breakpoint without
-   needing separate media-query overrides. */
+/* Row 2 only ("Enthusiastic Developers, Neat Code") gets a full-bleed
+   background. The width:100vw + left:50% + negative-margin trick breaks the
+   row out of showcase-rows' horizontal padding so the background covers the
+   entire screen width. */
 .showcase-row:nth-child(2) {
   position: relative;
   left: 50%;
@@ -963,8 +980,9 @@ onUnmounted(() => {
   transition: background-color var(--transition-speed);
 }
 
+/* CHANGED: light theme is now pure white (#ffffff), was #f2f2f2 */
 .theme-light .showcase-row:nth-child(2) {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
 }
 
 .row-reverse {
@@ -1114,12 +1132,8 @@ onUnmounted(() => {
 /* ----------------------------------------- */
 .culture-cta {
   position: relative;
-  /* CHANGED: full-bleed so this section covers 100% of the screen width
-     at every breakpoint, using the same technique as showcase row 2 above
-     — breaks out of culture-main's horizontal padding via 100vw + a
-     left:50% offset cancelled by negative margins. Rounded corners and a
-     border don't make sense on an edge-to-edge section, so those are
-     removed here in favor of top/bottom borders only. */
+  /* full-bleed so this section covers 100% of the screen width at every
+     breakpoint, using the same technique as showcase row 2 above. */
   left: 50%;
   right: 50%;
   width: 100vw;
@@ -1134,13 +1148,13 @@ onUnmounted(() => {
   border-radius: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  /* CHANGED: same background swap used across the other CTA sections */
   background-color: #1c1c1c;
   overflow: hidden;
 }
 
+/* CHANGED: light theme is now pure white (#ffffff), was #f2f2f2 */
 .theme-light .culture-cta {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   border-color: rgba(15, 23, 42, 0.06);
 }
 
@@ -1158,9 +1172,9 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
+/* CHANGED: the orange glow is removed on the light theme */
 .theme-light .cta-glow {
-  opacity: 0.15;
-  background-color: #fdba74;
+  display: none;
 }
 
 .cta-title {
@@ -1222,8 +1236,7 @@ onUnmounted(() => {
   z-index: 10;
   display: flex;
   justify-content: center;
-  /* CHANGED: now lives inside .culture-cta, right under Start a Project —
-     just needs spacing beneath the button above it, not its own width */
+  /* lives inside .culture-cta, right under Start a Project */
   margin-top: 18px;
 }
 
@@ -1542,6 +1555,38 @@ onUnmounted(() => {
   }
 }
 
+/* ==========================================================================
+   4K / Extra-Extra-Large Monitors: 2560px and up
+   CHANGED: hero stays full-screen and its text keeps scaling so the content
+   looks balanced at 4K instead of small and lost in the middle.
+   ========================================================================== */
+@media (min-width: 2560px) {
+  .culture-main {
+    padding-bottom: clamp(90px, 10vh, 120px);
+  }
+
+  .culture-hero {
+    margin-bottom: clamp(90px, 9vw, 130px);
+    padding: clamp(150px, 17vh, 190px) 120px 120px;
+  }
+
+  .section-tag {
+    font-size: 17px;
+    margin-bottom: 32px;
+  }
+
+  .culture-title {
+    font-size: clamp(4.2rem, 4.6vw, 8.2rem);
+    margin-bottom: 44px;
+  }
+
+  .culture-subtitle {
+    max-width: 1250px;
+    font-size: 1.5rem;
+    line-height: 1.75;
+  }
+}
+
 @media (min-width: 769px) and (max-width: 1024px) {
   .navbar {
     padding: 0.7rem 1.6rem;
@@ -1561,7 +1606,12 @@ onUnmounted(() => {
   }
 
   .culture-main {
-    padding: clamp(84px, 14vh, 116px) clamp(24px, 6vw, 48px) clamp(40px, 7vh, 72px);
+    padding: 0 clamp(24px, 6vw, 48px) clamp(40px, 7vh, 72px);
+  }
+
+  .culture-hero {
+    padding-top: clamp(84px, 14vh, 116px);
+    padding-bottom: clamp(40px, 7vh, 72px);
   }
 
   .culture-title {
@@ -1588,11 +1638,13 @@ onUnmounted(() => {
   }
 
   .culture-main {
-    padding: clamp(78px, 15vh, 104px) clamp(20px, 6vw, 40px) clamp(32px, 6vh, 56px);
+    padding: 0 clamp(20px, 6vw, 40px) clamp(32px, 6vh, 56px);
   }
 
   .culture-hero {
     margin-bottom: 60px;
+    padding-top: clamp(78px, 15vh, 104px);
+    padding-bottom: clamp(32px, 6vh, 56px);
   }
 
   .culture-title {
@@ -1656,11 +1708,13 @@ onUnmounted(() => {
   }
 
   .culture-main {
-    padding: clamp(74px, 15vh, 96px) 16px clamp(28px, 5vh, 44px);
+    padding: 0 16px clamp(28px, 5vh, 44px);
   }
 
   .culture-hero {
     margin-bottom: clamp(40px, 10vw, 60px);
+    padding-top: clamp(74px, 15vh, 96px);
+    padding-bottom: clamp(28px, 5vh, 44px);
   }
 
   .section-tag {

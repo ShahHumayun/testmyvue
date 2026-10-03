@@ -52,17 +52,19 @@
 
     <main class="hero-main">
       <section class="portfolio-hero">
-        <span class="section-tag animate-fade-in">Our Portfolio</span>
-        <h1 class="portfolio-title animate-title">
+        <!-- CHANGED: tag + title slide in from the RIGHT -->
+        <span class="section-tag hero-from-right">Our Portfolio</span>
+        <h1 class="portfolio-title hero-from-right">
           Projects Built <br>
           <span class="highlight-text">to Perform.</span>
         </h1>
-        <p class="portfolio-subtitle animate-fade-in">
+        <!-- CHANGED: subtitle + buttons slide in from the LEFT -->
+        <p class="portfolio-subtitle hero-from-left">
           A curated selection of web platforms, mobile apps, and e-commerce builds — each engineered for speed, scale,
           and measurable results.
         </p>
 
-        <div class="cta-button-group animate-fade-in">
+        <div class="cta-button-group hero-from-left">
           <button @click="scrollToWork" class="btn-our-work">
             Our Work
           </button>
@@ -210,7 +212,7 @@ const applyGlobalThemeClass = (isDark) => {
   }
 }
 
-// CHANGED: Saved under the unified webhive-theme key and updates root HTML element classes
+// Saved under the unified webhive-theme key and updates root HTML element classes
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
   const activeTheme = isDarkMode.value ? 'dark' : 'light'
@@ -270,7 +272,7 @@ const onMenuLeave = (el, done) => {
 }
 
 onMounted(() => {
-  // CHANGED: Check the universal site theme preference. Defaults to dark.
+  // Check the universal site theme preference. Defaults to dark.
   const savedTheme = localStorage.getItem('webhive-theme')
   if (savedTheme) {
     isDarkMode.value = savedTheme === 'dark'
@@ -282,14 +284,16 @@ onMounted(() => {
   // Keep root context token up-to-date instantly on view mount
   applyGlobalThemeClass(isDarkMode.value)
 
-  gsap.fromTo('.animate-title',
-    { y: 50, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.2 }
+  // CHANGED: Hero entrance — tag + title come in from the RIGHT
+  gsap.fromTo('.hero-from-right',
+    { x: 140, opacity: 0 },
+    { x: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power4.out', delay: 0.2 }
   )
 
-  gsap.fromTo('.animate-fade-in',
-    { opacity: 0, y: 25 },
-    { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.4 }
+  // CHANGED: Hero entrance — subtitle + buttons come in from the LEFT
+  gsap.fromTo('.hero-from-left',
+    { x: -140, opacity: 0 },
+    { x: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power4.out', delay: 0.5 }
   )
 
   gsap.set('.culture-cta', { opacity: 1 })
@@ -345,6 +349,12 @@ onUnmounted(() => {
   display: none;
   width: 0;
   height: 0;
+}
+
+/* CHANGED: in the light theme the whole page (html + body) is pure white */
+:global(html.theme-light),
+:global(html.theme-light body) {
+  background-color: #ffffff;
 }
 
 .hero-wrapper {
@@ -414,7 +424,7 @@ onUnmounted(() => {
   width: 100%;
   max-width: 100%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.03);
+  background: #000000;
   backdrop-filter: blur(15px) saturate(180%);
   -webkit-backdrop-filter: blur(15px) saturate(180%);
   border: none;
@@ -429,7 +439,7 @@ onUnmounted(() => {
 }
 
 .theme-light .navbar {
-  background: rgba(15, 23, 42, 0.03);
+  background: #ffffff;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
@@ -713,6 +723,8 @@ onUnmounted(() => {
   }
 }
 
+/* CHANGED: top padding removed here — the hero below now owns the navbar
+   clearance and fills the full screen height itself. */
 .hero-main {
   flex: 1 1 auto;
   display: flex;
@@ -723,16 +735,25 @@ onUnmounted(() => {
   margin: 0;
   box-sizing: border-box;
   gap: clamp(18px, 2.4vw, 24px);
-  padding-top: clamp(96px, 15vh, 150px);
+  padding-top: 0;
   padding-bottom: clamp(48px, 8vh, 90px);
   overflow-x: hidden;
 }
 
+/* CHANGED: hero now fills the full screen on every device.
+   100vh is the fallback; 100svh keeps it exactly one screen tall on mobile
+   browsers even while the address bar is visible. Content is centered
+   vertically and the top padding clears the fixed navbar. */
 .portfolio-hero {
   width: 100%;
   max-width: 100%;
-  padding-inline: clamp(20px, 5vw, 60px);
-  margin: clamp(20px, 3vh, 40px) auto clamp(40px, 6vw, 80px);
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: clamp(96px, 15vh, 150px) clamp(20px, 5vw, 60px) clamp(48px, 8vh, 96px);
+  margin: 0 auto clamp(40px, 6vw, 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
   position: relative;
   z-index: 5;
@@ -845,8 +866,9 @@ onUnmounted(() => {
   box-sizing: border-box;
 }
 
+/* CHANGED: light theme is now pure white (#ffffff), was #f2f2f2 */
 .theme-light .culture-cta {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   border-color: rgba(15, 23, 42, 0.06);
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.02);
 }
@@ -865,9 +887,9 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
+/* CHANGED: the orange glow is removed on the light theme */
 .theme-light .cta-glow {
-  opacity: 0.15;
-  background-color: #fdba74;
+  display: none;
 }
 
 .cta-title {
@@ -939,9 +961,7 @@ onUnmounted(() => {
   z-index: 1;
   display: flex;
   justify-content: center;
-  /* CHANGED: now lives inside .culture-cta, right under Start a Project —
-     no longer needs its own width/background, just spacing beneath the
-     button above it */
+  /* lives inside .culture-cta, right under Start a Project */
   margin-top: 18px;
 }
 
@@ -1355,6 +1375,41 @@ onUnmounted(() => {
   }
 }
 
+/* ==========================================================================
+   4K / Extra-Extra-Large Monitors: 2560px and up
+   CHANGED: hero stays full-screen and its text/buttons keep scaling so the
+   content looks balanced at 4K instead of small and lost in the middle.
+   ========================================================================== */
+@media (min-width: 2560px) {
+  .portfolio-hero {
+    padding: clamp(150px, 17vh, 190px) 120px 120px;
+    margin-bottom: clamp(60px, 5vw, 110px);
+  }
+
+  .section-tag {
+    font-size: 17px;
+    margin-bottom: 32px;
+  }
+
+  .portfolio-title {
+    font-size: clamp(4.2rem, 4.6vw, 8.2rem);
+    margin-bottom: 44px;
+  }
+
+  .portfolio-subtitle {
+    max-width: 1150px;
+    font-size: 1.5rem;
+    line-height: 1.75;
+    margin-bottom: 60px;
+  }
+
+  .btn-our-work,
+  .btn-start-project {
+    font-size: 16px;
+    padding: 22px 48px;
+  }
+}
+
 @media (min-width: 769px) and (max-width: 1024px) {
   .navbar {
     padding: 0.7rem 1.6rem;
@@ -1374,6 +1429,10 @@ onUnmounted(() => {
   }
 
   .hero-main {
+    padding-bottom: clamp(40px, 7vh, 72px);
+  }
+
+  .portfolio-hero {
     padding-top: clamp(84px, 14vh, 116px);
     padding-bottom: clamp(40px, 7vh, 72px);
   }
@@ -1406,6 +1465,10 @@ onUnmounted(() => {
   }
 
   .hero-main {
+    padding-bottom: clamp(32px, 6vh, 56px);
+  }
+
+  .portfolio-hero {
     padding-top: clamp(78px, 15vh, 104px);
     padding-bottom: clamp(32px, 6vh, 56px);
   }
@@ -1466,14 +1529,16 @@ onUnmounted(() => {
   }
 
   .hero-main {
-    padding-top: clamp(74px, 15vh, 96px);
     padding-bottom: clamp(28px, 5vh, 44px);
     gap: 16px;
   }
 
   .portfolio-hero {
+    padding-top: clamp(74px, 15vh, 96px);
+    padding-bottom: clamp(28px, 5vh, 44px);
     margin-bottom: clamp(32px, 9vw, 48px);
-    padding-inline: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .portfolio-title {

@@ -328,7 +328,7 @@ const onMenuLeave = (el, done) => {
   width: 100%;
   max-width: 100%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.03);
+  background: #000000;
   backdrop-filter: blur(15px) saturate(180%);
   -webkit-backdrop-filter: blur(15px) saturate(180%);
   border: none;

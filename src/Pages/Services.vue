@@ -52,17 +52,19 @@
       <div class="ambient-glow"></div>
 
       <section class="services-hero">
-        <span class="section-tag animate-fade-in">Our Services</span>
-        <h1 class="services-title animate-title">
+        <!-- CHANGED: tag + title slide in from the RIGHT -->
+        <span class="section-tag hero-from-right">Our Services</span>
+        <h1 class="services-title hero-from-right">
           High-Performance <br>
           <span class="highlight-text">Digital Architecture.</span>
         </h1>
-        <p class="services-subtitle animate-fade-in">
+        <!-- CHANGED: subtitle + buttons slide in from the LEFT -->
+        <p class="services-subtitle hero-from-left">
           We combine cutting-edge frontend engineering with robust system design to build highly secure, beautiful, and
           fluid digital platforms. Explore our technical capabilities below.
         </p>
 
-        <div class="cta-button-group animate-fade-in">
+        <div class="cta-button-group hero-from-left">
           <router-link to="/portfolio" class="btn-our-work">
             Our Work
           </router-link>
@@ -98,7 +100,7 @@
       <section class="services-cta animate-scroll-element">
         <div class="cta-glow"></div>
         <h2 class="cta-title">
-          Let's work  <span class="highlight-text">together</span>?
+          Let's work <span class="highlight-text">together</span>?
         </h2>
         <p class="cta-subtitle">
           Let's align your product vision with production-grade architectural builds. Partner with WebHive to construct
@@ -258,14 +260,16 @@ onMounted(() => {
 
   gsap.set('.showcase-row, .services-cta', { opacity: 1 })
 
-  gsap.fromTo('.animate-title',
-    { y: 50, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1, ease: 'power4.out', delay: 0.2 }
+  // CHANGED: Hero entrance — tag + title come in from the RIGHT
+  gsap.fromTo('.hero-from-right',
+    { x: 140, opacity: 0 },
+    { x: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power4.out', delay: 0.2 }
   )
 
-  gsap.fromTo('.animate-fade-in',
-    { opacity: 0, y: 25 },
-    { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.4 }
+  // CHANGED: Hero entrance — subtitle + buttons come in from the LEFT
+  gsap.fromTo('.hero-from-left',
+    { x: -140, opacity: 0 },
+    { x: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power4.out', delay: 0.5 }
   )
 
   gsap.utils.toArray('.showcase-row').forEach((row) => {
@@ -364,6 +368,12 @@ onUnmounted(() => {
   height: 0;
 }
 
+/* CHANGED: in the light theme the whole page (html + body) is pure white */
+:global(html.theme-light),
+:global(html.theme-light body) {
+  background-color: #ffffff;
+}
+
 /* ----------------------------------------- */
 /* CORE WRAPPER & BACKGROUND                 */
 /* ----------------------------------------- */
@@ -432,7 +442,7 @@ onUnmounted(() => {
   width: 100%;
   max-width: 100%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.03);
+  background: #000000;
   backdrop-filter: blur(15px) saturate(180%);
   -webkit-backdrop-filter: blur(15px) saturate(180%);
   border: none;
@@ -706,12 +716,14 @@ onUnmounted(() => {
   }
 }
 
+/* CHANGED: top padding removed here — the hero below now owns the navbar
+   clearance and fills the full screen height itself. */
 .services-main {
   flex: 1 1 0;
   position: relative;
   z-index: 10;
   width: 100%;
-  padding: clamp(96px, 15vh, 150px) clamp(16px, 5vw, 60px) clamp(48px, 8vh, 90px);
+  padding: 0 clamp(16px, 5vw, 60px) clamp(48px, 8vh, 90px);
   box-sizing: border-box;
 }
 
@@ -730,16 +742,25 @@ onUnmounted(() => {
   z-index: 1;
 }
 
+/* glow stays removed on the light theme */
 .theme-light .ambient-glow {
   display: none;
 }
 
-/* FULL WIDTH MODIFICATION: removed max-width constraints to make sections span full screen width */
+/* CHANGED: hero now fills the full screen on every device.
+   100vh is the fallback; 100svh keeps it exactly one screen tall on mobile
+   browsers even while the address bar is visible. Content is centered
+   vertically, and the top padding clears the fixed navbar. */
 .services-hero {
   width: 100%;
-  margin: clamp(20px, 3vh, 40px) 0 clamp(50px, 8vw, 90px);
-  padding: 0 clamp(16px, 4vw, 40px);
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0 0 clamp(50px, 8vw, 90px);
+  padding: clamp(96px, 15vh, 150px) clamp(16px, 4vw, 40px) clamp(48px, 8vh, 96px);
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: center;
   position: relative;
   z-index: 5;
@@ -833,11 +854,9 @@ onUnmounted(() => {
 /* FULL WIDTH MODIFICATION: removed max-width constraints */
 .showcase-rows {
   width: 100%;
-  /* CHANGED: margin-top for the gap below the hero, as requested. A plain
-     margin-top here would get collapsed into services-hero's own
-     margin-bottom (only the larger of the two would apply, silently
-     dropping this value) — the 1px transparent top border below stops
-     that collapse so the margin actually renders. */
+  /* margin-top for the gap below the hero. A plain margin-top here would get
+     collapsed into services-hero's own margin-bottom — the 1px transparent
+     top border below stops that collapse so the margin actually renders. */
   margin: clamp(20px, 4.5vw, 48px) 0 clamp(56px, 9vw, 110px);
   border-top: 1px solid transparent;
   padding: 0 clamp(16px, 4vw, 40px);
@@ -857,14 +876,9 @@ onUnmounted(() => {
   width: 100%;
 }
 
-/* CHANGED: rows 1 and 3 ("Web App Development" and "E-commerce Solutions")
-   get a full-bleed background matching the same gray/dark-gray shade used
-   elsewhere on the site. width:100vw + the negative-margin/left offset
-   trick breaks the row out of its padded parent so the background covers
-   the entire screen width, while the row's own padding keeps the image
-   and text aligned with the rest of the page content. Uses clamp() so it
-   scales fluidly at every breakpoint without needing separate media-query
-   overrides. */
+/* Rows 1 and 3 get a full-bleed background. width:100vw + the
+   negative-margin/left offset trick breaks the row out of its padded parent
+   so the background covers the entire screen width. */
 .showcase-row:nth-child(1),
 .showcase-row:nth-child(3) {
   position: relative;
@@ -880,9 +894,10 @@ onUnmounted(() => {
   transition: background-color var(--transition-speed);
 }
 
+/* CHANGED: light theme is now pure white (#ffffff), was #f2f2f2 */
 .theme-light .showcase-row:nth-child(1),
 .theme-light .showcase-row:nth-child(3) {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
 }
 
 .row-reverse {
@@ -1028,10 +1043,8 @@ onUnmounted(() => {
   position: relative;
   z-index: 30;
   pointer-events: auto;
-  /* CHANGED: full-bleed so this section covers 100% of the screen width at
-     every breakpoint, the same technique used on showcase rows 1 and 3 —
-     breaks out of services-main's horizontal padding via 100vw + a
-     left:50% offset cancelled by negative margins. */
+  /* full-bleed so this section covers 100% of the screen width at every
+     breakpoint — same technique used on showcase rows 1 and 3. */
   left: 50%;
   right: 50%;
   width: 100vw;
@@ -1050,8 +1063,9 @@ onUnmounted(() => {
   box-sizing: border-box;
 }
 
+/* CHANGED: light theme is now pure white (#ffffff), was #f2f2f2 */
 .theme-light .services-cta {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   border-color: rgba(15, 23, 42, 0.06);
 }
 
@@ -1134,9 +1148,7 @@ onUnmounted(() => {
   z-index: 10;
   display: flex;
   justify-content: center;
-  /* CHANGED: now lives inside .services-cta, right under Start a Project —
-     just needs spacing beneath the button above it, not its own width or
-     background anymore */
+  /* lives inside .services-cta, right under Start a Project */
   margin-top: 18px;
 }
 
@@ -1442,20 +1454,22 @@ onUnmounted(() => {
 
 /* ==========================================================================
    4K / Extra-Extra-Large Monitors: 2560px and up
-   CHANGED: this tier didn't exist before — the hero section was plateauing
-   at its 1921px sizing on very large/high-res displays, which left it
-   looking short and cramped at 4K. This gives services-main and
-   services-hero more vertical room and lets the title/subtitle keep
-   growing instead of maxing out.
+   CHANGED: hero stays full-screen and its text/buttons keep scaling so the
+   content looks balanced at 4K instead of small and lost in the middle.
    ========================================================================== */
 @media (min-width: 2560px) {
   .services-main {
-    padding-top: clamp(150px, 17vh, 190px);
     padding-bottom: clamp(90px, 10vh, 120px);
   }
 
   .services-hero {
-    margin: clamp(40px, 4vh, 60px) 0 clamp(90px, 9vw, 130px);
+    margin: 0 0 clamp(90px, 9vw, 130px);
+    padding: clamp(150px, 17vh, 190px) 120px 120px;
+  }
+
+  .section-tag {
+    font-size: 17px;
+    margin-bottom: 32px;
   }
 
   .services-title {
@@ -1467,6 +1481,7 @@ onUnmounted(() => {
     font-size: 1.5rem;
     max-width: 1150px;
     line-height: 1.75;
+    margin-bottom: 60px;
   }
 
   .btn-our-work,
@@ -1495,7 +1510,12 @@ onUnmounted(() => {
   }
 
   .services-main {
-    padding: clamp(84px, 14vh, 116px) clamp(24px, 6vw, 48px) clamp(40px, 7vh, 72px);
+    padding: 0 clamp(24px, 6vw, 48px) clamp(40px, 7vh, 72px);
+  }
+
+  .services-hero {
+    padding-top: clamp(84px, 14vh, 116px);
+    padding-bottom: clamp(40px, 7vh, 72px);
   }
 
   .services-title {
@@ -1522,7 +1542,12 @@ onUnmounted(() => {
   }
 
   .services-main {
-    padding: clamp(78px, 15vh, 104px) clamp(20px, 6vw, 40px) clamp(32px, 6vh, 56px);
+    padding: 0 clamp(20px, 6vw, 40px) clamp(32px, 6vh, 56px);
+  }
+
+  .services-hero {
+    padding-top: clamp(78px, 15vh, 104px);
+    padding-bottom: clamp(32px, 6vh, 56px);
   }
 
   .services-title {
@@ -1573,10 +1598,12 @@ onUnmounted(() => {
   }
 
   .services-main {
-    padding: clamp(74px, 15vh, 96px) 16px clamp(28px, 5vh, 44px);
+    padding: 0 16px clamp(28px, 5vh, 44px);
   }
 
   .services-hero {
+    padding-top: clamp(74px, 15vh, 96px);
+    padding-bottom: clamp(28px, 5vh, 44px);
     margin-bottom: clamp(40px, 10vw, 60px);
   }
 

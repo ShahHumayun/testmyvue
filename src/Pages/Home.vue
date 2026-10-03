@@ -614,7 +614,7 @@ const onMenuLeave = (el, done) => {
   width: 100%;
   max-width: 100%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.03);
+ background: #000000;
   backdrop-filter: blur(15px) saturate(180%);
   -webkit-backdrop-filter: blur(15px) saturate(180%);
   border: none;
@@ -629,7 +629,7 @@ const onMenuLeave = (el, done) => {
 }
 
 .theme-light .navbar {
-  background: rgba(15, 23, 42, 0.03);
+background: #ffffff;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }

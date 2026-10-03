@@ -27,6 +27,12 @@
     <Transition @enter="onMenuEnter" @leave="onMenuLeave" :css="false">
       <div v-if="isMenuOpen" class="nav-overlay">
         <nav class="nav-links-container">
+          <div class="menu-item-wrap mobile-home-item">
+            <router-link to="/" @click="toggleMenu" class="menu-link">
+              Home
+            </router-link>
+          </div>
+
           <div v-for="(item, index) in menuItems" :key="item" class="menu-item-wrap">
             <router-link :to="item === 'Consultation' ? '/consultation' : '/' + item.toLowerCase()" @click="toggleMenu"
               class="menu-link">
@@ -81,7 +87,7 @@ const onMenuLeave = (el, done) => {
 /* Unified structural color variables */
 .theme-dark {
   --brand-accent: #00ffa3;
-  --navbar-bg: rgba(255, 255, 255, 0.03);
+  --navbar-bg: #000000;
   --navbar-border: rgba(255, 255, 255, 0.1);
   --navbar-shadow: rgba(0, 0, 0, 0.5);
   --logo-color: #ffffff;
@@ -95,7 +101,7 @@ const onMenuLeave = (el, done) => {
 .theme-light {
   /* CHANGED: light-theme accent now vibrant orange instead of green */
   --brand-accent: #f97316;
-  --navbar-bg: rgba(15, 23, 42, 0.03);
+  --navbar-bg: #ffffff;
   --navbar-border: rgba(15, 23, 42, 0.08);
   --navbar-shadow: rgba(15, 23, 42, 0.08);
   --logo-color: #0f172a;
@@ -127,7 +133,7 @@ const onMenuLeave = (el, done) => {
   align-items: center;
   box-shadow: 0 10px 30px var(--navbar-shadow);
   box-sizing: border-box;
-  transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
+  transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
 }
 
 .logo {
@@ -139,11 +145,12 @@ const onMenuLeave = (el, done) => {
   letter-spacing: -0.04em;
   display: flex;
   align-items: center;
-  transition: color 0.4s;
+  transition: color 0.5s ease;
 }
 
 .logo .dot {
   color: var(--brand-accent);
+  transition: color 0.5s ease;
 }
 
 .nav-actions {
@@ -164,7 +171,7 @@ const onMenuLeave = (el, done) => {
   font-size: 13px;
   padding: 10px 18px;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, background-color 0.5s ease;
   white-space: nowrap;
 }
 
@@ -194,9 +201,9 @@ const onMenuLeave = (el, done) => {
   display: flex;
   align-items: center;
   cursor: pointer;
-  border: none;
+  border: 1px solid transparent;
   background-color: #cbd5e1;
-  transition: background-color 0.3s;
+  transition: background-color 0.5s ease, border-color 0.5s ease;
   flex-shrink: 0;
 }
 
@@ -216,11 +223,13 @@ const onMenuLeave = (el, done) => {
 .toggle-thumb {
   width: 16px;
   height: 16px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s ease, border-color 0.5s ease;
   background-color: #fbbf24;
 }
 
@@ -260,7 +269,7 @@ const onMenuLeave = (el, done) => {
   border: 1px solid var(--trigger-border);
   background-color: var(--trigger-bg);
   z-index: 55;
-  transition: background-color 0.3s, border-color 0.3s;
+  transition: background-color 0.5s ease, border-color 0.5s ease;
   flex-shrink: 0;
 }
 
@@ -276,7 +285,7 @@ const onMenuLeave = (el, done) => {
   height: 1.5px;
   width: 15px;
   background-color: var(--burger-color);
-  transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
+  transition: transform 0.3s, opacity 0.3s, background-color 0.5s ease;
 }
 
 .menu-active .line-top {
@@ -310,7 +319,7 @@ const onMenuLeave = (el, done) => {
   padding: clamp(24px, 5vh, 48px) clamp(20px, 6vw, 48px);
   padding-top: max(clamp(24px, 5vh, 48px), env(safe-area-inset-top));
   padding-bottom: max(clamp(24px, 5vh, 48px), env(safe-area-inset-bottom));
-  transition: background-color 0.4s;
+  transition: background-color 0.5s ease;
 }
 
 .nav-links-container {
@@ -327,6 +336,18 @@ const onMenuLeave = (el, done) => {
   align-items: center;
 }
 
+/* Home link inside the opened menu — only shown on small screens,
+   where the navbar Home button is hidden */
+.mobile-home-item {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .mobile-home-item {
+    display: flex;
+  }
+}
+
 .overlay-btn-item {
   margin-top: clamp(4px, 1vh, 12px);
 }
@@ -340,6 +361,7 @@ const onMenuLeave = (el, done) => {
   letter-spacing: 0.15em;
   opacity: 0.7;
   flex-shrink: 0;
+  transition: color 0.5s ease;
 }
 
 .menu-link {
@@ -348,7 +370,7 @@ const onMenuLeave = (el, done) => {
   text-decoration: none;
   letter-spacing: -0.02em;
   color: var(--link-color);
-  transition: color 0.3s, transform 0.3s;
+  transition: color 0.5s ease, transform 0.3s;
   display: inline-block;
   line-height: 1.1;
   word-break: break-word;
@@ -369,7 +391,7 @@ const onMenuLeave = (el, done) => {
   padding: clamp(8px, 1.5vw, 12px) clamp(20px, 4vw, 32px);
   cursor: pointer;
   display: inline-block;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.5s ease;
   will-change: transform;
   white-space: nowrap;
 }
