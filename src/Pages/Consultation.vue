@@ -167,8 +167,8 @@ function goBack() {
 
 const menuItems = ['About', 'Services', 'Portfolio', 'Culture', 'Studio', 'Policies']
 
-const SUPABASE_URL = 'https://sfdmzyvhwrqzcschtudb.supabase.co'
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNmZG16eXZod3JxemNzY2h0dWRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzMDUxMzAsImV4cCI6MjA5Njg4MTEzMH0.HSleUjf4AzorG5GBoTGnmwuGhQ2uGNBG84gZsf4NwuY'
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 const form = reactive({
